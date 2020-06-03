@@ -1,0 +1,48 @@
+body{
+    /*background-image: url("nyc.jpg");
+    background-position: to bottom bottom;
+    background-repeat: no-repeat;*/
+    text-align: center;
+    display: inline;
+}
+
+br{
+    content: "";
+    margin: 1em;
+    display: block;
+    font-size: 20%;
+}
+
+.name h2{
+    background-color: black;
+    color: white;
+    margin: auto;
+    width: 200px;
+    position: relative;
+    font-style: Garamond sans-serif;
+    font-size: 3em;
+    text-align: center;
+    display: block;
+}
+
+p{
+    text-align: center;
+    font-size: larger;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.links{
+    word-spacing: 3em; 
+}
+
+.links a{
+    text-decoration: none;
+}
+
+#bg-image{
+    background-image: url("nyc.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    padding-top: 650px;
+    position: relative;
+}
