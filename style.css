@@ -39,6 +39,12 @@ p{
     text-decoration: none;
 }
 
+#relaxApp {
+    margin-top: 15px;
+    text-decoration: none;
+    color: black;
+}
+
 #bg-image{
     background-image: url("roboHI.gif");
     background-position: center;
