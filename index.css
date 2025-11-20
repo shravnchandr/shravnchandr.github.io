@@ -414,6 +414,8 @@ nav {
 .hero-content {
     max-width: 800px;
     z-index: 1;
+    position: relative;
+    /* Ensure z-index works */
 }
 
 .hero-subtitle {
@@ -615,8 +617,10 @@ footer {
     margin: 0 auto 0 0;
     /* Align left */
     animation: blink-caret 0.75s step-end infinite;
-    max-width: 0;
-    /* Start hidden */
+    max-width: 100%;
+    /* Start visible (JS handles content) */
+    display: inline-block;
+    /* Fix cursor position */
     font-family: 'Fira Code', monospace;
     color: var(--md-sys-color-secondary);
 }
