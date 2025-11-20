@@ -56,61 +56,64 @@
 }
 
 /* Dark Theme Override */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --md-sys-color-primary: #d0bcff;
-        /* Much lighter purple/blue for contrast */
-        --md-sys-color-on-primary: #381e72;
-        --md-sys-color-primary-container: #4f378b;
-        --md-sys-color-on-primary-container: #eaddff;
+/* Dark Theme Override - Cyber/AI Aesthetic */
+:root {
+    --md-sys-color-primary: #00e5ff;
+    /* Neon Cyan */
+    --md-sys-color-on-primary: #00333d;
+    --md-sys-color-primary-container: #004f5d;
+    --md-sys-color-on-primary-container: #8ff7ff;
 
-        --md-sys-color-secondary: #ccc2dc;
-        --md-sys-color-on-secondary: #332d41;
-        --md-sys-color-secondary-container: #4a4458;
-        --md-sys-color-on-secondary-container: #e8def8;
+    --md-sys-color-secondary: #b388ff;
+    /* Electric Purple */
+    --md-sys-color-on-secondary: #32009a;
+    --md-sys-color-secondary-container: #4d00d2;
+    --md-sys-color-on-secondary-container: #eaddff;
 
-        --md-sys-color-tertiary: #efb8c8;
-        --md-sys-color-on-tertiary: #492532;
-        --md-sys-color-tertiary-container: #633b48;
-        --md-sys-color-on-tertiary-container: #ffd8e4;
+    --md-sys-color-tertiary: #ff4081;
+    /* Neon Pink */
+    --md-sys-color-on-tertiary: #66002c;
+    --md-sys-color-tertiary-container: #8e003f;
+    --md-sys-color-on-tertiary-container: #ffd8e4;
 
-        --md-sys-color-background: #000000;
-        --md-sys-color-on-background: #ffffff;
-        /* Pure white text */
-        --md-sys-color-surface: #141218;
-        --md-sys-color-on-surface: #ffffff;
-        /* Pure white text */
-        --md-sys-color-surface-variant: #49454f;
-        --md-sys-color-on-surface-variant: #e6e1e5;
-        /* Very light grey */
-        --md-sys-color-outline: #938f99;
-    }
+    --md-sys-color-background: #0a0a0a;
+    /* Deep Black */
+    --md-sys-color-on-background: #e0e0e0;
+
+    --md-sys-color-surface: #121212;
+    --md-sys-color-on-surface: #e0e0e0;
+
+    --md-sys-color-surface-variant: #1e1e1e;
+    --md-sys-color-on-surface-variant: #c2c2c2;
+
+    --md-sys-color-outline: #444444;
 }
 
 /* Manual Theme Overrides (via JS class) */
+/* Manual Theme Overrides (via JS class) */
 body.dark-theme {
-    --md-sys-color-primary: #d0bcff;
-    --md-sys-color-on-primary: #381e72;
-    --md-sys-color-primary-container: #4f378b;
-    --md-sys-color-on-primary-container: #eaddff;
+    --md-sys-color-primary: #00e5ff;
+    --md-sys-color-on-primary: #00333d;
+    --md-sys-color-primary-container: #004f5d;
+    --md-sys-color-on-primary-container: #8ff7ff;
 
-    --md-sys-color-secondary: #ccc2dc;
-    --md-sys-color-on-secondary: #332d41;
-    --md-sys-color-secondary-container: #4a4458;
-    --md-sys-color-on-secondary-container: #e8def8;
+    --md-sys-color-secondary: #b388ff;
+    --md-sys-color-on-secondary: #32009a;
+    --md-sys-color-secondary-container: #4d00d2;
+    --md-sys-color-on-secondary-container: #eaddff;
 
-    --md-sys-color-tertiary: #efb8c8;
-    --md-sys-color-on-tertiary: #492532;
-    --md-sys-color-tertiary-container: #633b48;
+    --md-sys-color-tertiary: #ff4081;
+    --md-sys-color-on-tertiary: #66002c;
+    --md-sys-color-tertiary-container: #8e003f;
     --md-sys-color-on-tertiary-container: #ffd8e4;
 
-    --md-sys-color-background: #000000;
-    --md-sys-color-on-background: #ffffff;
-    --md-sys-color-surface: #141218;
-    --md-sys-color-on-surface: #ffffff;
-    --md-sys-color-surface-variant: #49454f;
-    --md-sys-color-on-surface-variant: #e6e1e5;
-    --md-sys-color-outline: #938f99;
+    --md-sys-color-background: #0a0a0a;
+    --md-sys-color-on-background: #e0e0e0;
+    --md-sys-color-surface: #121212;
+    --md-sys-color-on-surface: #e0e0e0;
+    --md-sys-color-surface-variant: #1e1e1e;
+    --md-sys-color-on-surface-variant: #c2c2c2;
+    --md-sys-color-outline: #444444;
 }
 
 body.light-theme {
@@ -193,6 +196,8 @@ h1 {
 h2 {
     font-size: var(--md-sys-typescale-display-small);
     color: var(--md-sys-color-primary);
+    font-family: 'Fira Code', monospace;
+    /* Tech feel */
 }
 
 h3 {
@@ -300,8 +305,10 @@ section {
 
 .card:hover {
     transform: translateY(-4px);
-    background-color: var(--md-sys-color-primary-container);
-    color: var(--md-sys-color-on-primary-container);
+    background-color: var(--md-sys-color-surface-variant);
+    border-color: var(--md-sys-color-primary);
+    box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
+    /* Neon glow */
 }
 
 .card h3 {
@@ -385,6 +392,23 @@ nav {
     align-items: center;
     position: relative;
     padding-top: var(--spacing-xxl);
+    overflow: hidden;
+    /* Contain canvas */
+}
+
+.hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+#hero-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
 }
 
 .hero-content {
@@ -421,12 +445,20 @@ nav {
 }
 
 .skill-tag {
-    background-color: var(--md-sys-color-surface);
-    color: var(--md-sys-color-on-surface);
+    background-color: rgba(var(--md-sys-color-primary), 0.1);
+    color: var(--md-sys-color-primary);
     padding: 6px 16px;
-    border-radius: 8px;
+    border-radius: 4px;
+    /* More square/tech */
     font-size: 0.9rem;
     border: 1px solid var(--md-sys-color-outline);
+    font-family: 'Fira Code', monospace;
+    transition: all 0.2s ease;
+}
+
+.skill-tag:hover {
+    border-color: var(--md-sys-color-primary);
+    box-shadow: 0 0 8px rgba(0, 229, 255, 0.3);
 }
 
 /* Experience Section */
@@ -574,8 +606,31 @@ footer {
     transform: translateY(0);
 }
 
-.delay-1 {
-    transition-delay: 100ms;
+
+
+.typewriter-text {
+    border-right: 2px solid var(--md-sys-color-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    margin: 0 auto 0 0;
+    /* Align left */
+    animation: blink-caret 0.75s step-end infinite;
+    max-width: 0;
+    /* Start hidden */
+    font-family: 'Fira Code', monospace;
+    color: var(--md-sys-color-secondary);
+}
+
+@keyframes blink-caret {
+
+    from,
+    to {
+        border-color: transparent
+    }
+
+    50% {
+        border-color: var(--md-sys-color-primary)
+    }
 }
 
 .delay-2 {
