@@ -221,6 +221,21 @@
             <h2 class="animate-on-scroll">Projects & Publications</h2>
             <div class="projects-grid">
 
+                <!-- ASL Recognition -->
+                <a href="#" id="open-asl-demo" class="card project-card animate-on-scroll">
+                    <h3>Real-Time ASL Alphabet Recognition</h3>
+                    <p>A computer vision application that translates American Sign Language alphabets into text in
+                        real-time using MediaPipe and PyTorch.</p>
+                    <div class="project-tech">
+                        <span>Python</span>
+                        <span>OpenCV</span>
+                        <span>PyTorch</span>
+                        <span>MediaPipe</span>
+                    </div>
+                    <div class="try-demo-badge"><i class="fas fa-play"></i> Try Demo</div>
+                </a>
+
+
                 <!-- Duolingo ASL -->
                 <a href="https://github.com/shravnchandr/Duolingo-ASL" target="_blank"
                     class="card project-card animate-on-scroll">
@@ -313,7 +328,58 @@
         </div>
     </footer>
 
+    <!-- ASL Demo Modal -->
+    <div id="asl-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="asl-container">
+                <header>
+                    <h2>Real-Time ASL Recognition</h2>
+                    <p>Show your hand to the camera to translate ASL alphabets.</p>
+                </header>
+
+                <div class="demo-area">
+                    <div class="video-container">
+                        <video class="input_video"></video>
+                        <canvas class="output_canvas"></canvas>
+                        <div class="loading-overlay" id="loading">
+                            <div class="spinner"></div>
+                            <p>Loading Model...</p>
+                        </div>
+                    </div>
+
+                    <div class="prediction-box">
+                        <h3>Prediction</h3>
+                        <div id="prediction-text" class="prediction-text">-</div>
+                        <div class="confidence-bar">
+                            <div id="confidence-fill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="instructions">
+                    <h3>Instructions</h3>
+                    <ul>
+                        <li>Ensure your hand is clearly visible.</li>
+                        <li>Use good lighting conditions.</li>
+                        <li>Supported: A-Z, Space, Delete.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MediaPipe Dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+
     <!-- Script -->
+    <!-- ASL Model Data -->
+    <script src="asl_model.js"></script>
     <script src="script.js"></script>
 </body>
 

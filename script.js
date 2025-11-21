@@ -240,4 +240,220 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     observerTheme.observe(document.body, { attributes: true });
+
+    // --- ASL Recognition Logic ---
+    const modal = document.getElementById('asl-modal');
+    const openBtn = document.getElementById('open-asl-demo');
+    const closeBtn = document.querySelector('.close-modal');
+    const videoElement = document.getElementsByClassName('input_video')[0];
+    const canvasElement = document.getElementsByClassName('output_canvas')[0];
+    const canvasCtx = canvasElement.getContext('2d');
+    const predictionText = document.getElementById('prediction-text');
+    const confidenceFill = document.getElementById('confidence-fill');
+    const loadingOverlay = document.getElementById('loading');
+
+    let modelData = null;
+    let camera = null;
+    let hands = null;
+    let isModelLoaded = false;
+
+    // Open Modal
+    if (openBtn) {
+        openBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            modal.classList.add('show');
+            modal.style.display = 'flex';
+
+            if (!isModelLoaded) {
+                initASL();
+            } else {
+                if (camera) camera.start();
+            }
+        });
+    }
+
+    // Close Modal
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            closeModal();
+        });
+    }
+
+    window.addEventListener('click', (e) => {
+        if (e.target == modal) {
+            closeModal();
+        }
+    });
+
+    function closeModal() {
+        modal.classList.remove('show');
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 300);
+        // Stop camera to save resources
+        if (camera) {
+            // There is no direct stop() method in MediaPipe Camera Utils 0.3, 
+            // but we can stop sending frames or just hide it. 
+            // Actually, creating a new Camera instance might be better or just letting it run.
+            // For now, we'll leave it running but hidden, or we could try videoElement.pause()
+            videoElement.pause();
+        }
+    }
+
+    async function initASL() {
+        if (isModelLoaded) return;
+
+        try {
+            // Load Model from embedded data (asl_model.js)
+            if (typeof ASL_MODEL_DATA === 'undefined') {
+                throw new Error("ASL_MODEL_DATA not found. Make sure asl_model.js is loaded.");
+            }
+
+            modelData = ASL_MODEL_DATA;
+            console.log("ASL Model loaded from embedded data");
+            isModelLoaded = true;
+            loadingOverlay.style.display = 'none';
+
+            // Initialize MediaPipe
+            hands = new Hands({
+                locateFile: (file) => {
+                    return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
+                }
+            });
+
+            hands.setOptions({
+                maxNumHands: 1,
+                modelComplexity: 1,
+                minDetectionConfidence: 0.5,
+                minTrackingConfidence: 0.5
+            });
+
+            hands.onResults(onResults);
+
+            camera = new Camera(videoElement, {
+                onFrame: async () => {
+                    if (modal.style.display !== 'none') {
+                        await hands.send({ image: videoElement });
+                    }
+                },
+                width: 1280,
+                height: 720
+            });
+
+            camera.start();
+
+        } catch (error) {
+            console.error("Error initializing ASL:", error);
+            predictionText.innerText = "Error";
+            // Show specific error in UI
+            loadingOverlay.innerHTML = `<p style="color: #ff4444; text-align: center;">Error loading model:<br>${error.message}<br><br>Check console for details.</p>`;
+        }
+    }
+
+    // Matrix Multiplication Helper
+    function matMul(input, weights, bias) {
+        const outFeatures = weights.length;
+        const inFeatures = weights[0].length;
+        const output = new Array(outFeatures).fill(0);
+
+        for (let i = 0; i < outFeatures; i++) {
+            let sum = 0;
+            for (let j = 0; j < inFeatures; j++) {
+                sum += input[j] * weights[i][j];
+            }
+            output[i] = sum + bias[i];
+        }
+        return output;
+    }
+
+    // ReLU Activation
+    function relu(input) {
+        return input.map(x => Math.max(0, x));
+    }
+
+    // Softmax
+    function softmax(logits) {
+        const maxLogit = Math.max(...logits);
+        const exps = logits.map(x => Math.exp(x - maxLogit));
+        const sumExps = exps.reduce((a, b) => a + b, 0);
+        return exps.map(x => x / sumExps);
+    }
+
+    // Argmax
+    function argMax(array) {
+        return array.map((x, i) => [x, i]).reduce((r, a) => (a[0] > r[0] ? a : r))[1];
+    }
+
+    // Inference Function
+    function predict(landmarks) {
+        if (!modelData) return;
+
+        // 1. Preprocess: Flatten and Scale
+        let flatLandmarks = [];
+        for (const lm of landmarks) {
+            flatLandmarks.push(lm.x, lm.y, lm.z);
+        }
+
+        // Standard Scaler Transform: (x - mean) / scale
+        const scaledInput = flatLandmarks.map((val, idx) => {
+            return (val - modelData.scaler.mean[idx]) / modelData.scaler.scale[idx];
+        });
+
+        // 2. Forward Pass
+        // Layer 1: Linear -> ReLU
+        let x = matMul(scaledInput, modelData.model.fc1_w, modelData.model.fc1_b);
+        x = relu(x);
+
+        // Layer 2: Linear -> ReLU
+        x = matMul(x, modelData.model.fc2_w, modelData.model.fc2_b);
+        x = relu(x);
+
+        // Layer 3: Linear
+        const logits = matMul(x, modelData.model.fc3_w, modelData.model.fc3_b);
+
+        // 3. Post-process
+        const probs = softmax(logits);
+        const classIdx = argMax(probs);
+        const confidence = probs[classIdx];
+
+        // Map to Character
+        let char = '';
+        if (classIdx === 26) char = 'DEL';
+        else if (classIdx === 27) char = 'SPACE';
+        else char = String.fromCharCode(classIdx + 65); // 0 -> 'A'
+
+        return { char, confidence };
+    }
+
+    function onResults(results) {
+        canvasCtx.save();
+        canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+        canvasCtx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
+
+        if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
+            for (let i = 0; i < results.multiHandLandmarks.length; i++) {
+                const landmarks = results.multiHandLandmarks[i];
+
+                // Draw with thinner lines and dots
+                drawConnectors(canvasCtx, landmarks, HAND_CONNECTIONS,
+                    { color: '#00FF00', lineWidth: 2 });
+                drawLandmarks(canvasCtx, landmarks, { color: '#FF0000', lineWidth: 1, radius: 3 });
+
+                // Run Prediction using World Landmarks (if available)
+                // The model was trained on world landmarks (meters), not normalized screen coordinates.
+                if (results.multiHandWorldLandmarks && results.multiHandWorldLandmarks[i]) {
+                    const worldLandmarks = results.multiHandWorldLandmarks[i];
+                    const result = predict(worldLandmarks);
+                    if (result) {
+                        predictionText.innerText = result.char;
+                        confidenceFill.style.width = `${result.confidence * 100}%`;
+                    }
+                }
+            }
+        } else {
+            predictionText.innerText = "-";
+            confidenceFill.style.width = "0%";
+        }
+        canvasCtx.restore();
+    }
 });
