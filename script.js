@@ -308,6 +308,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (typeof ASL_MODEL_DATA === 'undefined') {
                 throw new Error("ASL_MODEL_DATA not found. Make sure asl_model.js is loaded.");
             }
+            if (typeof ASL_SCALER_DATA === 'undefined') {
+                throw new Error("ASL_SCALER_DATA not found. Make sure asl_model.js is loaded.");
+            }
 
             modelData = ASL_MODEL_DATA;
             console.log("ASL Model loaded from embedded data");
@@ -351,17 +354,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Matrix Multiplication Helper
+    // Handles weights in [in_features][out_features] format (transposed relative to PyTorch default)
     function matMul(input, weights, bias) {
-        const outFeatures = weights.length;
-        const inFeatures = weights[0].length;
+        const inFeatures = weights.length;
+        const outFeatures = weights[0].length;
         const output = new Array(outFeatures).fill(0);
 
+        // Initialize with bias
         for (let i = 0; i < outFeatures; i++) {
-            let sum = 0;
-            for (let j = 0; j < inFeatures; j++) {
-                sum += input[j] * weights[i][j];
+            output[i] = bias[i];
+        }
+
+        // Perform matrix multiplication: output = input * weights + bias
+        // Since weights are [in][out], we iterate:
+        for (let i = 0; i < inFeatures; i++) {
+            for (let j = 0; j < outFeatures; j++) {
+                output[j] += input[i] * weights[i][j];
             }
-            output[i] = sum + bias[i];
         }
         return output;
     }
@@ -396,7 +405,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Standard Scaler Transform: (x - mean) / scale
         const scaledInput = flatLandmarks.map((val, idx) => {
-            return (val - modelData.scaler.mean[idx]) / modelData.scaler.scale[idx];
+            return (val - ASL_SCALER_DATA.mean[idx]) / ASL_SCALER_DATA.scale[idx];
         });
 
         // 2. Forward Pass
