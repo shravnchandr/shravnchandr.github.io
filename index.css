@@ -154,7 +154,7 @@ html {
 /* Fonts */
 @font-face {
     font-family: 'Google Sans Flex';
-    src: url('Google_Sans_Flex/GoogleSansFlex-VariableFont_GRAD,ROND,opsz,slnt,wdth,wght.ttf') format('truetype');
+    src: url('GoogleSansFlex-VariableFont_GRAD,ROND,opsz,slnt,wdth,wght.ttf') format('truetype');
     font-weight: 100 900;
     font-style: normal;
 }
