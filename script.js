@@ -1,8 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Dynamic Year
-    document.getElementById('year').textContent = new Date().getFullYear();
+    initTheme();
+    initUI();
+    initParticles();
+    initASLDemo();
+    initASLDictionary();
+});
 
-    // Theme Toggle Logic
+// --- Theme Logic ---
+function initTheme() {
     const themeToggleBtn = document.getElementById('theme-toggle');
     const themeIcon = themeToggleBtn.querySelector('i');
     const body = document.body;
@@ -15,8 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
         body.classList.add(savedTheme);
         updateIcon(savedTheme === 'dark-theme');
     } else if (systemPrefersDark) {
-        // No class needed for system default if CSS media query handles it, 
-        // but adding class helps with manual toggle logic later
         body.classList.add('dark-theme');
         updateIcon(true);
     }
@@ -37,6 +40,16 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateIcon(isDark) {
         themeIcon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
     }
+}
+
+// --- UI Logic ---
+function initUI() {
+    // Remove no-js class to enable animations
+    document.documentElement.classList.remove('no-js');
+
+    // Dynamic Year
+    const yearEl = document.getElementById('year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
 
     // Scroll Animations (M3 Staggered)
     const observerOptions = {
@@ -71,28 +84,35 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
     // Typewriter Effect
     const typeWriterElement = document.querySelector('.typewriter-text');
-    const textToType = "Senior ML Engineer";
-    let typeIndex = 0;
+    if (typeWriterElement) {
+        const textToType = "Senior ML Engineer";
+        let typeIndex = 0;
 
-    function typeWriter() {
-        if (typeIndex < textToType.length) {
-            typeWriterElement.textContent += textToType.charAt(typeIndex);
-            typeWriterElement.style.maxWidth = '100%'; // Ensure visibility
-            typeIndex++;
-            setTimeout(typeWriter, 100); // Typing speed
+        function typeWriter() {
+            if (typeIndex < textToType.length) {
+                typeWriterElement.textContent += textToType.charAt(typeIndex);
+                typeWriterElement.style.maxWidth = '100%'; // Ensure visibility
+                typeIndex++;
+                setTimeout(typeWriter, 100); // Typing speed
+            }
         }
+
+        // Start typing after a small delay
+        setTimeout(() => {
+            typeWriterElement.textContent = ''; // Clear existing text
+            typeWriter();
+        }, 500);
     }
+}
 
-    // Start typing after a small delay
-    setTimeout(() => {
-        typeWriterElement.textContent = ''; // Clear existing text
-        typeWriter();
-    }, 500);
-
-    // Particle Network Animation
+// --- Particles Logic ---
+function initParticles() {
     const canvas = document.getElementById('hero-canvas');
+    if (!canvas) return;
+
     const ctx = canvas.getContext('2d');
     let particlesArray;
 
@@ -104,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-        initParticles();
+        init();
     });
 
     // Mouse interaction
@@ -172,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function initParticles() {
+    function init() {
         particlesArray = [];
         let numberOfParticles = (canvas.height * canvas.width) / 9000;
         for (let i = 0; i < numberOfParticles; i++) {
@@ -183,7 +203,6 @@ document.addEventListener('DOMContentLoaded', () => {
             let directionY = (Math.random() * 2) - 1; // -1 to 1
 
             // Color based on theme (defaulting to a neutral/primary mix)
-            // We can check the computed style of a primary color variable to match
             let color = getComputedStyle(document.documentElement).getPropertyValue('--md-sys-color-primary').trim();
 
             particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
@@ -200,9 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (distance < (canvas.width / 7) * (canvas.height / 7)) {
                     opacityValue = 1 - (distance / 20000);
                     let color = getComputedStyle(document.body).getPropertyValue('--md-sys-color-primary').trim();
-                    // Handle hex to rgba for opacity
-                    // Simple hack: just use the color as is, or assume it's hex and add opacity if needed.
-                    // For now, let's just use the primary color with globalAlpha
+
                     ctx.strokeStyle = color;
                     ctx.globalAlpha = opacityValue;
                     ctx.lineWidth = 1;
@@ -227,7 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Initialize and animate
-    initParticles();
+    init();
     animateParticles();
 
     // Re-init particles on theme change to update color
@@ -235,22 +252,30 @@ document.addEventListener('DOMContentLoaded', () => {
         mutations.forEach((mutation) => {
             if (mutation.attributeName === 'class') {
                 // Small delay to let CSS variables update
-                setTimeout(initParticles, 100);
+                setTimeout(init, 100);
             }
         });
     });
     observerTheme.observe(document.body, { attributes: true });
+}
 
-    // --- ASL Recognition Logic ---
+// --- ASL Demo Logic ---
+function initASLDemo() {
     const modal = document.getElementById('asl-modal');
     const openBtn = document.getElementById('open-asl-demo');
     const closeBtn = document.querySelector('.close-modal');
     const videoElement = document.getElementsByClassName('input_video')[0];
     const canvasElement = document.getElementsByClassName('output_canvas')[0];
-    const canvasCtx = canvasElement.getContext('2d');
     const predictionText = document.getElementById('prediction-text');
     const confidenceFill = document.getElementById('confidence-fill');
     const loadingOverlay = document.getElementById('loading');
+
+    if (!modal || !openBtn) return;
+
+    let canvasCtx = null;
+    if (canvasElement) {
+        canvasCtx = canvasElement.getContext('2d');
+    }
 
     let modelData = null;
     let camera = null;
@@ -258,19 +283,17 @@ document.addEventListener('DOMContentLoaded', () => {
     let isModelLoaded = false;
 
     // Open Modal
-    if (openBtn) {
-        openBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            modal.classList.add('show');
-            modal.style.display = 'flex';
+    openBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        modal.classList.add('show');
+        modal.style.display = 'flex';
 
-            if (!isModelLoaded) {
-                initASL();
-            } else {
-                if (camera) camera.start();
-            }
-        });
-    }
+        if (!isModelLoaded) {
+            initASL();
+        } else {
+            if (camera) camera.start();
+        }
+    });
 
     // Close Modal
     if (closeBtn) {
@@ -290,12 +313,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             modal.style.display = 'none';
         }, 300);
-        // Stop camera to save resources
         if (camera) {
-            // There is no direct stop() method in MediaPipe Camera Utils 0.3, 
-            // but we can stop sending frames or just hide it. 
-            // Actually, creating a new Camera instance might be better or just letting it run.
-            // For now, we'll leave it running but hidden, or we could try videoElement.pause()
             videoElement.pause();
         }
     }
@@ -304,16 +322,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isModelLoaded) return;
 
         try {
-            // Load Model from embedded data (asl_model.js)
+            // Check for global ASL data
             if (typeof ASL_MODEL_DATA === 'undefined') {
                 throw new Error("ASL_MODEL_DATA not found. Make sure asl_model.js is loaded.");
             }
-            if (typeof ASL_SCALER_DATA === 'undefined') {
-                throw new Error("ASL_SCALER_DATA not found. Make sure asl_model.js is loaded.");
-            }
 
             modelData = ASL_MODEL_DATA;
-            console.log("ASL Model loaded from embedded data");
+            console.log("ASL Model loaded");
             isModelLoaded = true;
             loadingOverlay.style.display = 'none';
 
@@ -347,26 +362,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } catch (error) {
             console.error("Error initializing ASL:", error);
-            predictionText.innerText = "Error";
-            // Show specific error in UI
-            loadingOverlay.innerHTML = `<p style="color: #ff4444; text-align: center;">Error loading model:<br>${error.message}<br><br>Check console for details.</p>`;
+            if (predictionText) predictionText.innerText = "Error";
+            if (loadingOverlay) loadingOverlay.innerHTML = `<p style="color: #ff4444; text-align: center;">Error loading model:<br>${error.message}<br><br>Check console for details.</p>`;
         }
     }
 
     // Matrix Multiplication Helper
-    // Handles weights in [in_features][out_features] format (transposed relative to PyTorch default)
     function matMul(input, weights, bias) {
         const inFeatures = weights.length;
         const outFeatures = weights[0].length;
         const output = new Array(outFeatures).fill(0);
 
-        // Initialize with bias
         for (let i = 0; i < outFeatures; i++) {
             output[i] = bias[i];
         }
 
-        // Perform matrix multiplication: output = input * weights + bias
-        // Since weights are [in][out], we iterate:
         for (let i = 0; i < inFeatures; i++) {
             for (let j = 0; j < outFeatures; j++) {
                 output[j] += input[i] * weights[i][j];
@@ -375,12 +385,10 @@ document.addEventListener('DOMContentLoaded', () => {
         return output;
     }
 
-    // ReLU Activation
     function relu(input) {
         return input.map(x => Math.max(0, x));
     }
 
-    // Softmax
     function softmax(logits) {
         const maxLogit = Math.max(...logits);
         const exps = logits.map(x => Math.exp(x - maxLogit));
@@ -388,53 +396,46 @@ document.addEventListener('DOMContentLoaded', () => {
         return exps.map(x => x / sumExps);
     }
 
-    // Argmax
     function argMax(array) {
         return array.map((x, i) => [x, i]).reduce((r, a) => (a[0] > r[0] ? a : r))[1];
     }
 
-    // Inference Function
     function predict(landmarks) {
         if (!modelData) return;
+        const scalerData = ASL_SCALER_DATA;
 
-        // 1. Preprocess: Flatten and Scale
         let flatLandmarks = [];
         for (const lm of landmarks) {
             flatLandmarks.push(lm.x, lm.y, lm.z);
         }
 
-        // Standard Scaler Transform: (x - mean) / scale
         const scaledInput = flatLandmarks.map((val, idx) => {
-            return (val - ASL_SCALER_DATA.mean[idx]) / ASL_SCALER_DATA.scale[idx];
+            return (val - scalerData.mean[idx]) / scalerData.scale[idx];
         });
 
-        // 2. Forward Pass
-        // Layer 1: Linear -> ReLU
         let x = matMul(scaledInput, modelData.model.fc1_w, modelData.model.fc1_b);
         x = relu(x);
 
-        // Layer 2: Linear -> ReLU
         x = matMul(x, modelData.model.fc2_w, modelData.model.fc2_b);
         x = relu(x);
 
-        // Layer 3: Linear
         const logits = matMul(x, modelData.model.fc3_w, modelData.model.fc3_b);
 
-        // 3. Post-process
         const probs = softmax(logits);
         const classIdx = argMax(probs);
         const confidence = probs[classIdx];
 
-        // Map to Character
         let char = '';
         if (classIdx === 26) char = 'DEL';
         else if (classIdx === 27) char = 'SPACE';
-        else char = String.fromCharCode(classIdx + 65); // 0 -> 'A'
+        else char = String.fromCharCode(classIdx + 65);
 
         return { char, confidence };
     }
 
     function onResults(results) {
+        if (!canvasCtx) return;
+
         canvasCtx.save();
         canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
         canvasCtx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
@@ -443,13 +444,10 @@ document.addEventListener('DOMContentLoaded', () => {
             for (let i = 0; i < results.multiHandLandmarks.length; i++) {
                 const landmarks = results.multiHandLandmarks[i];
 
-                // Draw with thinner lines and dots
                 drawConnectors(canvasCtx, landmarks, HAND_CONNECTIONS,
                     { color: '#00FF00', lineWidth: 2 });
                 drawLandmarks(canvasCtx, landmarks, { color: '#FF0000', lineWidth: 1, radius: 3 });
 
-                // Run Prediction using World Landmarks (if available)
-                // The model was trained on world landmarks (meters), not normalized screen coordinates.
                 if (results.multiHandWorldLandmarks && results.multiHandWorldLandmarks[i]) {
                     const worldLandmarks = results.multiHandWorldLandmarks[i];
                     const result = predict(worldLandmarks);
@@ -465,4 +463,195 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         canvasCtx.restore();
     }
-});
+}
+
+// --- ASL Dictionary Logic ---
+function initASLDictionary() {
+    const dictModal = document.getElementById('asl-dictionary-modal');
+    const openDictBtn = document.getElementById('open-asl-dictionary');
+    const closeDictBtn = document.getElementById('close-dictionary-modal');
+    const apiKeyInput = document.getElementById('gemini-api-key');
+    const saveKeyBtn = document.getElementById('save-api-key');
+    const toggleSettingsBtn = document.getElementById('toggle-api-settings');
+    const settingsPanel = document.getElementById('api-settings-panel');
+    const searchInput = document.getElementById('asl-search-input');
+    const searchBtn = document.getElementById('asl-search-btn');
+    const resultsContainer = document.getElementById('dictionary-results');
+    const dictLoading = document.getElementById('dictionary-loading');
+
+    if (!dictModal || !openDictBtn) return;
+
+    // Load saved API Key
+    const savedKey = localStorage.getItem('gemini_api_key');
+    if (savedKey && apiKeyInput) {
+        apiKeyInput.value = savedKey;
+    }
+
+    // Toggle Settings
+    if (toggleSettingsBtn) {
+        toggleSettingsBtn.addEventListener('click', () => {
+            settingsPanel.classList.toggle('hidden');
+        });
+    }
+
+    // Save API Key
+    if (saveKeyBtn) {
+        saveKeyBtn.addEventListener('click', () => {
+            const key = apiKeyInput.value.trim();
+            if (key) {
+                localStorage.setItem('gemini_api_key', key);
+                alert('API Key saved!');
+                settingsPanel.classList.add('hidden');
+            }
+        });
+    }
+
+    // Open/Close Modal
+    openDictBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        dictModal.classList.add('show');
+        dictModal.style.display = 'flex';
+    });
+
+    if (closeDictBtn) {
+        closeDictBtn.addEventListener('click', () => {
+            dictModal.classList.remove('show');
+            setTimeout(() => {
+                dictModal.style.display = 'none';
+            }, 300);
+        });
+    }
+
+    window.addEventListener('click', (e) => {
+        if (e.target == dictModal) {
+            dictModal.classList.remove('show');
+            setTimeout(() => {
+                dictModal.style.display = 'none';
+            }, 300);
+        }
+    });
+
+    // Translate Function
+    if (searchBtn) {
+        searchBtn.addEventListener('click', handleTranslate);
+    }
+
+    if (searchInput) {
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleTranslate();
+        });
+    }
+
+    async function handleTranslate() {
+        const text = searchInput.value.trim();
+        const apiKey = localStorage.getItem('gemini_api_key');
+
+        if (!text) return;
+
+        if (!apiKey) {
+            alert('Please enter your Google Gemini API Key in the settings.');
+            settingsPanel.classList.remove('hidden');
+            return;
+        }
+
+        // UI State
+        resultsContainer.innerHTML = '';
+        dictLoading.classList.remove('hidden');
+        searchBtn.disabled = true;
+
+        try {
+            const prompt = `
+                You are an expert ASL lexicographer. Translate the English text "${text}" into a sequence of Standard American Sign Language (ASL) signs.
+                Return ONLY a JSON object with this structure:
+                {
+                    "signs": [
+                        {
+                            "word": "GLOSS",
+                            "hand_shape": "Description",
+                            "location": "Description",
+                            "movement": "Description",
+                            "non_manual_markers": "Description"
+                        }
+                    ],
+                    "note": "Helpful grammar or context note."
+                }
+            `;
+
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    contents: [{
+                        parts: [{ text: prompt }]
+                    }],
+                    generationConfig: {
+                        temperature: 0.0
+                    }
+                })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.error("Gemini API Error Details:", errorData);
+                throw new Error(errorData.error?.message || `API Request Failed: ${response.status} ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            const generatedText = data.candidates[0].content.parts[0].text;
+            const jsonText = generatedText.replace(/```json|```/g, '').trim();
+            const parsedData = JSON.parse(jsonText);
+
+            renderDictionaryResults(parsedData);
+
+        } catch (error) {
+            console.error("Dictionary Error:", error);
+            resultsContainer.innerHTML = `<p style="color: red; text-align: center;">Error: ${error.message}.<br>Check your API Key.</p>`;
+        } finally {
+            dictLoading.classList.add('hidden');
+            searchBtn.disabled = false;
+        }
+    }
+
+    function renderDictionaryResults(data) {
+        if (!data || !data.signs) return;
+
+        data.signs.forEach((sign, index) => {
+            const card = document.createElement('div');
+            card.className = 'sign-card';
+            card.innerHTML = `
+                <div class="sign-header">
+                    <span class="sign-word">${sign.word.toUpperCase()}</span>
+                    <span class="sign-index">Sign ${index + 1}</span>
+                </div>
+                <div class="sign-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Hand Shape</span>
+                        <span class="detail-value">${sign.hand_shape}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Location</span>
+                        <span class="detail-value">${sign.location}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Movement</span>
+                        <span class="detail-value">${sign.movement}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">NMM (Face)</span>
+                        <span class="detail-value">${sign.non_manual_markers}</span>
+                    </div>
+                </div>
+            `;
+            resultsContainer.appendChild(card);
+        });
+
+        if (data.note) {
+            const note = document.createElement('div');
+            note.className = 'note-card';
+            note.innerHTML = `<strong>Note:</strong> ${data.note}`;
+            resultsContainer.appendChild(note);
+        }
+    }
+}

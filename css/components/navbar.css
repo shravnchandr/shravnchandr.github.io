@@ -1,0 +1,63 @@
+/* Navigation */
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: var(--spacing-md) 0;
+    background: rgba(var(--md-sys-color-surface), 0.8);
+    /* Needs RGB conversion for alpha, simplifying for now */
+    background-color: var(--md-sys-color-surface);
+    z-index: 1000;
+    border-bottom: 1px solid var(--md-sys-color-outline);
+    opacity: 0.95;
+}
+
+.nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: var(--md-sys-typescale-headline-small);
+    font-weight: 700;
+    color: var(--md-sys-color-on-surface);
+}
+
+.logo span {
+    color: var(--md-sys-color-primary);
+}
+
+.nav-links {
+    display: flex;
+    gap: var(--spacing-lg);
+}
+
+.nav-links a {
+    color: var(--md-sys-color-on-surface-variant);
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: var(--md-sys-shape-corner-full);
+}
+
+.nav-links a:hover {
+    background-color: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    background: none;
+    border: none;
+    color: var(--md-sys-color-on-surface);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.theme-toggle:hover {
+    background-color: var(--md-sys-color-surface-variant);
+}

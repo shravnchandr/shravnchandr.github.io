@@ -1,0 +1,66 @@
+/* Experience Section */
+.timeline {
+    position: relative;
+    max-width: 800px;
+    margin: var(--spacing-lg) auto 0;
+}
+
+.timeline-item {
+    position: relative;
+    padding-left: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--md-sys-color-outline);
+    opacity: 0.3;
+}
+
+.timeline-item::after {
+    content: '';
+    position: absolute;
+    left: -6px;
+    top: 6px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--md-sys-color-primary);
+    border: 2px solid var(--md-sys-color-surface);
+}
+
+.exp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: var(--spacing-xs);
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.exp-company {
+    color: var(--md-sys-color-primary);
+    font-weight: 600;
+}
+
+.exp-date {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.9rem;
+    color: var(--md-sys-color-on-surface-variant);
+}
+
+.exp-list {
+    list-style: disc;
+    padding-left: 1.2rem;
+    margin-top: var(--spacing-sm);
+}
+
+.exp-list li {
+    margin-bottom: 0.5rem;
+    color: var(--md-sys-color-on-surface-variant);
+}

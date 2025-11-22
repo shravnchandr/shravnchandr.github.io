@@ -1,0 +1,89 @@
+/* Reset & Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Fonts */
+@font-face {
+    font-family: 'Google Sans Flex';
+    src: url('../GoogleSansFlex-VariableFont_GRAD,ROND,opsz,slnt,wdth,wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+}
+
+body {
+    background-color: var(--md-sys-color-background);
+    color: var(--md-sys-color-on-background);
+    font-family: 'Google Sans Flex', 'Outfit', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    -webkit-font-smoothing: antialiased;
+    /* Better font rendering */
+    -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s ease;
+}
+
+ul {
+    list-style: none;
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 400;
+    /* M3 uses lighter weights for headings */
+    line-height: 1.2;
+    margin-bottom: var(--spacing-md);
+}
+
+h1 {
+    font-size: var(--md-sys-typescale-display-large);
+    letter-spacing: -0.25px;
+    font-weight: 500;
+}
+
+h2 {
+    font-size: var(--md-sys-typescale-display-small);
+    color: var(--md-sys-color-primary);
+    font-family: 'Fira Code', monospace;
+    /* Tech feel */
+}
+
+h3 {
+    font-size: var(--md-sys-typescale-headline-small);
+    color: var(--md-sys-color-on-surface);
+    font-weight: 500;
+}
+
+p {
+    font-size: var(--md-sys-typescale-body-large);
+    color: var(--md-sys-color-on-surface-variant);
+    margin-bottom: var(--spacing-md);
+}
+
+/* Layout Utilities */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+}
+
+section {
+    padding: var(--spacing-xxl) 0;
+}

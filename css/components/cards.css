@@ -1,0 +1,29 @@
+/* Cards */
+.card {
+    background-color: var(--md-sys-color-surface-variant);
+    /* Slightly lighter surface */
+    color: var(--md-sys-color-on-surface-variant);
+    border-radius: var(--md-sys-shape-corner-extra-large);
+    /* 28px */
+    padding: var(--spacing-lg);
+    transition: all 0.3s var(--md-sys-motion-easing-emphasized);
+    border: 1px solid transparent;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    background-color: var(--md-sys-color-surface-variant);
+    border-color: var(--md-sys-color-primary);
+    box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
+    /* Neon glow */
+}
+
+.card h3 {
+    color: inherit;
+    /* Inherit from card hover state */
+}
+
+.card p {
+    color: inherit;
+    opacity: 0.9;
+}

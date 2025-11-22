@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 
 <head>
     <meta charset="UTF-8">
@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="css/main.css">
 </head>
 
 <body>
@@ -243,6 +243,22 @@
                     </div>
                 </div>
 
+                <div class="card project-card animate-on-scroll" style="animation-delay: 0.1s;">
+                    <h3>ASL Dictionary (AI)</h3>
+                    <p>An AI-powered dictionary that translates English words into detailed American Sign Language (ASL)
+                        descriptions using Google Gemini.</p>
+                    <div class="project-tech">
+                        <span>GenAI</span>
+                        <span>Gemini API</span>
+                        <span>JavaScript</span>
+                    </div>
+                    <div class="project-actions">
+                        <a href="#" id="open-asl-dictionary" class="project-link">
+                            <i class="fas fa-book-open"></i> Open Dictionary
+                        </a>
+                    </div>
+                </div>
+
 
                 <!-- Duolingo ASL -->
                 <a href="https://github.com/shravnchandr/Duolingo-ASL" target="_blank"
@@ -372,6 +388,50 @@
                         <li>Use good lighting conditions.</li>
                         <li>Supported: A-Z, Space, Delete.</li>
                     </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ASL Dictionary Modal -->
+    <div id="asl-dictionary-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-dictionary-modal">&times;</span>
+            <div class="asl-container">
+                <header>
+                    <h2>ASL Dictionary</h2>
+                    <p>Translate words into ASL descriptions using AI.</p>
+                </header>
+
+                <!-- API Key Input (Collapsible/Settings) -->
+                <div class="api-key-section">
+                    <button id="toggle-api-settings" class="btn-text"><i class="fas fa-cog"></i> Settings</button>
+                    <div id="api-settings-panel" class="settings-panel hidden">
+                        <label for="gemini-api-key">Google Gemini API Key:</label>
+                        <div class="input-group">
+                            <input type="password" id="gemini-api-key" placeholder="Enter your API Key">
+                            <button id="save-api-key" class="btn btn-sm btn-primary">Save</button>
+                        </div>
+                        <p class="small-text">Key is saved locally in your browser.</p>
+                    </div>
+                </div>
+
+                <div class="dictionary-interface">
+                    <div class="search-box">
+                        <input type="text" id="asl-search-input"
+                            placeholder="Enter a word or phrase (e.g., 'Hello', 'Thank you')">
+                        <button id="asl-search-btn" class="btn btn-primary"><i class="fas fa-search"></i>
+                            Translate</button>
+                    </div>
+
+                    <div id="dictionary-loading" class="loading-state hidden">
+                        <div class="spinner"></div>
+                        <p>Consulting the ASL Expert...</p>
+                    </div>
+
+                    <div id="dictionary-results" class="results-container">
+                        <!-- Results will be injected here -->
+                    </div>
                 </div>
             </div>
         </div>

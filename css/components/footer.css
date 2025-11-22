@@ -1,0 +1,9 @@
+/* Footer */
+footer {
+    text-align: center;
+    padding: var(--spacing-lg) 0;
+    border-top: 1px solid var(--md-sys-color-outline);
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 0.9rem;
+    opacity: 0.5;
+}

@@ -1,0 +1,46 @@
+/* Hero Section */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-top: var(--spacing-xxl);
+    overflow: hidden;
+    /* Contain canvas */
+}
+
+.hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+#hero-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.hero-content {
+    max-width: 800px;
+    z-index: 1;
+    position: relative;
+    /* Ensure z-index works */
+}
+
+.hero-subtitle {
+    color: var(--md-sys-color-primary);
+    font-family: 'Fira Code', monospace;
+    font-size: var(--md-sys-typescale-body-large);
+    margin-bottom: var(--spacing-sm);
+    display: block;
+}
+
+.hero-description {
+    max-width: 600px;
+    margin-bottom: var(--spacing-xl);
+    font-size: 1.25rem;
+}

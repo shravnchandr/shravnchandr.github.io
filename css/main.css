@@ -1,0 +1,19 @@
+/* Main CSS - Imports all modules */
+@import 'variables.css';
+@import 'base.css';
+@import 'layout.css';
+@import 'animations.css';
+
+/* Components */
+@import 'components/buttons.css';
+@import 'components/cards.css';
+@import 'components/navbar.css';
+@import 'components/modals.css';
+@import 'components/footer.css';
+
+/* Sections */
+@import 'sections/hero.css';
+@import 'sections/skills.css';
+@import 'sections/experience.css';
+@import 'sections/projects.css';
+@import 'sections/contact.css';

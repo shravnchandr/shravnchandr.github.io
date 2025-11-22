@@ -1,0 +1,30 @@
+/* Contact Section */
+.contact-container {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+}
+
+.social-icon {
+    font-size: 2rem;
+    /* Increased size for better visibility */
+    color: var(--md-sys-color-on-surface-variant);
+    transition: var(--md-sys-motion-easing-emphasized);
+    padding: 12px;
+    /* Added padding for touch target */
+    border-radius: 50%;
+}
+
+.social-icon:hover {
+    color: var(--md-sys-color-primary);
+    background-color: var(--md-sys-color-surface-variant);
+    /* Add hover background */
+    transform: scale(1.1);
+}

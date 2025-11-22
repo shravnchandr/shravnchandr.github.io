@@ -1,0 +1,20 @@
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 3rem;
+    }
+
+    .nav-links {
+        display: none;
+        /* Could add hamburger menu later */
+    }
+
+    .timeline-item {
+        padding-left: var(--spacing-md);
+    }
+
+    .resume-fab {
+        bottom: 16px;
+        right: 16px;
+    }
+}

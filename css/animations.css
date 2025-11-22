@@ -1,0 +1,52 @@
+/* Animations */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s var(--md-sys-motion-easing-emphasized), transform 0.8s var(--md-sys-motion-easing-emphasized);
+}
+
+/* Fallback: Make content visible if JS is not running (no-js class present) */
+.no-js .animate-on-scroll {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.animate-on-scroll.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.typewriter-text {
+    border-right: 2px solid var(--md-sys-color-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    margin: 0 auto 0 0;
+    /* Align left */
+    animation: blink-caret 0.75s step-end infinite;
+    max-width: 100%;
+    /* Start visible (JS handles content) */
+    display: inline-block;
+    /* Fix cursor position */
+    font-family: 'Fira Code', monospace;
+    color: var(--md-sys-color-primary);
+}
+
+@keyframes blink-caret {
+
+    from,
+    to {
+        border-color: transparent
+    }
+
+    50% {
+        border-color: var(--md-sys-color-primary)
+    }
+}
+
+.delay-2 {
+    transition-delay: 200ms;
+}
+
+.delay-3 {
+    transition-delay: 300ms;
+}
