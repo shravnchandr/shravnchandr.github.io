@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     initTheme();
     initUI();
+    initMobileMenu();
     initParticles();
     initASLDemo();
     initASLDictionary();
@@ -106,6 +107,48 @@ function initUI() {
             typeWriter();
         }, 500);
     }
+}
+
+// --- Mobile Menu Logic ---
+function initMobileMenu() {
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+
+    if (!mobileBtn || !navLinks) return;
+
+    const links = navLinks.querySelectorAll('a');
+    const icon = mobileBtn.querySelector('i');
+
+    mobileBtn.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+        const isOpen = navLinks.classList.contains('active');
+
+        // Toggle icon
+        if (icon) {
+            icon.className = isOpen ? 'fas fa-times' : 'fas fa-bars';
+        }
+
+        // Prevent scrolling when menu is open
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    // Close menu when a link is clicked
+    links.forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+            if (icon) icon.className = 'fas fa-bars';
+            document.body.style.overflow = '';
+        });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!navLinks.contains(e.target) && !mobileBtn.contains(e.target) && navLinks.classList.contains('active')) {
+            navLinks.classList.remove('active');
+            if (icon) icon.className = 'fas fa-bars';
+            document.body.style.overflow = '';
+        }
+    });
 }
 
 // --- Particles Logic ---

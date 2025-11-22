@@ -15,14 +15,19 @@ nav {
 
 .nav-content {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    /* Remove justify-content: space-between to allow margin-auto to work */
 }
 
 .logo {
     font-size: var(--md-sys-typescale-headline-small);
     font-weight: 700;
     color: var(--md-sys-color-on-surface);
+    z-index: 1002;
+    /* Above mobile menu */
+    margin-right: auto;
+    /* Pushes everything else to the right */
+    order: 1;
 }
 
 .logo span {
@@ -32,6 +37,8 @@ nav {
 .nav-links {
     display: flex;
     gap: var(--spacing-lg);
+    align-items: center;
+    order: 2;
 }
 
 .nav-links a {
@@ -41,9 +48,21 @@ nav {
     border-radius: var(--md-sys-shape-corner-full);
 }
 
-.nav-links a:hover {
+.nav-links a:hover,
+.nav-links a.active {
     background-color: var(--md-sys-color-secondary-container);
     color: var(--md-sys-color-on-secondary-container);
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    z-index: 1002;
+    /* Above mobile menu */
+    order: 3;
+    margin-left: var(--spacing-lg);
+    /* Add some space between links and actions */
 }
 
 /* Theme Toggle Button */
@@ -60,4 +79,17 @@ nav {
 
 .theme-toggle:hover {
     background-color: var(--md-sys-color-surface-variant);
+}
+
+/* Mobile Menu Button */
+.mobile-menu-btn {
+    display: none;
+    /* Hidden on desktop */
+    background: none;
+    border: none;
+    color: var(--md-sys-color-on-surface);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 8px;
+    z-index: 1002;
 }
