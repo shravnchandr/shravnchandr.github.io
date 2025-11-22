@@ -1,2 +1,53 @@
-*.tex
+# ------------------------------------
+# 1. Dependency/Build Artifacts
+# ------------------------------------
+
+# Basic projects usually don't have node_modules or build folders,
+# but it's good practice to include them in case you add a tool later
+/node_modules
+/dist
+/build
+
+# Environment variables (if you ever add configuration)
+.env
+.env.*
+
+# ------------------------------------
+# 2. Editor/IDE/OS Files
+# ------------------------------------
+
+# macOS files
+.DS_Store
+.Trashes
+
+# Windows files
+Thumbs.db
+desktop.ini
+
+# VS Code
+.vscode/
+
+# IntelliJ/WebStorm
+.idea/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Python Files
 *.py
+
+# Font Files
+Google_Sans_Flex/
+
+# Vim/Nano/Other editor temp files
+*~
+#*#
+
+# ------------------------------------
+# 3. Security/Credentials
+# ------------------------------------
+
+# Ignore any files that might contain local configuration or secrets
+# (e.g., if you were to use a local JSON config file for development)
+# *.local.json

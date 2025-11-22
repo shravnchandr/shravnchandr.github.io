@@ -151,10 +151,18 @@ html {
     scroll-behavior: smooth;
 }
 
+/* Fonts */
+@font-face {
+    font-family: 'Google Sans Flex';
+    src: url('Google_Sans_Flex/GoogleSansFlex-VariableFont_GRAD,ROND,opsz,slnt,wdth,wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+}
+
 body {
     background-color: var(--md-sys-color-background);
     color: var(--md-sys-color-on-background);
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Google Sans Flex', 'Outfit', sans-serif;
     line-height: 1.6;
     overflow-x: hidden;
     transition: background-color 0.3s ease, color 0.3s ease;
@@ -554,6 +562,28 @@ nav {
     font-family: 'Fira Code', monospace;
 }
 
+.project-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.project-link {
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--md-sys-color-tertiary);
+    transition: color 0.2s ease;
+}
+
+.project-link:hover {
+    color: var(--md-sys-color-primary);
+}
+
 /* Contact Section */
 .contact-container {
     text-align: center;
@@ -866,48 +896,5 @@ footer {
 
     .prediction-text {
         font-size: 3rem;
-    }
-}
-
-margin: 1rem 0;
-min-height: 120px;
-}
-
-.confidence-bar {
-    width: 100%;
-    height: 6px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 3px;
-    overflow: hidden;
-}
-
-#confidence-fill {
-    height: 100%;
-    background: var(--primary);
-    transition: width 0.2s ease;
-}
-
-.instructions {
-    background: var(--surface);
-    padding: 1.5rem;
-    border-radius: 1rem;
-}
-
-.instructions h3 {
-    margin-bottom: 1rem;
-}
-
-.instructions ul {
-    padding-left: 1.5rem;
-    color: var(--text-muted);
-}
-
-.instructions li {
-    margin-bottom: 0.5rem;
-}
-
-@media (max-width: 768px) {
-    .demo-area {
-        grid-template-columns: 1fr;
     }
 }
