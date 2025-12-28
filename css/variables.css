@@ -43,10 +43,30 @@
     --md-sys-shape-corner-extra-large: 28px;
     --md-sys-shape-corner-full: 100px;
 
-    /* Motion */
+    /* Motion - Standard */
     --md-sys-motion-easing-emphasized: cubic-bezier(0.2, 0.0, 0.0, 1.0);
     --md-sys-motion-duration-medium: 400ms;
     --md-sys-motion-duration-long: 600ms;
+
+    /* Motion - Spring (Expressive) */
+    --spring-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --spring-smooth: cubic-bezier(0.22, 0.61, 0.36, 1);
+    --spring-snappy: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --spring-duration-short: 300ms;
+    --spring-duration-medium: 500ms;
+    --spring-duration-long: 700ms;
+
+    /* Staggered Animation Delays */
+    --stagger-1: 0ms;
+    --stagger-2: 50ms;
+    --stagger-3: 100ms;
+    --stagger-4: 150ms;
+    --stagger-5: 200ms;
+
+    /* Shapes - Expressive Asymmetric */
+    --shape-asymmetric-card: 28px 12px 28px 12px;
+    --shape-asymmetric-tag: 16px 4px 16px 4px;
+    --shape-pill: 100px;
 
     /* Spacing */
     --spacing-sm: 8px;

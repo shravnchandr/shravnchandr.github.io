@@ -1,4 +1,4 @@
-/* Hero Section */
+/* Material 3 Expressive Hero Section */
 .hero {
     min-height: 100vh;
     display: flex;
@@ -6,7 +6,6 @@
     position: relative;
     padding-top: var(--spacing-xxl);
     overflow: hidden;
-    /* Contain canvas */
 }
 
 .hero-bg {
@@ -28,13 +27,27 @@
     max-width: 800px;
     z-index: 1;
     position: relative;
-    /* Ensure z-index works */
+}
+
+/* Expressive Hero Title */
+.hero h1 {
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: var(--spacing-md);
+    background: linear-gradient(135deg, var(--md-sys-color-on-background) 0%, var(--md-sys-color-primary) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: spring-slide-up var(--spring-duration-long) var(--spring-bounce) forwards;
 }
 
 .hero-subtitle {
     color: var(--md-sys-color-primary);
     font-family: 'Fira Code', monospace;
     font-size: var(--md-sys-typescale-body-large);
+    font-weight: 600;
     margin-bottom: var(--spacing-sm);
     display: block;
 }
@@ -43,4 +56,14 @@
     max-width: 600px;
     margin-bottom: var(--spacing-xl);
     font-size: 1.25rem;
+    line-height: 1.7;
+    color: var(--md-sys-color-on-surface-variant);
+}
+
+.hero-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    animation: spring-slide-up var(--spring-duration-long) var(--spring-bounce) 0.2s forwards;
+    opacity: 0;
 }

@@ -1,65 +1,120 @@
-/* Buttons */
+/* Material 3 Expressive Buttons */
 .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    padding: 0 24px;
-    height: 48px;
-    /* M3 standard height */
-    border-radius: var(--md-sys-shape-corner-full);
+    gap: 10px;
+    padding: 0 28px;
+    height: 52px;
+    border-radius: var(--shape-pill);
     font-size: var(--md-sys-typescale-body-large);
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s var(--md-sys-motion-easing-emphasized);
     border: none;
+    position: relative;
+    overflow: hidden;
+    transition: transform var(--spring-duration-short) var(--spring-bounce),
+        box-shadow var(--spring-duration-short) var(--spring-smooth),
+        background-color var(--spring-duration-short) var(--spring-smooth);
 }
 
+.btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btn:hover::before {
+    opacity: 1;
+}
+
+/* Primary Button - Full rounded pill */
 .btn-primary {
-    background-color: var(--md-sys-color-primary);
+    background: linear-gradient(135deg, var(--md-sys-color-primary) 0%, var(--md-sys-color-tertiary) 100%);
     color: var(--md-sys-color-on-primary);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .btn-primary:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transform: translateY(-1px);
-    background-color: color-mix(in srgb, var(--md-sys-color-primary), white 10%);
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
 }
 
+.btn-primary:active {
+    transform: scale(0.98);
+}
+
+/* Outline Button - Squared contrast */
 .btn-outline {
     background-color: transparent;
-    border: 1px solid var(--md-sys-color-outline);
+    border: 2px solid var(--md-sys-color-primary);
     color: var(--md-sys-color-primary);
+    border-radius: var(--md-sys-shape-corner-medium);
 }
 
 .btn-outline:hover {
     background-color: var(--md-sys-color-primary-container);
     border-color: var(--md-sys-color-primary);
+    transform: scale(1.03);
 }
 
-/* FAB (Floating Action Button) */
+/* Tonal Button - Secondary color */
+.btn-tonal {
+    background-color: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
+    border-radius: var(--md-sys-shape-corner-large);
+}
+
+.btn-tonal:hover {
+    background-color: var(--md-sys-color-secondary);
+    color: var(--md-sys-color-on-secondary);
+    transform: scale(1.03);
+}
+
+/* Tertiary Button - Accent color */
+.btn-tertiary {
+    background-color: var(--md-sys-color-tertiary-container);
+    color: var(--md-sys-color-on-tertiary-container);
+    border-radius: var(--shape-pill);
+}
+
+.btn-tertiary:hover {
+    background-color: var(--md-sys-color-tertiary);
+    color: var(--md-sys-color-on-tertiary);
+    transform: scale(1.05);
+}
+
+/* FAB - Expressive Floating Action Button */
 .resume-fab {
     position: fixed;
     bottom: 32px;
     right: 32px;
-    width: 56px;
-    height: 56px;
-    border-radius: 16px;
-    /* M3 Large FAB shape */
-    background-color: var(--md-sys-color-tertiary-container);
+    width: 64px;
+    height: 64px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, var(--md-sys-color-tertiary-container) 0%, var(--md-sys-color-secondary-container) 100%);
     color: var(--md-sys-color-on-tertiary-container);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s var(--md-sys-motion-easing-emphasized);
+    font-size: 26px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
     z-index: 100;
     cursor: pointer;
+    transition: transform var(--spring-duration-short) var(--spring-bounce),
+        box-shadow var(--spring-duration-short) var(--spring-smooth),
+        border-radius var(--spring-duration-short) var(--spring-smooth);
 }
 
 .resume-fab:hover {
-    transform: scale(1.1) rotate(5deg);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    transform: scale(1.12) rotate(5deg);
+    border-radius: var(--shape-pill);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3);
+}
+
+.resume-fab:active {
+    transform: scale(0.95);
 }

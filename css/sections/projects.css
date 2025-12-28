@@ -1,7 +1,7 @@
-/* Projects Grid */
+/* Material 3 Expressive Projects Section */
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
     gap: var(--spacing-lg);
     margin-top: var(--spacing-lg);
 }
@@ -10,21 +10,44 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    border-radius: 24px;
-    /* Expressive shape */
+    border-radius: var(--md-sys-shape-corner-extra-large);
+    transition: transform var(--spring-duration-short) var(--spring-bounce),
+        box-shadow var(--spring-duration-short) var(--spring-smooth);
 }
 
+.project-card:hover {
+    transform: translateY(-8px);
+}
+
+.project-card h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: var(--spacing-sm);
+}
+
+.project-card p {
+    flex: 1;
+    line-height: 1.6;
+}
+
+/* Project Tech Tags - Consistent primary color */
 .project-tech {
     margin-top: auto;
+    padding-top: var(--spacing-md);
     display: flex;
+    flex-wrap: wrap;
     gap: 0.5rem;
-    font-size: 0.85rem;
-    color: var(--md-sys-color-primary);
+    font-size: 0.8rem;
     font-family: 'Fira Code', monospace;
+    font-weight: 500;
+    color: var(--md-sys-color-primary);
 }
 
+/* Project Action Links - CONSISTENT styling for ALL buttons */
 .project-actions {
     display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
     margin-top: 1rem;
 }
@@ -35,12 +58,25 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     font-weight: 600;
-    color: var(--md-sys-color-tertiary);
-    transition: color 0.2s ease;
+    padding: 10px 20px;
+    border-radius: var(--shape-pill);
+    background-color: var(--md-sys-color-primary-container);
+    border: 2px solid var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary-container);
+    transition: transform var(--spring-duration-short) var(--spring-bounce),
+        background-color var(--spring-duration-short) ease;
 }
 
+/* "View Code" buttons - Rounded square shape */
+.project-link-code {
+    border-radius: var(--md-sys-shape-corner-medium);
+}
+
+/* Unified hover state for ALL project links */
 .project-link:hover {
-    color: var(--md-sys-color-primary);
+    background-color: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+    transform: scale(1.05);
 }

@@ -46,12 +46,21 @@ nav {
     font-weight: 500;
     padding: 8px 16px;
     border-radius: var(--md-sys-shape-corner-full);
+    transition: transform var(--spring-duration-short) var(--spring-bounce),
+        background-color var(--spring-duration-short) ease,
+        color var(--spring-duration-short) ease;
 }
 
-.nav-links a:hover,
-.nav-links a.active {
+.nav-links a:hover {
+    transform: scale(1.05);
     background-color: var(--md-sys-color-secondary-container);
     color: var(--md-sys-color-on-secondary-container);
+}
+
+.nav-links a.active {
+    background-color: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
+    border-radius: var(--md-sys-shape-corner-medium);
 }
 
 .nav-actions {

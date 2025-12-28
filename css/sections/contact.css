@@ -1,30 +1,56 @@
-/* Contact Section */
+/* Material 3 Expressive Contact Section */
 .contact-container {
     text-align: center;
     max-width: 600px;
     margin: 0 auto;
 }
 
+.contact-container h2 {
+    font-size: clamp(1.75rem, 5vw, 2.5rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
 .social-links {
     display: flex;
     justify-content: center;
     gap: var(--spacing-lg);
-    margin-top: var(--spacing-lg);
+    margin-top: var(--spacing-xl);
 }
 
+/* Social Icon - CONSISTENT styling for ALL icons
+   M3 Expressive: Same fill + border, only SHAPES vary */
 .social-icon {
-    font-size: 2rem;
-    /* Increased size for better visibility */
-    color: var(--md-sys-color-on-surface-variant);
-    transition: var(--md-sys-motion-easing-emphasized);
-    padding: 12px;
-    /* Added padding for touch target */
+    font-size: 1.75rem;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
+    border: 2px solid var(--md-sys-color-primary);
+    transition: transform var(--spring-duration-short) var(--spring-bounce),
+        background-color var(--spring-duration-short) ease,
+        box-shadow var(--spring-duration-short) var(--spring-smooth);
+}
+
+/* Shape variety - all have same fill, only shapes differ */
+.social-icon:nth-child(3n+1) {
     border-radius: 50%;
 }
 
+.social-icon:nth-child(3n+2) {
+    border-radius: var(--md-sys-shape-corner-medium);
+}
+
+.social-icon:nth-child(3n) {
+    border-radius: var(--md-sys-shape-corner-large);
+}
+
+/* Unified hover state for ALL social icons */
 .social-icon:hover {
-    color: var(--md-sys-color-primary);
-    background-color: var(--md-sys-color-surface-variant);
-    /* Add hover background */
-    transform: scale(1.1);
+    transform: scale(1.15) translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    background-color: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
 }

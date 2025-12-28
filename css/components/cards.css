@@ -1,29 +1,31 @@
-/* Cards */
+/* Material 3 Expressive Cards */
 .card {
     background-color: var(--md-sys-color-surface-variant);
-    /* Slightly lighter surface */
     color: var(--md-sys-color-on-surface-variant);
     border-radius: var(--md-sys-shape-corner-extra-large);
-    /* 28px */
     padding: var(--spacing-lg);
-    transition: all 0.3s var(--md-sys-motion-easing-emphasized);
-    border: 1px solid transparent;
+    border: 1px solid var(--md-sys-color-outline);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: transform var(--spring-duration-short) var(--spring-bounce),
+        box-shadow var(--spring-duration-short) var(--spring-smooth),
+        border-color var(--spring-duration-short) ease;
 }
 
 .card:hover {
-    transform: translateY(-4px);
-    background-color: var(--md-sys-color-surface-variant);
+    transform: translateY(-6px);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
     border-color: var(--md-sys-color-primary);
-    box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
-    /* Neon glow */
 }
 
 .card h3 {
-    color: inherit;
-    /* Inherit from card hover state */
+    color: var(--md-sys-color-on-surface);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: var(--spacing-sm);
 }
 
 .card p {
     color: inherit;
     opacity: 0.9;
+    line-height: 1.6;
 }

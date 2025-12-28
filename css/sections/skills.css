@@ -1,30 +1,72 @@
-/* Skills Section */
+/* Material 3 Expressive Skills Section */
 .skills-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: var(--spacing-lg);
     margin-top: var(--spacing-lg);
+}
+
+.skill-category {
+    border-radius: var(--md-sys-shape-corner-extra-large);
+}
+
+.skill-category h3 {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: var(--spacing-md);
+    color: var(--md-sys-color-on-surface);
+}
+
+.skill-category h3 i {
+    color: var(--md-sys-color-primary);
+    font-size: 1.2rem;
 }
 
 .skill-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 10px;
 }
 
+/* Base Skill Tag - CONSISTENT styling for ALL tags
+   M3 Expressive: Same fill + border, only SHAPES vary for visual interest */
 .skill-tag {
-    background-color: rgba(var(--md-sys-color-primary), 0.1);
-    color: var(--md-sys-color-primary);
-    padding: 6px 16px;
-    border-radius: 4px;
-    /* More square/tech */
+    padding: 8px 18px;
     font-size: 0.9rem;
-    border: 1px solid var(--md-sys-color-outline);
     font-family: 'Fira Code', monospace;
-    transition: all 0.2s ease;
+    font-weight: 500;
+    background-color: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
+    border: 2px solid var(--md-sys-color-primary);
+    transition: transform var(--spring-duration-short) var(--spring-bounce),
+        box-shadow var(--spring-duration-short) var(--spring-smooth),
+        background-color var(--spring-duration-short) ease;
 }
 
+/* Shape variety using nth-child - ALL have same fill, only shapes differ */
+/* 1st, 4th, 7th... = Pill shape (full rounded) */
+.skill-tag:nth-child(3n+1) {
+    border-radius: var(--shape-pill);
+}
+
+/* 2nd, 5th, 8th... = Rounded rectangle */
+.skill-tag:nth-child(3n+2) {
+    border-radius: var(--md-sys-shape-corner-medium);
+}
+
+/* 3rd, 6th, 9th... = Squircle (extra large radius) */
+.skill-tag:nth-child(3n) {
+    border-radius: var(--md-sys-shape-corner-extra-large);
+}
+
+/* Unified hover state - same for ALL tags */
 .skill-tag:hover {
-    border-color: var(--md-sys-color-primary);
-    box-shadow: 0 0 8px rgba(0, 229, 255, 0.3);
+    transform: scale(1.08) translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    background-color: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
 }
