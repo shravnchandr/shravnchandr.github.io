@@ -8,7 +8,21 @@
     <meta name="description"
         content="Portfolio of Shravan Chandra, a Senior ML Engineer specializing in AI, Machine Learning, and MLOps.">
 
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://shravnchandr.github.io/">
+    <meta property="og:title" content="Shravan Chandra | Senior ML Engineer">
+    <meta property="og:description" content="Senior ML Engineer with 4+ years building scalable predictive maintenance systems, anomaly detection pipelines, and real-time inference infrastructure.">
+    <meta property="og:image" content="https://shravnchandr.github.io/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Shravan Chandra | Senior ML Engineer">
+    <meta name="twitter:description" content="Senior ML Engineer with 4+ years building scalable predictive maintenance systems, anomaly detection pipelines, and real-time inference infrastructure.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
     <!-- Fonts -->
+    <link rel="preload" href="GoogleSansFlex-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -47,7 +61,7 @@
     </nav>
 
     <!-- FAB -->
-    <a href="Resume New.pdf" class="resume-fab" download aria-label="Download Resume">
+    <a href="Shravan_Chandra_Resume.pdf" class="resume-fab" download aria-label="Download Resume">
         <i class="fas fa-file-arrow-down"></i>
     </a>
 
@@ -68,7 +82,7 @@
                 </p>
                 <div class="delay-3" style="display: flex; gap: 1rem;">
                     <a href="#contact" class="btn btn-primary">Get in Touch</a>
-                    <a href="Resume New.pdf" class="btn btn-outline" download><i class="fas fa-download"></i> Resume</a>
+                    <a href="Shravan_Chandra_Resume.pdf" class="btn btn-outline" download><i class="fas fa-download"></i> Resume</a>
                 </div>
             </div>
         </div>
@@ -81,16 +95,13 @@
             <div class="card animate-on-scroll">
                 <p>
                     Senior ML Engineer with 4+ years of production ML experience at Bosch Global Software Technologies,
-                    building
-                    scalable predictive maintenance systems, anomaly detection pipelines, and real-time inference
-                    infrastructure.
-                    Complemented by strong self-directed research in sign language recognition and generative AI,
-                    including
-                    published IEEE work and full-stack ML applications.
+                    building scalable predictive maintenance systems, anomaly detection pipelines, and real-time inference
+                    infrastructure. Complemented by strong self-directed research in sign language recognition and generative AI,
+                    including published IEEE work and full-stack ML applications.
                 </p>
                 <p style="margin-top: 1rem;">
                     Proficient across PyTorch, TensorFlow, cloud platforms, and modern LLM frameworks. Passionate about
-                    shipping end-to-end ML solutions and building AI for everyone.
+                    shipping end-to-end ML solutions and mentoring teams.
                 </p>
             </div>
         </div>
@@ -312,13 +323,13 @@
 
                 <!-- Diabetic Retinopathy -->
                 <div class="card project-card animate-on-scroll" style="animation-delay: 0.1s;">
-                    <h3>Diabetic Retinopathy with XAI</h3>
-                    <p>Developed an Xception-based deep learning classifier (96% Kappa Score) to detect diabetic
-                        retinopathy. Integrated Grad-CAM to provide Explainable AI insights for medical diagnosis.</p>
+                    <h3>Diabetic Retinopathy Classifier with XAI</h3>
+                    <p>Achieved 96% Kappa Score using an Xception-based classifier on fundus images.
+                        Integrated Grad-CAM for lesion visualization to improve clinical interpretability.</p>
                     <div class="project-tech">
+                        <span>Python</span>
                         <span>Keras</span>
                         <span>OpenCV</span>
-                        <span>Scikit-Learn</span>
                     </div>
                     <div class="project-actions">
                         <a href="https://github.com/shravnchandr/Diabetic-Retinopathy" target="_blank"
@@ -331,11 +342,14 @@
                 <!-- Publication -->
                 <div class="card project-card animate-on-scroll" style="animation-delay: 0.2s;">
                     <h3>Dynamic Sign Language Translator</h3>
-                    <p><strong>Publication (IEEE)</strong>: Developed a lightweight and automated sign language
-                        recognition system achieving 90%+ accuracy using deep learning and Mediapipe.</p>
+                    <p><strong>Publication (IEEE ICCAR 2022)</strong>: Developed a lightweight sign-language recognition
+                        model using Mediapipe + XGBoost achieving 90%+ accuracy across 15 phrases.</p>
+                    <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.8;">
+                        <em>Shravan Chandra, Venkatarangan MJ, Jyothi TN</em>
+                    </p>
                     <div class="project-tech">
-                        <span>Deep Learning</span>
-                        <span>Mediapipe</span>
+                        <span>MediaPipe</span>
+                        <span>XGBoost</span>
                         <span>Research</span>
                     </div>
                     <div class="project-actions">
@@ -419,7 +433,7 @@
 
                     <div class="prediction-box">
                         <h3>Prediction</h3>
-                        <div id="prediction-text" class="prediction-text">-</div>
+                        <div id="prediction-text" class="prediction-text" aria-live="polite">-</div>
                         <div class="confidence-bar">
                             <div id="confidence-fill" style="width: 0%"></div>
                         </div>

@@ -51,3 +51,5 @@ Google_Sans_Flex/
 # Ignore any files that might contain local configuration or secrets
 # (e.g., if you were to use a local JSON config file for development)
 # *.local.json
+
+CLAUDE.md

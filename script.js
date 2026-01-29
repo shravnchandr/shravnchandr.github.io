@@ -357,9 +357,16 @@ function initASLDemo() {
             modal.style.display = 'none';
         }, 300);
         if (camera) {
-            videoElement.pause();
+            camera.stop();
         }
     }
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.style.display !== 'none') {
+            closeModal();
+        }
+    });
 
     async function initASL() {
         if (isModelLoaded) return;
@@ -556,21 +563,27 @@ function initASLDictionary() {
         dictModal.style.display = 'flex';
     });
 
+    function closeDictModal() {
+        dictModal.classList.remove('show');
+        setTimeout(() => {
+            dictModal.style.display = 'none';
+        }, 300);
+    }
+
     if (closeDictBtn) {
-        closeDictBtn.addEventListener('click', () => {
-            dictModal.classList.remove('show');
-            setTimeout(() => {
-                dictModal.style.display = 'none';
-            }, 300);
-        });
+        closeDictBtn.addEventListener('click', closeDictModal);
     }
 
     window.addEventListener('click', (e) => {
         if (e.target == dictModal) {
-            dictModal.classList.remove('show');
-            setTimeout(() => {
-                dictModal.style.display = 'none';
-            }, 300);
+            closeDictModal();
+        }
+    });
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && dictModal.style.display !== 'none') {
+            closeDictModal();
         }
     });
 
