@@ -395,11 +395,14 @@
                         <span>Docker</span>
                     </div>
                     <div class="project-actions">
+                        <a href="#" id="open-asl-demo" class="project-link">
+                            <i class="fas fa-hand-sparkles" aria-hidden="true"></i> Try Demo
+                        </a>
                         <a href="https://asl-guide.onrender.com" target="_blank" class="project-link">
-                            <i class="fas fa-external-link-alt"></i> Live App
+                            <i class="fas fa-external-link-alt" aria-hidden="true"></i> Live App
                         </a>
                         <a href="https://github.com/shravnchandr/ASL-App" target="_blank" class="project-link project-link-code">
-                            <i class="fab fa-github"></i> View Code
+                            <i class="fab fa-github" aria-hidden="true"></i> View Code
                         </a>
                     </div>
                 </div>
@@ -529,6 +532,66 @@
         </div>
     </footer>
 
+    <!-- ASL Demo Modal -->
+    <div id="asl-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="asl-modal-title">
+        <div class="modal-content">
+            <button class="close-modal" aria-label="Close modal">&times;</button>
+            <div class="asl-container">
+                <header>
+                    <h2 id="asl-modal-title">ASL Guide — Try the Classifier</h2>
+                    <p>Show your hand to the camera to see real-time ASL alphabet recognition.</p>
+                </header>
+
+                <div class="demo-area">
+                    <div class="video-container">
+                        <video class="input_video"></video>
+                        <canvas class="output_canvas"></canvas>
+                        <div class="loading-overlay" id="loading">
+                            <div class="skeleton-loader">
+                                <div class="skeleton-icon">
+                                    <i class="fas fa-hand-sparkles" aria-hidden="true"></i>
+                                </div>
+                                <div class="skeleton-text">
+                                    <div class="skeleton-line"></div>
+                                    <div class="skeleton-line short"></div>
+                                </div>
+                                <div class="loading-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill"></div>
+                                    </div>
+                                    <p class="loading-status">Loading MediaPipe & Model...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="prediction-box">
+                        <h3>Prediction</h3>
+                        <div id="prediction-text" class="prediction-text" aria-live="polite">-</div>
+                        <div class="confidence-bar">
+                            <div id="confidence-fill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="instructions">
+                    <h3>Instructions</h3>
+                    <ul>
+                        <li>Ensure your hand is clearly visible.</li>
+                        <li>Use good lighting conditions.</li>
+                        <li>Supported: A-Z, Space, Delete.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MediaPipe Dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+    <script src="asl_model.js"></script>
     <script src="script.js"></script>
 </body>
 

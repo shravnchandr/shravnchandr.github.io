@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initBackToTop();
     initActiveNav();
     initProjectFilters();
+    initASLDemo();
 });
 
 // --- Theme Logic ---
@@ -459,3 +460,190 @@ function initParticles() {
     observerTheme.observe(document.body, { attributes: true });
 }
 
+
+// --- ASL Demo Logic ---
+function initASLDemo() {
+    const modal = document.getElementById('asl-modal');
+    const openBtn = document.getElementById('open-asl-demo');
+    const closeBtn = document.querySelector('.close-modal');
+    const videoElement = document.getElementsByClassName('input_video')[0];
+    const canvasElement = document.getElementsByClassName('output_canvas')[0];
+    const predictionText = document.getElementById('prediction-text');
+    const confidenceFill = document.getElementById('confidence-fill');
+    const loadingOverlay = document.getElementById('loading');
+
+    if (!modal || !openBtn) return;
+
+    let canvasCtx = null;
+    if (canvasElement) {
+        canvasCtx = canvasElement.getContext('2d');
+    }
+
+    let modelData = null;
+    let camera = null;
+    let hands = null;
+    let isModelLoaded = false;
+
+    // Open Modal
+    openBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        modal.classList.add('show');
+        modal.style.display = 'flex';
+
+        if (!isModelLoaded) {
+            initASL();
+        } else {
+            if (camera) camera.start();
+        }
+    });
+
+    // Close Modal
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            closeModal();
+        });
+    }
+
+    window.addEventListener('click', (e) => {
+        if (e.target == modal) {
+            closeModal();
+        }
+    });
+
+    function closeModal() {
+        modal.classList.remove('show');
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 300);
+        if (camera) {
+            camera.stop();
+        }
+    }
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.style.display !== 'none') {
+            closeModal();
+        }
+    });
+
+    async function initASL() {
+        if (isModelLoaded) return;
+
+        try {
+            if (typeof ASL_MODEL_DATA === 'undefined') {
+                throw new Error("ASL_MODEL_DATA not found. Make sure asl_model.js is loaded.");
+            }
+
+            modelData = ASL_MODEL_DATA;
+            isModelLoaded = true;
+            loadingOverlay.style.display = 'none';
+
+            hands = new Hands({
+                locateFile: (file) => {
+                    return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
+                }
+            });
+
+            hands.setOptions({
+                maxNumHands: 1,
+                modelComplexity: 1,
+                minDetectionConfidence: 0.5,
+                minTrackingConfidence: 0.5
+            });
+
+            hands.onResults(onResults);
+
+            camera = new Camera(videoElement, {
+                onFrame: async () => {
+                    if (modal.style.display !== 'none') {
+                        await hands.send({ image: videoElement });
+                    }
+                },
+                width: 1280,
+                height: 720
+            });
+
+            camera.start();
+
+        } catch (error) {
+            console.error("Error initializing ASL:", error);
+            if (predictionText) predictionText.innerText = "Error";
+            if (loadingOverlay) loadingOverlay.innerHTML = `<p style="color: #ff4444; text-align: center;">Error loading model:<br>${error.message}<br><br>Check console for details.</p>`;
+        }
+    }
+
+    function matMul(input, weights, bias) {
+        const inFeatures = weights.length;
+        const outFeatures = weights[0].length;
+        const output = new Array(outFeatures).fill(0);
+        for (let i = 0; i < outFeatures; i++) { output[i] = bias[i]; }
+        for (let i = 0; i < inFeatures; i++) {
+            for (let j = 0; j < outFeatures; j++) {
+                output[j] += input[i] * weights[i][j];
+            }
+        }
+        return output;
+    }
+
+    function relu(input) { return input.map(x => Math.max(0, x)); }
+
+    function softmax(logits) {
+        const maxLogit = Math.max(...logits);
+        const exps = logits.map(x => Math.exp(x - maxLogit));
+        const sumExps = exps.reduce((a, b) => a + b, 0);
+        return exps.map(x => x / sumExps);
+    }
+
+    function argMax(array) {
+        return array.map((x, i) => [x, i]).reduce((r, a) => (a[0] > r[0] ? a : r))[1];
+    }
+
+    function predict(landmarks) {
+        if (!modelData) return;
+        const scalerData = ASL_SCALER_DATA;
+        let flatLandmarks = [];
+        for (const lm of landmarks) { flatLandmarks.push(lm.x, lm.y, lm.z); }
+        const scaledInput = flatLandmarks.map((val, idx) => {
+            return (val - scalerData.mean[idx]) / scalerData.scale[idx];
+        });
+        let x = matMul(scaledInput, modelData.model.fc1_w, modelData.model.fc1_b);
+        x = relu(x);
+        x = matMul(x, modelData.model.fc2_w, modelData.model.fc2_b);
+        x = relu(x);
+        const logits = matMul(x, modelData.model.fc3_w, modelData.model.fc3_b);
+        const probs = softmax(logits);
+        const classIdx = argMax(probs);
+        const confidence = probs[classIdx];
+        let char = '';
+        if (classIdx === 26) char = 'DEL';
+        else if (classIdx === 27) char = 'SPACE';
+        else char = String.fromCharCode(classIdx + 65);
+        return { char, confidence };
+    }
+
+    function onResults(results) {
+        if (!canvasCtx) return;
+        canvasCtx.save();
+        canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+        canvasCtx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
+        if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
+            for (let i = 0; i < results.multiHandLandmarks.length; i++) {
+                const landmarks = results.multiHandLandmarks[i];
+                drawConnectors(canvasCtx, landmarks, HAND_CONNECTIONS, { color: '#00FF00', lineWidth: 2 });
+                drawLandmarks(canvasCtx, landmarks, { color: '#FF0000', lineWidth: 1, radius: 3 });
+                if (results.multiHandWorldLandmarks && results.multiHandWorldLandmarks[i]) {
+                    const result = predict(results.multiHandWorldLandmarks[i]);
+                    if (result) {
+                        predictionText.innerText = result.char;
+                        confidenceFill.style.width = `${result.confidence * 100}%`;
+                    }
+                }
+            }
+        } else {
+            predictionText.innerText = "-";
+            confidenceFill.style.width = "0%";
+        }
+        canvasCtx.restore();
+    }
+}
