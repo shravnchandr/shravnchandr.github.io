@@ -27,7 +27,7 @@
     max-width: 800px;
     z-index: 1;
     position: relative;
-    padding-bottom: 70px;
+    padding-bottom: 50px;
     text-align: center;
 }
 
@@ -97,7 +97,7 @@
 
 .hero-description {
     max-width: 600px;
-    margin: 0 auto var(--spacing-xl);
+    margin: 0 auto var(--spacing-md);
     font-size: 1.25rem;
     line-height: 1.7;
     color: var(--md-sys-color-on-surface-variant);
@@ -115,7 +115,7 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: var(--spacing-md);
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
     animation: spring-slide-up var(--spring-duration-long) var(--spring-bounce) 0.2s forwards;
     opacity: 0;
 }
@@ -133,7 +133,7 @@
     font-size: 0.85rem;
     font-weight: 500;
     color: var(--md-sys-color-on-surface-variant);
-    margin: 0 auto var(--spacing-lg);
+    margin: 0 auto var(--spacing-md);
 }
 
 .status-dot {
@@ -156,7 +156,7 @@
 
 /* Publication Badge */
 .hero-badge {
-    margin-top: var(--spacing-lg);
+    margin-top: var(--spacing-md);
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
