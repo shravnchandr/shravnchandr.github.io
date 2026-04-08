@@ -4,10 +4,7 @@ This file provides guidance to Claude Code when working with code in this reposi
 
 ## Project Overview
 
-Personal portfolio website for Shravan Chandra, Senior ML Engineer. Single-page application with two integrated interactive AI demos:
-
-- **ASL Recognition Demo**: Real-time hand gesture recognition via webcam using MediaPipe Hands + a custom MLP model running entirely in-browser
-- **ASL Dictionary**: English-to-ASL sign translation powered by Google Gemini 2.5 Flash API
+Personal portfolio website for Shravan Chandra, Senior ML Engineer. Single-page application focused on accessibility AI, production GenAI, and end-to-end ML infrastructure.
 
 **Deployment target:** GitHub Pages (`shravnchandr.github.io`), auto-deploys on push to `master`.
 
@@ -51,6 +48,44 @@ GoogleSansFlex-VariableFont_GRAD,ROND,opsz,slnt,wdth,wght.ttf  # Local font file
 
 ---
 
+## Page Structure (`index.html`)
+
+Sections in order:
+1. **Nav** — logo, theme toggle, mobile hamburger, nav links (About / Skills / Experience / Projects / Contact)
+2. **Hero** — name, typewriter title, description, CTA buttons, two badges (IEEE + ASL Guide), scroll indicator
+3. **Metrics** — 5+ Years Experience, €300K+ Annual Savings, 100+ ECUs Monitored, 48% Faster Training
+4. **About** — personal story (left-handed user anecdote), relocation intent, tech stack
+5. **Skills** — ML/DL, GenAI & LLMs, Data & MLOps, Languages, Infrastructure
+6. **Experience** — timeline with 4 entries (see below)
+7. **Projects** — filterable grid with 4 cards (see below)
+8. **Contact** — mailto + social links
+9. **Modals** — ASL demo modal + ASL dictionary modal (triggered from JS; note: trigger buttons removed from project cards — modals are dormant unless new trigger buttons are added)
+
+### Experience Entries (in order)
+| Title | Company | Dates |
+|---|---|---|
+| Senior Machine Learning Engineer | Bosch Global Software Technologies | Jan 2025 – Present |
+| Machine Learning Engineer | Bosch Global Software Technologies | Aug 2023 – Dec 2024 |
+| Software Developer | Bosch Global Software Technologies | Aug 2021 – Aug 2023 |
+| Junior Analyst (Internship) | Goldman Sachs | Jan 2021 – Jul 2021 |
+
+### Project Cards (in order)
+| Project | Category | Notes |
+|---|---|---|
+| ASL Guide — Production ASL Learning Platform | `genai` | Featured card, full-width, links to live app + GitHub |
+| Sign-Language Temporal Modeling | `research` | Research work, no links |
+| Diabetic Retinopathy Classifier with XAI | `ml-cv` | Links to GitHub |
+| IEEE Publication — ASL Recognition | `research` | Links to DOI |
+
+Filter categories: `all`, `ml-cv`, `genai`, `research`
+
+### Hero Badges
+Two `.publication-badge` elements inside `.hero-badge` (flex container):
+- IEEE ICCAR 2022 — links to `doi.org/10.1109/ICCAR55106.2022.9782661`
+- ASL Guide Live App — links to `asl-guide.onrender.com`
+
+---
+
 ## JavaScript Architecture (`script.js`)
 
 All logic lives in `script.js` as a single file with module-like `init*()` functions. Everything fires on `DOMContentLoaded`:
@@ -63,9 +98,11 @@ initParticles()      // Canvas particle animation in hero background
 initBackToTop()      // FAB visible after 300px scroll
 initActiveNav()      // IntersectionObserver highlights active nav link
 initProjectFilters() // data-category filter buttons on project cards
-initASLDemo()        // Modal + webcam + MediaPipe + MLP inference
-initASLDictionary()  // Modal + Gemini API call + results render
+initASLDemo()        // Modal + webcam + MediaPipe + MLP inference (dormant — no trigger button)
+initASLDictionary()  // Modal + Gemini API call + results render (dormant — no trigger button)
 ```
+
+**Note on dormant modals:** `initASLDemo` and `initASLDictionary` still initialize and their modals still exist in the HTML, but the buttons that previously triggered them (`id="open-asl-demo"` and `id="open-asl-dictionary"`) were removed along with the project cards. The modal code is harmless but effectively dead until new trigger buttons are added.
 
 ### State & Storage
 
@@ -83,32 +120,25 @@ Each `.project-card` has a `data-category` attribute (`ml-cv`, `genai`, `researc
 
 ---
 
-## ASL Recognition Demo (`initASLDemo`)
+## ASL Recognition Model (in `asl_model.js`)
 
-### Model
+Even though the demo modal is currently dormant, the model file and inference code remain active.
 
 - **File**: `asl_model.js` exports two globals: `ASL_MODEL_DATA` and `ASL_SCALER_DATA`
 - **Architecture**: 3-layer MLP — `63 → 128 → 64 → 28`
   - 63 inputs = 21 hand landmarks × (x, y, z)
   - 28 outputs = A–Z (indices 0–25), DEL (26), SPACE (27)
-- **Inference**: Fully implemented in vanilla JS — `matMul`, `relu`, `softmax`, `argMax` functions in `script.js`
+- **Inference**: Fully implemented in vanilla JS — `matMul`, `relu`, `softmax`, `argMax` in `script.js`
 - **Normalization**: StandardScaler applied before inference using `ASL_SCALER_DATA.mean` and `ASL_SCALER_DATA.scale` arrays
 - **Input used**: `worldLandmarks` (3D camera-space coordinates), not image-space landmarks
-
-### MediaPipe Integration
-
-- Loaded from CDN: `https://cdn.jsdelivr.net/npm/@mediapipe/hands/`
-- Settings: `maxNumHands: 1`, `modelComplexity: 1`, detection/tracking confidence `0.5`
-- Camera resolution: 1280×720
-- Camera only starts on first modal open (lazy init). Stops when modal closes.
-
-### To regenerate `asl_model.js`
-
-Run `export_model.py` after training a new PyTorch model. It outputs the weights and scaler parameters as JS.
+- **MediaPipe**: loaded from `cdn.jsdelivr.net/npm/@mediapipe/hands/`, `maxNumHands: 1`, camera 1280×720
+- **To regenerate**: run `export_model.py` after retraining the PyTorch model
 
 ---
 
-## ASL Dictionary (`initASLDictionary`)
+## ASL Dictionary (in `script.js`)
+
+Even though the demo modal is currently dormant, the code remains.
 
 - Calls **Gemini 2.5 Flash** directly from the browser: `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent`
 - Temperature: `0.0` for deterministic output
@@ -157,7 +187,7 @@ Dark mode is applied by adding `.dark-theme` to `<body>`. Variables override the
 | `animations.css` | `@keyframes` + `.animate-in`, `.animate-on-scroll`, stagger classes |
 | `components/cards.css` | `.card` base styles, `.project-card`, `.skill-category` |
 | `components/modals.css` | `.modal` overlay, `.close-modal`, show/hide transitions |
-| `sections/hero.css` | Hero layout, typewriter, particle canvas, scroll indicator |
+| `sections/hero.css` | Hero layout, typewriter, `.hero-badge` (flex), `.publication-badge`, particle canvas, scroll indicator |
 | `sections/metrics.css` | Metrics strip below hero |
 | `sections/projects.css` | Projects grid, `.featured-project`, filter buttons, `.project-tech` tags |
 

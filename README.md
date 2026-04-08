@@ -1,6 +1,6 @@
 # Shravan Chandra | Senior ML Engineer — Portfolio
 
-Personal portfolio website with integrated AI demonstrations. Built with accessibility AI as the core focus.
+Personal portfolio website focused on accessibility AI, production GenAI systems, and end-to-end ML infrastructure.
 
 **Live:** [shravnchandr.github.io](https://shravnchandr.github.io)
 
@@ -15,26 +15,22 @@ Personal portfolio website with integrated AI demonstrations. Built with accessi
 - Scroll-triggered animations via IntersectionObserver with staggered reveals
 - Material 3 Expressive design system with spring-based motion
 
-### Real-Time ASL Recognition
-Browser-based computer vision — no server, no data sent externally.
-- **Model**: 3-layer MLP (63 → 128 → 64 → 28) trained on ASL hand landmarks, exported to JS
-- **Input**: 21 hand landmarks × (x, y, z) = 63 features, using MediaPipe world coordinates
-- **Output**: A–Z, Space, Delete (28 classes)
-- **Inference**: Runs entirely in-browser with vanilla JS (matMul + ReLU + softmax)
-- **Landmark detection**: MediaPipe Hands via CDN
+### Hero Badges
+Two credential badges below the CTA buttons:
+- **Published in IEEE ICCAR 2022** — links to the paper DOI
+- **ASL Guide — Live Production App** — links to the deployed app
 
-### ASL Dictionary (AI-Powered)
-English → ASL sign translation with structured output.
-- **Model**: Google Gemini 2.5 Flash (direct browser API call, temperature 0.0)
-- **Output**: Per-sign breakdown — gloss, hand shape, location, movement, non-manual markers
-- **API key**: User-supplied, stored in `localStorage` — never hardcoded
+### Projects
+- **ASL Guide** (featured) — full-stack production ASL learning platform with LangGraph agentic workflow, TensorFlow.js in-browser classifier, SM-2 spaced repetition, PWA, Redis caching
+- **Sign-Language Temporal Modeling** — CNN + transformer research on MS-ASL200
+- **Diabetic Retinopathy Classifier** — Xception + Grad-CAM, 96% Kappa Score
+- **IEEE Publication** — ICCAR 2022, sign language recognition
 
 ---
 
 ## Tech Stack
 
 - **Frontend**: HTML5, CSS3 (Custom Properties), Vanilla JavaScript (ES6+)
-- **AI/ML**: MediaPipe Hands, Google Gemini API
 - **Design system**: Material 3 Expressive (custom CSS implementation)
 - **Icons**: Font Awesome 6.4
 - **Fonts**: Google Sans Flex (local), Fira Code + Outfit (Google Fonts CDN)
@@ -45,8 +41,8 @@ English → ASL sign translation with structured output.
 
 ```
 index.html              # Single-page app — all content
-script.js               # All JS logic (~830 lines): UI, theme, particles, ASL demo, dictionary
-asl_model.js            # Exported MLP weights + StandardScaler params as JS globals
+script.js               # All JS logic: UI, theme, particles, project filters, ASL modals
+asl_model.js            # Pre-trained MLP weights + StandardScaler params as JS globals
 export_model.py         # Generates asl_model.js from a trained PyTorch model
 css/
 ├── main.css            # Cascading @import entry point
@@ -68,21 +64,7 @@ python3 -m http.server
 # Open http://localhost:8000
 ```
 
-Direct `open index.html` works for basic browsing but will break the ASL demo.
-
----
-
-## Using the ASL Demo
-
-1. Click **"Try Demo"** on the Real-Time ASL Alphabet Recognition project card
-2. Allow camera access when prompted
-3. Hold your hand in front of the camera — predictions update in real-time
-
-## Using the ASL Dictionary
-
-1. Click **"Try It"** on the ASL Instruction Generator project card
-2. Click **Settings** and enter your [Google Gemini API Key](https://aistudio.google.com/app/apikey)
-3. Click **Save**, then type any English word or phrase and hit **Translate**
+Direct `open index.html` works for basic browsing.
 
 ---
 
