@@ -59,7 +59,7 @@ Sections in order:
 6. **Experience** — timeline with 4 entries (see below)
 7. **Projects** — filterable grid with 4 cards (see below)
 8. **Contact** — mailto + social links
-9. **Modals** — ASL demo modal + ASL dictionary modal (triggered from JS; note: trigger buttons removed from project cards — modals are dormant unless new trigger buttons are added)
+9. **Footer** — copyright year (set dynamically via `id="year"`)
 
 ### Experience Entries (in order)
 | Title | Company | Dates |
@@ -98,16 +98,11 @@ initParticles()      // Canvas particle animation in hero background
 initBackToTop()      // FAB visible after 300px scroll
 initActiveNav()      // IntersectionObserver highlights active nav link
 initProjectFilters() // data-category filter buttons on project cards
-initASLDemo()        // Modal + webcam + MediaPipe + MLP inference (dormant — no trigger button)
-initASLDictionary()  // Modal + Gemini API call + results render (dormant — no trigger button)
 ```
-
-**Note on dormant modals:** `initASLDemo` and `initASLDictionary` still initialize and their modals still exist in the HTML, but the buttons that previously triggered them (`id="open-asl-demo"` and `id="open-asl-dictionary"`) were removed along with the project cards. The modal code is harmless but effectively dead until new trigger buttons are added.
 
 ### State & Storage
 
 - **Theme**: `localStorage('theme')` → `'dark-theme'` or `'light-theme'`. Falls back to `prefers-color-scheme`.
-- **Gemini API key**: `localStorage('gemini_api_key')` — user enters it in the Dictionary modal settings panel.
 - All other state is managed via closures inside each `init*()` function. No global state object.
 
 ### Scroll Animations
@@ -120,30 +115,14 @@ Each `.project-card` has a `data-category` attribute (`ml-cv`, `genai`, `researc
 
 ---
 
-## ASL Recognition Model (in `asl_model.js`)
+## ASL Model (local dev artifact)
 
-Even though the demo modal is currently dormant, the model file and inference code remain active.
+`asl_model.js` is a trained model export kept in the repo as a reference artifact but not loaded by the site. To reintegrate the in-browser ASL demo:
+1. Add trigger buttons and modal HTML back to `index.html`
+2. Add back `<script src="asl_model.js">` and the 4 MediaPipe CDN scripts
+3. Restore `initASLDemo` / `initASLDictionary` in `script.js` (recoverable from git history)
 
-- **File**: `asl_model.js` exports two globals: `ASL_MODEL_DATA` and `ASL_SCALER_DATA`
-- **Architecture**: 3-layer MLP — `63 → 128 → 64 → 28`
-  - 63 inputs = 21 hand landmarks × (x, y, z)
-  - 28 outputs = A–Z (indices 0–25), DEL (26), SPACE (27)
-- **Inference**: Fully implemented in vanilla JS — `matMul`, `relu`, `softmax`, `argMax` in `script.js`
-- **Normalization**: StandardScaler applied before inference using `ASL_SCALER_DATA.mean` and `ASL_SCALER_DATA.scale` arrays
-- **Input used**: `worldLandmarks` (3D camera-space coordinates), not image-space landmarks
-- **MediaPipe**: loaded from `cdn.jsdelivr.net/npm/@mediapipe/hands/`, `maxNumHands: 1`, camera 1280×720
-- **To regenerate**: run `export_model.py` after retraining the PyTorch model
-
----
-
-## ASL Dictionary (in `script.js`)
-
-Even though the demo modal is currently dormant, the code remains.
-
-- Calls **Gemini 2.5 Flash** directly from the browser: `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent`
-- Temperature: `0.0` for deterministic output
-- Returns structured JSON: `{ signs: [{ word, hand_shape, location, movement, non_manual_markers }], note }`
-- API key is never hardcoded — user must paste their own key into the modal settings panel
+Model details: 3-layer MLP `63 → 128 → 64 → 28` (A–Z + DEL + SPACE). Weights + StandardScaler exported via `export_model.py`.
 
 ---
 
@@ -208,14 +187,11 @@ Dark mode is applied by adding `.dark-theme` to `<body>`. Variables override the
 
 | Dependency | Source | Used for |
 |---|---|---|
-| MediaPipe Hands | `cdn.jsdelivr.net/npm/@mediapipe/hands/` | Hand landmark detection |
-| MediaPipe Camera Utils | Same CDN | Webcam feed to MediaPipe |
-| MediaPipe Drawing Utils | Same CDN | `drawConnectors`, `drawLandmarks` on canvas |
 | Font Awesome 6.4.0 | `cdnjs.cloudflare.com` | All icons |
 | Fira Code, Outfit | Google Fonts | Body and code typography |
 | Google Sans Flex | Local TTF file | Display headings |
 
-No npm, no webpack, no React. All dependencies load via `<script>` or `<link>` tags in `index.html`.
+No npm, no webpack, no React. All dependencies load via `<link>` tags in `index.html`.
 
 ---
 
