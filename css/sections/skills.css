@@ -8,13 +8,24 @@
 
 .skill-category {
     border-radius: var(--md-sys-shape-corner-extra-large);
+    position: relative;
+    overflow: hidden;
+}
+
+/* ML/DL card gets special treatment - first skill category */
+.skill-category:first-child,
+.skill-category:nth-child(2) {
+    background: linear-gradient(135deg,
+        var(--md-sys-color-surface) 0%,
+        var(--md-sys-color-primary-container) 100%);
+    border: 2px solid var(--md-sys-color-primary);
 }
 
 .skill-category h3 {
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     font-weight: 700;
     letter-spacing: -0.01em;
     margin-bottom: var(--spacing-md);
@@ -23,7 +34,34 @@
 
 .skill-category h3 i {
     color: var(--md-sys-color-primary);
-    font-size: 1.2rem;
+    font-size: 1.3rem;
+    transition: transform var(--spring-duration-short) var(--spring-bounce);
+}
+
+.skill-category:hover h3 i {
+    transform: scale(1.2) rotate(5deg);
+}
+
+/* Highlighted ML-focused skill categories */
+.skill-highlight {
+    background: linear-gradient(135deg,
+        var(--md-sys-color-surface) 0%,
+        var(--md-sys-color-primary-container) 100%);
+    border: 2px solid var(--md-sys-color-primary);
+    position: relative;
+}
+
+.skill-highlight::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg,
+        var(--md-sys-color-primary) 0%,
+        var(--md-sys-color-tertiary) 100%);
+    border-radius: var(--md-sys-shape-corner-extra-large) var(--md-sys-shape-corner-extra-large) 0 0;
 }
 
 .skill-tags {

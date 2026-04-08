@@ -1,90 +1,101 @@
-# Shravan Chandra | Senior ML Engineer - Portfolio
+# Shravan Chandra | Senior ML Engineer — Portfolio
 
-Welcome to the source code of my personal portfolio website. This project showcases my professional experience, skills, and projects in Machine Learning and Software Engineering. It features a modern, responsive design with interactive elements and integrated AI demonstrations.
+Personal portfolio website with integrated AI demonstrations. Built with accessibility AI as the core focus.
 
-## 🚀 Features
-
-### 🎨 Modern UI/UX
-- **Responsive Design**: Fully optimized for desktop, tablet, and mobile devices.
-- **Theme System**: Toggle between Dark and Light modes with preference persistence (localStorage).
-- **Interactive Background**: Custom particle animation system on the hero section.
-- **Animations**: Smooth scroll animations and staggered reveal effects using Intersection Observer.
-
-### 👐 Real-Time ASL Recognition
-A browser-based Computer Vision application integrated directly into the portfolio.
-- **Tech**: MediaPipe Hands (for landmark detection) + Custom PyTorch Model (converted to run in JS).
-- **Functionality**: Recognizes American Sign Language (ASL) alphabets (A-Z), Space, and Delete in real-time via webcam.
-- **Privacy**: All processing happens locally in the browser; no video data is sent to a server.
-
-### 📖 ASL Dictionary (AI-Powered)
-An intelligent dictionary that translates English words into ASL descriptions.
-- **Tech**: Google Gemini API.
-- **Functionality**: Users can search for a word, and the system prompts Gemini to provide a structured description of the ASL sign (Hand Shape, Location, Movement, Non-Manual Markers).
-- **Configuration**: Requires a Google Gemini API Key (stored locally in the browser).
-
-## 🛠️ Technology Stack
-
-- **Frontend**: HTML5, CSS3 (Custom Properties/Variables), JavaScript (ES6+).
-- **AI/ML**:
-    - [MediaPipe Hands](https://developers.google.com/mediapipe/solutions/vision/hand_landmarker)
-    - [Google Gemini API](https://ai.google.dev/)
-- **Icons**: FontAwesome 6.
-- **Fonts**: Google Fonts (Fira Code, Outfit).
-
-## 📂 Project Structure
-
-```
-.
-├── index.html          # Main entry point
-├── script.js           # Core logic (UI, Theme, ASL Demo, ASL Dictionary)
-├── asl_model.js        # Pre-trained ASL model weights (JSON format)
-├── css/                # Stylesheets
-│   ├── main.css        # Main import file
-│   ├── variables.css   # CSS Variables (Colors, Fonts)
-│   ├── base.css        # Reset and Typography
-│   ├── layout.css      # Grid and Layout utilities
-│   ├── animations.css  # Keyframes and Transitions
-│   ├── components/     # UI Components (Buttons, Cards, Modals, etc.)
-│   └── sections/       # Page Sections (Hero, Skills, Experience, etc.)
-└── assets/             # Images and static assets
-```
-
-## 🚀 Getting Started
-
-### Prerequisites
-- A modern web browser (Chrome, Firefox, Edge, Safari).
-- A webcam (for ASL Recognition).
-- A [Google Gemini API Key](https://aistudio.google.com/app/apikey) (for ASL Dictionary).
-
-### Installation
-1.  **Clone the repository**:
-    ```bash
-    git clone https://github.com/shravnchandr/shravnchandr.github.io.git
-    cd shravnchandr.github.io
-    ```
-
-2.  **Run Locally**:
-    - Since this is a static site, you can simply open `index.html` in your browser.
-    - **Recommended**: Use a local development server to avoid CORS issues with some browser features.
-        - VS Code: Right-click `index.html` -> "Open with Live Server".
-        - Python: `python3 -m http.server` -> Open `http://localhost:8000`.
-
-### Usage
-
-#### ASL Recognition Demo
-1.  Click the **"Try Demo"** button on the "Real-Time ASL Alphabet Recognition" project card.
-2.  Allow camera access when prompted.
-3.  Show your hand to the camera to see real-time predictions.
-
-#### ASL Dictionary
-1.  Click the **"Open Dictionary"** button on the "ASL Dictionary (AI)" project card.
-2.  Click **"Settings"** and enter your Google Gemini API Key.
-3.  Click **"Save"**.
-4.  Enter a word (e.g., "Hello") and click **"Translate"**.
-
-## 📄 License
-
-This project is open-source and available under the [MIT License](LICENSE).
+**Live:** [shravnchandr.github.io](https://shravnchandr.github.io)
 
 ---
-*Designed and Developed by Shravan Chandra.*
+
+## Features
+
+### UI/UX
+- Responsive design (desktop, tablet, mobile)
+- Dark/Light theme toggle with `localStorage` persistence and `prefers-color-scheme` fallback
+- Canvas particle animation in hero section (respects `prefers-reduced-motion`, pauses when tab hidden)
+- Scroll-triggered animations via IntersectionObserver with staggered reveals
+- Material 3 Expressive design system with spring-based motion
+
+### Real-Time ASL Recognition
+Browser-based computer vision — no server, no data sent externally.
+- **Model**: 3-layer MLP (63 → 128 → 64 → 28) trained on ASL hand landmarks, exported to JS
+- **Input**: 21 hand landmarks × (x, y, z) = 63 features, using MediaPipe world coordinates
+- **Output**: A–Z, Space, Delete (28 classes)
+- **Inference**: Runs entirely in-browser with vanilla JS (matMul + ReLU + softmax)
+- **Landmark detection**: MediaPipe Hands via CDN
+
+### ASL Dictionary (AI-Powered)
+English → ASL sign translation with structured output.
+- **Model**: Google Gemini 2.5 Flash (direct browser API call, temperature 0.0)
+- **Output**: Per-sign breakdown — gloss, hand shape, location, movement, non-manual markers
+- **API key**: User-supplied, stored in `localStorage` — never hardcoded
+
+---
+
+## Tech Stack
+
+- **Frontend**: HTML5, CSS3 (Custom Properties), Vanilla JavaScript (ES6+)
+- **AI/ML**: MediaPipe Hands, Google Gemini API
+- **Design system**: Material 3 Expressive (custom CSS implementation)
+- **Icons**: Font Awesome 6.4
+- **Fonts**: Google Sans Flex (local), Fira Code + Outfit (Google Fonts CDN)
+
+---
+
+## Project Structure
+
+```
+index.html              # Single-page app — all content
+script.js               # All JS logic (~830 lines): UI, theme, particles, ASL demo, dictionary
+asl_model.js            # Exported MLP weights + StandardScaler params as JS globals
+export_model.py         # Generates asl_model.js from a trained PyTorch model
+css/
+├── main.css            # Cascading @import entry point
+├── variables.css       # All design tokens (M3 colors, type scale, spring motion)
+├── base.css            # Reset and typography
+├── layout.css          # Container, grid, flex, spacing utilities
+├── animations.css      # Spring keyframes and scroll animation classes
+├── components/         # buttons, cards, modals, navbar, footer
+└── sections/           # hero, metrics, about, skills, experience, projects, contact
+```
+
+---
+
+## Running Locally
+
+```bash
+# Recommended — avoids CORS issues with webcam and MediaPipe CDN
+python3 -m http.server
+# Open http://localhost:8000
+```
+
+Direct `open index.html` works for basic browsing but will break the ASL demo.
+
+---
+
+## Using the ASL Demo
+
+1. Click **"Try Demo"** on the Real-Time ASL Alphabet Recognition project card
+2. Allow camera access when prompted
+3. Hold your hand in front of the camera — predictions update in real-time
+
+## Using the ASL Dictionary
+
+1. Click **"Try It"** on the ASL Instruction Generator project card
+2. Click **Settings** and enter your [Google Gemini API Key](https://aistudio.google.com/app/apikey)
+3. Click **Save**, then type any English word or phrase and hit **Translate**
+
+---
+
+## Deployment
+
+Auto-deploys to GitHub Pages on push to `master`. Allow 2–3 minutes after push.
+
+```bash
+git add .
+git commit -m "your message"
+git push origin master
+```
+
+---
+
+*Designed and developed by Shravan Chandra.*

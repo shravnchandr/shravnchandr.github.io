@@ -31,7 +31,7 @@
 
 /* Expressive Hero Title */
 .hero h1 {
-    font-size: clamp(2.5rem, 8vw, 4rem);
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
     font-weight: 800;
     letter-spacing: -0.03em;
     line-height: 1.1;
@@ -49,7 +49,48 @@
     font-size: var(--md-sys-typescale-body-large);
     font-weight: 600;
     margin-bottom: var(--spacing-sm);
-    display: block;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.hero-subtitle::before {
+    content: '>';
+    opacity: 0.7;
+}
+
+/* ML Engineer Badge - Prominent Role Display */
+.hero h2.typewriter-text {
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    font-weight: 700;
+    margin-bottom: var(--spacing-lg);
+    position: relative;
+    display: inline-block;
+}
+
+/* ML-focused accent decoration */
+.hero h2.typewriter-text::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg,
+        var(--md-sys-color-primary) 0%,
+        var(--md-sys-color-tertiary) 50%,
+        var(--md-sys-color-secondary) 100%);
+    border-radius: var(--shape-pill);
+    animation: gradient-shift 3s ease-in-out infinite;
+}
+
+@keyframes gradient-shift {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
 }
 
 .hero-description {
@@ -60,10 +101,112 @@
     color: var(--md-sys-color-on-surface-variant);
 }
 
+/* ML Keywords highlight in description */
+.hero-description strong,
+.hero-description b {
+    color: var(--md-sys-color-primary);
+    font-weight: 600;
+}
+
 .hero-buttons {
     display: flex;
     flex-wrap: wrap;
     gap: var(--spacing-md);
     animation: spring-slide-up var(--spring-duration-long) var(--spring-bounce) 0.2s forwards;
     opacity: 0;
+}
+
+/* Publication Badge */
+.hero-badge {
+    margin-top: var(--spacing-lg);
+}
+
+.publication-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--md-sys-color-tertiary-container);
+    color: var(--md-sys-color-on-tertiary-container);
+    border-radius: var(--shape-pill);
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: transform var(--spring-duration-short) var(--spring-bounce),
+                box-shadow var(--spring-duration-short) var(--spring-smooth);
+}
+
+.publication-badge:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.publication-badge i {
+    color: var(--md-sys-color-tertiary);
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
+    color: var(--md-sys-color-on-surface-variant);
+    text-decoration: none;
+    opacity: 0.7;
+    transition: opacity var(--spring-duration-short) ease;
+    z-index: 10;
+}
+
+.scroll-indicator:hover {
+    opacity: 1;
+}
+
+.scroll-text {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.scroll-arrow {
+    width: 32px;
+    height: 32px;
+    border: 2px solid var(--md-sys-color-outline);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: bounce-arrow 2s ease-in-out infinite;
+}
+
+.scroll-arrow i {
+    font-size: 0.8rem;
+}
+
+@keyframes bounce-arrow {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(6px);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hero h2.typewriter-text {
+        font-size: 1.5rem;
+    }
+
+    .scroll-indicator {
+        bottom: 16px;
+    }
+
+    .publication-badge {
+        font-size: 0.8rem;
+    }
 }

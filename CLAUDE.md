@@ -1,0 +1,211 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code when working with code in this repository.
+
+## Project Overview
+
+Personal portfolio website for Shravan Chandra, Senior ML Engineer. Single-page application with two integrated interactive AI demos:
+
+- **ASL Recognition Demo**: Real-time hand gesture recognition via webcam using MediaPipe Hands + a custom MLP model running entirely in-browser
+- **ASL Dictionary**: English-to-ASL sign translation powered by Google Gemini 2.5 Flash API
+
+**Deployment target:** GitHub Pages (`shravnchandr.github.io`), auto-deploys on push to `master`.
+
+---
+
+## Running Locally
+
+```bash
+# Use a local server — direct file:// access breaks webcam (CORS) and MediaPipe CDN loading
+python3 -m http.server
+# Visit http://localhost:8000
+```
+
+---
+
+## Architecture
+
+**Fully static site** — no build tools, bundlers, package managers, or compilation step. Edit files and refresh the browser.
+
+### File Map
+
+```
+index.html                  # Single-page app, all HTML content
+script.js                   # All JS logic (~830 lines), no modules or imports
+asl_model.js                # Pre-trained MLP weights exported as JS globals
+css/main.css                # Cascading @import entry point for all stylesheets
+css/variables.css           # All design tokens (M3 colors, type scale, motion)
+css/base.css                # Reset, global typography
+css/layout.css              # Grid, container, flex utilities
+css/animations.css          # Spring-based @keyframes
+css/components/             # buttons, cards, modals, navbar, footer
+css/sections/               # hero, metrics, about, skills, experience, projects, contact
+export_model.py             # Generates asl_model.js from a trained PyTorch model
+Live Recognition.py         # Local Python webcam ASL recognition (dev/training tool)
+ASL Dictionary.py           # Python CLI version of the ASL dictionary
+og-image.png                # 1200×630 social share image
+favicon.svg                 # SVG favicon
+Shravan_Chandra_Resume.pdf  # Downloadable resume (linked from hero + FAB)
+GoogleSansFlex-VariableFont_GRAD,ROND,opsz,slnt,wdth,wght.ttf  # Local font file
+```
+
+---
+
+## JavaScript Architecture (`script.js`)
+
+All logic lives in `script.js` as a single file with module-like `init*()` functions. Everything fires on `DOMContentLoaded`:
+
+```js
+initTheme()          // Dark/light mode toggle + system preference detection
+initUI()             // Remove no-js class, typewriter, scroll animations, smooth scroll
+initMobileMenu()     // Hamburger menu open/close, ARIA, outside-click-to-close
+initParticles()      // Canvas particle animation in hero background
+initBackToTop()      // FAB visible after 300px scroll
+initActiveNav()      // IntersectionObserver highlights active nav link
+initProjectFilters() // data-category filter buttons on project cards
+initASLDemo()        // Modal + webcam + MediaPipe + MLP inference
+initASLDictionary()  // Modal + Gemini API call + results render
+```
+
+### State & Storage
+
+- **Theme**: `localStorage('theme')` → `'dark-theme'` or `'light-theme'`. Falls back to `prefers-color-scheme`.
+- **Gemini API key**: `localStorage('gemini_api_key')` — user enters it in the Dictionary modal settings panel.
+- All other state is managed via closures inside each `init*()` function. No global state object.
+
+### Scroll Animations
+
+Elements with `.animate-on-scroll` are observed via `IntersectionObserver`. The `.show` class is added when they enter the viewport (threshold 0.15, rootMargin `-50px`). Stagger delays are applied via `.stagger-2` through `.stagger-5` CSS classes.
+
+### Project Filters
+
+Each `.project-card` has a `data-category` attribute (`ml-cv`, `genai`, `research`). Filter buttons carry `data-filter`. Clicking a button toggles `hidden` class on non-matching cards and plays `spring-scale-in` on shown ones.
+
+---
+
+## ASL Recognition Demo (`initASLDemo`)
+
+### Model
+
+- **File**: `asl_model.js` exports two globals: `ASL_MODEL_DATA` and `ASL_SCALER_DATA`
+- **Architecture**: 3-layer MLP — `63 → 128 → 64 → 28`
+  - 63 inputs = 21 hand landmarks × (x, y, z)
+  - 28 outputs = A–Z (indices 0–25), DEL (26), SPACE (27)
+- **Inference**: Fully implemented in vanilla JS — `matMul`, `relu`, `softmax`, `argMax` functions in `script.js`
+- **Normalization**: StandardScaler applied before inference using `ASL_SCALER_DATA.mean` and `ASL_SCALER_DATA.scale` arrays
+- **Input used**: `worldLandmarks` (3D camera-space coordinates), not image-space landmarks
+
+### MediaPipe Integration
+
+- Loaded from CDN: `https://cdn.jsdelivr.net/npm/@mediapipe/hands/`
+- Settings: `maxNumHands: 1`, `modelComplexity: 1`, detection/tracking confidence `0.5`
+- Camera resolution: 1280×720
+- Camera only starts on first modal open (lazy init). Stops when modal closes.
+
+### To regenerate `asl_model.js`
+
+Run `export_model.py` after training a new PyTorch model. It outputs the weights and scaler parameters as JS.
+
+---
+
+## ASL Dictionary (`initASLDictionary`)
+
+- Calls **Gemini 2.5 Flash** directly from the browser: `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent`
+- Temperature: `0.0` for deterministic output
+- Returns structured JSON: `{ signs: [{ word, hand_shape, location, movement, non_manual_markers }], note }`
+- API key is never hardcoded — user must paste their own key into the modal settings panel
+
+---
+
+## CSS Design System
+
+### Material 3 Expressive (custom implementation)
+
+All design tokens are in `css/variables.css`. Key tokens:
+
+```css
+/* Primary palette */
+--md-sys-color-primary: #006874          /* Deep Cyan (light mode) */
+--md-sys-color-primary-container: #97f0ff
+
+/* ML accent colors (used for skill tags, highlights) */
+--ml-accent-neural: #7c4dff
+--ml-accent-data: #00bfa5
+--ml-accent-inference: #ff6d00
+
+/* Spring motion (use these, not plain ease-in-out) */
+--spring-bounce: cubic-bezier(0.34, 1.56, 0.64, 1)
+--spring-smooth: cubic-bezier(0.22, 0.61, 0.36, 1)
+--spring-snappy: cubic-bezier(0.68, -0.55, 0.265, 1.55)
+--spring-duration-short: 300ms
+--spring-duration-medium: 500ms
+
+/* Responsive type scale (clamp-based) */
+--md-sys-typescale-display-large: clamp(48px, 8vw, 64px)
+--md-sys-typescale-body-large: clamp(16px, 2vw, 18px)
+```
+
+Dark mode is applied by adding `.dark-theme` to `<body>`. Variables override themselves under `.dark-theme` in `variables.css`.
+
+### CSS File Responsibilities
+
+| File | Purpose |
+|---|---|
+| `variables.css` | All tokens — touch this for color, spacing, motion changes |
+| `base.css` | Resets, `body`, `h1–h6`, `p`, `a`, `code` |
+| `layout.css` | `.container`, `.grid`, `.flex`, `.gap-*`, `.mt-*` utilities |
+| `animations.css` | `@keyframes` + `.animate-in`, `.animate-on-scroll`, stagger classes |
+| `components/cards.css` | `.card` base styles, `.project-card`, `.skill-category` |
+| `components/modals.css` | `.modal` overlay, `.close-modal`, show/hide transitions |
+| `sections/hero.css` | Hero layout, typewriter, particle canvas, scroll indicator |
+| `sections/metrics.css` | Metrics strip below hero |
+| `sections/projects.css` | Projects grid, `.featured-project`, filter buttons, `.project-tech` tags |
+
+---
+
+## Particles (`initParticles`)
+
+- Draws on `<canvas id="hero-canvas">` in the hero section
+- Respects `prefers-reduced-motion` — hidden entirely if user prefers reduced motion
+- Pauses via `cancelAnimationFrame` when tab is hidden (`visibilitychange` event)
+- Mouse repulsion within 150px radius
+- Particle count: capped at 150, density-scaled by viewport area (fewer on mobile)
+- Particle color is read live from `--md-sys-color-primary` CSS variable, so it updates on theme change via `MutationObserver` on `body.className`
+
+---
+
+## External Dependencies (CDN only)
+
+| Dependency | Source | Used for |
+|---|---|---|
+| MediaPipe Hands | `cdn.jsdelivr.net/npm/@mediapipe/hands/` | Hand landmark detection |
+| MediaPipe Camera Utils | Same CDN | Webcam feed to MediaPipe |
+| MediaPipe Drawing Utils | Same CDN | `drawConnectors`, `drawLandmarks` on canvas |
+| Font Awesome 6.4.0 | `cdnjs.cloudflare.com` | All icons |
+| Fira Code, Outfit | Google Fonts | Body and code typography |
+| Google Sans Flex | Local TTF file | Display headings |
+
+No npm, no webpack, no React. All dependencies load via `<script>` or `<link>` tags in `index.html`.
+
+---
+
+## SEO / Meta
+
+- `<meta name="description">` — plain description for search crawlers
+- Open Graph (`og:description`, `og:image`) and Twitter card tags — for social sharing
+- JSON-LD structured data (`application/ld+json`) — Person schema for Google rich results
+- `og-image.png` is the 1200×630 preview image for link unfurls
+
+When updating bio content, keep all four in sync: hero text, about section, meta description, and JSON-LD description.
+
+---
+
+## Deployment
+
+Push to `master` → GitHub Pages deploys automatically. No CI/CD config required. Allow 2–3 minutes for propagation.
+
+```bash
+git add index.html
+git commit -m "your message"
+git push origin master
+```

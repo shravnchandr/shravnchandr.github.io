@@ -1,4 +1,44 @@
 /* Material 3 Expressive Projects Section */
+
+/* Project Filters */
+.project-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    justify-content: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+.filter-btn {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 2px solid var(--md-sys-color-outline);
+    border-radius: var(--shape-pill);
+    background: transparent;
+    color: var(--md-sys-color-on-surface-variant);
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--spring-duration-short) var(--spring-bounce);
+}
+
+.filter-btn:hover {
+    border-color: var(--md-sys-color-primary);
+    color: var(--md-sys-color-primary);
+    transform: scale(1.05);
+}
+
+.filter-btn.active {
+    background: var(--md-sys-color-primary);
+    border-color: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+}
+
+/* Project card hidden state for filtering */
+.project-card.hidden {
+    display: none;
+}
+
 .projects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
@@ -29,6 +69,12 @@
 .project-card p {
     flex: 1;
     line-height: 1.6;
+}
+
+.project-authors {
+    margin-top: var(--spacing-sm);
+    font-size: 0.9rem;
+    opacity: 0.8;
 }
 
 /* Project Tech Tags - Consistent primary color */

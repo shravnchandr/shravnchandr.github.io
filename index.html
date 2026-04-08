@@ -6,27 +6,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shravan Chandra | Senior ML Engineer</title>
     <meta name="description"
-        content="Portfolio of Shravan Chandra, a Senior ML Engineer specializing in AI, Machine Learning, and MLOps.">
+        content="Portfolio of Shravan Chandra, Senior ML Engineer specialising in accessibility AI, production GenAI systems, and end-to-end ML infrastructure. Builder of ASL Guide and IEEE published researcher.">
 
     <!-- Open Graph / Social Media -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://shravnchandr.github.io/">
     <meta property="og:title" content="Shravan Chandra | Senior ML Engineer">
-    <meta property="og:description" content="Senior ML Engineer with 4+ years building scalable predictive maintenance systems, anomaly detection pipelines, and real-time inference infrastructure.">
+    <meta property="og:description" content="Senior ML Engineer with 5+ years of experience in accessibility AI and production ML systems. Building AI that removes barriers — not creates them.">
     <meta property="og:image" content="https://shravnchandr.github.io/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Shravan Chandra | Senior ML Engineer">
-    <meta name="twitter:description" content="Senior ML Engineer with 4+ years building scalable predictive maintenance systems, anomaly detection pipelines, and real-time inference infrastructure.">
+    <meta name="twitter:description" content="Senior ML Engineer with 5+ years of experience in accessibility AI and production ML systems. Building AI that removes barriers — not creates them.">
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
-    <!-- Fonts -->
-    <link rel="preload" href="GoogleSansFlex-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin>
+    <!-- Fonts - Preload critical fonts -->
+    <link rel="preload" href="GoogleSansFlex-VariableFont_GRAD,ROND,opsz,slnt,wdth,wght.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="https://fonts.gstatic.com/s/firacode/v22/uU9eCBsR6Z2vfE9aq3bL0fxyUs4tcw4W_D1sJV37MOzlojwUKQ.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
 
     <!-- Icons -->
@@ -34,9 +35,50 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="css/main.css">
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Shravan Chandra",
+        "jobTitle": "Senior ML Engineer",
+        "description": "Senior ML Engineer specialising in accessibility AI, production GenAI systems, and end-to-end ML infrastructure",
+        "url": "https://shravnchandr.github.io/",
+        "image": "https://shravnchandr.github.io/og-image.png",
+        "email": "mailto:shravnchandr@gmail.com",
+        "telephone": "+919606638728",
+        "sameAs": [
+            "https://linkedin.com/in/shravnchandr",
+            "https://github.com/shravnchandr"
+        ],
+        "alumniOf": {
+            "@type": "EducationalOrganization",
+            "name": "PES University"
+        },
+        "worksFor": {
+            "@type": "Organization",
+            "name": "Bosch Global Software Technologies"
+        },
+        "knowsAbout": [
+            "Machine Learning",
+            "Deep Learning",
+            "PyTorch",
+            "TensorFlow",
+            "MLOps",
+            "Computer Vision",
+            "Natural Language Processing",
+            "Predictive Maintenance",
+            "Anomaly Detection",
+            "Sign Language Recognition"
+        ]
+    }
+    </script>
 </head>
 
 <body>
+    <!-- Skip Link for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
 
     <!-- Navigation -->
     <nav>
@@ -46,11 +88,11 @@
                 <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode">
                     <i class="fas fa-moon"></i>
                 </button>
-                <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle Navigation">
+                <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle Navigation" aria-expanded="false" aria-controls="nav-links">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
-            <div class="nav-links">
+            <div class="nav-links" id="nav-links">
                 <a href="#about">About</a>
                 <a href="#skills">Skills</a>
                 <a href="#experience">Experience</a>
@@ -65,6 +107,11 @@
         <i class="fas fa-file-arrow-down"></i>
     </a>
 
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-bg">
@@ -76,33 +123,81 @@
                 <h1>Shravan Chandra</h1>
                 <h2 class="typewriter-text">Senior ML Engineer</h2>
                 <p class="hero-description delay-2">
-                    Building scalable predictive maintenance systems, anomaly detection pipelines, and real-time
-                    inference infrastructure. Passionate about shipping end-to-end ML solutions and building AI for
-                    everyone.
+                    Building <strong>AI that removes barriers</strong> — not creates them. Senior ML Engineer focused on <strong>accessibility AI</strong>, production <strong>GenAI systems</strong>, and end-to-end <strong>ML infrastructure</strong>. Relocating to North America.
                 </p>
-                <div class="delay-3" style="display: flex; gap: 1rem;">
+                <div class="flex gap-md delay-3">
                     <a href="#contact" class="btn btn-primary">Get in Touch</a>
                     <a href="Shravan_Chandra_Resume.pdf" class="btn btn-outline" download><i class="fas fa-download"></i> Resume</a>
+                </div>
+
+                <!-- Publication Badge -->
+                <div class="hero-badge delay-3">
+                    <a href="https://doi.org/10.1109/ICCAR55106.2022.9782661" target="_blank" class="publication-badge">
+                        <i class="fas fa-award"></i>
+                        <span>Published in IEEE ICCAR 2022</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <a href="#about" class="scroll-indicator" aria-label="Scroll to content">
+            <span class="scroll-text">Scroll</span>
+            <div class="scroll-arrow">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </a>
+    </section>
+
+    <!-- Metrics Section -->
+    <section class="metrics-section">
+        <div class="container">
+            <div class="metrics-grid">
+                <div class="metric-item animate-on-scroll">
+                    <span class="metric-value">5+</span>
+                    <span class="metric-label">Years Experience</span>
+                </div>
+                <div class="metric-item animate-on-scroll stagger-2">
+                    <span class="metric-value">€300K+</span>
+                    <span class="metric-label">Annual Savings</span>
+                </div>
+                <div class="metric-item animate-on-scroll stagger-3">
+                    <span class="metric-value">100+</span>
+                    <span class="metric-label">ECUs Monitored</span>
+                </div>
+                <div class="metric-item animate-on-scroll stagger-4">
+                    <span class="metric-value">48%</span>
+                    <span class="metric-label">Faster Training</span>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Main Content -->
+    <main id="main-content">
+
     <!-- About Section -->
     <section id="about">
         <div class="container">
             <h2 class="animate-on-scroll">About Me</h2>
-            <div class="card animate-on-scroll">
-                <p>
-                    Senior ML Engineer with 4+ years of production ML experience at Bosch Global Software Technologies,
-                    building scalable predictive maintenance systems, anomaly detection pipelines, and real-time inference
-                    infrastructure. Complemented by strong self-directed research in sign language recognition and generative AI,
-                    including published IEEE work and full-stack ML applications.
-                </p>
-                <p style="margin-top: 1rem;">
-                    Proficient across PyTorch, TensorFlow, cloud platforms, and modern LLM frameworks. Passionate about
-                    shipping end-to-end ML solutions and mentoring teams.
-                </p>
+            <div class="about-content animate-on-scroll">
+                <div class="about-avatar">
+                    <div class="avatar-placeholder">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="avatar-decoration"></div>
+                </div>
+                <div class="card about-text">
+                    <p>
+                        Senior ML Engineer with <strong>5+ years</strong> of production ML experience at <strong>Bosch Global Software Technologies</strong>, and a deep focus on <strong>accessibility AI</strong>. Published IEEE researcher in sign language recognition.
+                    </p>
+                    <p class="mt-md">
+                        A deployment failure changed how I build. When a left-handed user signed to my model, it failed completely — because I had built for an imaginary user, not a real one. That experience shaped everything since: a data-centric philosophy, a production ASL learning platform used by real learners, and a commitment to building AI that actually works for the people who need it most.
+                    </p>
+                    <p class="mt-md">
+                        Proficient across <strong>PyTorch, TensorFlow, LangGraph</strong>, cloud platforms, and modern LLM frameworks. Relocating to North America — open to Senior ML Engineer and AI/ML roles in Canada and the US.
+                    </p>
+                </div>
             </div>
         </div>
     </section>
@@ -112,8 +207,49 @@
         <div class="container">
             <h2 class="animate-on-scroll">Technical Skills</h2>
             <div class="skills-grid">
+                <!-- ML/DL - Primary Focus -->
+                <div class="card skill-category animate-on-scroll skill-highlight">
+                    <h3><i class="fas fa-brain"></i> Machine Learning & Deep Learning</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">PyTorch</span>
+                        <span class="skill-tag">TensorFlow</span>
+                        <span class="skill-tag">Keras</span>
+                        <span class="skill-tag">Scikit-Learn</span>
+                        <span class="skill-tag">Transformers</span>
+                        <span class="skill-tag">OpenCV</span>
+                        <span class="skill-tag">MediaPipe</span>
+                        <span class="skill-tag">NLTK</span>
+                    </div>
+                </div>
+
+                <!-- GenAI -->
+                <div class="card skill-category animate-on-scroll stagger-2 skill-highlight">
+                    <h3><i class="fas fa-robot"></i> Generative AI & LLMs</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">LangChain</span>
+                        <span class="skill-tag">RAG Systems</span>
+                        <span class="skill-tag">Prompt Engineering</span>
+                        <span class="skill-tag">LLM APIs</span>
+                        <span class="skill-tag">AI Agents</span>
+                        <span class="skill-tag">Chroma</span>
+                    </div>
+                </div>
+
+                <!-- Data & MLOps -->
+                <div class="card skill-category animate-on-scroll stagger-3">
+                    <h3><i class="fas fa-database"></i> Data & MLOps</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">PySpark</span>
+                        <span class="skill-tag">Databricks</span>
+                        <span class="skill-tag">SQL</span>
+                        <span class="skill-tag">Pandas</span>
+                        <span class="skill-tag">Azure ML</span>
+                        <span class="skill-tag">Power BI</span>
+                    </div>
+                </div>
+
                 <!-- Languages -->
-                <div class="card skill-category animate-on-scroll">
+                <div class="card skill-category animate-on-scroll stagger-4">
                     <h3><i class="fas fa-code"></i> Languages</h3>
                     <div class="skill-tags">
                         <span class="skill-tag">Python</span>
@@ -123,56 +259,15 @@
                     </div>
                 </div>
 
-                <!-- ML/DL -->
-                <div class="card skill-category animate-on-scroll" style="animation-delay: 0.1s;">
-                    <h3><i class="fas fa-brain"></i> ML/DL</h3>
+                <!-- Tools & Infrastructure -->
+                <div class="card skill-category animate-on-scroll stagger-5">
+                    <h3><i class="fas fa-server"></i> Infrastructure</h3>
                     <div class="skill-tags">
-                        <span class="skill-tag">PyTorch</span>
-                        <span class="skill-tag">TensorFlow</span>
-                        <span class="skill-tag">Keras</span>
-                        <span class="skill-tag">Scikit-Learn</span>
-                        <span class="skill-tag">NLTK</span>
-                        <span class="skill-tag">Transformers</span>
-                        <span class="skill-tag">OpenCV</span>
-                        <span class="skill-tag">MediaPipe</span>
-                    </div>
-                </div>
-
-                <!-- GenAI -->
-                <div class="card skill-category animate-on-scroll" style="animation-delay: 0.2s;">
-                    <h3><i class="fas fa-robot"></i> GenAI</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">LangChain</span>
-                        <span class="skill-tag">Chroma</span>
-                        <span class="skill-tag">Prompt Engineering</span>
-                        <span class="skill-tag">RAG Systems</span>
-                        <span class="skill-tag">LLM APIs (Gemini)</span>
-                        <span class="skill-tag">Agents</span>
-                    </div>
-                </div>
-
-                <!-- Data & Cloud -->
-                <div class="card skill-category animate-on-scroll" style="animation-delay: 0.3s;">
-                    <h3><i class="fas fa-cloud"></i> Data & Cloud</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">PySpark</span>
-                        <span class="skill-tag">Databricks</span>
-                        <span class="skill-tag">SQL</span>
-                        <span class="skill-tag">Pandas</span>
-                        <span class="skill-tag">Power BI</span>
-                        <span class="skill-tag">Azure</span>
-                    </div>
-                </div>
-
-                <!-- Tools -->
-                <div class="card skill-category animate-on-scroll" style="animation-delay: 0.4s;">
-                    <h3><i class="fas fa-tools"></i> Tools</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Git</span>
                         <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">Kubernetes</span>
+                        <span class="skill-tag">Git</span>
                         <span class="skill-tag">Flask</span>
                         <span class="skill-tag">Jupyter</span>
-                        <span class="skill-tag">Kubernetes</span>
                     </div>
                 </div>
             </div>
@@ -246,9 +341,42 @@
     <section id="projects">
         <div class="container">
             <h2 class="animate-on-scroll">Projects & Publications</h2>
+
+            <!-- Project Filters -->
+            <div class="project-filters animate-on-scroll">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="ml-cv">ML/CV</button>
+                <button class="filter-btn" data-filter="genai">GenAI</button>
+                <button class="filter-btn" data-filter="research">Research</button>
+            </div>
+
             <div class="projects-grid">
 
-                <div class="card project-card animate-on-scroll">
+                <div class="card project-card animate-on-scroll featured-project" data-category="genai" style="border: 2px solid var(--primary-color); grid-column: 1 / -1;">
+                    <div style="display: inline-block; background: var(--primary-color); color: white; font-size: 0.75rem; font-weight: 600; padding: 3px 10px; border-radius: 4px; margin-bottom: 0.75rem; letter-spacing: 0.05em;">FEATURED PROJECT</div>
+                    <h3>ASL Guide — Production ASL Learning Platform</h3>
+                    <p>A full-stack ASL learning platform built for real learners — not a demo, a deployed production system. Features a LangGraph agentic workflow applying 10 documented ASL grammar rules, a TensorFlow.js in-browser classifier (95.5% accuracy on 36 classes via MediaPipe hand landmarks), SM-2 spaced repetition scheduling, PWA with offline support, sentence animations, Sign of the Day, and dual-layer Redis + LRU caching. Free, live, and used by real people.</p>
+                    <div class="project-tech">
+                        <span>LangGraph</span>
+                        <span>TensorFlow.js</span>
+                        <span>MediaPipe</span>
+                        <span>FastAPI</span>
+                        <span>React</span>
+                        <span>PostgreSQL</span>
+                        <span>Redis</span>
+                        <span>Docker</span>
+                    </div>
+                    <div class="project-actions">
+                        <a href="https://asl-guide.onrender.com" target="_blank" class="project-link">
+                            <i class="fas fa-external-link-alt"></i> Live App
+                        </a>
+                        <a href="https://github.com/shravnchandr/ASL-App" target="_blank" class="project-link project-link-code">
+                            <i class="fab fa-github"></i> View Code
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card project-card animate-on-scroll" data-category="ml-cv">
                     <h3>Real-Time ASL Alphabet Recognition</h3>
                     <p>A computer vision application that translates American Sign Language alphabets into text in
                         real-time using MediaPipe and PyTorch. Repository includes trained models and Docker container.
@@ -270,7 +398,7 @@
                     </div>
                 </div>
 
-                <div class="card project-card animate-on-scroll" style="animation-delay: 0.1s;">
+                <div class="card project-card animate-on-scroll stagger-2" data-category="genai">
                     <h3>ASL Instruction Generator</h3>
                     <p>Built a real-time ASL learning agent using the Google Gemini API, generating step-by-step signing
                         instructions from natural language input. Designed grammar-aware transformations (English → ASL
@@ -289,7 +417,7 @@
                 </div>
 
                 <!-- Sign-Language Model Expansion & Temporal Modeling -->
-                <div class="card project-card animate-on-scroll" style="animation-delay: 0.2s;">
+                <div class="card project-card animate-on-scroll stagger-3" data-category="research">
                     <h3>Sign-Language Temporal Modeling</h3>
                     <p><strong>Research Work:</strong> Experimented with the MS-ASL200 dataset (200 signs, 49
                         samples/sign)
@@ -303,26 +431,8 @@
                     </div>
                 </div>
 
-                <!-- Duolingo ASL -->
-                <div class="card project-card animate-on-scroll" style="animation-delay: 0.3s;">
-                    <h3>Progressive Sign-Language Learning App</h3>
-                    <p>Created a full-stack web application for ASL education using mastery-gated levels, quizzes,
-                        and score tracking.</p>
-                    <div class="project-tech">
-                        <span>Python</span>
-                        <span>Flask</span>
-                        <span>HTML/CSS/JS</span>
-                    </div>
-                    <div class="project-actions">
-                        <a href="https://github.com/shravnchandr/Duolingo-ASL" target="_blank"
-                            class="project-link project-link-code">
-                            <i class="fab fa-github"></i> View Code
-                        </a>
-                    </div>
-                </div>
-
                 <!-- Diabetic Retinopathy -->
-                <div class="card project-card animate-on-scroll" style="animation-delay: 0.1s;">
+                <div class="card project-card animate-on-scroll stagger-2" data-category="ml-cv">
                     <h3>Diabetic Retinopathy Classifier with XAI</h3>
                     <p>Achieved 96% Kappa Score using an Xception-based classifier on fundus images.
                         Integrated Grad-CAM for lesion visualization to improve clinical interpretability.</p>
@@ -340,11 +450,11 @@
                 </div>
 
                 <!-- Publication -->
-                <div class="card project-card animate-on-scroll" style="animation-delay: 0.2s;">
+                <div class="card project-card animate-on-scroll stagger-3" data-category="research">
                     <h3>Dynamic Sign Language Translator</h3>
                     <p><strong>Publication (IEEE ICCAR 2022)</strong>: Developed a lightweight sign-language recognition
                         model using Mediapipe + XGBoost achieving 90%+ accuracy across 15 phrases.</p>
-                    <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.8;">
+                    <p class="project-authors">
                         <em>Shravan Chandra, Venkatarangan MJ, Jyothi TN</em>
                     </p>
                     <div class="project-tech">
@@ -374,7 +484,7 @@
                 </div>
                 <p><strong>BTech in Electrical and Electronics</strong></p>
                 <p>CGPA: 8.5/10.0 | Final Year GPA: 8.75/10.0</p>
-                <p style="margin-top: 0.5rem;"><strong>Coursework:</strong> Python, Calculus, Linear Algebra,
+                <p class="mt-sm"><strong>Coursework:</strong> Python, Calculus, Linear Algebra,
                     Probability & Statistics, Machine Learning, Control Systems</p>
             </div>
         </div>
@@ -382,27 +492,47 @@
 
     <!-- Contact Section -->
     <section id="contact">
-        <div class="container contact-container">
-            <h2>Get In Touch</h2>
-            <p>
-                I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions.
-            </p>
+        <div class="container">
+            <div class="contact-wrapper">
+                <div class="contact-header animate-on-scroll">
+                    <h2>Get In Touch</h2>
+                    <p class="contact-intro">
+                        I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions.
+                    </p>
+                    <div class="social-links">
+                        <a href="mailto:shravnchandr@gmail.com" class="social-icon" title="Email"><i class="fas fa-envelope"></i></a>
+                        <a href="https://linkedin.com/in/shravnchandr" target="_blank" class="social-icon" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://github.com/shravnchandr" target="_blank" class="social-icon" title="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="tel:+919606638728" class="social-icon" title="Phone"><i class="fas fa-phone"></i></a>
+                    </div>
+                </div>
 
-            <div class="social-links">
-                <a href="mailto:shravnchandr@gmail.com" class="social-icon" title="Email"><i
-                        class="fas fa-envelope"></i></a>
-                <a href="https://linkedin.com/in/shravnchandr" target="_blank" class="social-icon" title="LinkedIn"><i
-                        class="fab fa-linkedin"></i></a>
-                <a href="https://github.com/shravnchandr" target="_blank" class="social-icon" title="GitHub"><i
-                        class="fab fa-github"></i></a>
-                <a href="tel:+919606638728" class="social-icon" title="Phone"><i class="fas fa-phone"></i></a>
-            </div>
-
-            <div style="margin-top: var(--spacing-md);">
-                <a href="mailto:shravnchandr@gmail.com" class="btn btn-primary">Say Hello</a>
+                <!-- Contact Form -->
+                <form class="contact-form card animate-on-scroll stagger-2" action="https://formspree.io/f/xovqgkpw" method="POST">
+                    <h3 class="form-title">Send a Message</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required placeholder="Your name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required placeholder="your@email.com">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required placeholder="Tell me about your project or idea..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                </form>
             </div>
         </div>
     </section>
+
+    </main>
 
     <!-- Footer -->
     <footer>
@@ -412,12 +542,12 @@
     </footer>
 
     <!-- ASL Demo Modal -->
-    <div id="asl-modal" class="modal">
+    <div id="asl-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="asl-modal-title">
         <div class="modal-content">
-            <span class="close-modal">&times;</span>
+            <button class="close-modal" aria-label="Close modal">&times;</button>
             <div class="asl-container">
                 <header>
-                    <h2>Real-Time ASL Recognition</h2>
+                    <h2 id="asl-modal-title">Real-Time ASL Recognition</h2>
                     <p>Show your hand to the camera to translate ASL alphabets.</p>
                 </header>
 
@@ -426,8 +556,21 @@
                         <video class="input_video"></video>
                         <canvas class="output_canvas"></canvas>
                         <div class="loading-overlay" id="loading">
-                            <div class="spinner"></div>
-                            <p>Loading Model...</p>
+                            <div class="skeleton-loader">
+                                <div class="skeleton-icon">
+                                    <i class="fas fa-hand-sparkles"></i>
+                                </div>
+                                <div class="skeleton-text">
+                                    <div class="skeleton-line"></div>
+                                    <div class="skeleton-line short"></div>
+                                </div>
+                                <div class="loading-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill"></div>
+                                    </div>
+                                    <p class="loading-status">Loading MediaPipe & Model...</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -453,12 +596,12 @@
     </div>
 
     <!-- ASL Dictionary Modal -->
-    <div id="asl-dictionary-modal" class="modal">
+    <div id="asl-dictionary-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="asl-dictionary-title">
         <div class="modal-content">
-            <span class="close-modal" id="close-dictionary-modal">&times;</span>
+            <button class="close-modal" id="close-dictionary-modal" aria-label="Close modal">&times;</button>
             <div class="asl-container">
                 <header>
-                    <h2>ASL Dictionary</h2>
+                    <h2 id="asl-dictionary-title">ASL Dictionary</h2>
                     <p>Translate words into ASL descriptions using AI.</p>
                 </header>
 
@@ -466,15 +609,15 @@
                 <div class="api-key-section">
                     <button id="toggle-api-settings" class="btn-text"><i class="fas fa-cog"></i> Settings</button>
                     <div id="api-settings-panel" class="settings-panel hidden">
-                        <label for="gemini-api-key">Google Gemini API Key:</label>
+                        <label for="gemini-api-key" class="settings-label">Google Gemini API Key:</label>
                         <div class="input-group">
-                            <input type="password" id="gemini-api-key" placeholder="Enter your API Key">
+                            <input type="password" id="gemini-api-key" placeholder="Enter your API Key" autocomplete="off">
                             <button id="save-api-key" class="btn btn-sm btn-primary">Save</button>
                         </div>
                         <p class="small-text">Key is saved locally in your browser.</p>
-                        <p class="small-text" style="margin-top: 10px;">
+                        <p class="small-text mt-sm">
                             To get your Gemini API Key, visit <a href="https://makersuite.google.com/app/apikey"
-                                target="_blank" style="color: var(--primary-color);">Google AI Studio</a>.
+                                target="_blank" class="api-link">Google AI Studio</a>.
                         </p>
                     </div>
                 </div>

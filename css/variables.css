@@ -25,14 +25,19 @@
     --md-sys-color-on-surface-variant: #43474e;
     --md-sys-color-outline: #73777f;
 
-    /* Typography - Expressive Scale */
-    --md-sys-typescale-display-large: 57px;
-    --md-sys-typescale-display-medium: 45px;
-    --md-sys-typescale-display-small: 36px;
-    --md-sys-typescale-headline-large: 32px;
-    --md-sys-typescale-headline-medium: 28px;
-    --md-sys-typescale-headline-small: 24px;
-    --md-sys-typescale-body-large: 16px;
+    /* ML-focused accent colors */
+    --ml-accent-neural: #7c4dff;
+    --ml-accent-data: #00bfa5;
+    --ml-accent-inference: #ff6d00;
+
+    /* Typography - Expressive Scale (Enhanced) */
+    --md-sys-typescale-display-large: clamp(48px, 8vw, 64px);
+    --md-sys-typescale-display-medium: clamp(40px, 6vw, 52px);
+    --md-sys-typescale-display-small: clamp(32px, 5vw, 40px);
+    --md-sys-typescale-headline-large: clamp(28px, 4vw, 36px);
+    --md-sys-typescale-headline-medium: clamp(24px, 3.5vw, 30px);
+    --md-sys-typescale-headline-small: clamp(20px, 3vw, 26px);
+    --md-sys-typescale-body-large: clamp(16px, 2vw, 18px);
     --md-sys-typescale-body-medium: 14px;
 
     /* Shapes - Expressive */
@@ -69,6 +74,7 @@
     --shape-pill: 100px;
 
     /* Spacing */
+    --spacing-xs: 4px;
     --spacing-sm: 8px;
     --spacing-md: 16px;
     --spacing-lg: 24px;

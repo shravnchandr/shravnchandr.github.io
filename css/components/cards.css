@@ -9,12 +9,33 @@
     transition: transform var(--spring-duration-short) var(--spring-bounce),
         box-shadow var(--spring-duration-short) var(--spring-smooth),
         border-color var(--spring-duration-short) ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg,
+        transparent 0%,
+        rgba(var(--md-sys-color-primary-rgb, 0, 104, 116), 0.03) 100%);
+    opacity: 0;
+    transition: opacity var(--spring-duration-short) ease;
+    pointer-events: none;
 }
 
 .card:hover {
     transform: translateY(-6px);
     box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
     border-color: var(--md-sys-color-primary);
+}
+
+.card:hover::before {
+    opacity: 1;
 }
 
 .card h3 {
@@ -28,4 +49,15 @@
     color: inherit;
     opacity: 0.9;
     line-height: 1.6;
+}
+
+/* Expressive card variants */
+.card-elevated {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.card-filled {
+    background-color: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
+    border-color: transparent;
 }

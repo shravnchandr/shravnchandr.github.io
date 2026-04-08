@@ -9,12 +9,58 @@ html {
     scroll-behavior: smooth;
 }
 
+/* Skip Link for Accessibility */
+.skip-link {
+    position: absolute;
+    top: -100%;
+    left: var(--spacing-md);
+    background: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--md-sys-shape-corner-medium);
+    font-weight: 600;
+    z-index: 9999;
+    transition: top var(--spring-duration-short) var(--spring-bounce);
+}
+
+.skip-link:focus {
+    top: var(--spacing-md);
+    outline: none;
+}
+
+/* Focus Styles - Material 3 Expressive */
+:focus-visible {
+    outline: 3px solid var(--md-sys-color-primary);
+    outline-offset: 2px;
+    border-radius: var(--md-sys-shape-corner-small);
+}
+
+/* Custom focus for specific elements */
+a:focus-visible,
+button:focus-visible {
+    outline: 3px solid var(--md-sys-color-primary);
+    outline-offset: 3px;
+}
+
+/* Focus ring with glow effect for dark theme */
+body.dark-theme :focus-visible {
+    outline-color: var(--md-sys-color-primary);
+    box-shadow: 0 0 0 4px rgba(0, 229, 255, 0.25);
+}
+
+/* Remove default outline for elements that have custom focus */
+input:focus-visible,
+textarea:focus-visible {
+    outline: none;
+}
+
 /* Fonts */
 @font-face {
     font-family: 'Google Sans Flex';
-    src: url('../GoogleSansFlex-VariableFont_GRAD,ROND,opsz,slnt,wdth,wght.ttf') format('truetype');
+    src: url('../GoogleSansFlex-VariableFont_GRAD%2CROND%2Copsz%2Cslnt%2Cwdth%2Cwght.ttf') format('truetype');
     font-weight: 100 900;
     font-style: normal;
+    font-display: swap;
 }
 
 body {
