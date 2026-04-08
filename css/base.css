@@ -57,7 +57,7 @@ textarea:focus-visible {
 /* Fonts */
 @font-face {
     font-family: 'Google Sans Flex';
-    src: url('../GoogleSansFlex-VariableFont_GRAD%2CROND%2Copsz%2Cslnt%2Cwdth%2Cwght.ttf') format('truetype');
+    src: url('../GoogleSansFlex-subset.woff2') format('woff2');
     font-weight: 100 900;
     font-style: normal;
     font-display: swap;

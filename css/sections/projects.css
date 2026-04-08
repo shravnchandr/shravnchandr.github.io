@@ -77,6 +77,27 @@
     opacity: 0.8;
 }
 
+/* Project Metrics Row */
+.project-metrics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    margin: var(--spacing-md) 0;
+    padding: var(--spacing-md);
+    background: var(--md-sys-color-surface-variant);
+    border-radius: var(--md-sys-shape-corner-medium);
+}
+
+.project-metric {
+    font-size: 0.85rem;
+    color: var(--md-sys-color-on-surface-variant);
+}
+
+.project-metric strong {
+    color: var(--md-sys-color-primary);
+    font-weight: 700;
+}
+
 /* Project Tech Tags - Consistent primary color */
 .project-tech {
     margin-top: auto;
