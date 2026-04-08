@@ -4,7 +4,7 @@
     display: flex;
     align-items: center;
     position: relative;
-    padding-top: var(--spacing-xxl);
+    padding-top: 90px;
     overflow: hidden;
 }
 
