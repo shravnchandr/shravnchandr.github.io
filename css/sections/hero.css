@@ -28,6 +28,7 @@
     z-index: 1;
     position: relative;
     padding-bottom: 70px;
+    text-align: center;
 }
 
 /* Expressive Hero Title */
@@ -96,7 +97,7 @@
 
 .hero-description {
     max-width: 600px;
-    margin-bottom: var(--spacing-xl);
+    margin: 0 auto var(--spacing-xl);
     font-size: 1.25rem;
     line-height: 1.7;
     color: var(--md-sys-color-on-surface-variant);
@@ -112,7 +113,9 @@
 .hero-buttons {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
     animation: spring-slide-up var(--spring-duration-long) var(--spring-bounce) 0.2s forwards;
     opacity: 0;
 }
@@ -130,7 +133,7 @@
     font-size: 0.85rem;
     font-weight: 500;
     color: var(--md-sys-color-on-surface-variant);
-    margin-bottom: var(--spacing-sm);
+    margin: 0 auto var(--spacing-lg);
 }
 
 .status-dot {
@@ -156,6 +159,7 @@
     margin-top: var(--spacing-lg);
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: var(--spacing-sm);
 }
 
