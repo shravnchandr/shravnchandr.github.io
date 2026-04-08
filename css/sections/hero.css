@@ -119,6 +119,9 @@
 /* Publication Badge */
 .hero-badge {
     margin-top: var(--spacing-lg);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
 }
 
 .publication-badge {
