@@ -27,6 +27,7 @@
     max-width: 800px;
     z-index: 1;
     position: relative;
+    padding-bottom: 70px;
 }
 
 /* Expressive Hero Title */
