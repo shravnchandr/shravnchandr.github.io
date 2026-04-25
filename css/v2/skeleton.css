@@ -1,0 +1,168 @@
+/**
+ * css/v2/skeleton.css — Skeleton screens shown while body.loading is set.
+ *
+ * body.loading { visibility: hidden } hides the page while fragments are
+ * being fetched. CSS visibility can be overridden by descendants, so
+ * .v2-skeleton children stay visible and show the shimmer while loading.
+ */
+
+@keyframes v2-shimmer {
+    0%   { background-position: 200% center; }
+    100% { background-position: -200% center; }
+}
+
+/* Skeleton visibility exception — overrides the body.loading guard */
+body.loading .v2-skeleton { visibility: visible; }
+
+/* Shimmer tile — applied to every individual placeholder shape */
+.v2-sk-item {
+    background: linear-gradient(
+        90deg,
+        var(--v2-surface-hi)  30%,
+        var(--v2-surface-hi2) 50%,
+        var(--v2-surface-hi)  70%
+    );
+    background-size: 200% 100%;
+    animation: v2-shimmer 1.8s ease-in-out infinite;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+/* ── Nav skeleton ──────────────────────────────────────────────────── */
+.v2-sk-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    height: 66px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 56px;
+    background: rgba(11, 15, 20, 0.84);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--v2-border);
+    gap: 16px;
+}
+
+.v2-sk-logo-wrap  { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.v2-sk-logo-badge { width: 32px; height: 32px; border-radius: 10px; }
+.v2-sk-logo-text  { width: 128px; height: 14px; }
+
+.v2-sk-nav-pills {
+    display: flex;
+    gap: 6px;
+    padding: 4px;
+    background: var(--v2-surface);
+    border-radius: 999px;
+    border: 1px solid var(--v2-border);
+}
+.v2-sk-pill { width: 52px; height: 28px; border-radius: 999px; }
+
+.v2-sk-nav-right { display: flex; gap: 10px; align-items: center; flex-shrink: 0; }
+.v2-sk-square    { width: 38px; height: 38px; border-radius: 12px; }
+.v2-sk-btn-pill  { width: 84px; height: 36px; border-radius: 999px; }
+
+/* ── Hero skeleton ─────────────────────────────────────────────────── */
+.v2-sk-hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 64px 56px 88px;
+    align-items: center;
+}
+
+.v2-sk-hero-left { display: flex; flex-direction: column; gap: 16px; }
+
+.v2-sk-badge  { width: 230px; height: 30px; border-radius: 999px; }
+.v2-sk-h1-a  { height: 66px; width: 95%; }
+.v2-sk-h1-b  { height: 66px; width: 72%; }
+.v2-sk-h1-c  { height: 66px; width: 80%; }
+.v2-sk-desc-a { height: 17px; width: 100%; }
+.v2-sk-desc-b { height: 17px; width: 83%; }
+.v2-sk-desc-c { height: 17px; width: 58%; margin-top: -4px; }
+.v2-sk-cta-row { display: flex; gap: 12px; margin-top: 8px; }
+.v2-sk-cta-a { width: 200px; height: 50px; border-radius: 14px; }
+.v2-sk-cta-b { width: 130px; height: 50px; border-radius: 14px; }
+.v2-sk-cta-c { width:  90px; height: 50px; border-radius: 14px; }
+
+.v2-sk-asl-card { height: 380px; border-radius: 28px; width: 100%; }
+
+/* ── Impact skeleton ───────────────────────────────────────────────── */
+/* Matches .v2-impact { padding: 56px 0 } + .v2-inner { padding: 0 56px } */
+.v2-sk-impact {
+    padding: 56px 0;
+    border-top: 1px solid var(--v2-border);
+    border-bottom: 1px solid var(--v2-border);
+}
+
+.v2-sk-impact-inner {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 0 56px;
+}
+
+.v2-sk-impact-hdr {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+.v2-sk-code-a { height: 12px; width: 180px; }
+.v2-sk-code-b { height: 12px; width: 130px; }
+
+/* Replicates the 6-cell grid with 1px border gaps */
+.v2-sk-metrics-wrap {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1px;
+    background: var(--v2-border);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--v2-border);
+    margin-top: 24px;
+}
+.v2-sk-metric-cell {
+    height: 130px;
+    border-radius: 0;
+    background: linear-gradient(
+        90deg,
+        var(--v2-surface-hi)  30%,
+        var(--v2-surface-hi2) 50%,
+        var(--v2-surface-hi)  70%
+    );
+    background-size: 200% 100%;
+    animation: v2-shimmer 1.8s ease-in-out infinite;
+}
+
+/* ── Below-fold generic section block ──────────────────────────────── */
+.v2-sk-section {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 64px 56px;
+}
+.v2-sk-block { height: 280px; border-radius: 20px; }
+
+/* ── Responsive ────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+    .v2-sk-nav  { padding: 0 24px; }
+    .v2-sk-hero { grid-template-columns: 1fr; padding: 48px 24px 64px; }
+    .v2-sk-hero-right { display: none; }
+    .v2-sk-impact-inner { padding: 0 24px; }
+    .v2-sk-section { padding: 48px 24px; }
+}
+
+@media (max-width: 900px) {
+    .v2-sk-nav-pills { display: none; }
+    .v2-sk-metrics-wrap { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 480px) {
+    .v2-sk-metrics-wrap { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .v2-sk-item,
+    .v2-sk-metric-cell { animation: none; }
+}

@@ -1,0 +1,163 @@
+/* v2 Story section — experience + education */
+
+/* Story tab panel uses a 2-col: left content + right nav */
+.v2-story-layout {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 48px;
+    min-height: 400px;
+    background: var(--v2-bg);
+    border-radius: 28px;
+    padding: 48px;
+    border: 1px solid var(--v2-border);
+}
+
+/* Left column: experience content panels */
+.v2-exp-panel { display: none; }
+.v2-exp-panel.active { display: block; }
+
+.v2-exp-date {
+    font-family: 'Fira Code', monospace;
+    font-size: 12px;
+    color: var(--v2-text-muted);
+    margin-top: 10px;
+}
+
+.v2-bullets-label {
+    font-family: 'Fira Code', monospace;
+    font-size: 11px;
+    color: var(--v2-text-muted);
+    letter-spacing: 1px;
+    margin: 24px 0 12px;
+}
+
+.v2-exp-bullets {
+    list-style: none;
+    margin: 0; padding: 0;
+}
+
+.v2-exp-bullets li {
+    display: flex;
+    gap: 14px;
+    padding: 10px 0;
+    border-top: 1px dashed var(--v2-border);
+    font-size: 14px;
+    color: var(--v2-text-dim);
+    line-height: 1.55;
+}
+
+.v2-exp-bullets li:first-child { border-top: none; }
+
+.v2-bullet-idx {
+    font-family: 'Fira Code', monospace;
+    font-size: 11px;
+    color: var(--v2-inference);
+    margin-top: 3px;
+    min-width: 20px;
+    flex-shrink: 0;
+}
+
+/* Right column: role-nav + summary */
+.v2-role-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.v2-role-btn {
+    padding: 18px 20px;
+    border-radius: 16px;
+    background: var(--v2-surface);
+    border: 1px solid var(--v2-border);
+    color: var(--v2-text);
+    cursor: pointer;
+    text-align: left;
+    transition: all 200ms ease;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-family: 'Outfit', sans-serif;
+}
+
+.v2-role-btn:hover { background: var(--v2-surface-hi); }
+
+.v2-role-btn.active {
+    background: var(--v2-surface-hi);
+    border-color: var(--v2-inference);
+}
+
+.v2-role-btn-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.v2-role-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--v2-text);
+    letter-spacing: -0.2px;
+}
+
+.v2-role-year {
+    font-family: 'Fira Code', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.v2-role-company {
+    font-size: 12px;
+    color: var(--v2-text-muted);
+}
+
+/* Education block */
+.v2-education {
+    margin-top: 32px;
+    padding: 24px 28px;
+    background: var(--v2-surface);
+    border-radius: 20px;
+    border: 1px solid var(--v2-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.v2-edu-label {
+    font-family: 'Fira Code', monospace;
+    font-size: 11px;
+    color: var(--v2-text-muted);
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.v2-edu-school {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--v2-text);
+}
+
+.v2-edu-degree {
+    font-size: 14px;
+    color: var(--v2-text-dim);
+    margin-top: 4px;
+}
+
+.v2-edu-dates {
+    font-family: 'Fira Code', monospace;
+    font-size: 12px;
+    color: var(--v2-text-muted);
+    margin-top: 6px;
+}
+
+@media (max-width: 900px) {
+    .v2-story-layout { grid-template-columns: 1fr; gap: 28px; }
+}
+
+@media (max-width: 600px) {
+    .v2-story-layout { padding: 24px 20px; }
+}

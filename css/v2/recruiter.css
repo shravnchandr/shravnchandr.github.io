@@ -1,0 +1,223 @@
+/**
+ * css/v2/recruiter.css — "For Recruiters" modal.
+ */
+
+/* ── Overlay ────────────────────────────────────────────────── */
+.v2-recruiter-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2100;
+    background: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 220ms ease;
+}
+
+.v2-recruiter-overlay--open {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* ── Modal ──────────────────────────────────────────────────── */
+.v2-recruiter-modal {
+    width: min(600px, calc(100vw - 32px));
+    max-height: calc(100dvh - 48px);
+    overflow-y: auto;
+    background: var(--v2-surface);
+    border: 1px solid var(--v2-border);
+    border-radius: 24px;
+    box-shadow: 0 32px 80px rgba(0, 0, 0, 0.5);
+
+    transform: translateY(-10px) scale(0.97);
+    transition: transform 280ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.v2-recruiter-overlay--open .v2-recruiter-modal {
+    transform: translateY(0) scale(1);
+}
+
+/* ── Header ─────────────────────────────────────────────────── */
+.v2-recruiter-hdr {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid var(--v2-border);
+    position: sticky;
+    top: 0;
+    background: var(--v2-surface);
+    z-index: 1;
+    border-radius: 24px 24px 0 0;
+}
+
+.v2-recruiter-tag {
+    font-family: 'Fira Code', monospace;
+    font-size: 10px;
+    color: var(--v2-data);
+    letter-spacing: 2px;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.v2-recruiter-name {
+    font-family: 'Google Sans Flex', 'Outfit', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--v2-text);
+    margin: 0;
+    letter-spacing: -0.5px;
+}
+
+.v2-recruiter-close {
+    background: none;
+    border: none;
+    color: var(--v2-text-muted);
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 8px;
+    flex-shrink: 0;
+    transition: color 150ms ease, background 150ms ease;
+}
+
+.v2-recruiter-close:hover {
+    color: var(--v2-text);
+    background: var(--v2-surface-hi);
+}
+
+/* ── Section ────────────────────────────────────────────────── */
+.v2-recruiter-section {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--v2-border);
+}
+
+.v2-recruiter-section-label {
+    font-family: 'Fira Code', monospace;
+    font-size: 9px;
+    color: var(--v2-text-muted);
+    letter-spacing: 2px;
+    margin-bottom: 14px;
+}
+
+/* ── Role rows ──────────────────────────────────────────────── */
+.v2-recruiter-row {
+    display: flex;
+    gap: 16px;
+    padding: 6px 0;
+    align-items: baseline;
+}
+
+.v2-recruiter-key {
+    font-family: 'Fira Code', monospace;
+    font-size: 11px;
+    color: var(--v2-text-muted);
+    min-width: 90px;
+    flex-shrink: 0;
+}
+
+.v2-recruiter-val {
+    font-size: 13px;
+    color: var(--v2-text);
+    font-weight: 500;
+}
+
+/* ── Team fit grid ──────────────────────────────────────────── */
+.v2-recruiter-fit-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.v2-recruiter-fit-card {
+    padding: 14px 16px;
+    border-radius: 14px;
+    background: var(--v2-surface-hi);
+    border: 1px solid var(--v2-border);
+}
+
+.v2-recruiter-company {
+    font-family: 'Fira Code', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: 0.3px;
+}
+
+.v2-recruiter-team {
+    font-size: 11px;
+    color: var(--v2-text-dim);
+    padding: 2px 0;
+    line-height: 1.45;
+}
+
+.v2-recruiter-team::before {
+    content: '→ ';
+    color: var(--v2-text-muted);
+}
+
+/* ── Actions ────────────────────────────────────────────────── */
+.v2-recruiter-actions {
+    display: flex;
+    gap: 12px;
+    padding: 20px 24px;
+    flex-wrap: wrap;
+}
+
+.v2-recruiter-resume,
+.v2-recruiter-email {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.v2-recruiter-resume .material-symbols-outlined,
+.v2-recruiter-email  .material-symbols-outlined {
+    font-size: 17px;
+    line-height: 1;
+}
+
+/* ── Recruiter trigger button (in contact section) ──────────── */
+.v2-recruiter-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 24px;
+    border-radius: 16px;
+    border: 1px dashed rgba(124, 77, 255, 0.5);
+    background: rgba(124, 77, 255, 0.07);
+    color: var(--v2-neural);
+    font-family: 'Fira Code', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 200ms ease, border-color 200ms ease;
+    margin-top: 20px;
+}
+
+.v2-recruiter-trigger:hover {
+    background: rgba(124, 77, 255, 0.14);
+    border-color: rgba(124, 77, 255, 0.7);
+}
+
+/* ── Mobile ─────────────────────────────────────────────────── */
+@media (max-width: 560px) {
+    .v2-recruiter-fit-grid { grid-template-columns: 1fr; }
+    .v2-recruiter-actions  { flex-direction: column; }
+    .v2-recruiter-hdr,
+    .v2-recruiter-section,
+    .v2-recruiter-actions  { padding-left: 18px; padding-right: 18px; }
+}
+
+/* ── Reduced motion ─────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+    .v2-recruiter-overlay,
+    .v2-recruiter-modal { transition: none; }
+}

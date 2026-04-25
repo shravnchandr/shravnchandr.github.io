@@ -4,37 +4,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shravan Chandra | Accessibility AI & ML Engineer</title>
+    <title>Shravan Chandra | Accessibility AI &amp; ML Engineer</title>
     <meta name="description"
         content="Portfolio of Shravan Chandra, Senior ML Engineer specialising in accessibility AI, production GenAI systems, and end-to-end ML infrastructure. Builder of ASL Guide and IEEE published researcher.">
 
-    <!-- Open Graph / Social Media -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://shravnchandr.github.io/">
-    <meta property="og:title" content="Shravan Chandra | Accessibility AI & ML Engineer">
-    <meta property="og:description" content="Senior ML Engineer with 5+ years of experience in accessibility AI and production ML systems. Building AI that removes barriers — not creates them.">
-    <meta property="og:image" content="https://shravnchandr.github.io/og-image.png">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Shravan Chandra | Accessibility AI & ML Engineer">
-    <meta name="twitter:description" content="Senior ML Engineer with 5+ years of experience in accessibility AI and production ML systems. Building AI that removes barriers — not creates them.">
+    <!-- Open Graph -->
+    <meta property="og:type"        content="website">
+    <meta property="og:url"         content="https://shravnchandr.github.io/">
+    <meta property="og:title"       content="Shravan Chandra | Accessibility AI &amp; ML Engineer">
+    <meta property="og:description" content="Senior ML Engineer building AI that removes barriers — not creates them.">
+    <meta property="og:image"       content="https://shravnchandr.github.io/og-image.png">
+    <meta name="twitter:card"        content="summary_large_image">
+    <meta name="twitter:title"       content="Shravan Chandra | Accessibility AI &amp; ML Engineer">
+    <meta name="twitter:description" content="Senior ML Engineer with 5+ years in accessibility AI and production ML systems.">
 
-    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
-    <!-- Fonts - Preload critical fonts -->
+    <!-- Fonts -->
     <link rel="preload" href="GoogleSansFlex-subset.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="https://fonts.gstatic.com/s/firacode/v22/uU9eCBsR6Z2vfE9aq3bL0fxyUs4tcw4W_D1sJV37MOzlojwUKQ.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet">
 
     <!-- Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
 
     <!-- Styles -->
     <link rel="stylesheet" href="css/main.css">
+
+    <!-- Fragment prefetch — browser fetches these idle-time so loader.js hits cache -->
+    <link rel="prefetch" href="html/nav.html">
+    <link rel="prefetch" href="html/hero.html">
+    <link rel="prefetch" href="html/impact.html">
+    <link rel="prefetch" href="html/work.html">
+    <link rel="prefetch" href="html/demo.html">
+    <link rel="prefetch" href="html/story.html">
+    <link rel="prefetch" href="html/stack.html">
+    <link rel="prefetch" href="html/now.html">
+    <link rel="prefetch" href="html/contact.html">
 
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
@@ -52,546 +63,137 @@
             "https://linkedin.com/in/shravnchandr",
             "https://github.com/shravnchandr"
         ],
-        "alumniOf": {
-            "@type": "EducationalOrganization",
-            "name": "PES University"
-        },
-        "worksFor": {
-            "@type": "Organization",
-            "name": "Bosch Global Software Technologies"
-        },
-        "knowsAbout": [
-            "Machine Learning",
-            "Deep Learning",
-            "PyTorch",
-            "TensorFlow",
-            "MLOps",
-            "Computer Vision",
-            "Natural Language Processing",
-            "Predictive Maintenance",
-            "Anomaly Detection",
-            "Sign Language Recognition"
-        ]
+        "alumniOf": { "@type": "EducationalOrganization", "name": "PES University" },
+        "worksFor":  { "@type": "Organization", "name": "Bosch Global Software Technologies" }
     }
     </script>
 </head>
 
 <body>
-    <!-- Skip Link for Accessibility -->
+    <!-- Accessibility skip link -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <!-- Navigation -->
-    <nav aria-label="Main navigation">
-        <div class="container nav-content">
-            <a href="/" class="logo">Shravan<span>.</span></a>
-            <div class="nav-actions">
-                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode">
-                    <i class="fas fa-moon" aria-hidden="true"></i>
-                </button>
-                <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle Navigation" aria-expanded="false" aria-controls="nav-links">
-                    <i class="fas fa-bars" aria-hidden="true"></i>
-                </button>
+    <!-- ── Nav placeholder (replaced by loader.js) ── -->
+    <div id="frag-nav">
+        <div class="v2-skeleton v2-sk-nav">
+            <div class="v2-sk-logo-wrap">
+                <div class="v2-sk-item v2-sk-logo-badge"></div>
+                <div class="v2-sk-item v2-sk-logo-text"></div>
             </div>
-            <div class="nav-links" id="nav-links">
-                <a href="#about">About</a>
-                <a href="#skills">Skills</a>
-                <a href="#experience">Experience</a>
-                <a href="#projects">Projects</a>
-                <a href="#contact">Contact</a>
+            <div class="v2-sk-nav-pills">
+                <div class="v2-sk-item v2-sk-pill"></div>
+                <div class="v2-sk-item v2-sk-pill"></div>
+                <div class="v2-sk-item v2-sk-pill"></div>
+                <div class="v2-sk-item v2-sk-pill"></div>
+                <div class="v2-sk-item v2-sk-pill"></div>
+            </div>
+            <div class="v2-sk-nav-right">
+                <div class="v2-sk-item v2-sk-square"></div>
+                <div class="v2-sk-item v2-sk-square"></div>
+                <div class="v2-sk-item v2-sk-btn-pill"></div>
             </div>
         </div>
-    </nav>
+    </div>
 
-    <!-- FAB -->
+    <!-- Persistent UI (not section-based) -->
     <a href="Shravan_Chandra_Resume.pdf" class="resume-fab" download aria-label="Download Resume">
         <i class="fas fa-file-arrow-down" aria-hidden="true"></i>
     </a>
-
-    <!-- Back to Top Button -->
     <button id="back-to-top" class="back-to-top" aria-label="Back to top">
         <i class="fas fa-arrow-up" aria-hidden="true"></i>
     </button>
 
-    <!-- Hero Section -->
-    <section class="hero" aria-label="Introduction">
-        <div class="hero-bg">
-            <canvas id="hero-canvas"></canvas>
-        </div>
-        <div class="container">
-            <div class="hero-content animate-in">
-                <span class="hero-subtitle">Hello, I'm</span>
-                <h1>Shravan Chandra</h1>
-                <h2 class="typewriter-text">Senior ML Engineer</h2>
-                <p class="hero-description delay-2">
-                    Building <strong>AI that removes barriers</strong> — not creates them. Senior ML Engineer focused on <strong>accessibility AI</strong>, production <strong>GenAI systems</strong>, and end-to-end <strong>ML infrastructure</strong>. Relocating to North America.
-                </p>
-                <div class="availability-badge">
-                    <span class="status-dot" aria-hidden="true"></span>
-                    <span>Open to roles in Canada &amp; US</span>
-                </div>
-                <div class="hero-buttons">
-                    <a href="#contact" class="btn btn-primary">Get in Touch</a>
-                    <a href="Shravan_Chandra_Resume.pdf" class="btn btn-outline" download><i class="fas fa-download"></i> Resume</a>
-                </div>
+    <!-- Accessibility Lab side panel (persistent, built by js/a11y.js) -->
+    <aside id="a11y-panel" role="complementary" aria-label="Accessibility design notes" aria-hidden="true"></aside>
 
-                <!-- Badges -->
-                <div class="hero-badge delay-3">
-                    <a href="https://doi.org/10.1109/ICCAR55106.2022.9782661" target="_blank" class="publication-badge">
-                        <i class="fas fa-award"></i>
-                        <span>Published in IEEE ICCAR 2022</span>
-                    </a>
-                    <a href="https://asl-guide.onrender.com" target="_blank" class="publication-badge">
-                        <i class="fas fa-hand-paper"></i>
-                        <span>ASL Guide — Live Production App</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Scroll Indicator -->
-        <a href="#about" class="scroll-indicator" aria-label="Scroll to content">
-            <div class="scroll-arrow">
-                <i class="fas fa-chevron-down"></i>
-            </div>
-        </a>
-    </section>
-
-    <!-- Metrics Section -->
-    <section class="metrics-section">
-        <div class="container">
-            <div class="metrics-grid">
-                <div class="metric-item animate-on-scroll">
-                    <span class="metric-value">5+</span>
-                    <span class="metric-label">Years Experience</span>
-                </div>
-                <div class="metric-item animate-on-scroll stagger-2">
-                    <span class="metric-value">€300K+</span>
-                    <span class="metric-label">Annual Savings</span>
-                </div>
-                <div class="metric-item animate-on-scroll stagger-3">
-                    <span class="metric-value">100+</span>
-                    <span class="metric-label">ECUs Monitored</span>
-                </div>
-                <div class="metric-item animate-on-scroll stagger-4">
-                    <span class="metric-value">48%</span>
-                    <span class="metric-label">Faster Training</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Main Content -->
     <main id="main-content">
 
-    <!-- About Section -->
-    <section id="about" aria-labelledby="about-heading">
-        <div class="container">
-            <h2 id="about-heading" class="animate-on-scroll">About Me</h2>
-            <div class="about-content animate-on-scroll">
-                <div class="about-avatar">
-                    <img src="og-image.png" alt="Shravan Chandra" class="avatar-photo">
-                    <div class="avatar-decoration" aria-hidden="true"></div>
+        <!-- Hero -->
+        <div id="frag-hero">
+            <div class="v2-skeleton v2-sk-hero">
+                <div class="v2-sk-hero-left">
+                    <div class="v2-sk-item v2-sk-badge"></div>
+                    <div class="v2-sk-item v2-sk-h1-a"></div>
+                    <div class="v2-sk-item v2-sk-h1-b"></div>
+                    <div class="v2-sk-item v2-sk-h1-c"></div>
+                    <div class="v2-sk-item v2-sk-desc-a"></div>
+                    <div class="v2-sk-item v2-sk-desc-b"></div>
+                    <div class="v2-sk-item v2-sk-desc-c"></div>
+                    <div class="v2-sk-cta-row">
+                        <div class="v2-sk-item v2-sk-cta-a"></div>
+                        <div class="v2-sk-item v2-sk-cta-b"></div>
+                        <div class="v2-sk-item v2-sk-cta-c"></div>
+                    </div>
                 </div>
-                <div class="card about-text">
-                    <p>
-                        Senior ML Engineer with <strong>5+ years</strong> of production ML experience at <strong>Bosch Global Software Technologies</strong>, and a deep focus on <strong>accessibility AI</strong>. Published IEEE researcher in sign language recognition.
-                    </p>
-                    <p class="mt-md">
-                        A deployment failure changed how I build. When a left-handed user signed to my model, it failed completely — because I had built for an imaginary user, not a real one. That experience shaped everything since: a data-centric philosophy, a production ASL learning platform used by real learners, and a commitment to building AI that actually works for the people who need it most.
-                    </p>
-                    <p class="mt-md">
-                        Proficient across <strong>PyTorch, TensorFlow, LangGraph</strong>, cloud platforms, and modern LLM frameworks. Relocating to North America — open to Senior ML Engineer and AI/ML roles in Canada and the US.
-                    </p>
+                <div class="v2-sk-hero-right">
+                    <div class="v2-sk-item v2-sk-asl-card"></div>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- Skills Section -->
-    <section id="skills" aria-labelledby="skills-heading">
-        <div class="container">
-            <h2 id="skills-heading" class="animate-on-scroll">Technical Skills</h2>
-            <div class="skills-grid">
-                <!-- ML/DL - Primary Focus -->
-                <div class="card skill-category animate-on-scroll skill-highlight">
-                    <h3><i class="fas fa-brain"></i> Machine Learning & Deep Learning</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">PyTorch</span>
-                        <span class="skill-tag">TensorFlow</span>
-                        <span class="skill-tag">Keras</span>
-                        <span class="skill-tag">Scikit-Learn</span>
-                        <span class="skill-tag">Transformers</span>
-                        <span class="skill-tag">OpenCV</span>
-                        <span class="skill-tag">MediaPipe</span>
-                        <span class="skill-tag">NLTK</span>
+        <!-- Impact metrics -->
+        <div id="frag-impact">
+            <div class="v2-skeleton v2-sk-impact">
+                <div class="v2-sk-impact-inner">
+                    <div class="v2-sk-impact-hdr">
+                        <div class="v2-sk-item v2-sk-code-a"></div>
+                        <div class="v2-sk-item v2-sk-code-b"></div>
                     </div>
-                </div>
-
-                <!-- GenAI -->
-                <div class="card skill-category animate-on-scroll stagger-2 skill-highlight">
-                    <h3><i class="fas fa-robot"></i> Generative AI & LLMs</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">LangGraph</span>
-                        <span class="skill-tag">LangChain</span>
-                        <span class="skill-tag">RAG Systems</span>
-                        <span class="skill-tag">Prompt Engineering</span>
-                        <span class="skill-tag">LLM APIs</span>
-                        <span class="skill-tag">AI Agents</span>
-                        <span class="skill-tag">Chroma</span>
-                    </div>
-                </div>
-
-                <!-- Data & MLOps -->
-                <div class="card skill-category animate-on-scroll stagger-3">
-                    <h3><i class="fas fa-database"></i> Data & MLOps</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">PySpark</span>
-                        <span class="skill-tag">Databricks</span>
-                        <span class="skill-tag">SQL</span>
-                        <span class="skill-tag">Pandas</span>
-                        <span class="skill-tag">Azure ML</span>
-                        <span class="skill-tag">Power BI</span>
-                    </div>
-                </div>
-
-                <!-- Languages -->
-                <div class="card skill-category animate-on-scroll stagger-4">
-                    <h3><i class="fas fa-code"></i> Languages</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">JavaScript</span>
-                        <span class="skill-tag">SQL</span>
-                        <span class="skill-tag">HTML/CSS</span>
-                    </div>
-                </div>
-
-                <!-- Tools & Infrastructure -->
-                <div class="card skill-category animate-on-scroll stagger-5">
-                    <h3><i class="fas fa-server"></i> Infrastructure</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Docker</span>
-                        <span class="skill-tag">Kubernetes</span>
-                        <span class="skill-tag">Git</span>
-                        <span class="skill-tag">Flask</span>
-                        <span class="skill-tag">Jupyter</span>
+                    <div class="v2-sk-metrics-wrap">
+                        <div class="v2-sk-metric-cell"></div>
+                        <div class="v2-sk-metric-cell"></div>
+                        <div class="v2-sk-metric-cell"></div>
+                        <div class="v2-sk-metric-cell"></div>
+                        <div class="v2-sk-metric-cell"></div>
+                        <div class="v2-sk-metric-cell"></div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- Experience Section -->
-    <section id="experience" aria-labelledby="experience-heading">
-        <div class="container">
-            <h2 id="experience-heading" class="animate-on-scroll">Experience</h2>
-            <div class="timeline">
-
-                <!-- Bosch Senior ML -->
-                <div class="timeline-item animate-on-scroll">
-                    <div class="exp-header">
-                        <h3>Senior Machine Learning Engineer</h3>
-                        <span class="exp-company">Bosch Global Software Technologies</span>
-                    </div>
-                    <span class="exp-date">Jan 2025 – Present | Bengaluru, IN</span>
-                    <ul class="exp-list">
-                        <li>Engineered a production predictive-maintenance pipeline using Autoencoder-based anomaly
-                            detection, cutting component testing cycles by 4 months and saving €300K+ annually.</li>
-                        <li>Built ML observability infrastructure (Azure + Power BI) enabling real-time monitoring for
-                            100+ ECU models across 50+ global users; reduced debugging turnaround by 40%.</li>
-                        <li>Led strategy as SPOC for 5+ automation and ML initiatives across cross-functional teams
-                            spanning India, Germany, and China.</li>
-                        <li>Mentored 3 interns (all now full-time ML contributors), establishing onboarding guides, code
-                            standards, and ML infrastructure best practices.</li>
-                        <li>Developed predictive failure analysis via Elastic Net regression on debounce signals to
-                            identify early-warning patterns for proactive maintenance.</li>
-                    </ul>
-                </div>
-
-                <!-- Bosch ML -->
-                <div class="timeline-item animate-on-scroll">
-                    <div class="exp-header">
-                        <h3>Machine Learning Engineer</h3>
-                        <span class="exp-company">Bosch Global Software Technologies</span>
-                    </div>
-                    <span class="exp-date">Aug 2023 – Dec 2024 | Bengaluru, IN</span>
-                    <ul class="exp-list">
-                        <li>Led migration of legacy ML infrastructure from TensorFlow 1.x → PyTorch, achieving 48%
-                            faster training and adding Azure GPU support.</li>
-                        <li>Implemented distribution-based drift detection using KL divergence and hypothesis testing,
-                            achieving 95% detection accuracy for ECU sensor anomalies.</li>
-                        <li>Built and shipped Power BI dashboards for real-time model insight across 100+ ECUs, enabling
-                            faster test validation for distributed engineering teams.</li>
-                    </ul>
-                </div>
-
-                <!-- Bosch Software Developer -->
-                <div class="timeline-item animate-on-scroll">
-                    <div class="exp-header">
-                        <h3>Software Developer</h3>
-                        <span class="exp-company">Bosch Global Software Technologies</span>
-                    </div>
-                    <span class="exp-date">Aug 2021 – Aug 2023 | Bengaluru, IN</span>
-                    <ul class="exp-list">
-                        <li>Developed automation tools and GUIs reducing manual data-analysis time by 45% for 25+
-                            engineers.</li>
-                        <li>Increased PCB pricing estimation accuracy by 30%, reducing processing time from 90 min to 5
-                            min through automated pipeline design.</li>
-                        <li>Designed Flask web applications for automotive test data visualization and configuration
-                            management.</li>
-                    </ul>
-                </div>
-
-                <!-- Goldman Sachs -->
-                <div class="timeline-item animate-on-scroll">
-                    <div class="exp-header">
-                        <h3>Junior Analyst</h3>
-                        <span class="exp-company">Goldman Sachs</span>
-                    </div>
-                    <span class="exp-date">Jan 2021 – Jul 2021 | Bengaluru, IN · Remote</span>
-                    <ul class="exp-list">
-                        <li>Automated trade booking verification workflows using Python-based document processing
-                            pipelines, reducing booking time by 65%.</li>
-                    </ul>
-                </div>
-
+        <!-- Below-fold sections — simple pulse blocks -->
+        <div id="frag-work">
+            <div class="v2-skeleton v2-sk-section">
+                <div class="v2-sk-item v2-sk-block"></div>
             </div>
         </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" aria-labelledby="projects-heading">
-        <div class="container">
-            <h2 id="projects-heading" class="animate-on-scroll">Projects & Publications</h2>
-
-            <!-- Project Filters -->
-            <div class="project-filters animate-on-scroll" role="group" aria-label="Filter projects by category">
-                <button class="filter-btn active" data-filter="all" aria-pressed="true">All</button>
-                <button class="filter-btn" data-filter="ml-cv" aria-pressed="false">ML/CV</button>
-                <button class="filter-btn" data-filter="genai" aria-pressed="false">GenAI</button>
-                <button class="filter-btn" data-filter="research" aria-pressed="false">Research</button>
-            </div>
-
-            <div class="projects-grid">
-
-                <div class="card project-card animate-on-scroll featured-project" data-category="genai" style="border: 2px solid var(--primary-color); grid-column: 1 / -1;">
-                    <div style="display: inline-block; background: var(--primary-color); color: white; font-size: 0.75rem; font-weight: 600; padding: 3px 10px; border-radius: 4px; margin-bottom: 0.75rem; letter-spacing: 0.05em;">FEATURED PROJECT</div>
-                    <h3>ASL Guide — Production ASL Learning Platform</h3>
-                    <p>A full-stack ASL learning platform built for real learners — not a demo, a deployed production system. LangGraph agentic workflow applies 10 documented ASL grammar rules for accurate English → ASL translation. TensorFlow.js in-browser classifier with SM-2 spaced repetition, PWA offline support, Sign of the Day, and dual-layer Redis + LRU caching.</p>
-                    <div class="project-metrics" aria-label="Project metrics">
-                        <span class="project-metric"><strong>95.5%</strong> classifier accuracy</span>
-                        <span class="project-metric"><strong>36</strong> sign classes</span>
-                        <span class="project-metric"><strong>10</strong> ASL grammar rules</span>
-                        <span class="project-metric"><strong>PWA</strong> offline-ready</span>
-                    </div>
-                    <div class="project-tech">
-                        <span>LangGraph</span>
-                        <span>TensorFlow.js</span>
-                        <span>MediaPipe</span>
-                        <span>FastAPI</span>
-                        <span>React</span>
-                        <span>PostgreSQL</span>
-                        <span>Redis</span>
-                        <span>Docker</span>
-                    </div>
-                    <div class="project-actions">
-                        <a href="#" id="open-asl-demo" class="project-link">
-                            <i class="fas fa-hand-sparkles" aria-hidden="true"></i> Try Demo
-                        </a>
-                        <a href="https://asl-guide.onrender.com" target="_blank" class="project-link">
-                            <i class="fas fa-external-link-alt" aria-hidden="true"></i> Live App
-                        </a>
-                        <a href="https://github.com/shravnchandr/ASL-App" target="_blank" class="project-link project-link-code">
-                            <i class="fab fa-github" aria-hidden="true"></i> View Code
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Sign-Language Model Expansion & Temporal Modeling -->
-                <div class="card project-card animate-on-scroll stagger-3" data-category="research">
-                    <h3>Sign-Language Temporal Modeling</h3>
-                    <p><strong>Research Work:</strong> Experimented with the MS-ASL200 dataset (200 signs, 49
-                        samples/sign)
-                        to assess scaling challenges. Implemented CNN + transformer-based temporal models achieving
-                        80.85% top-1 accuracy.</p>
-                    <div class="project-tech">
-                        <span>Python</span>
-                        <span>PyTorch</span>
-                        <span>Transformers</span>
-                        <span>MediaPipe</span>
-                    </div>
-                </div>
-
-                <!-- Diabetic Retinopathy -->
-                <div class="card project-card animate-on-scroll stagger-2" data-category="ml-cv">
-                    <h3>Diabetic Retinopathy Classifier with XAI</h3>
-                    <p>Achieved 96% Kappa Score using an Xception-based classifier on fundus images.
-                        Integrated Grad-CAM for lesion visualization to improve clinical interpretability.</p>
-                    <div class="project-tech">
-                        <span>Python</span>
-                        <span>Keras</span>
-                        <span>OpenCV</span>
-                    </div>
-                    <div class="project-actions">
-                        <a href="https://github.com/shravnchandr/Diabetic-Retinopathy" target="_blank"
-                            class="project-link project-link-code">
-                            <i class="fab fa-github"></i> View Code
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Publication -->
-                <div class="card project-card animate-on-scroll stagger-3" data-category="research">
-                    <h3>Dynamic Sign Language Translator</h3>
-                    <p><strong>Publication (IEEE ICCAR 2022)</strong>: Developed a lightweight sign-language recognition
-                        model using Mediapipe + XGBoost achieving 90%+ accuracy across 15 phrases.</p>
-                    <p class="project-authors">
-                        <em>Shravan Chandra, Venkatarangan MJ, Jyothi TN</em>
-                    </p>
-                    <div class="project-tech">
-                        <span>MediaPipe</span>
-                        <span>XGBoost</span>
-                        <span>Research</span>
-                    </div>
-                    <div class="project-actions">
-                        <a href="https://doi.org/10.1109/ICCAR55106.2022.9782661" target="_blank" class="project-link">
-                            <i class="fas fa-file-alt"></i> View Paper
-                        </a>
-                    </div>
-                </div>
-
+        <div id="frag-demo">
+            <div class="v2-skeleton v2-sk-section">
+                <div class="v2-sk-item v2-sk-block"></div>
             </div>
         </div>
-    </section>
-
-    <!-- Education Section -->
-    <section id="education" aria-labelledby="education-heading">
-        <div class="container">
-            <h2 id="education-heading" class="animate-on-scroll">Education</h2>
-            <div class="card animate-on-scroll">
-                <div class="exp-header">
-                    <h3>PES University</h3>
-                    <span class="exp-date">Aug 2017 – May 2021</span>
-                </div>
-                <p><strong>BTech in Electrical and Electronics</strong></p>
-                <p>CGPA: 8.5/10.0 | Final Year GPA: 8.75/10.0</p>
-                <p class="mt-sm"><strong>Coursework:</strong> Python, Calculus, Linear Algebra,
-                    Probability & Statistics, Machine Learning, Control Systems</p>
+        <div id="frag-story">
+            <div class="v2-skeleton v2-sk-section">
+                <div class="v2-sk-item v2-sk-block"></div>
             </div>
         </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" aria-labelledby="contact-heading">
-        <div class="container">
-            <div class="contact-wrapper">
-                <div class="contact-header animate-on-scroll">
-                    <h2 id="contact-heading">Get In Touch</h2>
-                    <p class="contact-intro">
-                        Open to Senior ML Engineer and AI/ML roles in Canada and the US. Also happy to connect with anyone working on accessibility technology.
-                    </p>
-                    <div class="social-links">
-                        <a href="mailto:shravnchandr@gmail.com" class="social-icon" aria-label="Send email to Shravan"><i class="fas fa-envelope" aria-hidden="true"></i></a>
-                        <a href="https://linkedin.com/in/shravnchandr" target="_blank" class="social-icon" aria-label="Shravan's LinkedIn profile"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
-                        <a href="https://github.com/shravnchandr" target="_blank" class="social-icon" aria-label="Shravan's GitHub profile"><i class="fab fa-github" aria-hidden="true"></i></a>
-                        <a href="tel:+919606638728" class="social-icon" aria-label="Call Shravan"><i class="fas fa-phone" aria-hidden="true"></i></a>
-                    </div>
-                </div>
-
-                <!-- Contact Form -->
-                <form class="contact-form card animate-on-scroll stagger-2" action="https://formspree.io/f/xovqgkpw" method="POST">
-                    <h3 class="form-title">Send a Message</h3>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name" required placeholder="Your name">
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required placeholder="your@email.com">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" rows="5" required placeholder="Tell me about your project or idea..."></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-full">
-                        <i class="fas fa-paper-plane"></i> Send Message
-                    </button>
-                </form>
+        <div id="frag-stack">
+            <div class="v2-skeleton v2-sk-section">
+                <div class="v2-sk-item v2-sk-block"></div>
             </div>
         </div>
-    </section>
+        <div id="frag-now">
+            <div class="v2-skeleton v2-sk-section">
+                <div class="v2-sk-item v2-sk-block"></div>
+            </div>
+        </div>
+        <div id="frag-contact">
+            <div class="v2-skeleton v2-sk-section">
+                <div class="v2-sk-item v2-sk-block"></div>
+            </div>
+        </div>
 
     </main>
 
-    <!-- Footer -->
     <footer>
         <div class="container">
             <p>&copy; <span id="year"></span> Shravan Chandra. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- ASL Demo Modal -->
-    <div id="asl-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="asl-modal-title">
-        <div class="modal-content">
-            <button class="close-modal" aria-label="Close modal">&times;</button>
-            <div class="asl-container">
-                <header>
-                    <h2 id="asl-modal-title">ASL Guide — Try the Classifier</h2>
-                    <p>Show your hand to the camera to see real-time ASL alphabet recognition.</p>
-                </header>
-
-                <div class="demo-area">
-                    <div class="video-container">
-                        <video class="input_video"></video>
-                        <canvas class="output_canvas"></canvas>
-                        <div class="loading-overlay" id="loading">
-                            <div class="skeleton-loader">
-                                <div class="skeleton-icon">
-                                    <i class="fas fa-hand-sparkles" aria-hidden="true"></i>
-                                </div>
-                                <div class="skeleton-text">
-                                    <div class="skeleton-line"></div>
-                                    <div class="skeleton-line short"></div>
-                                </div>
-                                <div class="loading-progress">
-                                    <div class="progress-bar">
-                                        <div class="progress-fill"></div>
-                                    </div>
-                                    <p class="loading-status">Loading MediaPipe & Model...</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="prediction-box">
-                        <h3>Prediction</h3>
-                        <div id="prediction-text" class="prediction-text" aria-live="polite">-</div>
-                        <div class="confidence-bar">
-                            <div id="confidence-fill" style="width: 0%"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="instructions">
-                    <h3>Instructions</h3>
-                    <ul>
-                        <li>Ensure your hand is clearly visible.</li>
-                        <li>Use good lighting conditions.</li>
-                        <li>Supported: A-Z, Space, Delete.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- MediaPipe Dependencies -->
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
-    <script src="asl_model.js"></script>
-    <script src="script.js"></script>
+    <!-- loader.js fetches html/* fragments; script.js waits until they're injected -->
+    <script src="loader.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 
 </html>

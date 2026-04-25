@@ -1,0 +1,303 @@
+/* v2 Live Demo section — ASL Guide pipeline replay */
+
+.v2-demo-desc {
+    font-size: 16px;
+    color: var(--v2-text-dim);
+    max-width: 680px;
+    margin: 0 0 24px;
+    line-height: 1.6;
+}
+
+.v2-demo-ctas {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+/* Pulsing live dot on the camera CTA */
+.v2-demo-live-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25);
+    animation: v2-pulse 1.4s ease-in-out infinite;
+    flex-shrink: 0;
+}
+
+.v2-demo-camera-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Card chrome reuse — panel box */
+.v2-demo-card {
+    box-shadow: 0 24px 60px -12px rgba(124, 77, 255, 0.18);
+}
+
+/* Replay button */
+.v2-demo-replay {
+    padding: 4px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--v2-border);
+    background: var(--v2-surface-hi);
+    color: var(--v2-text);
+    font-family: 'Fira Code', monospace;
+    font-size: 10px;
+    cursor: pointer;
+    transition: background 200ms ease;
+    white-space: nowrap;
+}
+.v2-demo-replay:hover { background: var(--v2-surface-hi2); }
+
+/* ── Demo body: 2-col (webcam | pipeline) ── */
+.v2-demo-body {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+}
+
+/* ── Webcam simulation panel ── */
+.v2-demo-webcam {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    background: #04080d;
+    border-right: 1px solid var(--v2-border);
+    overflow: hidden;
+}
+
+/* Scanline sweep */
+.v2-demo-scanline {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        180deg,
+        transparent 0%,
+        rgba(0, 191, 165, 0.07) 50%,
+        transparent 100%
+    );
+    animation: scan 3s linear infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Corner tracking brackets */
+.v2-demo-bracket {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    z-index: 2;
+}
+.v2-demo-bracket path { stroke: var(--v2-data); }
+.v2-demo-bracket-tl { top: 8px;    left: 8px; }
+.v2-demo-bracket-tr { top: 8px;    right: 8px; }
+.v2-demo-bracket-bl { bottom: 8px; left: 8px; }
+.v2-demo-bracket-br { bottom: 8px; right: 8px; }
+
+/* Hand skeleton SVG */
+.v2-demo-asl-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+}
+
+/* HUD top-left */
+.v2-demo-hud {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    font-family: 'Fira Code', monospace;
+    font-size: 11px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    z-index: 4;
+}
+.v2-demo-hud-live {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.v2-demo-hud-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--v2-data);
+    box-shadow: 0 0 6px var(--v2-data);
+    animation: v2-pulse 1.4s ease-in-out infinite;
+}
+.v2-demo-hud-live-text { color: var(--v2-data); }
+.v2-demo-hud-sub { color: #666; font-size: 10px; }
+
+/* HUD bottom-left: latency */
+.v2-demo-hud-bottom {
+    position: absolute;
+    bottom: 14px;
+    left: 14px;
+    font-family: 'Fira Code', monospace;
+    font-size: 10px;
+    color: #666;
+    z-index: 4;
+}
+
+/* Big letter overlay (pops in on each sign) */
+.v2-demo-sign-letter {
+    position: absolute;
+    bottom: 14px;
+    right: 14px;
+    font-family: 'Google Sans Flex', 'Outfit', sans-serif;
+    font-size: 72px;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--v2-data);
+    text-shadow: 0 0 24px rgba(0, 191, 165, 0.55);
+    z-index: 4;
+    transform-origin: center bottom;
+}
+.v2-demo-sign-letter.pop {
+    animation: pop 420ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ── Pipeline panel (right column) ── */
+.v2-demo-pipeline {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-height: 360px;
+}
+
+.v2-demo-stage { display: flex; flex-direction: column; }
+
+.v2-demo-log-stage { margin-top: auto; }
+
+.v2-demo-stage-label {
+    font-family: 'Fira Code', monospace;
+    font-size: 10px;
+    color: var(--v2-text-muted);
+    letter-spacing: 1.5px;
+    margin-bottom: 6px;
+}
+
+/* Sign buffer: typed characters */
+.v2-demo-buffer {
+    padding: 12px 16px;
+    border-radius: 12px;
+    background: var(--v2-surface-hi);
+    border: 1px solid var(--v2-border);
+    font-family: 'Fira Code', monospace;
+    font-size: 18px;
+    letter-spacing: 3px;
+    color: var(--v2-text);
+    min-height: 46px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0;
+}
+
+.v2-demo-cursor {
+    color: var(--v2-data);
+    animation: blink 0.8s step-end infinite;
+}
+.v2-demo-cursor.hidden { display: none; }
+
+/* LangGraph grammar panel */
+.v2-demo-grammar-box {
+    padding: 12px 16px;
+    border-radius: 12px;
+    background: var(--v2-surface-hi);
+    border: 1px solid var(--v2-border);
+    font-family: 'Fira Code', monospace;
+    font-size: 11px;
+    color: var(--v2-text-dim);
+    line-height: 1.6;
+    min-height: 42px;
+    transition: border-color 300ms ease, box-shadow 300ms ease;
+}
+.v2-demo-grammar-box.active {
+    border-color: var(--v2-neural);
+    box-shadow: 0 0 0 3px rgba(124, 77, 255, 0.10);
+}
+.v2-demo-waiting {
+    color: var(--v2-text-muted);
+}
+
+/* Output card */
+.v2-demo-output-box {
+    padding: 16px 20px;
+    border-radius: 14px;
+    background: var(--v2-surface-hi);
+    border: 1px solid var(--v2-border);
+    font-family: 'Google Sans Flex', 'Outfit', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--v2-text);
+    min-height: 54px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: -0.3px;
+    transition: background 400ms ease, border-color 400ms ease;
+}
+.v2-demo-output-box.done {
+    background: linear-gradient(
+        135deg,
+        rgba(124, 77, 255, 0.10),
+        rgba(0, 191, 165, 0.10)
+    );
+    border-color: var(--v2-data);
+}
+.v2-demo-output-empty {
+    color: var(--v2-text-muted);
+    font-size: 13px;
+    font-family: 'Fira Code', monospace;
+}
+
+/* Terminal-style log */
+.v2-demo-log {
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: #03060a;
+    border: 1px solid var(--v2-border);
+    font-family: 'Fira Code', monospace;
+    font-size: 10px;
+    line-height: 1.75;
+    height: 90px;
+    overflow: hidden;
+    color: #ccc;
+}
+.v2-demo-log-idle { color: #555; }
+.v2-demo-log-num  { color: #444; }
+.v2-demo-log-mediapipe { color: var(--v2-data); }
+.v2-demo-log-classifier { color: var(--v2-neural); }
+.v2-demo-log-buffer    { color: var(--v2-inference); }
+.v2-demo-log-langgraph { color: var(--v2-neural); }
+.v2-demo-log-out       { color: var(--v2-data); }
+
+/* ── Light theme overrides ── */
+body.light-theme .v2-demo-webcam { background: #0d1420; }
+body.light-theme .v2-demo-log { background: #0d1420; }
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+    .v2-demo-body {
+        grid-template-columns: 1fr;
+    }
+    .v2-demo-webcam {
+        aspect-ratio: 16 / 9;
+        border-right: none;
+        border-bottom: 1px solid var(--v2-border);
+    }
+}
+
+@media (max-width: 600px) {
+    .v2-demo-pipeline { padding: 16px; }
+    .v2-demo-sign-letter { font-size: 48px; }
+}

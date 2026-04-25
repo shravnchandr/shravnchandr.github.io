@@ -1,0 +1,84 @@
+/* v2 Contact section */
+.v2-contact {
+    padding: 120px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.v2-contact::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 30% 30%, rgba(124,77,255,0.18), transparent 55%),
+        radial-gradient(circle at 70% 70%, rgba(0,191,165,0.18), transparent 55%);
+    pointer-events: none;
+}
+
+.v2-contact-inner {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 56px;
+    text-align: center;
+}
+
+.v2-contact-h2 {
+    font-family: 'Google Sans Flex', 'Outfit', sans-serif;
+    font-size: clamp(48px, 8vw, 80px);
+    font-weight: 800;
+    letter-spacing: -2.5px;
+    line-height: 1;
+    margin: 16px 0 24px;
+    color: var(--v2-text);
+}
+
+.v2-contact-accent {
+    background: linear-gradient(90deg, var(--v2-neural), var(--v2-data), var(--v2-inference));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.v2-contact-desc {
+    font-size: 17px;
+    color: var(--v2-text-dim);
+    max-width: 560px;
+    margin: 0 auto;
+    line-height: 1.55;
+}
+
+.v2-contact-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+.v2-contact-actions .v2-btn-primary {
+    padding: 20px 36px;
+    border-radius: 18px;
+    font-family: 'Fira Code', monospace;
+    font-size: 14px;
+}
+
+.v2-contact-actions .v2-btn-secondary {
+    padding: 20px 36px;
+    border-radius: 18px;
+    font-size: 14px;
+}
+
+/* Icon sizing inside contact action buttons */
+.v2-contact-actions .material-symbols-outlined {
+    font-size: 18px;
+    line-height: 1;
+}
+
+.v2-contact-actions .fa-brands {
+    font-size: 15px;
+}
+
+@media (max-width: 768px) {
+    .v2-contact-inner { padding: 0 24px; }
+}

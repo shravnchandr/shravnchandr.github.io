@@ -1,0 +1,181 @@
+<section id="work" class="v2-section" aria-labelledby="work-heading">
+    <div class="v2-inner">
+        <div class="v2-section-header">
+            <span class="v2-code-label">// 01 · SELECTED WORK</span>
+            <span class="v2-code-label">4 projects</span>
+        </div>
+        <h2 id="work-heading" class="v2-section-h2 animate-on-scroll">Projects, shipped.</h2>
+
+        <div class="v2-tabs animate-on-scroll" role="tablist" id="work-tabs" aria-label="Project tabs">
+            <button class="v2-tab active" data-tab="asl-guide" role="tab" aria-selected="true" aria-controls="panel-asl-guide">
+                <span class="v2-tab-star">★</span> ASL Guide
+            </button>
+            <button class="v2-tab" data-tab="retinopathy" role="tab" aria-selected="false" aria-controls="panel-retinopathy">
+                Retinopathy Classifier
+            </button>
+            <button class="v2-tab" data-tab="temporal-asl" role="tab" aria-selected="false" aria-controls="panel-temporal-asl">
+                Temporal Modeling
+            </button>
+            <button class="v2-tab" data-tab="iccar" role="tab" aria-selected="false" aria-controls="panel-iccar">
+                IEEE Publication
+            </button>
+        </div>
+
+        <!-- ASL Guide -->
+        <div id="panel-asl-guide" class="v2-tab-panel active v2-panel-chrome animate-on-scroll stagger-2"
+             data-tab-panel="asl-guide" role="tabpanel">
+            <div>
+                <div class="v2-card-badge badge-featured">★ FEATURED · PRODUCTION</div>
+                <h3 class="v2-card-h3">ASL Guide</h3>
+                <div class="v2-card-tagline">Production ASL learning platform</div>
+                <p class="v2-card-desc">A full-stack ASL learning platform built for real learners — not a demo. LangGraph agentic workflow applies 10 documented ASL grammar rules for accurate English → ASL translation, powered by <strong>Gemini 2.5 Flash</strong> with context caching. In-browser TensorFlow.js classifier with SM-2 spaced repetition, PWA offline support, and dual-layer Redis + LRU caching.</p>
+                <div class="v2-tech-tags">
+                    <span class="v2-tag-gemini">Gemini 2.5 Flash</span>
+                    <span>LangGraph</span><span>TensorFlow.js</span><span>MediaPipe</span>
+                    <span>FastAPI</span><span>React</span><span>PostgreSQL</span>
+                    <span>Redis</span><span>Docker</span>
+                </div>
+                <div class="v2-app-status" aria-live="polite">
+                    <span id="asl-status-dot" class="v2-app-dot"></span>
+                    <span id="asl-status-label">checking…</span>
+                </div>
+                <div class="v2-card-links">
+                    <a href="https://asl-guide.onrender.com" target="_blank" rel="noopener" class="v2-btn-primary" data-m3-press data-m3-morph>Live app ↗</a>
+                    <a href="https://github.com/shravnchandr/ASL-App" target="_blank" rel="noopener" class="v2-btn-secondary" data-m3-press>GitHub ↗</a>
+                </div>
+            </div>
+            <div>
+                <div class="v2-right-label">// KEY METRICS</div>
+                <div class="v2-metric-row"><span class="v2-mv" style="color:var(--v2-inference)">95.5%</span><span class="v2-ml">accuracy</span></div>
+                <div class="v2-metric-row"><span class="v2-mv" style="color:var(--v2-neural)">36</span><span class="v2-ml">sign classes</span></div>
+                <div class="v2-metric-row"><span class="v2-mv" style="color:var(--v2-data)">10</span><span class="v2-ml">grammar rules</span></div>
+                <div class="v2-metric-row"><span class="v2-mv" style="color:var(--v2-inference)">PWA</span><span class="v2-ml">offline-ready</span></div>
+                <div class="v2-code-block">
+                    <div class="v2-cb-header">// stack</div>
+                    browser → MediaPipe<br>
+                    &nbsp;&nbsp;↓ 21 landmarks · TF.js<br>
+                    FastAPI → LangGraph<br>
+                    &nbsp;&nbsp;↓ 10 ASL grammar rules<br>
+                    &nbsp;&nbsp;↓ Redis + LRU cache<br>
+                    Postgres → SM-2 scheduling
+                </div>
+            </div>
+
+            <!-- Architecture Trace — spans both grid columns -->
+            <details class="v2-arch-trace">
+                <summary class="v2-arch-toggle" aria-label="Toggle system architecture diagram">
+                    <span class="v2-arch-toggle-ico" aria-hidden="true">⬡</span>
+                    System Architecture
+                    <span class="v2-arch-toggle-sub">// click to expand</span>
+                </summary>
+                <div class="v2-arch-diagram">
+                    <div class="v2-arch-layer v2-arch-browser">
+                        <div class="v2-arch-lbl">BROWSER</div>
+                        <div class="v2-arch-body">
+                            Camera Feed<span class="v2-arch-sep"> → </span><span class="v2-arch-chip chip-data">MediaPipe Hands · 21 landmarks</span><br>
+                            <span class="v2-arch-sep">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓</span><br>
+                            <span class="v2-arch-chip chip-data">TF.js MLP Classifier</span><span class="v2-arch-dim"> · 95.5% accuracy · 36 classes</span><br>
+                            <span class="v2-arch-sep">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓ 5-frame rolling buffer</span><br>
+                            Stable prediction<span class="v2-arch-sep"> → </span><span class="v2-arch-chip chip-data">React UI · PWA offline cache</span>
+                        </div>
+                    </div>
+
+                    <div class="v2-arch-connector">
+                        <span class="v2-arch-connector-line"></span>
+                        <span class="v2-arch-connector-label">POST /api/translate</span>
+                        <span class="v2-arch-connector-line"></span>
+                    </div>
+
+                    <div class="v2-arch-layer v2-arch-api">
+                        <div class="v2-arch-lbl">FASTAPI</div>
+                        <div class="v2-arch-body">
+                            Rate limiter<span class="v2-arch-sep"> → </span>Cache check<span class="v2-arch-sep"> (</span><span class="v2-arch-chip chip-inference">Redis + LRU</span><span class="v2-arch-sep">)</span><br>
+                            <span class="v2-arch-sep">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓ cache miss</span><br>
+                            <span class="v2-arch-chip chip-inference">Grammar Agent</span><span class="v2-arch-dim"> · Gemini 2.5 Flash · 10 ASL rules</span><br>
+                            <span class="v2-arch-sep">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓ context cache · 24h TTL</span><br>
+                            <span class="v2-arch-chip chip-inference">Translation Agent</span><span class="v2-arch-dim"> + KB grounding</span><br>
+                            <span class="v2-arch-sep">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;100 verified signs · structured output</span><br>
+                            <span class="v2-arch-sep">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓ cache write</span>
+                        </div>
+                    </div>
+
+                    <div class="v2-arch-connector">
+                        <span class="v2-arch-connector-line"></span>
+                        <span class="v2-arch-connector-label">persist</span>
+                        <span class="v2-arch-connector-line"></span>
+                    </div>
+
+                    <div class="v2-arch-layer v2-arch-data">
+                        <div class="v2-arch-lbl">DATA LAYER</div>
+                        <div class="v2-arch-body">
+                            <span class="v2-arch-chip chip-neural">Redis</span><span class="v2-arch-dim"> · in-memory LRU fallback · </span><span class="v2-arch-chip chip-neural">SQLite / PostgreSQL</span><br>
+                            <span class="v2-arch-dim">Feedback · Analytics · SM-2 spaced repetition</span>
+                        </div>
+                    </div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Retinopathy -->
+        <div id="panel-retinopathy" class="v2-tab-panel v2-panel-chrome"
+             data-tab-panel="retinopathy" role="tabpanel">
+            <div>
+                <div class="v2-card-badge badge-2">CV · HEALTHCARE</div>
+                <h3 class="v2-card-h3">Diabetic Retinopathy Classifier</h3>
+                <div class="v2-card-tagline">Clinical-grade with Grad-CAM</div>
+                <p class="v2-card-desc">Xception-based classifier on fundus images with Grad-CAM lesion visualization for clinical interpretability.</p>
+                <div class="v2-tech-tags">
+                    <span>Keras</span><span>OpenCV</span><span>Xception</span><span>Grad-CAM</span>
+                </div>
+                <div class="v2-card-links">
+                    <a href="https://github.com/shravnchandr/Diabetic-Retinopathy" target="_blank" rel="noopener" class="v2-btn-secondary" data-m3-press>GitHub ↗</a>
+                </div>
+            </div>
+            <div>
+                <div class="v2-right-label">// KEY METRICS</div>
+                <div class="v2-metric-row"><span class="v2-mv" style="color:var(--v2-neural)">96%</span><span class="v2-ml">Kappa score</span></div>
+            </div>
+        </div>
+
+        <!-- Temporal ASL -->
+        <div id="panel-temporal-asl" class="v2-tab-panel v2-panel-chrome"
+             data-tab-panel="temporal-asl" role="tabpanel">
+            <div>
+                <div class="v2-card-badge badge-3">RESEARCH · CV</div>
+                <h3 class="v2-card-h3">Sign-Language Temporal Modeling</h3>
+                <div class="v2-card-tagline">Scaling to 200 signs</div>
+                <p class="v2-card-desc">Experimented with MS-ASL200 (200 signs, 49 samples/sign) to assess scaling. Implemented CNN + transformer temporal models.</p>
+                <div class="v2-tech-tags">
+                    <span>PyTorch</span><span>Transformers</span><span>MediaPipe</span>
+                </div>
+            </div>
+            <div>
+                <div class="v2-right-label">// KEY METRICS</div>
+                <div class="v2-metric-row"><span class="v2-mv" style="color:var(--v2-data)">80.85%</span><span class="v2-ml">top-1 accuracy</span></div>
+            </div>
+        </div>
+
+        <!-- ICCAR -->
+        <div id="panel-iccar" class="v2-tab-panel v2-panel-chrome"
+             data-tab-panel="iccar" role="tabpanel">
+            <div>
+                <div class="v2-card-badge">PUBLICATION · RESEARCH</div>
+                <h3 class="v2-card-h3">Dynamic Sign Language Translator</h3>
+                <div class="v2-card-tagline">IEEE ICCAR 2022 publication</div>
+                <p class="v2-card-desc">Lightweight sign-language recognition using MediaPipe + XGBoost. Published in IEEE ICCAR 2022.</p>
+                <div class="v2-tech-tags">
+                    <span>MediaPipe</span><span>XGBoost</span>
+                </div>
+                <div class="v2-card-links">
+                    <a href="https://doi.org/10.1109/ICCAR55106.2022.9782661" target="_blank" rel="noopener" class="v2-btn-neural" data-m3-press>IEEE paper ↗</a>
+                    <a href="https://scholar.google.com/scholar?q=10.1109/ICCAR55106.2022.9782661" target="_blank" rel="noopener" class="v2-btn-secondary" data-m3-press>Google Scholar ↗</a>
+                </div>
+            </div>
+            <div>
+                <div class="v2-right-label">// KEY METRICS</div>
+                <div class="v2-metric-row"><span class="v2-mv" style="color:var(--v2-inference)">90%+</span><span class="v2-ml">accuracy</span></div>
+                <div class="v2-metric-row"><span class="v2-mv" style="color:var(--v2-neural)">15</span><span class="v2-ml">phrases</span></div>
+            </div>
+        </div>
+    </div>
+</section>

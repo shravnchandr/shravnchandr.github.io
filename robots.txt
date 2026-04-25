@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://shravnchandr.github.io/sitemap.xml

@@ -1,0 +1,107 @@
+<section id="hero" class="v2-hero" aria-label="Introduction">
+    <div class="v2-blob-top" aria-hidden="true"></div>
+
+    <div class="v2-hero-inner">
+        <!-- Left: headline + CTA -->
+        <div class="v2-hero-left animate-in">
+            <div class="v2-status-badge">
+                <span class="v2-status-dot" aria-hidden="true"></span>
+                OPEN TO NORTH AMERICA — CA &amp; US
+            </div>
+
+            <h1 class="v2-hero-h1">
+                I build AI that
+                <span class="v2-accent-word">
+                    actually&nbsp;works
+                    <svg class="v2-underline-svg" viewBox="0 0 300 14"
+                         preserveAspectRatio="none" aria-hidden="true">
+                        <path d="M2,9 C 60,2 120,12 180,6 S 280,10 298,5"
+                              fill="none" stroke-width="3" stroke-linecap="round"/>
+                    </svg>
+                </span>
+                for the people who need it.
+            </h1>
+
+            <p class="v2-hero-desc">
+                <strong>A deployment failure changed how I build.</strong>
+                A left-handed user signed to my model and it failed — I'd built for an imaginary user.
+                5 years, one IEEE paper, and a live ASL learning platform later, it still drives everything.
+            </p>
+
+            <div class="v2-hero-cta">
+                <a href="https://asl-guide.onrender.com/camera"
+                   target="_blank" rel="noopener"
+                   class="v2-btn-primary v2-demo-camera-btn"
+                   data-m3-press data-m3-morph>
+                    <span class="v2-demo-live-dot" aria-hidden="true"></span>
+                    Try live ASL recognition ↗
+                </a>
+                <a href="#work" class="v2-btn-secondary" data-m3-press>See my work</a>
+                <a href="Shravan_Chandra_Resume.pdf"
+                   class="v2-btn-text" download data-m3-press>⬇ Resume</a>
+            </div>
+        </div>
+
+        <!-- Right: live ASL demo card -->
+        <div class="v2-hero-right animate-in delay-2">
+            <div class="v2-asl-card">
+                <div class="v2-asl-chrome">
+                    <span class="v2-chrome-dot dot-red"    aria-hidden="true"></span>
+                    <span class="v2-chrome-dot dot-yellow" aria-hidden="true"></span>
+                    <span class="v2-chrome-dot dot-green"  aria-hidden="true"></span>
+                    <div class="v2-asl-url">asl-guide.onrender.com — live</div>
+                    <span class="v2-rec-badge">● REC</span>
+                </div>
+
+                <div class="v2-asl-body">
+                    <div class="v2-asl-canvas-wrap">
+                        <!-- Webcam feed sits behind the SVG in live mode -->
+                        <video id="webcam-video" class="v2-webcam-video"
+                               autoplay muted playsinline aria-hidden="true"></video>
+                        <svg id="asl-svg" class="v2-asl-svg" viewBox="0 0 100 125"
+                             aria-label="Animated ASL hand sign"></svg>
+                        <div class="v2-asl-meta" aria-hidden="true">
+                            <div>MediaPipe · 21 landmarks</div>
+                            <div>TF.js · in-browser</div>
+                            <div class="v2-data-text">latency: 18ms</div>
+                        </div>
+                        <div class="v2-signing-label" id="asl-signing-label" aria-live="polite">
+                            SIGNING: A · ASL FINGERSPELL
+                        </div>
+                    </div>
+
+                    <div class="v2-asl-pred" aria-live="polite">
+                        <div class="v2-pred-micro">PREDICTION</div>
+                        <div class="v2-pred-letter" id="asl-pred-letter">A</div>
+                        <div class="v2-conf-row">
+                            <span>confidence</span>
+                            <span class="v2-data-text" id="asl-conf-val">95.0%</span>
+                        </div>
+                        <div class="v2-conf-track">
+                            <div class="v2-conf-fill" id="asl-conf-fill" style="width:95%"></div>
+                        </div>
+                        <div class="v2-pred-micro" style="margin-top:4px">TOP-3</div>
+                        <div id="asl-top3" class="v2-top3" aria-hidden="true"></div>
+                        <div class="v2-asl-stats">
+                            95.5% acc · 36 classes<br>
+                            10 ASL grammar rules
+                        </div>
+                    </div>
+                </div>
+                <!-- Live webcam toggle -->
+                <div class="v2-webcam-cta">
+                    <button id="webcam-toggle" class="v2-webcam-btn"
+                            aria-label="Activate live webcam ASL classifier">
+                        <span class="v2-webcam-dot" aria-hidden="true"></span>
+                        <span class="v2-webcam-label">Try live →</span>
+                    </button>
+                    <span class="v2-webcam-hint" aria-hidden="true">your camera · 36 classes</span>
+                </div>
+            </div>
+            </div>
+            <div class="v2-asl-caption" aria-hidden="true">
+                ↑ ASL fingerspell · A–Z + 0–9 · random cycle · 36 classes
+            </div>
+        </div>
+    </div>
+</section>

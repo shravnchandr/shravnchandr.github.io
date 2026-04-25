@@ -1,0 +1,57 @@
+/* v2 global base — body defaults dark, section wrappers */
+body {
+    background: var(--v2-bg);
+    color: var(--v2-text);
+    font-family: 'Outfit', system-ui, sans-serif;
+}
+
+/* Hide content while HTML fragments are being injected (prevents FOUC) */
+body.loading { visibility: hidden; }
+
+/* Transitioning only color (not background shorthand) avoids gradient-reparse flash */
+body, .v2-nav, .v2-asl-card, .v2-metric-cell, .v2-tech-tags span {
+    transition: color 220ms ease;
+}
+
+.v2-section {
+    padding: 96px 0;
+    background: var(--v2-bg);
+}
+
+.v2-section.v2-surface {
+    background: var(--v2-surface);
+}
+
+.v2-inner {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 0 56px;
+}
+
+.v2-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 12px;
+}
+
+.v2-code-label {
+    font-family: 'Fira Code', monospace;
+    font-size: 12px;
+    color: var(--v2-text-muted);
+    letter-spacing: 2px;
+}
+
+.v2-section-h2 {
+    font-family: 'Google Sans Flex', 'Outfit', sans-serif;
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    margin: 0 0 40px;
+    color: var(--v2-text);
+}
+
+@media (max-width: 900px) {
+    .v2-inner { padding: 0 24px; }
+    .v2-section { padding: 64px 0; }
+}

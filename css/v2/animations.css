@@ -1,0 +1,144 @@
+/**
+ * css/v2/animations.css — M3 Expressive keyframes + interaction rules.
+ *
+ * Loaded after css/animations.css so these selectors take precedence
+ * for v2 sections. Defines:
+ *   - M3 spring keyframes (m3LetterPop, pop, scan, blink, float, v2SlideUp)
+ *   - [data-m3-press]  — spring press-state for buttons
+ *   - [data-m3-morph]  — shape-morph (pill) on hover
+ *   - [data-hover-lift] — card hover lift
+ *   - .animate-in       — entry animation (fires on load, not scroll)
+ *   - .stagger-2 … .stagger-5 — transition-delay helpers
+ *   - Upgraded .animate-on-scroll with M3 Expressive spring bounce
+ */
+
+/* ── Keyframes ────────────────────────────────────────────── */
+
+/* Scanline sweep (used in Live Demo webcam panel) */
+@keyframes scan {
+    0%   { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+}
+
+/* Spring-scale pop — for letter/digit overlays in demo */
+@keyframes pop {
+    0%   { transform: scale(0.6);  opacity: 0; }
+    60%  { transform: scale(1.1);  opacity: 1; }
+    100% { transform: scale(1);    opacity: 1; }
+}
+
+/* Cursor blink */
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+/* Subtle float (decorative blobs, badges) */
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-6px); }
+}
+
+/* M3 Expressive letter swap — spring overshoot then settle */
+@keyframes m3LetterPop {
+    0%   { transform: scale(0.75) translateY(8px);  opacity: 0.4; }
+    45%  { transform: scale(1.12) translateY(-2px); opacity: 1; }
+    70%  { transform: scale(0.97) translateY(1px); }
+    100% { transform: scale(1)    translateY(0);    opacity: 1; }
+}
+
+/* Hero column entry (fires once on load; not scroll-gated) */
+@keyframes v2SlideUp {
+    from { opacity: 0; transform: translateY(32px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0)    scale(1); }
+}
+
+/* ── animate-in ───────────────────────────────────────────── */
+/* Used by hero left/right columns — fires on page load */
+.animate-in {
+    animation: v2SlideUp 720ms cubic-bezier(0.22, 1.18, 0.36, 1.03) both;
+}
+.animate-in.delay-2 { animation-delay: 180ms; }
+.animate-in.delay-3 { animation-delay: 360ms; }
+
+/* ── Stagger transition-delay helpers ─────────────────────── */
+/* Applied alongside .animate-on-scroll to offset reveal timing */
+.stagger-2 { transition-delay: 90ms; }
+.stagger-3 { transition-delay: 180ms; }
+.stagger-4 { transition-delay: 270ms; }
+.stagger-5 { transition-delay: 360ms; }
+
+/* ── Scroll-reveal (M3 Expressive override) ───────────────── */
+/* Overrides the base css/animations.css .animate-on-scroll with
+   M3 spatial spring that has a subtle bounce on entry. */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(28px) scale(0.97);
+    transition:
+        opacity  420ms cubic-bezier(0.33, 1, 0.68, 1),
+        transform 720ms cubic-bezier(0.22, 1.18, 0.36, 1.03);
+}
+.animate-on-scroll.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* Impact metric cells stagger via nth-child (independent of class) */
+.v2-metrics-grid .v2-metric-cell:nth-child(1) { transition-delay:   0ms; }
+.v2-metrics-grid .v2-metric-cell:nth-child(2) { transition-delay:  90ms; }
+.v2-metrics-grid .v2-metric-cell:nth-child(3) { transition-delay: 180ms; }
+.v2-metrics-grid .v2-metric-cell:nth-child(4) { transition-delay: 270ms; }
+.v2-metrics-grid .v2-metric-cell:nth-child(5) { transition-delay: 360ms; }
+.v2-metrics-grid .v2-metric-cell:nth-child(6) { transition-delay: 450ms; }
+
+/* ── M3 Expressive button press state ────────────────────── */
+[data-m3-press] {
+    transition:
+        transform      420ms cubic-bezier(0.34, 1.56, 0.64, 1),
+        border-radius  340ms cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow     260ms ease,
+        background     220ms ease,
+        color          220ms ease;
+    will-change: transform, border-radius;
+}
+[data-m3-press]:hover  { transform: translateY(-2px) scale(1.02); }
+[data-m3-press]:active {
+    transform: scale(0.94);
+    transition:
+        transform     90ms cubic-bezier(0.4, 0, 0.2, 1),
+        border-radius 160ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Shape-morph: primary CTAs expand to pill on hover */
+[data-m3-morph]:hover { border-radius: 999px !important; }
+
+/* ── Hover lift (project + experience cards) ──────────────── */
+[data-hover-lift] {
+    transition:
+        transform  420ms cubic-bezier(0.22, 1.18, 0.36, 1.03),
+        box-shadow 240ms ease;
+}
+[data-hover-lift]:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.28);
+}
+
+/* ── Reduced-motion overrides ─────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+    .animate-in,
+    .animate-in.delay-2,
+    .animate-in.delay-3 {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+    .animate-on-scroll {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+    [data-m3-press] { transition: background 120ms ease, color 120ms ease; }
+    [data-m3-press]:hover,
+    [data-m3-press]:active { transform: none; }
+    [data-m3-morph]:hover  { border-radius: inherit !important; }
+    [data-hover-lift]:hover { transform: none; box-shadow: none; }
+}

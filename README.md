@@ -10,48 +10,117 @@ Personal portfolio website focused on accessibility AI, production GenAI systems
 
 ### UI/UX
 - Responsive design (desktop, tablet, mobile)
-- Dark/Light theme toggle with `localStorage` persistence and `prefers-color-scheme` fallback
-- Canvas particle animation in hero section (respects `prefers-reduced-motion`, pauses when tab hidden)
+- Dark/light theme toggle with `localStorage` persistence
+- Material 3 Expressive design system — spring-based motion, M3 press/morph/lift interactions
 - Scroll-triggered animations via IntersectionObserver with staggered reveals
-- Material 3 Expressive design system with spring-based motion
+- Skeleton shimmer screens while HTML fragments load (no blank flash)
+- Fragment prefetching — all `html/*.html` files declared as `<link rel="prefetch">` for near-instant load
 
-### Hero Badges
-Two credential badges below the CTA buttons:
-- **Published in IEEE ICCAR 2022** — links to the paper DOI
-- **ASL Guide — Live Production App** — links to the deployed app
+### Navigation
+- Sticky nav with active-section highlight (IntersectionObserver)
+- **Semantic search** (`⌘K` / `Ctrl+K`) — keyword index over all projects and experience; keyboard navigable (↑↓ Enter Escape); grouped results
+- **Logo Easter egg** — clicking the logo spells `S-H-R-A-V-A-N` on the hero ASL hand at 2× speed, then resumes the random cycle
 
-### Projects
-- **ASL Guide** (featured) — full-stack production ASL learning platform with LangGraph agentic workflow, TensorFlow.js in-browser classifier, SM-2 spaced repetition, PWA, Redis caching
-- **Sign-Language Temporal Modeling** — CNN + transformer research on MS-ASL200
-- **Diabetic Retinopathy Classifier** — Xception + Grad-CAM, 96% Kappa Score
-- **IEEE Publication** — ICCAR 2022, sign language recognition
+### Hero
+- Procedural SVG ASL hand skeleton (21-landmark, MediaPipe order) animating through A–Z + 0–9
+- **Live webcam ASL classifier** — "Try live →" button activates the camera; MediaPipe Hands feeds world landmarks (21 × x,y,z) into the embedded trained MLP (63→128→64→28) for in-browser inference; no server round-trip
+- Live confidence panel with Top-3 predictions and animated confidence bar
+- Credential badges: IEEE ICCAR 2022 paper DOI + ASL Guide live app status (live ping)
+
+### Projects (`#work`)
+Tab-switching panel for four projects, each with a left-column description + right-column metrics:
+- **ASL Guide** — LangGraph · TF.js · MediaPipe · FastAPI · Redis · PWA; includes an expandable **Architecture Trace** (`<details>`) showing the full MediaPipe → TF.js → FastAPI → LangGraph → Redis/Postgres data flow
+- **Diabetic Retinopathy Classifier** — Xception + Grad-CAM, 96% Kappa
+- **Sign-Language Temporal Modeling** — CNN + Transformer, MS-ASL200, 80.85%
+- **IEEE ICCAR 2022** — XGBoost + MediaPipe, dynamic sign language, published DOI
+
+### Live Demo (`#demo`)
+Scripted replay of the ASL Guide pipeline: `HELLO WORLD` → grammar agent → translation output. Fires on scroll into view; replayable.
+
+### Experience & Education (`#story`)
+Dual-nav: top tab buttons + right-column role-nav (both in sync). Four tabs: Bosch Senior ML Engineer, Bosch ML Engineer, Bosch Software Developer, Goldman Sachs.
+
+### Accessibility Lab
+Toggle button in the nav (universal access icon) activates `body.a11y-lab`:
+- CSS outlines highlight ARIA landmarks (orange), `aria-label` elements (teal), and `aria-live` regions (purple)
+- Side panel slides in from the right listing six accessibility decisions (ARIA landmarks, labels, live regions, reduced-motion fallback, WCAG-AA contrast, keyboard / skip nav)
+- State persisted in `localStorage`
+
+### Contact (`#contact`)
+Three CTA buttons — Email (Material Symbols `mail` icon), LinkedIn, GitHub.
+
+### Recruiter Modal
+"For Recruiters" trigger button in the contact section opens a spring-animated overlay with role targets (title, location, availability, focus areas) and a 2×2 team-fit grid (Google, Meta, Amazon, Microsoft with specific team names).
+
+### Console Easter Egg
+DevTools console prints a styled `%c` banner: stack summary and a GitHub invite for curious engineers who open the console.
 
 ---
 
 ## Tech Stack
 
-- **Frontend**: HTML5, CSS3 (Custom Properties), Vanilla JavaScript (ES6+)
+- **Frontend**: HTML5, CSS3 (Custom Properties), Vanilla JavaScript ES modules — no build tools, no npm
 - **Design system**: Material 3 Expressive (custom CSS implementation)
-- **Icons**: Font Awesome 6.4
-- **Fonts**: Google Sans Flex (local), Fira Code + Outfit (Google Fonts CDN)
+- **Icons**: Font Awesome 6.4 (UI + brand icons), Material Symbols Outlined (contact section)
+- **Fonts**: Google Sans Flex (local TTF), Fira Code + Outfit (Google Fonts CDN)
 
 ---
 
 ## Project Structure
 
 ```
-index.html              # Single-page app — all content
-script.js               # All JS logic: UI, theme, particles, project filters, ASL modals
-asl_model.js            # Pre-trained MLP weights + StandardScaler params as JS globals
-export_model.py         # Generates asl_model.js from a trained PyTorch model
+index.html                  # Lean shell — head, fragment placeholders, skeleton screens
+loader.js                   # Fetches html/*.html in parallel; sets window.__sectionsReady
+script.js                   # ES module entry point — imports js/* and calls initApp()
+
+js/
+  theme.js                  # Dark/light toggle (localStorage key: 'theme-v2')
+  nav.js                    # Hamburger, active-section highlight, logo Easter egg (spellSequence)
+  scroll.js                 # Scroll-reveal, CountUp, back-to-top, smooth scroll
+  tabs.js                   # Work tab switcher + Story dual-nav
+  asl.js                    # Procedural SVG ASL hand; exports initASL, SPEC, SIGNS, CONNECTIONS, spellSequence
+  demo.js                   # Scripted ASL pipeline demo (HELLO WORLD)
+  a11y.js                   # Accessibility Lab toggle + side panel
+  search.js                 # ⌘K semantic search overlay (keyword index, keyboard nav)
+  webcam.js                 # Live webcam ASL classifier: MediaPipe Hands + MLP inference on world landmarks
+  recruiter.js              # Recruiter modal: role targets + team-fit grid (pure DOM, no innerHTML)
+
+html/
+  nav.html                  # Nav: logo, pill links, search trigger, theme toggle, a11y btn, hire-me
+  hero.html                 # Hero: headline, ASL card, credential badges
+  impact.html               # 6 CountUp impact metrics
+  work.html                 # Project tabs with Architecture Trace on ASL Guide
+  demo.html                 # Live demo section
+  story.html                # Experience tabs + role-nav + education
+  stack.html                # 5-column skills grid
+  now.html                  # Now + OSS contributions
+  contact.html              # Contact CTAs (Email / LinkedIn / GitHub)
+
 css/
-├── main.css            # Cascading @import entry point
-├── variables.css       # All design tokens (M3 colors, type scale, spring motion)
-├── base.css            # Reset and typography
-├── layout.css          # Container, grid, flex, spacing utilities
-├── animations.css      # Spring keyframes and scroll animation classes
-├── components/         # buttons, cards, modals, navbar, footer
-└── sections/           # hero, metrics, about, skills, experience, projects, contact
+  main.css                  # @import entry point
+  variables.css             # All design tokens (dark + light-theme palette)
+  v2/
+    base.css                # body background, .v2-section, body.loading FOUC guard
+    skeleton.css            # Shimmer skeleton screens (nav, hero, impact, below-fold)
+    nav.css                 # Sticky nav, mobile responsive
+    hero.css                # Hero layout, ASL card, wavy underline SVG
+    impact.css              # 6-cell metrics grid
+    demo.css                # Live demo section
+    story.css               # Experience tabs, role-nav, education
+    tabs.css                # .v2-tab, .v2-tab-panel show/hide
+    cards.css               # Panel chrome, badges, buttons, Architecture Trace diagram
+    stack.css               # Skills grid
+    now.css                 # Now + OSS cards
+    contact.css             # Contact section gradient bg + icon sizing
+    a11y.css                # Accessibility Lab toggle, side panel, ARIA highlight overlays
+    search.css              # ⌘K search overlay, modal, results, nav trigger
+    webcam.css              # Webcam video overlay, toggle button, status dot
+    recruiter.css           # Recruiter modal overlay, team-fit grid
+    animations.css          # M3 spring keyframes — loaded last
+
+asl_model.js                # Trained MLP weights + StandardScaler (loaded lazily by webcam.js on first activation)
+robots.txt                  # Crawl rules (allow all) + sitemap pointer
+sitemap.xml                 # URL index for SEO
 ```
 
 ---
@@ -59,22 +128,20 @@ css/
 ## Running Locally
 
 ```bash
-# Recommended — avoids CORS issues with webcam and MediaPipe CDN
+# ES modules and fetch() require a local server (file:// breaks CORS)
 python3 -m http.server
 # Open http://localhost:8000
 ```
-
-Direct `open index.html` works for basic browsing.
 
 ---
 
 ## Deployment
 
-Auto-deploys to GitHub Pages on push to `master`. Allow 2–3 minutes after push.
+Push to `master` → GitHub Pages deploys automatically. Allow 2–3 minutes for propagation.
 
 ```bash
-git add .
-git commit -m "your message"
+git add -p          # stage selectively
+git commit -m "feat: your message"
 git push origin master
 ```
 

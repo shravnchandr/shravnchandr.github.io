@@ -1,0 +1,140 @@
+/**
+ * css/v2/webcam.css — Live webcam ASL classifier UI.
+ *
+ * Webcam video overlays inside .v2-asl-canvas-wrap (position: relative).
+ * Toggle button lives below the ASL card as .v2-webcam-cta.
+ * App live-status badge sits in the ASL Guide project card.
+ */
+
+/* ── Webcam video overlay ───────────────────────────────────── */
+.v2-webcam-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+    /* Mirror for natural self-view on front-facing camera */
+    transform: scaleX(-1);
+    opacity: 0;
+    transition: opacity 400ms ease;
+    z-index: 0;
+}
+
+/* SVG stays above the video feed */
+.v2-asl-canvas-wrap .v2-asl-svg { position: relative; z-index: 1; }
+
+.v2-webcam-video.v2-webcam-video--active { opacity: 0.72; }
+
+/* ── Webcam toggle CTA row ──────────────────────────────────── */
+.v2-webcam-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 16px;
+    border-top: 1px solid var(--v2-border);
+}
+
+.v2-webcam-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--v2-border);
+    background: var(--v2-surface-hi);
+    color: var(--v2-text-dim);
+    font-family: 'Fira Code', monospace;
+    font-size: 11px;
+    cursor: pointer;
+    transition: background 180ms ease, color 180ms ease, border-color 180ms ease;
+}
+
+.v2-webcam-btn:hover:not(:disabled) {
+    background: rgba(0, 191, 165, 0.12);
+    border-color: rgba(0, 191, 165, 0.4);
+    color: var(--v2-data);
+}
+
+.v2-webcam-btn--active,
+.v2-webcam-btn--active:hover {
+    background: rgba(255, 109, 0, 0.12);
+    border-color: rgba(255, 109, 0, 0.4);
+    color: var(--v2-inference);
+}
+
+.v2-webcam-btn:disabled { opacity: 0.55; cursor: wait; }
+
+.v2-webcam-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--v2-data);
+    flex-shrink: 0;
+    transition: background 300ms ease;
+}
+
+/* Pulse when live */
+.v2-webcam-btn--active .v2-webcam-dot {
+    animation: v2-pulse 1.2s ease infinite;
+}
+
+.v2-webcam-hint {
+    font-family: 'Fira Code', monospace;
+    font-size: 10px;
+    color: var(--v2-text-muted);
+}
+
+/* ── App live-status badge (ASL Guide card) ─────────────────── */
+.v2-app-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 10px 3px 8px;
+    border-radius: 999px;
+    background: var(--v2-surface-hi);
+    border: 1px solid var(--v2-border);
+    font-family: 'Fira Code', monospace;
+    font-size: 10px;
+    color: var(--v2-text-muted);
+    margin-top: 10px;
+    margin-bottom: 4px;
+}
+
+.v2-app-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: var(--v2-text-muted);
+}
+
+.v2-app-dot--live {
+    background: var(--v2-data);
+    animation: v2-pulse 2s ease infinite;
+}
+
+.v2-app-dot--slow {
+    background: var(--v2-inference);
+}
+
+.v2-app-dot--offline {
+    background: var(--v2-text-muted);
+}
+
+/* ── Gemini tag inside .v2-tech-tags ────────────────────────── */
+.v2-tech-tags .v2-tag-gemini {
+    background: rgba(66, 133, 244, 0.12);
+    color: #6da4f8;
+    border-color: rgba(66, 133, 244, 0.3);
+    font-weight: 700;
+}
+
+/* ── Reduced motion ─────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+    .v2-webcam-video,
+    .v2-webcam-btn,
+    .v2-webcam-dot { transition: none; animation: none; }
+    .v2-webcam-btn--active .v2-webcam-dot { animation: none; }
+}

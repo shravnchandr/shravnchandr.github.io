@@ -165,3 +165,39 @@ body.light-theme {
     --md-sys-color-on-surface-variant: #43474e;
     --md-sys-color-outline: #73777f;
 }
+
+/* ─────────────────────────────────────────────────────────────
+   v2 Lab palette — Dark is the default
+   ───────────────────────────────────────────────────────────── */
+:root {
+    --v2-bg:          #0b0f14;
+    --v2-surface:     #131820;
+    --v2-surface-hi:  #1a212c;
+    --v2-surface-hi2: #222a36;
+    --v2-border:      #2a3342;
+    --v2-text:        #e6ebf2;
+    --v2-text-dim:    #a0a9b8;
+    --v2-text-muted:  #6b7585;
+    --v2-neural:      #7c4dff;
+    --v2-data:        #00bfa5;
+    --v2-inference:   #ff6d00;
+    --v2-hero-glow:   radial-gradient(circle at 70% 20%, #7c4dff22, transparent 60%),
+                      radial-gradient(circle at 20% 80%,  #00bfa522, transparent 60%);
+}
+
+/* Light-mode overrides */
+body.light-theme {
+    --v2-bg:          #f7f5f0;
+    --v2-surface:     #ffffff;
+    --v2-surface-hi:  #f1ede4;
+    --v2-surface-hi2: #e7e2d6;
+    --v2-border:      #d6cfbe;
+    --v2-text:        #1a1a1a;
+    --v2-text-dim:    #4a4a4a;
+    --v2-text-muted:  #7a7560;
+    --v2-neural:      #7c4dff;
+    --v2-data:        #00a189;
+    --v2-inference:   #e55a00;
+    --v2-hero-glow:   radial-gradient(circle at 70% 20%, #7c4dff18, transparent 60%),
+                      radial-gradient(circle at 20% 80%,  #00a18918, transparent 60%);
+}

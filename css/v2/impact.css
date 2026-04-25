@@ -1,0 +1,63 @@
+/* v2 Impact — 6-number strip */
+.v2-impact {
+    padding: 56px 0;
+    background: var(--v2-bg);
+    border-top: 1px solid var(--v2-border);
+    border-bottom: 1px solid var(--v2-border);
+}
+
+.v2-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1px;
+    background: var(--v2-border);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--v2-border);
+    margin-top: 24px;
+}
+
+.v2-metric-cell {
+    padding: 28px 22px;
+    background: var(--v2-surface);
+    position: relative;
+}
+
+.v2-metric-idx {
+    position: absolute;
+    top: 12px; right: 14px;
+    font-family: 'Fira Code', monospace;
+    font-size: 10px;
+    color: var(--v2-text-muted);
+    letter-spacing: 1px;
+}
+
+.v2-metric-val {
+    font-family: 'Google Sans Flex', 'Outfit', sans-serif;
+    font-size: clamp(28px, 3vw, 44px);
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    line-height: 1;
+}
+
+.v2-metric-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--v2-text);
+    margin-top: 8px;
+}
+
+.v2-metric-sub {
+    font-size: 11px;
+    color: var(--v2-text-muted);
+    margin-top: 4px;
+}
+
+@media (max-width: 900px) {
+    .v2-metrics-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 480px) {
+    .v2-metrics-grid { grid-template-columns: repeat(2, 1fr); }
+    .v2-metric-cell { padding: 20px 16px; }
+}
