@@ -18,7 +18,7 @@ Personal portfolio website focused on accessibility AI, production GenAI systems
 
 ### Navigation
 - Sticky nav with active-section highlight (IntersectionObserver)
-- **Semantic search** (`⌘K` / `Ctrl+K`) — keyword index over all projects and experience; keyboard navigable (↑↓ Enter Escape); grouped results
+- **Semantic search** (`⌘K` / `Ctrl+K`) — keyword index over all projects, research, and experience; keyboard navigable (↑↓ Enter Escape); grouped results
 - **Logo Easter egg** — clicking the logo spells `S-H-R-A-V-A-N` on the hero ASL hand at 2× speed, then resumes the random cycle
 
 ### Hero
@@ -27,18 +27,23 @@ Personal portfolio website focused on accessibility AI, production GenAI systems
 - Live confidence panel with Top-3 predictions and animated confidence bar
 - Credential badges: IEEE ICCAR 2022 paper DOI + ASL Guide live app status (live ping)
 
+### Experience (`#story`)
+Dual-nav: top tab buttons + right-column role-nav (both in sync). Four tabs: Bosch Senior ML Engineer, Bosch ML Engineer, Bosch Software Developer, Goldman Sachs.
+
 ### Projects (`#work`)
-Tab-switching panel for four projects, each with a left-column description + right-column metrics:
+Tab-switching panel for two projects, each with a left-column description + right-column metrics:
 - **ASL Guide** — LangGraph · TF.js · MediaPipe · FastAPI · Redis · PWA; includes an expandable **Architecture Trace** (`<details>`) showing the full MediaPipe → TF.js → FastAPI → LangGraph → Redis/Postgres data flow
 - **Diabetic Retinopathy Classifier** — Xception + Grad-CAM, 96% Kappa
-- **Sign-Language Temporal Modeling** — CNN + Transformer, MS-ASL200, 80.85%
+
+### Research & Publications (`#research`)
+Four research entries in a featured + grid layout:
+- **VQ-VAE + Conformer Translation System** — 2026, sign-to-gloss-to-text pipeline
+- **ST-GCN Sign Language Recognition** — 2025, graph convolutional networks on skeletal sequences
+- **Temporal Modeling for Dynamic Signs** — 2024, CNN + Transformer on MS-ASL200
 - **IEEE ICCAR 2022** — XGBoost + MediaPipe, dynamic sign language, published DOI
 
 ### Live Demo (`#demo`)
 Scripted replay of the ASL Guide pipeline: `HELLO WORLD` → grammar agent → translation output. Fires on scroll into view; replayable.
-
-### Experience & Education (`#story`)
-Dual-nav: top tab buttons + right-column role-nav (both in sync). Four tabs: Bosch Senior ML Engineer, Bosch ML Engineer, Bosch Software Developer, Goldman Sachs.
 
 ### Accessibility Lab
 Toggle button in the nav (universal access icon) activates `body.a11y-lab`:
@@ -89,35 +94,36 @@ js/
 html/
   nav.html                  # Nav: logo, pill links, search trigger, theme toggle, a11y btn, hire-me
   hero.html                 # Hero: headline, ASL card, credential badges
-  impact.html               # 6 CountUp impact metrics
-  work.html                 # Project tabs with Architecture Trace on ASL Guide
-  demo.html                 # Live demo section
-  story.html                # Experience tabs + role-nav + education
-  stack.html                # 5-column skills grid
-  now.html                  # Now + OSS contributions
-  contact.html              # Contact CTAs (Email / LinkedIn / GitHub)
+  impact.html               # 6 CountUp impact metrics  (01 · IMPACT)
+  story.html                # Experience tabs + role-nav + education  (02 · WORK)
+  work.html                 # Project tabs with Architecture Trace on ASL Guide  (03 · SELECTED PROJECTS)
+  research.html             # Research & Publications: 4 papers  (04 · RESEARCH · PUBLICATIONS)
+  demo.html                 # Live demo section  (05 · LIVE DEMO)
+  stack.html                # 5-column skills grid  (06 · STACK)
+  now.html                  # Now + OSS contributions  (07 · NOW)
+  contact.html              # Contact CTAs (Email / LinkedIn / GitHub)  (08 · NEXT)
 
 css/
-  main.css                  # @import entry point (variables.css + v2/*.css)
+  main.css                  # @import entry point — no legacy layers
   variables.css             # All design tokens (dark + light-theme palette)
-  v2/
-    base.css                # body/reset rules, @font-face, .v2-section, shared modal/panel base classes, FOUC guard
-    skeleton.css            # Shimmer skeleton screens (nav, hero, impact, below-fold)
-    nav.css                 # Sticky nav, mobile responsive
-    hero.css                # Hero layout, ASL card, wavy underline SVG
-    impact.css              # 6-cell metrics grid
-    demo.css                # Live demo section
-    story.css               # Experience tabs, role-nav, education
-    tabs.css                # .v2-tab, .v2-tab-panel show/hide
-    cards.css               # Panel chrome, badges, buttons, Architecture Trace diagram
-    stack.css               # Skills grid
-    now.css                 # Now + OSS cards
-    contact.css             # Contact section gradient bg + icon sizing
-    a11y.css                # Accessibility Lab toggle, side panel, ARIA highlight overlays
-    search.css              # ⌘K search overlay, modal, results, nav trigger
-    webcam.css              # Webcam video overlay, toggle button, status dot
-    recruiter.css           # Recruiter modal overlay, team-fit grid
-    animations.css          # M3 spring keyframes — loaded last
+  base.css                  # body/reset rules, @font-face, .v2-section, shared modal/panel base classes, FOUC guard
+  skeleton.css              # Shimmer skeleton screens (nav, hero, impact, below-fold)
+  nav.css                   # Sticky nav, mobile responsive
+  hero.css                  # Hero layout, ASL card, wavy underline SVG
+  impact.css                # 6-cell metrics grid
+  demo.css                  # Live demo section
+  story.css                 # Experience tabs, role-nav, education
+  tabs.css                  # .v2-tab, .v2-tab-panel show/hide
+  cards.css                 # Panel chrome, badges, buttons, Architecture Trace diagram
+  research.css              # Research section: featured card, 2-col row, bullet list
+  stack.css                 # Skills grid
+  now.css                   # Now + OSS cards
+  contact.css               # Contact section gradient bg + icon sizing
+  a11y.css                  # Accessibility Lab toggle, side panel, ARIA highlight overlays
+  search.css                # ⌘K search overlay, modal, results, nav trigger
+  webcam.css                # Webcam video overlay, toggle button, status dot
+  recruiter.css             # Recruiter modal overlay, team-fit grid
+  animations.css            # M3 spring keyframes — loaded last
 
 asl_model.js                # Trained MLP weights + StandardScaler (loaded lazily by webcam.js on first activation)
 robots.txt                  # Crawl rules (allow all) + sitemap pointer

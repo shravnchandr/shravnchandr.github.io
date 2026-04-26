@@ -49,6 +49,7 @@
     z-index: 500;
     box-shadow: -6px 0 28px rgba(0, 0, 0, 0.32);
 
+    width: min(288px, calc(100vw - 48px));
     transform: translateX(calc(100% + 2px));
     visibility: hidden;
     transition:

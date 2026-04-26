@@ -66,26 +66,61 @@ const INDEX = [
     },
     {
         type:  'project',
-        id:    'temporal-asl',
-        label: 'Sign-Language Temporal Modeling',
-        sub:   'PyTorch · CNN + Transformer · MS-ASL200 · 80.85%',
+        id:    'vqvae-conformer',
+        label: 'VQ-VAE + Conformer Translation System',
+        sub:   'VQ-VAE · Conformer · CTC-Attention · Beam Search · PyTorch',
         icon:  '◎',
         tokens: [
-            'temporal','modeling','sequence','video',
-            'ms','msaml','msaml200','ms-asl','ms-asl200','200',
-            'cnn','transformer','attention','architecture',
-            'pytorch','scaling','scale','dataset',
-            '80','80.85','signs','top1','accuracy','research',
-            'asl','sign','language','recognition',
+            'vqvae','vq','vae','conformer','quantization','quantize',
+            'ctc','attention','beam','search','prefix','scoring',
+            'continuous','slt','translation','sequence','seq2seq',
+            'hierarchical','factors','pose','motion','dynamics','facial',
+            'signer','independent','dominance','normalization',
+            'pytorch','mediapipe','research','2026','current',
+            'sign','language','gloss','landmark','landmarks',
         ],
-        action() { _selectTab('[data-tab="temporal-asl"]', '#work'); },
+        action() { _scrollTo('#research'); },
+    },
+    {
+        type:  'project',
+        id:    'stgcn',
+        label: 'Graph-Based Sign Language Recognition',
+        sub:   'ST-GCN · 209 joints · Edge Importance · Spatial Attention',
+        icon:  '◇',
+        tokens: [
+            'stgcn','st','gcn','graph','convolutional','network',
+            'skeletal','skeleton','joints','adjacency','matrix',
+            'edge','importance','spatial','attention','weighting',
+            'residual','temporal','kernels','multi','scale',
+            'fingertips','velocity','motion','postural','transition',
+            'pytorch','mediapipe','research','2025',
+            'sign','language','recognition',
+        ],
+        action() { _scrollTo('#research'); },
+    },
+    {
+        type:  'project',
+        id:    'temporal-asl',
+        label: 'Temporal Modeling & Scaling',
+        sub:   'CNN + Transformer · MS-ASL200 · 80.85% · AMP · TTA',
+        icon:  '◈',
+        tokens: [
+            'temporal','modeling','sequence','video',
+            'ms','msasl','msasl200','ms-asl','ms-asl200','200',
+            'cnn','transformer','attention','architecture',
+            'pytorch','scaling','scale','dataset','keypoint','keypoints','543',
+            '80','80.85','signs','top1','accuracy',
+            'mixup','dropout','augmentation','tta','amp','focal','loss',
+            'asl','sign','language','recognition','research','2024',
+        ],
+        action() { _scrollTo('#research'); },
     },
     {
         type:  'project',
         id:    'iccar',
         label: 'IEEE ICCAR 2022 Publication',
-        sub:   'MediaPipe · XGBoost · Dynamic Sign Language · Research',
-        icon:  '◇',
+        sub:   'MediaPipe · XGBoost · Dynamic Sign Language · Published',
+        icon:  '⬡',
         tokens: [
             'ieee','iccar','2022','publication','paper','published','doi',
             'xgboost','mediapipe','dynamic','static',
@@ -93,7 +128,7 @@ const INDEX = [
             '90','15','phrases','gesture',
             'computer','vision','cv',
         ],
-        action() { _selectTab('[data-tab="iccar"]', '#work'); },
+        action() { _scrollTo('#research'); },
     },
 
     // ── Experience ─────────────────────────────────────────────────────
@@ -105,16 +140,16 @@ const INDEX = [
         icon:  '⚙',
         tokens: [
             'bosch','senior','current','present','2025',
+            'databricks','pyspark','spark','partition','telemetry','ingestion','ingest',
+            'tb','80tb','80','high','frequency','sensor',
             'autoencoder','anomaly','anomaly detection','detection',
             'predictive','maintenance','pipeline','production',
             'cycles','testing','saving','savings',
             '300k','300','4 months','months',
             'azure','power','powerbi','bi',
-            'observability','infra','infrastructure','debug','turnaround','40',
-            'ecu','ecus','models','global','users','50',
             'spoc','automation','initiatives','india','germany','china',
-            'mentor','mentoring','mentored','interns','internship',
-            'machine','learning','engineer',
+            'mentor','mentoring','mentored','interns','internship','onboarding',
+            'machine','learning','engineer','infrastructure',
         ],
         action() { _selectTab('[data-story="bosch-sr"]', '#story'); },
     },
@@ -126,13 +161,15 @@ const INDEX = [
         icon:  '⚙',
         tokens: [
             'bosch','ml','2023','2024',
+            'elastic','net','regression','autosar','dem','debounce','recall','0.92',
+            'failure','predictive','early','warning','30','seconds',
             'migration','tf','tf1.x','tensorflow','pytorch',
-            '48','faster','training','train','speed',
-            'azure','gpu','cloud',
-            'drift','detection','kl','divergence','distribution',
-            'sensor','sensors','accuracy','95',
+            '48','faster','training','train','speed','throughput',
+            'azure','gpu','cloud','multi','distributed',
+            'drift','detection','kl','divergence','distribution','hypothesis','testing',
+            'online','shift','sensor','sensors','accuracy','95',
             'dashboard','dashboards','powerbi','power bi','power','bi',
-            'ecu','ecus','100','distributed','engineering','teams',
+            'ecu','ecus','100','engineering','teams',
             'machine','learning','engineer',
         ],
         action() { _selectTab('[data-story="bosch-ml"]', '#story'); },
@@ -373,9 +410,9 @@ function _showTips() {
     const tip = _el('div', 'v2-search-tip');
     const lines = [
         '"autoencoder anomaly detection"',
-        '"PyTorch migration 48%"',
+        '"Databricks PySpark 80TB"',
+        '"VQ-VAE Conformer translation"',
         '"spaced repetition"',
-        '"PCB pricing Flask"',
         '"trade booking Goldman"',
         '"IEEE ICCAR 2022"',
     ];
@@ -405,5 +442,9 @@ function _close() {
 /* ── Helpers ───────────────────────────────────────────────────────── */
 function _selectTab(selector, sectionId) {
     document.querySelector(selector)?.click();
+    document.querySelector(sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function _scrollTo(sectionId) {
     document.querySelector(sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }

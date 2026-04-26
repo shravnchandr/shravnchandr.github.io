@@ -1,0 +1,122 @@
+<section id="research" class="v2-section" aria-labelledby="research-heading">
+    <div class="v2-inner">
+        <div class="v2-section-header">
+            <span class="v2-code-label">// 04 · RESEARCH · PUBLICATIONS</span>
+            <span class="v2-code-label">4 papers</span>
+        </div>
+        <h2 id="research-heading" class="v2-section-h2 animate-on-scroll">Deep work, documented.</h2>
+
+        <div class="v2-research-stack">
+
+            <!-- VQ-VAE + Conformer 2026 — Featured -->
+            <div class="v2-panel-chrome v2-research-featured animate-on-scroll">
+                <div class="v2-research-main">
+                    <div class="v2-card-badge badge-featured">CURRENT · 2026</div>
+                    <h3 class="v2-card-h3">VQ-VAE + Conformer Translation System</h3>
+                    <div class="v2-card-tagline">Continuous sign language translation — hierarchical quantization + sequence modeling</div>
+                    <div class="v2-tech-tags">
+                        <span>VQ-VAE</span>
+                        <span>Conformer</span>
+                        <span>CTC-Attention</span>
+                        <span>Beam Search</span>
+                        <span>PyTorch</span>
+                        <span>MediaPipe</span>
+                    </div>
+                </div>
+                <div class="v2-research-contribs">
+                    <div class="v2-right-label">// KEY CONTRIBUTIONS</div>
+                    <div class="v2-research-bullet">
+                        <span class="v2-research-num" style="color:var(--v2-inference)">01</span>
+                        <span>Factorized VQ-VAE discretizing continuous 3D landmark sequences into 4 hierarchical factors — Pose, Motion, Dynamics, Facial Expressions — reducing latent space complexity for translation.</span>
+                    </div>
+                    <div class="v2-research-bullet">
+                        <span class="v2-research-num" style="color:var(--v2-inference)">02</span>
+                        <span>Conformer Seq2Seq with Joint CTC-Attention decoder; Beam Search + CTC Prefix Scoring for precise autoregressive alignment between visual tokens and glosses.</span>
+                    </div>
+                    <div class="v2-research-bullet">
+                        <span class="v2-research-num" style="color:var(--v2-inference)">03</span>
+                        <span>Signer-Independent pipeline featuring Hand Dominance Normalization and Robust Coordinate Preprocessor — invariant to signer handedness and camera positioning.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ST-GCN 2025 + Temporal 2024 -->
+            <div class="v2-research-row">
+
+                <div class="v2-panel-chrome animate-on-scroll stagger-2">
+                    <div class="v2-card-badge badge-2">ST-GCN · 2025</div>
+                    <h3 class="v2-research-h3">Graph-Based Sign Recognition</h3>
+                    <div class="v2-research-tagline">Spatial-temporal graph network over 209 skeletal joints</div>
+                    <div class="v2-tech-tags">
+                        <span>ST-GCN</span><span>PyTorch</span><span>Graph Networks</span><span>MediaPipe</span>
+                    </div>
+                    <div class="v2-research-contribs-sm">
+                        <div class="v2-right-label">// KEY CONTRIBUTIONS</div>
+                        <div class="v2-research-bullet">
+                            <span class="v2-research-num" style="color:var(--v2-neural)">01</span>
+                            <span>ST-GCN modeling 209 skeletal joints as a dynamic graph; D⁻¹/²AD⁻¹/² normalization on a custom adjacency matrix for stable feature aggregation.</span>
+                        </div>
+                        <div class="v2-research-bullet">
+                            <span class="v2-research-num" style="color:var(--v2-neural)">02</span>
+                            <span>Edge Importance Weighting + Spatial Attention to dynamically prioritize key physiological connections (e.g., fingertips) during high-velocity signs.</span>
+                        </div>
+                        <div class="v2-research-bullet">
+                            <span class="v2-research-num" style="color:var(--v2-neural)">03</span>
+                            <span>Residual Graph Blocks with Multi-Scale Temporal Kernels capturing motion from rapid finger movements to full postural transitions.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="v2-panel-chrome animate-on-scroll stagger-3">
+                    <div class="v2-card-badge badge-3">CNN-TRANSFORMER · 2024</div>
+                    <h3 class="v2-research-h3">Temporal Modeling &amp; Scaling</h3>
+                    <div class="v2-research-tagline">CNN + Transformer pipeline on MS-ASL200</div>
+                    <div class="v2-tech-tags">
+                        <span>PyTorch</span><span>Transformers</span><span>AMP</span><span>MediaPipe</span>
+                    </div>
+                    <div class="v2-research-contribs-sm">
+                        <div class="v2-right-label">// KEY CONTRIBUTIONS</div>
+                        <div class="v2-research-bullet">
+                            <span class="v2-research-num" style="color:var(--v2-data)">01</span>
+                            <span>CNN-Transformer pipeline on 543-keypoint frames; joint angles + frame-to-frame velocities as engineered temporal features.</span>
+                        </div>
+                        <div class="v2-research-bullet">
+                            <span class="v2-research-num" style="color:var(--v2-data)">02</span>
+                            <span>Mixup, Finger Dropout, Time Stretching + Signer-Independent Splitting → 80.85% top-1 accuracy on MS-ASL200.</span>
+                        </div>
+                        <div class="v2-research-bullet">
+                            <span class="v2-research-num" style="color:var(--v2-data)">03</span>
+                            <span>AMP + Focal Loss for class imbalance; TTA ensemble for reliable inference in production-simulated environments.</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- IEEE ICCAR 2022 -->
+            <div class="v2-panel-chrome animate-on-scroll">
+                <div class="v2-research-featured">
+                    <div>
+                        <div class="v2-card-badge">IEEE · ICCAR 2022</div>
+                        <h3 class="v2-card-h3">Dynamic Sign Language Translator</h3>
+                        <div class="v2-card-tagline">Published — IEEE ICCAR 2022</div>
+                        <p class="v2-card-desc">Lightweight real-time sign language recognition system using MediaPipe hand landmarks and XGBoost classification. Presented at the 8th International Conference on Control, Automation and Robotics.</p>
+                        <div class="v2-tech-tags">
+                            <span>MediaPipe</span><span>XGBoost</span><span>OpenCV</span>
+                        </div>
+                        <div class="v2-card-links">
+                            <a href="https://doi.org/10.1109/ICCAR55106.2022.9782661" target="_blank" rel="noopener" class="v2-btn-neural" data-m3-press>IEEE paper ↗</a>
+                            <a href="https://scholar.google.com/scholar?q=10.1109/ICCAR55106.2022.9782661" target="_blank" rel="noopener" class="v2-btn-secondary" data-m3-press>Google Scholar ↗</a>
+                        </div>
+                    </div>
+                    <div class="v2-research-contribs">
+                        <div class="v2-right-label">// KEY METRICS</div>
+                        <div class="v2-metric-row"><span class="v2-mv" style="color:var(--v2-inference)">90%+</span><span class="v2-ml">accuracy</span></div>
+                        <div class="v2-metric-row"><span class="v2-mv" style="color:var(--v2-neural)">15</span><span class="v2-ml">sign phrases</span></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

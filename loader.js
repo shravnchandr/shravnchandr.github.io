@@ -9,15 +9,16 @@
  */
 
 const FRAGMENTS = [
-    { id: 'frag-nav',     src: 'html/nav.html',     critical: true  },
-    { id: 'frag-hero',    src: 'html/hero.html',    critical: true  },
-    { id: 'frag-impact',  src: 'html/impact.html',  critical: false },
-    { id: 'frag-work',    src: 'html/work.html',    critical: false },
-    { id: 'frag-demo',    src: 'html/demo.html',    critical: false },
-    { id: 'frag-story',   src: 'html/story.html',   critical: false },
-    { id: 'frag-stack',   src: 'html/stack.html',   critical: false },
-    { id: 'frag-now',     src: 'html/now.html',     critical: false },
-    { id: 'frag-contact', src: 'html/contact.html', critical: false },
+    { id: 'frag-nav',      src: 'html/nav.html',      critical: true  },
+    { id: 'frag-hero',     src: 'html/hero.html',     critical: true  },
+    { id: 'frag-impact',   src: 'html/impact.html',   critical: false },
+    { id: 'frag-story',    src: 'html/story.html',    critical: false },
+    { id: 'frag-work',     src: 'html/work.html',     critical: false },
+    { id: 'frag-research', src: 'html/research.html', critical: false },
+    { id: 'frag-demo',     src: 'html/demo.html',     critical: false },
+    { id: 'frag-stack',    src: 'html/stack.html',    critical: false },
+    { id: 'frag-now',      src: 'html/now.html',      critical: false },
+    { id: 'frag-contact',  src: 'html/contact.html',  critical: false },
 ];
 
 const MAX_RETRIES = 3;

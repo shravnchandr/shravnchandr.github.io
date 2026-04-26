@@ -1,23 +1,23 @@
 <section id="story" class="v2-section v2-surface" aria-labelledby="story-heading">
     <div class="v2-inner">
         <div class="v2-section-header">
-            <span class="v2-code-label">// 04 · THE PATH</span>
+            <span class="v2-code-label">// 02 · WORK</span>
             <span class="v2-code-label">5 years · 4 roles</span>
         </div>
         <h2 id="story-heading" class="v2-section-h2 animate-on-scroll">Production ML, in the wild.</h2>
 
         <!-- Top tab buttons -->
         <div class="v2-tabs animate-on-scroll" role="tablist" id="story-tabs" aria-label="Experience tabs">
-            <button class="v2-tab active" data-story="bosch-sr" role="tab" aria-selected="true">
+            <button id="tab-bosch-sr" class="v2-tab active" data-story="bosch-sr" role="tab" aria-selected="true" aria-controls="panel-bosch-sr">
                 <span class="v2-tab-year">2025</span><span class="v2-tab-sep">▸</span>Sr. ML Engineer
             </button>
-            <button class="v2-tab" data-story="bosch-ml" role="tab" aria-selected="false">
+            <button id="tab-bosch-ml" class="v2-tab" data-story="bosch-ml" role="tab" aria-selected="false" aria-controls="panel-bosch-ml">
                 <span class="v2-tab-year">2023</span><span class="v2-tab-sep">▸</span>ML Engineer
             </button>
-            <button class="v2-tab" data-story="bosch-swe" role="tab" aria-selected="false">
+            <button id="tab-bosch-swe" class="v2-tab" data-story="bosch-swe" role="tab" aria-selected="false" aria-controls="panel-bosch-swe">
                 <span class="v2-tab-year">2021</span><span class="v2-tab-sep">▸</span>Software Developer
             </button>
-            <button class="v2-tab" data-story="goldman" role="tab" aria-selected="false">
+            <button id="tab-goldman" class="v2-tab" data-story="goldman" role="tab" aria-selected="false" aria-controls="panel-goldman">
                 <span class="v2-tab-year">2021</span><span class="v2-tab-sep">▸</span>Junior Analyst
             </button>
         </div>
@@ -26,47 +26,48 @@
         <div class="v2-story-layout animate-on-scroll stagger-2">
             <!-- Left: switching experience panels -->
             <div id="story-content">
-                <div class="v2-exp-panel active" data-story-panel="bosch-sr">
+                <div id="panel-bosch-sr" class="v2-exp-panel active" data-story-panel="bosch-sr" role="tabpanel" aria-labelledby="tab-bosch-sr">
                     <div class="v2-card-badge badge-1">● CURRENT ROLE</div>
                     <h3 class="v2-card-h3">Senior Machine Learning Engineer</h3>
                     <div class="v2-card-tagline">Bosch Global Software Technologies</div>
                     <div class="v2-exp-date">Jan 2025 – Present · Bengaluru</div>
                     <div class="v2-bullets-label">// WHAT I DID</div>
                     <ul class="v2-exp-bullets">
-                        <li><span class="v2-bullet-idx">01</span>Engineered production predictive-maintenance pipeline — autoencoder anomaly detection cut testing cycles by 4 months, saving €300K+/yr.</li>
-                        <li><span class="v2-bullet-idx">02</span>Built ML observability infra (Azure + Power BI) for 100+ ECU models, 50+ global users. Cut debug turnaround 40%.</li>
-                        <li><span class="v2-bullet-idx">03</span>SPOC for 5+ automation &amp; ML initiatives across India, Germany, China.</li>
-                        <li><span class="v2-bullet-idx">04</span>Mentored 3 interns (all now full-time ML contributors).</li>
+                        <li><span class="v2-bullet-idx">01</span>Architected a scalable Databricks pipeline to ingest and process 80+ TB of high-frequency sensor telemetry for production anomaly detection; reduced per-partition processing time by over 50% with PySpark query optimizations and broadcast joins.</li>
+                        <li><span class="v2-bullet-idx">02</span>Engineered a production predictive-maintenance pipeline using Autoencoder-based anomaly detection, cutting component testing cycles by 4 months and saving €300K+ annually.</li>
+                        <li><span class="v2-bullet-idx">03</span>Drove ML architecture decisions and deployment workflows across India, Germany, and China as technical SPOC for 5+ concurrent initiatives.</li>
+                        <li><span class="v2-bullet-idx">04</span>Mentored 3 interns to full-time ML roles; authored onboarding guides and infrastructure standards adopted team-wide.</li>
                     </ul>
                 </div>
 
-                <div class="v2-exp-panel" data-story-panel="bosch-ml">
+                <div id="panel-bosch-ml" class="v2-exp-panel" data-story-panel="bosch-ml" role="tabpanel" aria-labelledby="tab-bosch-ml">
                     <div class="v2-card-badge badge-2">ROLE 2 OF 4</div>
                     <h3 class="v2-card-h3">Machine Learning Engineer</h3>
                     <div class="v2-card-tagline">Bosch Global Software Technologies</div>
                     <div class="v2-exp-date">Aug 2023 – Dec 2024 · Bengaluru</div>
                     <div class="v2-bullets-label">// WHAT I DID</div>
                     <ul class="v2-exp-bullets">
-                        <li><span class="v2-bullet-idx">01</span>Led TF 1.x → PyTorch migration — 48% faster training, Azure GPU support.</li>
-                        <li><span class="v2-bullet-idx">02</span>Distribution-based drift detection via KL divergence — 95% detection accuracy on ECU sensors.</li>
-                        <li><span class="v2-bullet-idx">03</span>Shipped Power BI dashboards across 100+ ECUs for distributed engineering teams.</li>
+                        <li><span class="v2-bullet-idx">01</span>Developed a real-time predictive failure pipeline using Elastic Net regression on AUTOSAR DEM debounce signals to identify early-warning patterns; achieved a 0.92 recall rate and predicted system errors 30 seconds in advance.</li>
+                        <li><span class="v2-bullet-idx">02</span>Implemented online distribution-shift detection (KL divergence + hypothesis testing) across 100+ ECUs, flagging sensor anomalies with 95% accuracy under continuous high-frequency data ingestion.</li>
+                        <li><span class="v2-bullet-idx">03</span>Led TensorFlow 1.x → PyTorch migration across a multi-GPU Azure environment, achieving 48% faster training throughput and unblocking distributed training at scale.</li>
+                        <li><span class="v2-bullet-idx">04</span>Built and shipped Power BI dashboards for real-time model insight across 100+ ECUs, enabling faster test validation for distributed engineering teams.</li>
                     </ul>
                 </div>
 
-                <div class="v2-exp-panel" data-story-panel="bosch-swe">
+                <div id="panel-bosch-swe" class="v2-exp-panel" data-story-panel="bosch-swe" role="tabpanel" aria-labelledby="tab-bosch-swe">
                     <div class="v2-card-badge badge-3">ROLE 3 OF 4</div>
                     <h3 class="v2-card-h3">Software Developer</h3>
                     <div class="v2-card-tagline">Bosch Global Software Technologies</div>
                     <div class="v2-exp-date">Aug 2021 – Aug 2023 · Bengaluru</div>
                     <div class="v2-bullets-label">// WHAT I DID</div>
                     <ul class="v2-exp-bullets">
-                        <li><span class="v2-bullet-idx">01</span>Built automation tools + GUIs — 45% less manual data-analysis time for 25+ engineers.</li>
-                        <li><span class="v2-bullet-idx">02</span>Improved PCB pricing accuracy 30%; cut processing 90 min → 5 min.</li>
-                        <li><span class="v2-bullet-idx">03</span>Flask apps for automotive test-data visualization.</li>
+                        <li><span class="v2-bullet-idx">01</span>Built a comprehensive data analysis tool to monitor sensor and component behavior across humidity levels; integrated features for real-time visualization, GPS movement plotting, and time-series trend forecasting.</li>
+                        <li><span class="v2-bullet-idx">02</span>Developed automation tools and GUIs reducing manual data-analysis time by 45% for 25+ engineers.</li>
+                        <li><span class="v2-bullet-idx">03</span>Increased PCB pricing estimation accuracy by 30%, reducing processing time from 90 min to 5 min through automated pipeline design.</li>
                     </ul>
                 </div>
 
-                <div class="v2-exp-panel" data-story-panel="goldman">
+                <div id="panel-goldman" class="v2-exp-panel" data-story-panel="goldman" role="tabpanel" aria-labelledby="tab-goldman">
                     <div class="v2-card-badge badge-4">ROLE 4 OF 4</div>
                     <h3 class="v2-card-h3">Junior Analyst</h3>
                     <div class="v2-card-tagline">Goldman Sachs</div>

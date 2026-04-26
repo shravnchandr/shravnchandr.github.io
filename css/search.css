@@ -198,6 +198,14 @@
 @media (max-width: 768px) {
     .v2-search-trigger-label { display: none; }
     .v2-search-trigger kbd { display: none; }
-    .v2-search-trigger { padding: 8px 10px; border-radius: 12px; }
-    .v2-search-trigger i { font-size: 14px; }
+    .v2-search-trigger {
+        min-width: 44px;
+        min-height: 44px;
+        padding: 0;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .v2-search-trigger i { font-size: 16px; }
 }

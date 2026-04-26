@@ -155,4 +155,6 @@
 
 @media (max-width: 600px) {
     .v2-story-layout { padding: 24px 20px; }
+    .v2-role-btn { padding: 14px 16px; }
+    .v2-exp-bullets li { font-size: 13px; gap: 10px; }
 }

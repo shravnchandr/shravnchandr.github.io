@@ -82,6 +82,7 @@ export function initDemo() {
     };
 
     let logCount = 0;
+    let _demoTimer = null;
 
     function addLog(type, msg) {
         const idle = logEl.querySelector('.v2-demo-log-idle');
@@ -109,6 +110,8 @@ export function initDemo() {
     }
 
     function reset() {
+        clearTimeout(_demoTimer);
+        _demoTimer = null;
         logCount = 0;
         while (logEl.firstChild) logEl.removeChild(logEl.firstChild);
         const idle = document.createElement('div');
@@ -220,10 +223,10 @@ export function initDemo() {
             }
 
             step++;
-            if (step <= SCRIPT.length + 3) setTimeout(tick, STEP_MS);
+            if (step <= SCRIPT.length + 3) _demoTimer = setTimeout(tick, STEP_MS);
         }
 
-        setTimeout(tick, STEP_MS);
+        _demoTimer = setTimeout(tick, STEP_MS);
     }
 
     const section = svg.closest('section');

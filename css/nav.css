@@ -80,8 +80,8 @@ body.light-theme .v2-nav {
 }
 
 .v2-theme-btn {
-    width: 38px;
-    height: 38px;
+    width: 44px;
+    height: 44px;
     border-radius: 12px;
     border: 1px solid var(--v2-border);
     background: var(--v2-surface);
@@ -111,8 +111,8 @@ body.light-theme .v2-nav {
 
 .v2-mobile-btn {
     display: none;
-    width: 38px;
-    height: 38px;
+    width: 44px;
+    height: 44px;
     border-radius: 12px;
     border: 1px solid var(--v2-border);
     background: var(--v2-surface);

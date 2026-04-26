@@ -2,7 +2,7 @@
  * js/a11y.js — Accessibility Lab mode.
  *
  * Adds body.a11y-lab when the toggle (#a11y-lab-btn) is pressed.
- * CSS outlines in css/v2/a11y.css highlight ARIA landmarks, labeled
+ * CSS outlines in css/a11y.css highlight ARIA landmarks, labeled
  * elements, and live regions.
  *
  * Also builds and shows a side panel (#a11y-panel) listing the

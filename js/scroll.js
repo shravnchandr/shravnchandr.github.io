@@ -66,9 +66,15 @@ function initCountUp() {
 
 function initBackToTop() {
     const btn = document.getElementById('back-to-top');
+    let _ticking = false;
 
     window.addEventListener('scroll', () => {
-        btn.classList.toggle('visible', window.scrollY > 300);
+        if (_ticking) return;
+        _ticking = true;
+        requestAnimationFrame(() => {
+            btn.classList.toggle('visible', window.scrollY > 300);
+            _ticking = false;
+        });
     });
 
     btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));

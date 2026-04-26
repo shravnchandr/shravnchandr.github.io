@@ -24,7 +24,7 @@ python3 -m http.server
 
 **Fully static site** — no build tools, bundlers, package managers, or compilation step. Edit files and refresh the browser.
 
-The site uses a **v2 Dark Bold · Lab** design (Material 3 Expressive). All new styles are under `css/v2/`, all new HTML in `html/`, all JS in `js/`. The old `script.js` (single-file) has been replaced by ES modules.
+The site uses a **v2 Dark Bold · Lab** design (Material 3 Expressive). All styles are under `css/`, all HTML fragments in `html/`, all JS in `js/`. The old `script.js` (single-file) has been replaced by ES modules.
 
 ### File Map
 
@@ -50,34 +50,35 @@ html/
   nav.html                  # <nav>: logo, pill nav, search trigger, theme toggle, a11y btn, hire-me
   hero.html                 # Hero: headline, live ASL recognition CTA, ASL card
   impact.html               # 6 impact metrics (CountUp on scroll)
-  work.html                 # Project tabs: ASL Guide (+ Architecture Trace), Retinopathy, Temporal, ICCAR
-  demo.html                 # Live Demo section: scripted ASL Guide pipeline replay
-  story.html                # Experience tabs + role-nav + education block
-  stack.html                # 5-column skills grid
-  now.html                  # "What I'm on" + OSS contributions
-  contact.html              # Contact h2, 3 CTA buttons (Email / LinkedIn / GitHub)
+  story.html                # Experience tabs + role-nav + education block  (02 · WORK)
+  work.html                 # Project tabs: ASL Guide (+ Architecture Trace), Retinopathy  (03 · SELECTED PROJECTS)
+  research.html             # Research & Publications: 4 papers  (04 · RESEARCH · PUBLICATIONS)
+  demo.html                 # Live Demo section: scripted ASL Guide pipeline replay  (05 · LIVE DEMO)
+  stack.html                # 5-column skills grid  (06 · STACK)
+  now.html                  # "What I'm on" + OSS contributions  (07 · NOW)
+  contact.html              # Contact h2, 3 CTA buttons (Email / LinkedIn / GitHub)  (08 · NEXT)
 
 css/
-  main.css                  # @import entry point (variables.css + v2/*.css — no legacy layers)
+  main.css                  # @import entry point — no legacy layers
   variables.css             # All design tokens (dark + light-theme palette)
-  v2/
-    base.css                # body/reset rules, @font-face, .v2-section, .v2-modal-overlay, .v2-panel-close, FOUC guard
-    skeleton.css            # Shimmer screens for nav/hero/impact/below-fold (visibility override trick)
-    nav.css                 # .v2-nav sticky + mobile responsive
-    hero.css                # Hero layout, ASL card, status badge, wavy underline SVG
-    impact.css              # 6-cell metrics grid
-    demo.css                # Live demo section: webcam panel, pipeline panel, log
-    story.css               # Experience tabs, role-nav, education
-    tabs.css                # .v2-tab, .v2-tab-panel show/hide
-    cards.css               # .v2-panel-chrome, badges, buttons (.v2-btn-*), Architecture Trace diagram
-    stack.css               # 5-col skill categories grid
-    now.css                 # Now + OSS cards
-    contact.css             # Contact section gradient bg + icon sizing
-    a11y.css                # Accessibility Lab toggle btn, side panel, ARIA highlight overlays
-    search.css              # ⌘K overlay, modal, results list, nav trigger btn
-    webcam.css              # Webcam video overlay, toggle button (.v2-webcam-*), status dot
-    recruiter.css           # Recruiter modal overlay (z-index: 2100), team-fit grid
-    animations.css          # M3 spring keyframes, [data-m3-press], [data-m3-morph],
+  base.css                  # body/reset rules, @font-face, .v2-section, .v2-modal-overlay, .v2-panel-close, FOUC guard
+  skeleton.css              # Shimmer screens for nav/hero/impact/below-fold (visibility override trick)
+  nav.css                   # .v2-nav sticky + mobile responsive
+  hero.css                  # Hero layout, ASL card, status badge, wavy underline SVG
+  impact.css                # 6-cell metrics grid
+  demo.css                  # Live demo section: webcam panel, pipeline panel, log
+  story.css                 # Experience tabs, role-nav, education
+  tabs.css                  # .v2-tab, .v2-tab-panel show/hide
+  cards.css                 # .v2-panel-chrome, badges, buttons (.v2-btn-*), Architecture Trace diagram
+  research.css              # Research section: featured card, 2-col row, bullet list
+  stack.css                 # 5-col skill categories grid
+  now.css                   # Now + OSS cards
+  contact.css               # Contact section gradient bg + icon sizing
+  a11y.css                  # Accessibility Lab toggle btn, side panel, ARIA highlight overlays
+  search.css                # ⌘K overlay, modal, results list, nav trigger btn
+  webcam.css                # Webcam video overlay, toggle button (.v2-webcam-*), status dot
+  recruiter.css             # Recruiter modal overlay (z-index: 2100), team-fit grid
+  animations.css            # M3 spring keyframes, [data-m3-press], [data-m3-morph],
                             #   [data-hover-lift], .animate-in, .stagger-2–5 — LOADED LAST
 
 asl_model.js                # Trained MLP weights + StandardScaler; loaded lazily by webcam.js
@@ -108,7 +109,7 @@ index.html parsed
           else window.__onSectionsReady = initApp;
 ```
 
-`body.loading { visibility: hidden }` (in `css/v2/base.css`) prevents any flash while fragments are being fetched.
+`body.loading { visibility: hidden }` (in `css/base.css`) prevents any flash while fragments are being fetched.
 
 ---
 
@@ -120,16 +121,17 @@ Sections load in this order (matching `loader.js` FRAGMENTS array):
 |---|---|---|---|
 | 1 | nav.html | — | Sticky nav |
 | 2 | hero.html | — | Headline + ASL demo card |
-| 3 | impact.html | — | 6 impact metrics |
-| 4 | work.html | `#work` | Project tabs (01) |
-| 5 | demo.html | `#demo` | Live ASL pipeline demo (03) |
-| 6 | story.html | `#story` | Experience tabs (04) |
-| 7 | stack.html | `#stack` | Skills grid (05) |
-| 8 | now.html | `#now` | Now + OSS (06) |
-| 9 | contact.html | `#contact` | Contact (07) |
+| 3 | impact.html | — | 6 impact metrics (01 · IMPACT) |
+| 4 | story.html | `#story` | Experience tabs (02 · WORK) |
+| 5 | work.html | `#work` | Project tabs (03 · SELECTED PROJECTS) |
+| 6 | research.html | `#research` | Research & Publications (04 · RESEARCH) |
+| 7 | demo.html | `#demo` | Live ASL pipeline demo (05 · LIVE DEMO) |
+| 8 | stack.html | `#stack` | Skills grid (06 · STACK) |
+| 9 | now.html | `#now` | Now + OSS (07 · NOW) |
+| 10 | contact.html | `#contact` | Contact (08 · NEXT) |
 
 ### Project tabs (`#work`)
-`data-tab` buttons + `data-tab-panel` panels: `asl-guide`, `retinopathy`, `temporal-asl`, `iccar`
+`data-tab` buttons + `data-tab-panel` panels: `asl-guide`, `retinopathy`
 
 ### Experience tabs (`#story`)
 `data-story` top buttons + `data-story-panel` panels: `bosch-sr`, `bosch-ml`, `bosch-swe`, `goldman`
@@ -164,7 +166,7 @@ else window.__onSectionsReady = initApp;
 Shared DOM/UI helpers imported by `a11y.js`, `search.js`, `recruiter.js`, `asl.js`, `webcam.js`.
 
 - `el(tag, cls, attrs)` — creates an element, sets className, applies attr key/value pairs
-- `makeOverlay(extraClass, ariaLabel)` — builds the standard modal overlay div with `role="dialog"`, `aria-modal`, `aria-hidden`; base styles from `.v2-modal-overlay` in `css/v2/base.css`
+- `makeOverlay(extraClass, ariaLabel)` — builds the standard modal overlay div with `role="dialog"`, `aria-modal`, `aria-hidden`; base styles from `.v2-modal-overlay` in `css/base.css`
 - `makeTop3Row(key, pct)` — builds a `.v2-t3-row` confidence bar row (label + fill bar)
 - `updateLetterDisplay(letterEl, key, prevKey)` — swaps letter text and re-triggers `m3LetterPop` animation via reflow
 
@@ -190,18 +192,18 @@ Exports `initASL`, `SPEC`, `SIGNS`, `CONNECTIONS`, `spellSequence`, `pauseASL`, 
 - `initA11yLab()` — wires `#a11y-lab-btn` (nav) and `#a11y-panel` (persistent aside in index.html)
 - `_buildPanel(panel)` — constructs side panel via pure DOM manipulation (no innerHTML): header + close button, colour legend, 6 feature rows
 - `setActive(on)` — toggles `body.a11y-lab`, `aria-pressed`, `.v2-a11y-panel--open`, `aria-hidden`; persists to `localStorage` key `a11y-lab`
-- `body.a11y-lab` activates CSS outline overlays in `css/v2/a11y.css`: orange dashes on landmarks, teal on `aria-label` elements, purple on `aria-live` regions
+- `body.a11y-lab` activates CSS outline overlays in `css/a11y.css`: orange dashes on landmarks, teal on `aria-label` elements, purple on `aria-live` regions
 
 ### `js/search.js`
 - `initSearch()` — builds the search overlay via DOM, binds `⌘K`/`Ctrl+K`, wires `#search-trigger` in the nav
-- `INDEX`: 9 entries (4 projects + 4 experience + 1 education), each with `tokens[]`, `label`, `sub`, `icon`, `action()`
+- `INDEX`: 11 entries (2 projects + 4 research + 4 experience + 1 education), each with `tokens[]`, `label`, `sub`, `icon`, `action()`
 - `_query(raw)` — tokenises query (strips stop words, normalises), scores against `INDEX`:
   - Exact match: `+5` (len ≥ 5), `+3` (len ≥ 3), `+1` (short)
   - Prefix match (query is prefix of token, len ≥ 3): `+2`
   - Substring match (query inside token, len ≥ 3): `+1`
   - **No `w.includes(t)` direction** — avoids false positives (e.g. token `"ecu"` inside query `"because"`)
 - Results grouped into Projects / Experience & Education; keyboard nav (↑↓ Enter Escape)
-- `action()` on each entry calls `_selectTab(selector, sectionId)` which clicks the correct tab and scrolls to the section
+- `action()` on project/experience entries calls `_selectTab(selector, sectionId)` which clicks the correct tab and scrolls; research entries call `_scrollTo('#research')`
 
 ### `js/demo.js`
 Imports `SIGNS`, `CONNECTIONS` from `./asl.js`.
@@ -271,7 +273,7 @@ body.light-theme {
 }
 ```
 
-### M3 Expressive motion (`css/v2/animations.css`)
+### M3 Expressive motion (`css/animations.css`)
 - `[data-m3-press]` — spring press-state on buttons (scale 0.94 on active, bounce back)
 - `[data-m3-morph]` — primary CTAs morph to pill (`border-radius: 999px`) on hover
 - `[data-hover-lift]` — cards translateY(-3px) with spring easing on hover
@@ -282,16 +284,16 @@ body.light-theme {
 - `@media (prefers-reduced-motion: reduce)` — disables all the above
 
 ### `body.loading` FOUC guard
-`loader.js` adds `body.loading` before fetching; `css/v2/base.css` has `body.loading { visibility: hidden }`. Removed once all fragments are injected.
+`loader.js` adds `body.loading` before fetching; `css/base.css` has `body.loading { visibility: hidden }`. Removed once all fragments are injected.
 
-CSS `visibility` is inherited but can be overridden by descendants. `css/v2/skeleton.css` uses this:
+CSS `visibility` is inherited but can be overridden by descendants. `css/skeleton.css` uses this:
 ```css
 body.loading .v2-skeleton { visibility: visible; }
 ```
 This lets skeleton shimmer screens show while the real content stays hidden — no JS required.
 
 ### Architecture Trace
-The ASL Guide tab panel (`#panel-asl-guide`) contains a `<details class="v2-arch-trace">` as a third child of the grid. `css/v2/tabs.css` sets `grid-column: 1 / -1` so it spans both columns. Styling lives in `css/v2/cards.css` under the `/* ── Architecture Trace ── */` section.
+The ASL Guide tab panel (`#panel-asl-guide`) contains a `<details class="v2-arch-trace">` as a third child of the grid. `css/tabs.css` sets `grid-column: 1 / -1` so it spans both columns. Styling lives in `css/cards.css` under the `/* ── Architecture Trace ── */` section.
 
 ### Transition rule
 Only `color` is transitioned on `body` and surface elements — never `background` shorthand (browsers can't interpolate multi-layer radial gradients and pin the computed value to the wrong theme).
