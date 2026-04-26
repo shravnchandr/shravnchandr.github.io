@@ -1,4 +1,126 @@
-/* v2 global base — body defaults dark, section wrappers */
+/* ── Reset ───────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+ul { list-style: none; }
+a { text-decoration: none; color: inherit; }
+
+/* Google Sans Flex — used for display headings */
+@font-face {
+    font-family: 'Google Sans Flex';
+    src: url('../../GoogleSansFlex-subset.woff2') format('woff2');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Skip link — visible on focus; always visible in a11y-lab mode (see a11y.css) */
+.skip-link {
+    position: absolute;
+    top: -100%;
+    left: 16px;
+    background: var(--v2-neural);
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-family: 'Fira Code', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    z-index: 9999;
+    transition: top 200ms ease;
+}
+.skip-link:focus { top: 16px; outline: none; }
+
+/* Focus ring — v2 palette */
+:focus-visible {
+    outline: 2px solid var(--v2-neural);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+input:focus-visible,
+textarea:focus-visible { outline: none; }
+
+/* Resume FAB */
+.resume-fab {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    background: var(--v2-inference);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.28);
+    z-index: 100;
+    cursor: pointer;
+    transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 300ms ease;
+}
+.resume-fab:hover {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.36);
+}
+
+/* Back to Top */
+.back-to-top {
+    position: fixed;
+    bottom: 32px;
+    left: 32px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--v2-surface-hi);
+    color: var(--v2-text-dim);
+    border: 1px solid var(--v2-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    cursor: pointer;
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: opacity 300ms ease,
+                visibility 300ms ease,
+                transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1),
+                background 200ms ease;
+}
+.back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+.back-to-top:hover {
+    background: var(--v2-surface-hi2);
+    color: var(--v2-text);
+    transform: translateY(-4px);
+}
+@media (max-width: 768px) {
+    .back-to-top { bottom: 16px; left: 16px; width: 38px; height: 38px; }
+    .resume-fab  { bottom: 16px; right: 16px; width: 44px; height: 44px; font-size: 17px; }
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 24px 0;
+    border-top: 1px solid var(--v2-border);
+    color: var(--v2-text-muted);
+    font-size: 0.85rem;
+}
+
+/* Used only in <footer> */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
 body {
     background: var(--v2-bg);
     color: var(--v2-text);
@@ -55,3 +177,42 @@ body, .v2-nav, .v2-asl-card, .v2-metric-cell, .v2-tech-tags span {
     .v2-inner { padding: 0 24px; }
     .v2-section { padding: 64px 0; }
 }
+
+/* ── Shared panel close button ───────────────────────────────────
+   Used by a11y panel (.v2-a11y-close) and recruiter modal
+   (.v2-recruiter-close). Component files set font-size, padding,
+   border-radius, and any extra properties (e.g. flex-shrink).
+   ─────────────────────────────────────────────────────────────── */
+.v2-panel-close {
+    background: none;
+    border: none;
+    color: var(--v2-text-muted);
+    line-height: 1;
+    cursor: pointer;
+    transition: color 150ms ease, background 150ms ease;
+}
+
+.v2-panel-close:hover {
+    color: var(--v2-text);
+    background: var(--v2-surface-hi);
+}
+
+/* ── Shared modal overlay backdrop ──────────────────────────────
+   Used by search.css (.v2-search-overlay) and recruiter.css
+   (.v2-recruiter-overlay). Component files set z-index, padding,
+   and flex alignment on top of this base.
+   ─────────────────────────────────────────────────────────────── */
+.v2-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: flex;
+
+    /* Hidden state */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 220ms ease;
+}
+

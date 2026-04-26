@@ -13,6 +13,8 @@
  *   substr match  → query word is substring of token, len ≥ 3 → +1
  */
 
+import { el as _el, makeOverlay } from './utils.js';
+
 /* ── Stop words (filtered before matching) ─────────────────────────── */
 const _STOP = new Set([
     'is','in','at','to','for','of','or','and','the','my','me','i','a','an',
@@ -213,11 +215,7 @@ export function initSearch() {
 
 /* ── Overlay DOM ───────────────────────────────────────────────────── */
 function _buildOverlay() {
-    _overlay = _el('div', 'v2-search-overlay');
-    _overlay.setAttribute('role', 'dialog');
-    _overlay.setAttribute('aria-modal', 'true');
-    _overlay.setAttribute('aria-label', 'Portfolio search');
-    _overlay.setAttribute('aria-hidden', 'true');
+    _overlay = makeOverlay('v2-search-overlay', 'Portfolio search');
 
     const modal = _el('div', 'v2-search-modal');
 
@@ -276,13 +274,13 @@ function _onKeyDown(e) {
         _updateCursor(items);
     } else if (e.key === 'Enter' && _active >= 0) {
         e.preventDefault();
-        items[_active]?.click();
+        items[_active].click();
     }
 }
 
 function _updateCursor(items) {
     items.forEach((el, i) => el.classList.toggle('v2-search-item--active', i === _active));
-    items[_active]?.scrollIntoView({ block: 'nearest' });
+    items[_active].scrollIntoView({ block: 'nearest' });
 }
 
 /* ── Query engine ──────────────────────────────────────────────────── */
@@ -408,10 +406,4 @@ function _close() {
 function _selectTab(selector, sectionId) {
     document.querySelector(selector)?.click();
     document.querySelector(sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-function _el(tag, className = '') {
-    const el = document.createElement(tag);
-    if (className) el.className = className;
-    return el;
 }

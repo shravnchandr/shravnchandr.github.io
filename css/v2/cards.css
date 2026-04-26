@@ -1,6 +1,3 @@
-/* v2 shared panel / card chrome and card elements */
-
-/* Panel chrome — wraps the active tab panel content */
 .v2-panel-chrome {
     background: var(--v2-surface);
     border-radius: 28px;
@@ -8,7 +5,6 @@
     border: 1px solid var(--v2-border);
 }
 
-/* Category badge */
 .v2-card-badge {
     display: inline-block;
     padding: 4px 12px;
@@ -35,7 +31,7 @@
     border-color: rgba(0, 191, 165, 0.32);
 }
 
-/* Accent cycles for badge-n classes */
+/* badge-n cycles through accent colours */
 .v2-card-badge.badge-1 { background:rgba(255,109,0,.14);  color:var(--v2-inference); border-color:rgba(255,109,0,.32); }
 .v2-card-badge.badge-2 { background:rgba(124,77,255,.14); color:var(--v2-neural);    border-color:rgba(124,77,255,.32); }
 .v2-card-badge.badge-3 { background:rgba(0,191,165,.14);  color:var(--v2-data);      border-color:rgba(0,191,165,.32); }
@@ -89,7 +85,6 @@
     flex-wrap: wrap;
 }
 
-/* Shared buttons */
 .v2-btn-primary {
     display: inline-flex;
     align-items: center;
@@ -133,7 +128,6 @@
     border: 1px solid rgba(124, 77, 255, 0.32);
 }
 
-/* Ghost / text-only button (e.g. resume link) */
 .v2-btn-text {
     display: inline-block;
     padding: 12px 20px;
@@ -147,7 +141,6 @@
 }
 .v2-btn-text:hover { color: var(--v2-text); }
 
-/* Right column */
 .v2-right-label {
     font-family: 'Fira Code', monospace;
     font-size: 11px;
@@ -199,8 +192,7 @@
     .v2-panel-chrome { padding: 24px 20px; }
 }
 
-/* ── Architecture Trace (inside work panel) ─────────────────── */
-/* Spans both grid columns of the active tab panel */
+/* Architecture Trace — spans both grid columns of the active tab panel */
 .v2-arch-trace {
     grid-column: 1 / -1;
     margin-top: 20px;
@@ -243,7 +235,6 @@
 .v2-arch-trace .v2-arch-toggle-sub { font-size: 0; } /* hide static text */
 .v2-arch-trace .v2-arch-toggle-sub::after { font-size: 10px; }
 
-/* Diagram body */
 .v2-arch-diagram {
     margin-top: 18px;
     display: flex;
@@ -254,7 +245,6 @@
     line-height: 1.7;
 }
 
-/* Layer boxes */
 .v2-arch-layer {
     padding: 16px 20px;
     border-radius: 14px;
@@ -279,7 +269,6 @@
 .v2-arch-api     { border-color: rgba(255, 109, 0, 0.25); }
 .v2-arch-data    { border-color: rgba(124, 77, 255, 0.25); }
 
-/* Inline accent chips */
 .v2-arch-chip {
     display: inline;
     padding: 1px 6px;
@@ -294,7 +283,6 @@
 .v2-arch-sep { color: var(--v2-text-muted); }
 .v2-arch-dim { color: var(--v2-text-muted); font-size: 11px; }
 
-/* Arrow connector between layers */
 .v2-arch-connector {
     display: flex;
     align-items: center;

@@ -6,6 +6,8 @@
  * DOM updates use textContent / setAttribute — no innerHTML anywhere.
  */
 
+import { makeTop3Row, updateLetterDisplay } from './utils.js';
+
 // ── Hand geometry constants ──────────────────────────────────
 const WRIST = [50, 112];
 const MCP = {
@@ -132,27 +134,6 @@ function svgEl(tag, attrs) {
     return e;
 }
 
-/** Build a safe Top-3 row using DOM APIs (no innerHTML) */
-function makeTop3Row(rank, letter, pct, isTop) {
-    const row = document.createElement('div');
-    row.className = isTop ? 'v2-t3-row top' : 'v2-t3-row';
-
-    const idx = document.createElement('span');
-    idx.className   = 'v2-t3-idx';
-    idx.textContent = `${rank}.`;
-
-    const ltr = document.createElement('span');
-    ltr.className   = 'v2-t3-letter';
-    ltr.textContent = letter;
-
-    const pctEl = document.createElement('span');
-    pctEl.className   = 'v2-t3-pct';
-    pctEl.textContent = `${(pct * 100).toFixed(1)}%`;
-
-    row.append(idx, ltr, pctEl);
-    return row;
-}
-
 // ── Webcam override — set by initASL(), called by webcam.js ─
 let _pauseFn  = null;
 let _resumeFn = null;
@@ -190,10 +171,8 @@ export function spellSequence(letters, onDone) {
     _onSeqDone = onDone || null;
 }
 
-// ── Named exports for use by other modules (e.g. demo.js) ───
-export { SPEC, SIGNS, CONNECTIONS };
+export { SIGNS, CONNECTIONS };
 
-// ── Main export ──────────────────────────────────────────────
 export function initASL() {
     const svg        = document.getElementById('asl-svg');
     const letterEl   = document.getElementById('asl-pred-letter');
@@ -206,13 +185,11 @@ export function initASL() {
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    // ── Static SVG grid ──────────────────────────────────────
     for (let i = 0; i <= 10; i++)
         svg.appendChild(svgEl('line',{x1:i*10,y1:0,x2:i*10,y2:125,stroke:'#2a3342','stroke-width':0.15}));
     for (let i = 0; i <= 13; i++)
         svg.appendChild(svgEl('line',{x1:0,y1:i*10,x2:100,y2:i*10,stroke:'#2a3342','stroke-width':0.15}));
 
-    // ── Dynamic SVG elements (pre-created, updated each frame) ──
     const connLines = CONNECTIONS.map(() =>
         svg.appendChild(svgEl('line',{stroke:'#00bfa5','stroke-width':1.1,'stroke-linecap':'round',opacity:0.85}))
     );
@@ -221,7 +198,6 @@ export function initASL() {
     );
     const bbox = svg.appendChild(svgEl('rect',{fill:'none',stroke:'#7c4dff','stroke-width':0.4,'stroke-dasharray':'2 2'}));
 
-    // ── State machine ────────────────────────────────────────
     const HOLD_MS      = 1100;
     const MORPH_MS     = 420;
     const SEQ_HOLD_MS  = 550;   // 2× speed for Easter egg sequence
@@ -234,7 +210,6 @@ export function initASL() {
     let raf;
 
     function tick(now) {
-        // Activate a pending sequence on the next available frame
         if (_seqQueue && !_seqActive) {
             _seqActive = true;
             curKey     = _seqQueue[0];
@@ -284,7 +259,6 @@ export function initASL() {
         raf = requestAnimationFrame(tick);
     }
 
-    // Expose pause/resume/draw to webcam.js via module-level refs
     _pauseFn  = () => cancelAnimationFrame(raf);
     _resumeFn = () => { phaseStart = performance.now(); raf = requestAnimationFrame(tick); };
     _drawFn   = drawSVG;
@@ -300,7 +274,6 @@ export function initASL() {
 
     raf = requestAnimationFrame(tick);
 
-    // ── Render functions ─────────────────────────────────────
     let _prevLetter = null;
 
     function drawSVG(pose) {
@@ -327,30 +300,18 @@ export function initASL() {
     }
 
     function updatePanel(key, conf) {
-        if (letterEl && key !== _prevLetter) {
-            _prevLetter = key;
-            letterEl.textContent = key;
-            // Re-trigger M3 Expressive spring pop on each letter change
-            letterEl.style.animation = 'none';
-            void letterEl.offsetWidth; // force reflow
-            letterEl.style.animation = 'm3LetterPop 520ms cubic-bezier(0.34, 1.56, 0.64, 1)';
-        } else if (letterEl) {
-            letterEl.textContent = key;
-        }
-        if (confValEl)  confValEl.textContent  = `${(conf*100).toFixed(1)}%`;
-        if (confFillEl) confFillEl.style.width = `${conf*100}%`;
-        if (signingEl)  signingEl.textContent  = `SIGNING: ${key} · ASL FINGERSPELL`;
+        _prevLetter = updateLetterDisplay(letterEl, key, _prevLetter);
+        confValEl.textContent  = `${(conf*100).toFixed(1)}%`;
+        confFillEl.style.width = `${conf*100}%`;
+        signingEl.textContent  = `SIGNING: ${key} · ASL FINGERSPELL`;
 
-        if (top3El) {
-            const alts = ALTS[key] || ['E','S'];
-            const rows = [
-                {l:key,     p:conf},
-                {l:alts[0], p:0.04 + Math.random()*0.02},
-                {l:alts[1], p:0.02 + Math.random()*0.015},
-            ];
-            // Safe DOM rebuild — no innerHTML
-            while (top3El.firstChild) top3El.removeChild(top3El.firstChild);
-            rows.forEach((r, i) => top3El.appendChild(makeTop3Row(i+1, r.l, r.p, i===0)));
-        }
+        const alts = ALTS[key] || ['E','S'];
+        const rows = [
+            {l:key,     p:conf},
+            {l:alts[0], p:0.04 + Math.random()*0.02},
+            {l:alts[1], p:0.02 + Math.random()*0.015},
+        ];
+        while (top3El.firstChild) top3El.removeChild(top3El.firstChild);
+        rows.forEach((r, i) => top3El.appendChild(makeTop3Row(i+1, r.l, r.p, i===0)));
     }
 }

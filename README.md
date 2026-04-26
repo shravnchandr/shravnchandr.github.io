@@ -74,6 +74,7 @@ loader.js                   # Fetches html/*.html in parallel; sets window.__sec
 script.js                   # ES module entry point — imports js/* and calls initApp()
 
 js/
+  utils.js                  # Shared DOM helpers: el(), makeOverlay(), makeTop3Row(), updateLetterDisplay()
   theme.js                  # Dark/light toggle (localStorage key: 'theme-v2')
   nav.js                    # Hamburger, active-section highlight, logo Easter egg (spellSequence)
   scroll.js                 # Scroll-reveal, CountUp, back-to-top, smooth scroll
@@ -97,10 +98,10 @@ html/
   contact.html              # Contact CTAs (Email / LinkedIn / GitHub)
 
 css/
-  main.css                  # @import entry point
+  main.css                  # @import entry point (variables.css + v2/*.css)
   variables.css             # All design tokens (dark + light-theme palette)
   v2/
-    base.css                # body background, .v2-section, body.loading FOUC guard
+    base.css                # body/reset rules, @font-face, .v2-section, shared modal/panel base classes, FOUC guard
     skeleton.css            # Shimmer skeleton screens (nav, hero, impact, below-fold)
     nav.css                 # Sticky nav, mobile responsive
     hero.css                # Hero layout, ASL card, wavy underline SVG

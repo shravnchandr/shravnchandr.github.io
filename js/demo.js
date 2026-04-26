@@ -32,7 +32,6 @@ export function initDemo() {
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    // ── Pre-create SVG skeleton elements ────────────────────
     const connLines = CONNECTIONS.map(() => {
         const line = document.createElementNS(NS, 'line');
         line.setAttribute('stroke',         'var(--v2-data)');
@@ -74,7 +73,6 @@ export function initDemo() {
         jointDots.forEach(d => { d.setAttribute('cx','0'); d.setAttribute('cy','0'); });
     }
 
-    // ── Log helper (no innerHTML) ────────────────────────────
     const LOG_TYPE_CLASS = {
         mediapipe:  'v2-demo-log-mediapipe',
         classifier: 'v2-demo-log-classifier',
@@ -86,7 +84,6 @@ export function initDemo() {
     let logCount = 0;
 
     function addLog(type, msg) {
-        // Remove idle placeholder if still present
         const idle = logEl.querySelector('.v2-demo-log-idle');
         if (idle) idle.remove();
 
@@ -99,7 +96,7 @@ export function initDemo() {
 
         const typeSpan = document.createElement('span');
         typeSpan.className = LOG_TYPE_CLASS[type] || '';
-        typeSpan.textContent = type + ' ';
+        typeSpan.textContent = `${type} `;
 
         const msgSpan = document.createElement('span');
         msgSpan.textContent = msg;
@@ -111,7 +108,6 @@ export function initDemo() {
         while (logEl.children.length > 6) logEl.removeChild(logEl.firstChild);
     }
 
-    // ── Reset all UI to initial state ────────────────────────
     function reset() {
         logCount = 0;
         while (logEl.firstChild) logEl.removeChild(logEl.firstChild);
@@ -120,14 +116,10 @@ export function initDemo() {
         idle.textContent = '$ waiting for input…';
         logEl.appendChild(idle);
 
-        // Clear sign buffer (keep cursor)
         while (bufferEl.firstChild) bufferEl.removeChild(bufferEl.firstChild);
-        if (cursorEl) {
-            bufferEl.appendChild(cursorEl);
-            cursorEl.classList.remove('hidden');
-        }
+        bufferEl.appendChild(cursorEl);
+        cursorEl.classList.remove('hidden');
 
-        // Grammar box — waiting
         grammarEl.className = 'v2-demo-grammar-box';
         while (grammarEl.firstChild) grammarEl.removeChild(grammarEl.firstChild);
         const waiting = document.createElement('span');
@@ -135,7 +127,6 @@ export function initDemo() {
         waiting.textContent = 'waiting for buffer…';
         grammarEl.appendChild(waiting);
 
-        // Output box — empty
         outputEl.className = 'v2-demo-output-box';
         while (outputEl.firstChild) outputEl.removeChild(outputEl.firstChild);
         const empty = document.createElement('span');
@@ -143,14 +134,13 @@ export function initDemo() {
         empty.textContent = '\u00a0';
         outputEl.appendChild(empty);
 
-        // Clear overlays
-        if (letterEl) { letterEl.textContent = ''; letterEl.className = 'v2-demo-sign-letter'; }
-        if (latencyEl) latencyEl.textContent = '12ms';
+        letterEl.textContent = '';
+        letterEl.className = 'v2-demo-sign-letter';
+        latencyEl.textContent = '12ms';
 
         hidePose();
     }
 
-    // ── Scripted animation tick ──────────────────────────────
     function run() {
         reset();
         let step = 0;
@@ -161,49 +151,37 @@ export function initDemo() {
             const ch   = SCRIPT[step - 1];
             const sign = (ch && ch !== ' ') ? ch : null;
 
-            // Update SVG hand skeleton
             if (sign && SIGNS[sign]) drawPose(SIGNS[sign]);
             else hidePose();
 
-            // Letter overlay with spring pop
-            if (letterEl) {
-                if (sign) {
-                    letterEl.textContent = sign;
-                    letterEl.className = 'v2-demo-sign-letter';
-                    void letterEl.offsetWidth;
-                    letterEl.classList.add('pop');
-                } else {
-                    letterEl.textContent = '';
-                    letterEl.className = 'v2-demo-sign-letter';
-                }
+            if (sign) {
+                letterEl.textContent = sign;
+                letterEl.className = 'v2-demo-sign-letter';
+                void letterEl.offsetWidth;
+                letterEl.classList.add('pop');
+            } else {
+                letterEl.textContent = '';
+                letterEl.className = 'v2-demo-sign-letter';
             }
 
-            // Latency jitter
-            if (latencyEl && sign) {
+            if (sign) {
                 latencyEl.textContent = `${15 + Math.floor(Math.abs(Math.sin(step)) * 5)}ms`;
             }
 
-            // Buffer: append typed character
             if (step >= 1 && step <= SCRIPT.length) {
                 const c    = SCRIPT[step - 1];
                 const span = document.createElement('span');
                 span.textContent = c === ' ' ? '·' : c;
                 span.style.color = c === ' ' ? 'var(--v2-text-muted)' : 'var(--v2-text)';
-                span.style.animation = 'pop 280ms cubic-bezier(0.34, 1.56, 0.64, 1)';
-                if (cursorEl && bufferEl.contains(cursorEl)) {
-                    bufferEl.insertBefore(span, cursorEl);
-                } else {
-                    bufferEl.appendChild(span);
-                }
+                span.style.animation = 'pop 280ms var(--spring-bounce)';
+                bufferEl.insertBefore(span, cursorEl);
             }
 
-            // Log events at milestones
             if (step === 1) addLog('mediapipe',  'hand detected · 21 landmarks');
             if (step === 3) addLog('classifier', `tf.js → "${SCRIPT[step-1]}" · 96.2%`);
             if (step === 6) addLog('buffer',     'word complete: "HELLO"');
             if (step === SCRIPT.length) addLog('buffer', 'word complete: "WORLD"');
 
-            // Phase: grammar pass
             if (step === SCRIPT.length + 1) {
                 addLog('langgraph', 'grammar pass · 10 rules');
 
@@ -218,10 +196,9 @@ export function initDemo() {
                 blinkDot.textContent = '_';
                 grammarEl.append(correcting, blinkDot);
 
-                if (cursorEl) cursorEl.classList.add('hidden');
+                cursorEl.classList.add('hidden');
             }
 
-            // Phase: output done
             if (step === SCRIPT.length + 2) {
                 addLog('out', `"${CORRECTED}"`);
 
@@ -249,15 +226,11 @@ export function initDemo() {
         setTimeout(tick, STEP_MS);
     }
 
-    // ── Start when demo section scrolls into view ────────────
     const section = svg.closest('section');
-    if (section) {
-        const io = new IntersectionObserver(entries => {
-            if (entries[0].isIntersecting) { io.disconnect(); run(); }
-        }, { threshold: 0.25 });
-        io.observe(section);
-    }
+    const io = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) { io.disconnect(); run(); }
+    }, { threshold: 0.25 });
+    io.observe(section);
 
-    // ── Replay button ────────────────────────────────────────
-    if (replayBtn) replayBtn.addEventListener('click', run);
+    replayBtn.addEventListener('click', run);
 }

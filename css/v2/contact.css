@@ -1,4 +1,3 @@
-/* v2 Contact section */
 .v2-contact {
     padding: 120px 0;
     position: relative;
@@ -69,7 +68,6 @@
     font-size: 14px;
 }
 
-/* Icon sizing inside contact action buttons */
 .v2-contact-actions .material-symbols-outlined {
     font-size: 18px;
     line-height: 1;

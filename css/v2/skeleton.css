@@ -144,7 +144,6 @@ body.loading .v2-skeleton { visibility: visible; }
 }
 .v2-sk-block { height: 280px; border-radius: 20px; }
 
-/* ── Responsive ────────────────────────────────────────────────────── */
 @media (max-width: 1024px) {
     .v2-sk-nav  { padding: 0 24px; }
     .v2-sk-hero { grid-template-columns: 1fr; padding: 48px 24px 64px; }

@@ -20,7 +20,6 @@ function initScrollReveal() {
     document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
 }
 
-// ── CountUp — animates .v2-metric-val numbers when scrolled into view ──
 function initCountUp() {
     // Parse "€300K+" → { pre:"€", num:300, suf:"K+", decimals:0 }
     function parse(str) {
@@ -67,7 +66,6 @@ function initCountUp() {
 
 function initBackToTop() {
     const btn = document.getElementById('back-to-top');
-    if (!btn) return;
 
     window.addEventListener('scroll', () => {
         btn.classList.toggle('visible', window.scrollY > 300);

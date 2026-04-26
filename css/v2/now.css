@@ -1,4 +1,3 @@
-/* v2 Now + OSS section */
 .v2-now-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -16,7 +15,6 @@
     overflow: hidden;
 }
 
-/* Blob decoration inside Now card */
 .v2-now-card::before {
     content: '';
     position: absolute;
@@ -52,7 +50,6 @@
     margin: 0 0 24px;
 }
 
-/* Now items */
 .v2-now-item {
     display: flex;
     gap: 14px;
@@ -75,7 +72,6 @@
     flex-shrink: 0;
 }
 
-/* OSS repos */
 .v2-oss-list {
     display: flex;
     flex-direction: column;

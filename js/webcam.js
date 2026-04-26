@@ -17,12 +17,18 @@
  */
 
 import { pauseASL, resumeASL, drawHandPose } from './asl.js';
+import { updateLetterDisplay, makeTop3Row }  from './utils.js';
 
 const MP_HANDS_CDN = 'https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js';
 const MODEL_SRC    = './asl_model.js';
 const APP_URL      = 'https://asl-guide.onrender.com';
 
-/* ── MLP inference ──────────────────────────────────────────── */
+const BTN_STATE_LOADING = 'loading';
+const BTN_STATE_ACTIVE  = 'active';
+const BTN_STATE_IDLE    = 'idle';
+
+const CLS_BTN_ACTIVE   = 'v2-webcam-btn--active';
+const CLS_VIDEO_ACTIVE = 'v2-webcam-video--active';
 
 let _modelData = null;   // populated from window.ASL_MODEL_DATA after script load
 
@@ -87,36 +93,31 @@ function _classify(worldLandmarks) {
         .slice(0, 3);
 }
 
-/* ── Webcam state ───────────────────────────────────────────── */
 let _active  = false;
-let _hands   = null;   // MediaPipe Hands instance
-let _stream  = null;   // MediaStream from getUserMedia
-let _video   = null;   // <video> element
+let _hands   = null;
+let _stream  = null;
+let _video   = null;
 let _rafId   = null;
 
-/* ── MediaPipe results callback ─────────────────────────────── */
 let _prevLetter = null;
 
 function _onResults(results) {
     if (!_active) return;
-    if (!results.multiHandLandmarks?.length) return; // no hand in frame
+    if (!results.multiHandLandmarks?.length) return;
 
     const lms      = results.multiHandLandmarks[0];
     const worldLms = results.multiHandWorldLandmarks?.[0];
 
-    // Map MediaPipe [0,1] → SVG coords [0-100, 0-125]; mirror x for natural
-    // self-view (front-facing camera gives laterally-flipped coordinates).
+    // Mirror x: front-facing camera gives laterally-flipped coordinates
     const svgPose = lms.map(({ x, y }) => [(1 - x) * 100, y * 125]);
     drawHandPose(svgPose);
 
-    // Classify using world landmarks (metres) — the model was trained on these.
     if (worldLms && _modelData) {
         const preds = _classify(worldLms);
         if (preds) _updatePanel(preds);
     }
 }
 
-/* ── Panel updater (mirrors asl.js updatePanel) ─────────────── */
 function _updatePanel([top, ...rest]) {
     const letterEl   = document.getElementById('asl-pred-letter');
     const confValEl  = document.getElementById('asl-conf-val');
@@ -124,17 +125,7 @@ function _updatePanel([top, ...rest]) {
     const signingEl  = document.getElementById('asl-signing-label');
     const top3El     = document.getElementById('asl-top3');
 
-    if (letterEl) {
-        if (top.key !== _prevLetter) {
-            _prevLetter = top.key;
-            letterEl.textContent = top.key;
-            letterEl.style.animation = 'none';
-            void letterEl.offsetWidth;
-            letterEl.style.animation = 'm3LetterPop 520ms cubic-bezier(0.34,1.56,0.64,1)';
-        } else {
-            letterEl.textContent = top.key;
-        }
-    }
+    _prevLetter = updateLetterDisplay(letterEl, top.key, _prevLetter);
     if (confValEl)  confValEl.textContent  = `${(top.conf * 100).toFixed(1)}%`;
     if (confFillEl) confFillEl.style.width = `${top.conf * 100}%`;
     if (signingEl)  signingEl.textContent  = `SIGNING: ${top.key} · LIVE CAM`;
@@ -142,21 +133,11 @@ function _updatePanel([top, ...rest]) {
     if (top3El) {
         while (top3El.firstChild) top3El.removeChild(top3El.firstChild);
         [top, ...rest].forEach(({ key, conf }, i) => {
-            const row = document.createElement('div');
-            row.className = i === 0 ? 'v2-t3-row top' : 'v2-t3-row';
-            const idx = document.createElement('span');
-            idx.className = 'v2-t3-idx'; idx.textContent = `${i + 1}.`;
-            const ltr = document.createElement('span');
-            ltr.className = 'v2-t3-letter'; ltr.textContent = key;
-            const pct = document.createElement('span');
-            pct.className = 'v2-t3-pct'; pct.textContent = `${(conf * 100).toFixed(1)}%`;
-            row.append(idx, ltr, pct);
-            top3El.appendChild(row);
+            top3El.appendChild(makeTop3Row(i + 1, key, conf, i === 0));
         });
     }
 }
 
-/* ── Frame loop ─────────────────────────────────────────────── */
 async function _sendFrame() {
     if (!_active) return;
     if (_video && _video.readyState >= 2) {
@@ -165,11 +146,10 @@ async function _sendFrame() {
     _rafId = requestAnimationFrame(_sendFrame);
 }
 
-/* ── Start ──────────────────────────────────────────────────── */
 async function _start(btn) {
-    _setBtnState(btn, 'loading');
+    _setBtnState(btn, BTN_STATE_LOADING);
 
-    // Lazily load model weights + MediaPipe in parallel on first activation
+    // Load model weights + MediaPipe lazily on first activation
     try {
         const loads = [];
         if (!_modelData) loads.push(_loadScript(MODEL_SRC));
@@ -177,12 +157,11 @@ async function _start(btn) {
         await Promise.all(loads);
     } catch (err) {
         console.error('[webcam] Failed to load dependencies:', err);
-        _setBtnState(btn, 'idle');
+        _setBtnState(btn, BTN_STATE_IDLE);
         return;
     }
 
-    // Initialise model weights (ASL_MODEL_DATA is a top-level const in a
-    // non-module script — accessible from ES modules via the global scope).
+    // ASL_MODEL_DATA is a top-level const in a non-module script — accessible via window
     if (!_modelData) {
         /* global ASL_MODEL_DATA */
         if (typeof ASL_MODEL_DATA !== 'undefined') {
@@ -192,7 +171,6 @@ async function _start(btn) {
         }
     }
 
-    // Initialise MediaPipe Hands
     if (!_hands) {
         try {
             _hands = new window.Hands({
@@ -208,19 +186,18 @@ async function _start(btn) {
             await _hands.initialize();
         } catch (err) {
             console.error('[webcam] MediaPipe init failed:', err);
-            _setBtnState(btn, 'idle');
+            _setBtnState(btn, BTN_STATE_IDLE);
             return;
         }
     }
 
-    // Request camera
     try {
         _stream = await navigator.mediaDevices.getUserMedia({
             video: { width: 640, height: 480, facingMode: 'user' },
         });
     } catch (err) {
         console.warn('[webcam] Camera access denied:', err);
-        _setBtnState(btn, 'idle');
+        _setBtnState(btn, BTN_STATE_IDLE);
         return;
     }
 
@@ -229,15 +206,14 @@ async function _start(btn) {
 
     _video.srcObject = _stream;
     await _video.play();
-    _video.classList.add('v2-webcam-video--active');
+    _video.classList.add(CLS_VIDEO_ACTIVE);
 
     _active = true;
     pauseASL();
-    _setBtnState(btn, 'active');
+    _setBtnState(btn, BTN_STATE_ACTIVE);
     _rafId = requestAnimationFrame(_sendFrame);
 }
 
-/* ── Stop ───────────────────────────────────────────────────── */
 function _stop(btn) {
     _active = false;
     cancelAnimationFrame(_rafId);
@@ -250,36 +226,34 @@ function _stop(btn) {
     }
     if (_video) {
         _video.srcObject = null;
-        _video.classList.remove('v2-webcam-video--active');
+        _video.classList.remove(CLS_VIDEO_ACTIVE);
     }
 
     resumeASL();
-    _setBtnState(btn, 'idle');
+    _setBtnState(btn, BTN_STATE_IDLE);
 }
 
-/* ── Button state helper ────────────────────────────────────── */
 function _setBtnState(btn, state) {
     const labelEl = btn.querySelector('.v2-webcam-label');
     const dotEl   = btn.querySelector('.v2-webcam-dot');
 
-    if (state === 'loading') {
+    if (state === BTN_STATE_LOADING) {
         btn.disabled = true;
-        if (labelEl) labelEl.textContent = 'Loading…';
-        if (dotEl)   dotEl.style.background = 'var(--v2-text-muted)';
-    } else if (state === 'active') {
+        labelEl.textContent = 'Loading…';
+        dotEl.style.background = 'var(--v2-text-muted)';
+    } else if (state === BTN_STATE_ACTIVE) {
         btn.disabled = false;
-        btn.classList.add('v2-webcam-btn--active');
-        if (labelEl) labelEl.textContent = 'Stop camera';
-        if (dotEl)   dotEl.style.background = 'var(--v2-inference)';
+        btn.classList.add(CLS_BTN_ACTIVE);
+        labelEl.textContent = 'Stop camera';
+        dotEl.style.background = 'var(--v2-inference)';
     } else {
         btn.disabled = false;
-        btn.classList.remove('v2-webcam-btn--active');
-        if (labelEl) labelEl.textContent = 'Try live →';
-        if (dotEl)   dotEl.style.background = 'var(--v2-data)';
+        btn.classList.remove(CLS_BTN_ACTIVE);
+        labelEl.textContent = 'Try live →';
+        dotEl.style.background = 'var(--v2-data)';
     }
 }
 
-/* ── Script loader ──────────────────────────────────────────── */
 function _loadScript(src) {
     return new Promise((resolve, reject) => {
         if (document.querySelector(`script[src="${src}"]`)) { resolve(); return; }
@@ -292,8 +266,7 @@ function _loadScript(src) {
     });
 }
 
-/* ── Live app status ping ───────────────────────────────────── */
-export function checkAppStatus() {
+function checkAppStatus() {
     const dot   = document.getElementById('asl-status-dot');
     const label = document.getElementById('asl-status-label');
     if (!dot || !label) return;
@@ -320,12 +293,9 @@ export function checkAppStatus() {
         });
 }
 
-/* ── Public init ────────────────────────────────────────────── */
 export function initWebcam() {
-    // Wire toggle button
     const btn = document.getElementById('webcam-toggle');
     if (btn) {
-        // Hide button if getUserMedia not available (e.g. HTTP, old browser)
         if (!navigator.mediaDevices?.getUserMedia) {
             btn.closest('.v2-webcam-cta')?.remove();
         } else {
@@ -336,6 +306,5 @@ export function initWebcam() {
         }
     }
 
-    // Kick off app status check
     checkAppStatus();
 }

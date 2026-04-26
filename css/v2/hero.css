@@ -1,4 +1,3 @@
-/* v2 Hero section */
 .v2-hero {
     position: relative;
     padding: 64px 56px 88px;
@@ -23,7 +22,6 @@
     align-items: center;
 }
 
-/* Blob decoration */
 .v2-blob-top {
     position: absolute;
     top: -160px; right: -120px;
@@ -154,7 +152,6 @@
     grid-template-columns: 1.3fr 1fr;
 }
 
-/* SVG canvas */
 .v2-asl-canvas-wrap {
     aspect-ratio: 4 / 5;
     position: relative;
@@ -184,7 +181,6 @@
     letter-spacing: 1px;
 }
 
-/* Prediction panel */
 .v2-asl-pred {
     padding: 18px 16px;
     display: flex;
@@ -271,7 +267,6 @@
     margin-top: 12px;
 }
 
-/* Responsive */
 @media (max-width: 1024px) {
     .v2-hero { padding: 48px 24px 64px; }
     .v2-hero-inner { grid-template-columns: 1fr; gap: 40px; }

@@ -2,7 +2,6 @@
 :root {
     /* Core Palette - Light (Default) */
     --md-sys-color-primary: #006874;
-    /* Deep Cyan */
     --md-sys-color-on-primary: #ffffff;
     --md-sys-color-primary-container: #97f0ff;
     --md-sys-color-on-primary-container: #001f24;
@@ -25,52 +24,23 @@
     --md-sys-color-on-surface-variant: #43474e;
     --md-sys-color-outline: #73777f;
 
-    /* ML-focused accent colors */
-    --ml-accent-neural: #7c4dff;
-    --ml-accent-data: #00bfa5;
-    --ml-accent-inference: #ff6d00;
-
-    /* Typography - Expressive Scale (Enhanced) */
+    /* Typography - Expressive Scale */
     --md-sys-typescale-display-large: clamp(48px, 8vw, 64px);
-    --md-sys-typescale-display-medium: clamp(40px, 6vw, 52px);
     --md-sys-typescale-display-small: clamp(32px, 5vw, 40px);
-    --md-sys-typescale-headline-large: clamp(28px, 4vw, 36px);
-    --md-sys-typescale-headline-medium: clamp(24px, 3.5vw, 30px);
     --md-sys-typescale-headline-small: clamp(20px, 3vw, 26px);
     --md-sys-typescale-body-large: clamp(16px, 2vw, 18px);
-    --md-sys-typescale-body-medium: 14px;
 
     /* Shapes - Expressive */
-    --md-sys-shape-corner-extra-small: 4px;
     --md-sys-shape-corner-small: 8px;
     --md-sys-shape-corner-medium: 12px;
     --md-sys-shape-corner-large: 16px;
-    --md-sys-shape-corner-extra-large: 28px;
-    --md-sys-shape-corner-full: 100px;
-
-    /* Motion - Standard */
-    --md-sys-motion-easing-emphasized: cubic-bezier(0.2, 0.0, 0.0, 1.0);
-    --md-sys-motion-duration-medium: 400ms;
-    --md-sys-motion-duration-long: 600ms;
 
     /* Motion - Spring (Expressive) */
     --spring-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
     --spring-smooth: cubic-bezier(0.22, 0.61, 0.36, 1);
-    --spring-snappy: cubic-bezier(0.68, -0.55, 0.265, 1.55);
     --spring-duration-short: 300ms;
-    --spring-duration-medium: 500ms;
-    --spring-duration-long: 700ms;
-
-    /* Staggered Animation Delays */
-    --stagger-1: 0ms;
-    --stagger-2: 50ms;
-    --stagger-3: 100ms;
-    --stagger-4: 150ms;
-    --stagger-5: 200ms;
 
     /* Shapes - Expressive Asymmetric */
-    --shape-asymmetric-card: 28px 12px 28px 12px;
-    --shape-asymmetric-tag: 16px 4px 16px 4px;
     --shape-pill: 100px;
 
     /* Spacing */
@@ -86,25 +56,21 @@
 @media (prefers-color-scheme: dark) {
     :root {
         --md-sys-color-primary: #00e5ff;
-        /* Neon Cyan */
         --md-sys-color-on-primary: #00333d;
         --md-sys-color-primary-container: #004f5d;
         --md-sys-color-on-primary-container: #8ff7ff;
 
         --md-sys-color-secondary: #b388ff;
-        /* Electric Purple */
         --md-sys-color-on-secondary: #32009a;
         --md-sys-color-secondary-container: #4d00d2;
         --md-sys-color-on-secondary-container: #eaddff;
 
         --md-sys-color-tertiary: #ff4081;
-        /* Neon Pink */
         --md-sys-color-on-tertiary: #66002c;
         --md-sys-color-tertiary-container: #8e003f;
         --md-sys-color-on-tertiary-container: #ffd8e4;
 
         --md-sys-color-background: #0a0a0a;
-        /* Deep Black */
         --md-sys-color-on-background: #e0e0e0;
         --md-sys-color-surface: #121212;
         --md-sys-color-on-surface: #e0e0e0;
@@ -114,35 +80,8 @@
     }
 }
 
-/* Manual Theme Overrides (via JS class) */
-body.dark-theme {
-    --md-sys-color-primary: #00e5ff;
-    --md-sys-color-on-primary: #00333d;
-    --md-sys-color-primary-container: #004f5d;
-    --md-sys-color-on-primary-container: #8ff7ff;
-
-    --md-sys-color-secondary: #b388ff;
-    --md-sys-color-on-secondary: #32009a;
-    --md-sys-color-secondary-container: #4d00d2;
-    --md-sys-color-on-secondary-container: #eaddff;
-
-    --md-sys-color-tertiary: #ff4081;
-    --md-sys-color-on-tertiary: #66002c;
-    --md-sys-color-tertiary-container: #8e003f;
-    --md-sys-color-on-tertiary-container: #ffd8e4;
-
-    --md-sys-color-background: #0a0a0a;
-    --md-sys-color-on-background: #e0e0e0;
-    --md-sys-color-surface: #121212;
-    --md-sys-color-on-surface: #e0e0e0;
-    --md-sys-color-surface-variant: #1e1e1e;
-    --md-sys-color-on-surface-variant: #c2c2c2;
-    --md-sys-color-outline: #444444;
-}
-
 body.light-theme {
     --md-sys-color-primary: #006874;
-    /* Deep Cyan (Readable on white) */
     --md-sys-color-on-primary: #ffffff;
     --md-sys-color-primary-container: #97f0ff;
     --md-sys-color-on-primary-container: #001f24;

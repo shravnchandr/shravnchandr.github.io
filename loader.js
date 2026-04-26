@@ -42,17 +42,15 @@ async function loadFragment({ id, src, critical }) {
 
     try {
         const html = await fetchWithRetry(src);
-        placeholder.outerHTML = html; // replace placeholder with real HTML
+        placeholder.outerHTML = html;
     } catch (err) {
         console.error(`[loader] Failed to load ${src} after ${MAX_RETRIES} retries:`, err);
 
         if (critical) {
-            // Show a minimal in-place error so the user isn't left with a blank page
             placeholder.style.cssText =
                 'padding:20px;text-align:center;color:#a0a9b8;font-family:monospace;font-size:13px';
             placeholder.textContent = `⚠ Failed to load section (${src}). Please refresh.`;
         } else {
-            // Non-critical: silently remove the placeholder so layout isn't broken
             placeholder.remove();
         }
     }
@@ -62,7 +60,6 @@ async function bootstrap() {
     await Promise.all(FRAGMENTS.map(loadFragment));
     document.body.classList.remove('loading');
 
-    // Notify script.js — use callback if it's already set, else set flag
     if (typeof window.__onSectionsReady === 'function') {
         window.__onSectionsReady();
     } else {
@@ -70,6 +67,5 @@ async function bootstrap() {
     }
 }
 
-// Hide body until fragments are injected (prevents FOUC)
 document.body.classList.add('loading');
 bootstrap();

@@ -2,22 +2,12 @@
  * css/v2/recruiter.css — "For Recruiters" modal.
  */
 
-/* ── Overlay ────────────────────────────────────────────────── */
+/* Base backdrop state in base.css (.v2-modal-overlay) */
 .v2-recruiter-overlay {
-    position: fixed;
-    inset: 0;
     z-index: 2100;
-    background: rgba(0, 0, 0, 0.72);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    display: flex;
     align-items: center;
     justify-content: center;
     padding: 24px;
-
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 220ms ease;
 }
 
 .v2-recruiter-overlay--open {
@@ -25,7 +15,6 @@
     pointer-events: all;
 }
 
-/* ── Modal ──────────────────────────────────────────────────── */
 .v2-recruiter-modal {
     width: min(600px, calc(100vw - 32px));
     max-height: calc(100dvh - 48px);
@@ -43,7 +32,6 @@
     transform: translateY(0) scale(1);
 }
 
-/* ── Header ─────────────────────────────────────────────────── */
 .v2-recruiter-hdr {
     display: flex;
     align-items: center;
@@ -75,25 +63,14 @@
     letter-spacing: -0.5px;
 }
 
+/* Base styles in v2/base.css (.v2-panel-close) */
 .v2-recruiter-close {
-    background: none;
-    border: none;
-    color: var(--v2-text-muted);
     font-size: 24px;
-    line-height: 1;
-    cursor: pointer;
     padding: 4px 8px;
     border-radius: 8px;
     flex-shrink: 0;
-    transition: color 150ms ease, background 150ms ease;
 }
 
-.v2-recruiter-close:hover {
-    color: var(--v2-text);
-    background: var(--v2-surface-hi);
-}
-
-/* ── Section ────────────────────────────────────────────────── */
 .v2-recruiter-section {
     padding: 20px 24px;
     border-bottom: 1px solid var(--v2-border);
@@ -107,7 +84,6 @@
     margin-bottom: 14px;
 }
 
-/* ── Role rows ──────────────────────────────────────────────── */
 .v2-recruiter-row {
     display: flex;
     gap: 16px;
@@ -129,7 +105,6 @@
     font-weight: 500;
 }
 
-/* ── Team fit grid ──────────────────────────────────────────── */
 .v2-recruiter-fit-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -163,7 +138,6 @@
     color: var(--v2-text-muted);
 }
 
-/* ── Actions ────────────────────────────────────────────────── */
 .v2-recruiter-actions {
     display: flex;
     gap: 12px;
@@ -184,7 +158,6 @@
     line-height: 1;
 }
 
-/* ── Recruiter trigger button (in contact section) ──────────── */
 .v2-recruiter-trigger {
     display: inline-flex;
     align-items: center;
@@ -207,7 +180,6 @@
     border-color: rgba(124, 77, 255, 0.7);
 }
 
-/* ── Mobile ─────────────────────────────────────────────────── */
 @media (max-width: 560px) {
     .v2-recruiter-fit-grid { grid-template-columns: 1fr; }
     .v2-recruiter-actions  { flex-direction: column; }
@@ -216,7 +188,6 @@
     .v2-recruiter-actions  { padding-left: 18px; padding-right: 18px; }
 }
 
-/* ── Reduced motion ─────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
     .v2-recruiter-overlay,
     .v2-recruiter-modal { transition: none; }

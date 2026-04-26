@@ -2,6 +2,9 @@
 
 import { spellSequence } from './asl.js';
 
+const ICON_OPEN  = 'fas fa-bars';
+const ICON_CLOSE = 'fas fa-times';
+
 export function initNav() {
     initMobileMenu();
     initActiveNav();
@@ -28,16 +31,14 @@ function initMobileMenu() {
     btn.addEventListener('click', () => {
         const open = links.classList.toggle('active');
         btn.setAttribute('aria-expanded', open);
-        if (icon) icon.className = open ? 'fas fa-times' : 'fas fa-bars';
+        if (icon) icon.className = open ? ICON_CLOSE : ICON_OPEN;
         document.body.style.overflow = open ? 'hidden' : '';
     });
 
-    // Close on link click
     links.querySelectorAll('a').forEach(a => {
         a.addEventListener('click', () => closeMenu());
     });
 
-    // Close on outside click
     document.addEventListener('click', e => {
         if (!links.contains(e.target) && !btn.contains(e.target) && links.classList.contains('active')) {
             closeMenu();
@@ -47,7 +48,7 @@ function initMobileMenu() {
     function closeMenu() {
         links.classList.remove('active');
         btn.setAttribute('aria-expanded', 'false');
-        if (icon) icon.className = 'fas fa-bars';
+        if (icon) icon.className = ICON_OPEN;
         document.body.style.overflow = '';
     }
 }

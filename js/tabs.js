@@ -14,13 +14,12 @@ function initWorkTabs() {
         btn.addEventListener('click', () => {
             const key = btn.dataset.tab;
 
-            // Update tab buttons
             tabBtns.forEach(b => {
-                b.classList.toggle('active', b === btn);
-                b.setAttribute('aria-selected', b === btn);
+                const isActive = b === btn;
+                b.classList.toggle('active', isActive);
+                b.setAttribute('aria-selected', String(isActive));
             });
 
-            // Update panels
             document.querySelectorAll('[data-tab-panel]').forEach(panel => {
                 panel.classList.toggle('active', panel.dataset.tabPanel === key);
             });
@@ -35,16 +34,14 @@ function initStoryTabs() {
     if (!topBtns.length) return;
 
     function switchStory(key) {
-        // Top tabs
         topBtns.forEach(b => {
-            b.classList.toggle('active', b.dataset.story === key);
-            b.setAttribute('aria-selected', b.dataset.story === key);
+            const isActive = b.dataset.story === key;
+            b.classList.toggle('active', isActive);
+            b.setAttribute('aria-selected', String(isActive));
         });
 
-        // Role-nav buttons (right column)
         roleBtns.forEach(b => b.classList.toggle('active', b.dataset.role === key));
 
-        // Content panels
         document.querySelectorAll('[data-story-panel]').forEach(panel => {
             panel.classList.toggle('active', panel.dataset.storyPanel === key);
         });

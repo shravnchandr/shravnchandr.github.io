@@ -5,23 +5,12 @@
  * Full-screen backdrop + centred modal with real-time results.
  */
 
-/* ── Overlay backdrop ──────────────────────────────────────────────── */
+/* Base backdrop state in base.css (.v2-modal-overlay) */
 .v2-search-overlay {
-    position: fixed;
-    inset: 0;
     z-index: 2000;
-    background: rgba(0, 0, 0, 0.72);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    display: flex;
     align-items: flex-start;
     justify-content: center;
     padding-top: clamp(60px, 12vh, 120px);
-
-    /* Hidden state */
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 220ms ease;
 }
 
 .v2-search-overlay--open {
@@ -29,7 +18,6 @@
     pointer-events: all;
 }
 
-/* ── Modal box ─────────────────────────────────────────────────────── */
 .v2-search-modal {
     width: min(560px, calc(100vw - 32px));
     background: var(--v2-surface);
@@ -46,7 +34,6 @@
     transform: translateY(0) scale(1);
 }
 
-/* ── Input row ─────────────────────────────────────────────────────── */
 .v2-search-row {
     display: flex;
     align-items: center;
@@ -89,7 +76,6 @@
     flex-shrink: 0;
 }
 
-/* ── Results ───────────────────────────────────────────────────────── */
 .v2-search-results {
     max-height: 360px;
     overflow-y: auto;
@@ -149,7 +135,6 @@
     text-overflow: ellipsis;
 }
 
-/* ── Empty / tip states ────────────────────────────────────────────── */
 .v2-search-empty {
     padding: 16px 12px;
     font-size: 13px;
@@ -173,7 +158,6 @@
     color: var(--v2-neural);
 }
 
-/* ── Nav search trigger button ─────────────────────────────────────── */
 .v2-search-trigger {
     display: flex;
     align-items: center;
@@ -206,13 +190,11 @@
     padding: 1px 5px;
 }
 
-/* ── Reduced motion ────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
     .v2-search-overlay,
     .v2-search-modal { transition: none; }
 }
 
-/* ── Mobile — hide the trigger label text, show icon only ──────────── */
 @media (max-width: 768px) {
     .v2-search-trigger-label { display: none; }
     .v2-search-trigger kbd { display: none; }

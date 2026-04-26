@@ -20,7 +20,7 @@ desktop.ini
 *~
 #*#
 
-# Python dev scripts (local model training/export tools)
+# Python dev scripts (model training/export — dev/ only, not part of the site)
 *.py
 
 # Font directory (font file is committed directly)

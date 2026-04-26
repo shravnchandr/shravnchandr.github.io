@@ -1,6 +1,4 @@
-/* v2 Story section — experience + education */
-
-/* Story tab panel uses a 2-col: left content + right nav */
+/* v2 Story — 2-col layout: left content + right role-nav */
 .v2-story-layout {
     display: grid;
     grid-template-columns: 1.2fr 1fr;
@@ -12,7 +10,6 @@
     border: 1px solid var(--v2-border);
 }
 
-/* Left column: experience content panels */
 .v2-exp-panel { display: none; }
 .v2-exp-panel.active { display: block; }
 
@@ -57,7 +54,6 @@
     flex-shrink: 0;
 }
 
-/* Right column: role-nav + summary */
 .v2-role-nav {
     display: flex;
     flex-direction: column;
@@ -113,7 +109,6 @@
     color: var(--v2-text-muted);
 }
 
-/* Education block */
 .v2-education {
     margin-top: 32px;
     padding: 24px 28px;

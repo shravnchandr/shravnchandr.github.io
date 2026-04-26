@@ -1,14 +1,4 @@
-/* Main CSS - Imports all modules */
 @import 'variables.css';
-@import 'base.css';
-@import 'layout.css';
-@import 'animations.css';
-
-/* Persistent UI (FAB, back-to-top, footer — not section-specific) */
-@import 'components/buttons.css';
-@import 'components/footer.css';
-
-/* v2 Lab redesign — dark-default, modular */
 @import 'v2/base.css';
 @import 'v2/skeleton.css';
 @import 'v2/a11y.css';

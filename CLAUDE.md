@@ -34,6 +34,7 @@ loader.js                   # Fetches html/*.html fragments in parallel, sets __
 script.js                   # ES module entry point — imports js/* and calls initApp()
 
 js/
+  utils.js                  # Shared DOM helpers: el(), makeOverlay(), makeTop3Row(), updateLetterDisplay()
   theme.js                  # Dark/light toggle (localStorage key: 'theme-v2')
   nav.js                    # Mobile hamburger + active-section highlight + logo Easter egg
   scroll.js                 # Scroll-reveal, CountUp, back-to-top, smooth scroll
@@ -57,11 +58,10 @@ html/
   contact.html              # Contact h2, 3 CTA buttons (Email / LinkedIn / GitHub)
 
 css/
-  main.css                  # @import entry point for all stylesheets
-  variables.css             # All design tokens (original M3 + v2 dark/light palette)
-  animations.css            # Original spring @keyframes + .animate-on-scroll base
+  main.css                  # @import entry point (variables.css + v2/*.css — no legacy layers)
+  variables.css             # All design tokens (dark + light-theme palette)
   v2/
-    base.css                # body background, .v2-section, .v2-inner, body.loading FOUC guard
+    base.css                # body/reset rules, @font-face, .v2-section, .v2-modal-overlay, .v2-panel-close, FOUC guard
     skeleton.css            # Shimmer screens for nav/hero/impact/below-fold (visibility override trick)
     nav.css                 # .v2-nav sticky + mobile responsive
     hero.css                # Hero layout, ASL card, status badge, wavy underline SVG
@@ -84,8 +84,7 @@ asl_model.js                # Trained MLP weights + StandardScaler; loaded lazil
                             # Defines two globals: ASL_MODEL_DATA and ASL_SCALER_DATA
                             # Format: { model: {fc1_w,fc1_b,fc2_w,fc2_b,fc3_w,fc3_b}, scaler: {mean,scale} }
                             # Weights stored TRANSPOSED: shape [in_features][out_features]
-dev/export_model.py         # PyTorch → JSON export script (generates asl_model.js)
-dev/asl_model.js            # Dev copy of asl_model.js
+dev/export_model.py         # PyTorch → JSON export script (generates asl_model.js; gitignored)
 og-image.png                # 1200×630 social share image
 favicon.svg                 # SVG favicon
 Shravan_Chandra_Resume.pdf  # Downloadable resume
@@ -161,6 +160,14 @@ if (window.__sectionsReady) initApp();
 else window.__onSectionsReady = initApp;
 ```
 
+### `js/utils.js`
+Shared DOM/UI helpers imported by `a11y.js`, `search.js`, `recruiter.js`, `asl.js`, `webcam.js`.
+
+- `el(tag, cls, attrs)` — creates an element, sets className, applies attr key/value pairs
+- `makeOverlay(extraClass, ariaLabel)` — builds the standard modal overlay div with `role="dialog"`, `aria-modal`, `aria-hidden`; base styles from `.v2-modal-overlay` in `css/v2/base.css`
+- `makeTop3Row(key, pct)` — builds a `.v2-t3-row` confidence bar row (label + fill bar)
+- `updateLetterDisplay(letterEl, key, prevKey)` — swaps letter text and re-triggers `m3LetterPop` animation via reflow
+
 ### `js/asl.js`
 Exports `initASL`, `SPEC`, `SIGNS`, `CONNECTIONS`, `spellSequence`, `pauseASL`, `resumeASL`, `drawHandPose`.
 
@@ -172,7 +179,7 @@ Exports `initASL`, `SPEC`, `SIGNS`, `CONNECTIONS`, `spellSequence`, `pauseASL`, 
 - `updatePanel(key, conf)`: re-triggers `m3LetterPop` CSS animation on letter change
 - Pauses on `document.hidden`; respects `prefers-reduced-motion`
 - `spellSequence(letters, onDone?)`: module-level override — sets `_seqQueue`; on the next `tick()` frame the state machine hijacks to the sequence at 2× speed (hold 550ms / morph 280ms) then resumes random cycle. Silently ignored if a sequence is already playing.
-- `pauseASL()` / `resumeASL()` / `drawHandPose(pose)`: module-level refs wired inside `initASL`; called by `webcam.js` to pause the animation loop and draw live landmarks.
+- `pauseASL()` / `resumeASL()` / `drawHandPose(pose)`: refs wired inside `initASL`; called by `webcam.js` to pause the random cycle and draw live MediaPipe landmarks instead.
 
 ### `js/nav.js`
 - `initMobileMenu`: hamburger toggle, close on link click or outside click

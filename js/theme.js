@@ -6,17 +6,17 @@ export function initTheme() {
 
     if (!btn) return;
 
-    // Dark is default. Only 'light-theme' class is toggled.
-    const saved = localStorage.getItem('theme-v2');
-    if (saved === 'light') {
-        body.classList.add('light-theme');
-    }
+    try {
+        if (localStorage.getItem('theme-v2') === 'light') body.classList.add('light-theme');
+    } catch (_) {}
 
     updateBtn();
 
     btn.addEventListener('click', () => {
         body.classList.toggle('light-theme');
-        localStorage.setItem('theme-v2', body.classList.contains('light-theme') ? 'light' : 'dark');
+        try {
+            localStorage.setItem('theme-v2', body.classList.contains('light-theme') ? 'light' : 'dark');
+        } catch (_) {}
         updateBtn();
     });
 

@@ -9,6 +9,8 @@
  * accessibility design decisions behind this portfolio.
  */
 
+import { el as _el } from './utils.js';
+
 const FEATURES = [
     {
         icon: 'fas fa-route',
@@ -73,31 +75,26 @@ export function initA11yLab() {
         setActive(!document.body.classList.contains('a11y-lab'));
     });
 
-    // Close button is built by _buildPanel — find it after building
-    panel.querySelector('.v2-a11y-close')?.addEventListener('click', () => setActive(false));
+    panel.querySelector('.v2-a11y-close').addEventListener('click', () => setActive(false));
 
-    // Restore previous session preference
     try {
         if (localStorage.getItem('a11y-lab') === '1') setActive(true);
     } catch (_) {}
 }
 
 function _buildPanel(panel) {
-    // Clear any prior content
     while (panel.firstChild) panel.removeChild(panel.firstChild);
 
-    // ── Header ──────────────────────────────────────────────────────
     const hdr   = _el('div',    'v2-a11y-hdr');
     const title = _el('span',   'v2-a11y-title');
     title.textContent = '⬡ Accessibility Lab';
-    const close = _el('button', 'v2-a11y-close');
+    const close = _el('button', 'v2-panel-close v2-a11y-close');
     close.setAttribute('aria-label', 'Close Accessibility Lab');
     close.textContent = '×';
     hdr.appendChild(title);
     hdr.appendChild(close);
     panel.appendChild(hdr);
 
-    // ── Highlight legend ─────────────────────────────────────────────
     const legend    = _el('div', 'v2-a11y-legend');
     const legHeader = _el('p',   'v2-a11y-legend-title');
     legHeader.textContent = 'HIGHLIGHT KEY';
@@ -114,11 +111,10 @@ function _buildPanel(panel) {
     });
     panel.appendChild(legend);
 
-    // ── Feature list ─────────────────────────────────────────────────
     const list = _el('ul', 'v2-a11y-list');
     FEATURES.forEach(({ icon, accent, title: featureTitle, note }) => {
         const li   = _el('li',  'v2-a11y-item');
-        const ico  = _el('i',   icon + ' v2-a11y-ico v2-a11y-ico--' + accent);
+        const ico  = _el('i',   `${icon} v2-a11y-ico v2-a11y-ico--${accent}`);
         ico.setAttribute('aria-hidden', 'true');
         const body = _el('div', 'v2-a11y-body');
         const ttl  = _el('strong');
@@ -134,8 +130,3 @@ function _buildPanel(panel) {
     panel.appendChild(list);
 }
 
-function _el(tag, className = '') {
-    const el = document.createElement(tag);
-    if (className) el.className = className;
-    return el;
-}
