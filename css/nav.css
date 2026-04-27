@@ -129,6 +129,8 @@ body.light-theme .v2-nav {
 }
 
 @media (max-width: 768px) {
+    .v2-nav { padding: 10px 16px; }
+    .v2-logo-text { display: none; }
     .v2-mobile-btn { display: flex; }
 
     .v2-nav-links {
