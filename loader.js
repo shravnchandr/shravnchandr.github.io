@@ -22,10 +22,13 @@ const FRAGMENTS = [
 ];
 
 const MAX_RETRIES = 3;
-const RETRY_BASE_MS = 400; // 400ms, 800ms, 1600ms
+const RETRY_BASE_MS = 400;
 
 async function fetchWithRetry(src, retries = MAX_RETRIES) {
     for (let attempt = 0; attempt <= retries; attempt++) {
+        // Network errors and non-2xx responses are both real failure modes for a static
+        // file fetch (offline, CDN hiccup, deploy race). Retry with exponential backoff;
+        // re-throw on the final attempt so loadFragment() can decide how to handle it.
         try {
             const res = await fetch(src);
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -41,6 +44,10 @@ async function loadFragment({ id, src, critical }) {
     const placeholder = document.getElementById(id);
     if (!placeholder) return;
 
+    // fetchWithRetry throws only after MAX_RETRIES attempts — a genuine permanent failure.
+    // Critical sections (nav, hero) must show a visible error message; non-critical sections
+    // are silently removed so the rest of the page still renders. Propagating this error
+    // further would stall Promise.all and leave body.loading permanently set.
     try {
         const html = await fetchWithRetry(src);
         placeholder.outerHTML = html;

@@ -65,6 +65,17 @@ export function makeTop3Row(rank, letter, pct, isTop) {
 }
 
 /**
+ * Remove all child nodes from a DOM element.
+ * Replaces the repeated `while (el.firstChild) el.removeChild(el.firstChild)`
+ * idiom used across asl.js, webcam.js, search.js, a11y.js, and demo.js.
+ *
+ * @param {HTMLElement} element  The element to empty
+ */
+export function clearEl(element) {
+    while (element.firstChild) element.removeChild(element.firstChild);
+}
+
+/**
  * Update the ASL prediction letter display with an M3 spring pop animation.
  * Shared between the procedural cycle (asl.js) and the live webcam classifier
  * (webcam.js) to avoid duplicating the reflow-trigger pattern.
@@ -78,7 +89,6 @@ export function updateLetterDisplay(letterEl, key, prevKey) {
     if (!letterEl) return prevKey;
     if (key !== prevKey) {
         letterEl.textContent = key;
-        // Re-trigger M3 Expressive spring pop on each letter change
         letterEl.style.animation = 'none';
         void letterEl.offsetWidth; // force reflow
         letterEl.style.animation = 'm3LetterPop 520ms var(--spring-bounce)';

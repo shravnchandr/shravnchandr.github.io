@@ -1,5 +1,8 @@
 /** scroll.js — scroll-reveal animations + CountUp + back-to-top + smooth scroll */
 
+const COUNTUP_DURATION_MS    = 1400;  // total animation duration for metric count-up
+const BACK_TO_TOP_SCROLL_PX  = 300;   // scroll depth at which the back-to-top button appears
+
 export function initScroll() {
     initScrollReveal();
     initCountUp();
@@ -44,7 +47,7 @@ function initCountUp() {
             started = true;
             io.disconnect();
 
-            const duration = 1400;
+            const duration = COUNTUP_DURATION_MS;
             let raf, startTime;
 
             const step = (t) => {
@@ -66,13 +69,14 @@ function initCountUp() {
 
 function initBackToTop() {
     const btn = document.getElementById('back-to-top');
+    if (!btn) return;
     let _ticking = false;
 
     window.addEventListener('scroll', () => {
         if (_ticking) return;
         _ticking = true;
         requestAnimationFrame(() => {
-            btn.classList.toggle('visible', window.scrollY > 300);
+            btn.classList.toggle('visible', window.scrollY > BACK_TO_TOP_SCROLL_PX);
             _ticking = false;
         });
     });

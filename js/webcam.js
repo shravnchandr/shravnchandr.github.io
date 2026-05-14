@@ -17,11 +17,18 @@
  */
 
 import { pauseASL, resumeASL, drawHandPose } from './asl.js';
-import { updateLetterDisplay, makeTop3Row }  from './utils.js';
+import { updateLetterDisplay, makeTop3Row, clearEl } from './utils.js';
 
-const MP_HANDS_CDN = 'https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js';
-const MODEL_SRC    = './asl_model.js';
-const APP_URL      = 'https://asl-guide.onrender.com';
+const MP_HANDS_VERSION = '@mediapipe/hands@0.4.1675469240';
+const MP_HANDS_CDN     = `https://cdn.jsdelivr.net/npm/${MP_HANDS_VERSION}/hands.js`;
+const MP_HANDS_BASE    = `https://cdn.jsdelivr.net/npm/${MP_HANDS_VERSION}/`;
+const MODEL_SRC        = './asl_model.js';
+const APP_URL          = 'https://asl-guide.onrender.com';
+
+const STATUS_TIMEOUT_MS = 7000;   // AbortController timeout for app-status ping
+const STATUS_FAST_MS    = 2500;   // response faster than this → "live" (vs "waking up")
+const CAM_WIDTH         = 640;
+const CAM_HEIGHT        = 480;
 
 const BTN_STATE_LOADING = 'loading';
 const BTN_STATE_ACTIVE  = 'active';
@@ -77,7 +84,10 @@ function _classify(worldLandmarks) {
 
     // 2. StandardScaler: (val − mean) / scale
     const { mean, scale } = _modelData.scaler;
-    const scaled = flat.map((v, i) => (v - mean[i]) / scale[i]);
+    const scaled = flat.map((v, i) => {
+        const s = scale[i];
+        return s !== 0 ? (v - mean[i]) / s : 0;
+    });
 
     // 3. Forward pass: 63 → 128(ReLU) → 64(ReLU) → 28
     const { fc1_w, fc1_b, fc2_w, fc2_b, fc3_w, fc3_b } = _modelData.model;
@@ -131,7 +141,7 @@ function _updatePanel([top, ...rest]) {
     if (signingEl)  signingEl.textContent  = `SIGNING: ${top.key} · LIVE CAM`;
 
     if (top3El) {
-        while (top3El.firstChild) top3El.removeChild(top3El.firstChild);
+        clearEl(top3El);
         [top, ...rest].forEach(({ key, conf }, i) => {
             top3El.appendChild(makeTop3Row(i + 1, key, conf, i === 0));
         });
@@ -149,7 +159,9 @@ async function _sendFrame() {
 async function _start(btn) {
     _setBtnState(btn, BTN_STATE_LOADING);
 
-    // Load model weights + MediaPipe lazily on first activation
+    // Load model weights + MediaPipe lazily on first activation.
+    // External CDN or local script load can genuinely fail (offline, CDN outage, 404).
+    // Partial failure must not crash the page — reset button to idle so user can retry.
     try {
         const loads = [];
         if (!_modelData) loads.push(_loadScript(MODEL_SRC));
@@ -172,9 +184,12 @@ async function _start(btn) {
     }
 
     if (!_hands) {
+        // MediaPipe Hands initialisation downloads WASM and model assets from CDN.
+        // This can fail if the CDN is unreachable, the browser blocks WASM, or WebGL
+        // is unavailable. Failure must not crash the page — reset button to idle.
         try {
             _hands = new window.Hands({
-                locateFile: f => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${f}`,
+                locateFile: f => `${MP_HANDS_BASE}${f}`,
             });
             _hands.setOptions({
                 maxNumHands:          1,
@@ -191,9 +206,12 @@ async function _start(btn) {
         }
     }
 
+    // getUserMedia rejects when the user denies camera permission, no camera is present,
+    // or the context is not secure (non-HTTPS). This is expected user input, not a bug —
+    // reset button to idle so the user can see the feature is unavailable.
     try {
         _stream = await navigator.mediaDevices.getUserMedia({
-            video: { width: 640, height: 480, facingMode: 'user' },
+            video: { width: CAM_WIDTH, height: CAM_HEIGHT, facingMode: 'user' },
         });
     } catch (err) {
         console.warn('[webcam] Camera access denied:', err);
@@ -272,14 +290,14 @@ function checkAppStatus() {
     if (!dot || !label) return;
 
     const ctrl = new AbortController();
-    const timer = setTimeout(() => ctrl.abort(), 7000);
+    const timer = setTimeout(() => ctrl.abort(), STATUS_TIMEOUT_MS);
     const t0 = Date.now();
 
     fetch(APP_URL, { method: 'HEAD', mode: 'no-cors', signal: ctrl.signal })
         .then(() => {
             clearTimeout(timer);
             const ms = Date.now() - t0;
-            if (ms < 2500) {
+            if (ms < STATUS_FAST_MS) {
                 dot.className   = 'v2-app-dot v2-app-dot--live';
                 label.textContent = '● live';
             } else {
@@ -288,6 +306,10 @@ function checkAppStatus() {
             }
         })
         .catch(() => {
+            // In no-cors mode the fetch either resolves (server reachable) or rejects
+            // (network error, CORS block, or AbortController timeout above). All rejection
+            // reasons are indistinguishable and all mean the same thing: server is offline.
+            // Do not log — this rejection fires on every page load when the app is sleeping.
             dot.className   = 'v2-app-dot v2-app-dot--offline';
             label.textContent = '○ offline';
         });

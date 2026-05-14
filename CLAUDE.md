@@ -171,9 +171,9 @@ Shared DOM/UI helpers imported by `a11y.js`, `search.js`, `recruiter.js`, `asl.j
 - `updateLetterDisplay(letterEl, key, prevKey)` — swaps letter text and re-triggers `m3LetterPop` animation via reflow
 
 ### `js/asl.js`
-Exports `initASL`, `SPEC`, `SIGNS`, `CONNECTIONS`, `spellSequence`, `pauseASL`, `resumeASL`, `drawHandPose`.
+Exports `initASL`, `SIGNS`, `CONNECTIONS`, `spellSequence`, `pauseASL`, `resumeASL`, `drawHandPose`.
 
-- `SPEC`: 36-entry dict mapping sign keys → `[thumbState, idx, mid, rng, pnk]` finger states
+- `SPEC`: 36-entry dict mapping sign keys → `[thumbState, idx, mid, rng, pnk]` finger states (module-internal, not exported)
 - `SIGNS`: 36 ASL poses (A–Z + 0–9), each a 21-point array `[[x,y], …]` (procedural rendering geometry built from SPEC via `buildPose`)
 - `CONNECTIONS`: 21 MediaPipe-style connection pairs for drawing the skeleton
 - `buildPose(thumb, index, middle, ring, pinky)`: composes pose from per-finger states

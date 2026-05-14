@@ -10,12 +10,14 @@
  */
 
 import { SIGNS, CONNECTIONS } from './asl.js';
+import { clearEl } from './utils.js';
 
 const NS = 'http://www.w3.org/2000/svg';
 
-const SCRIPT    = ['H','E','L','L','O',' ','W','O','R','L','D'];
-const CORRECTED = 'Hello, world!';
-const STEP_MS   = 680;
+const SCRIPT      = ['H','E','L','L','O',' ','W','O','R','L','D'];
+const CORRECTED   = 'Hello, world!';
+const STEP_MS     = 680;
+const LETTER_POP_MS = 280;  // matches SEQ_MORPH_MS in asl.js — letter pop animation duration
 
 export function initDemo() {
     const svg       = document.getElementById('demo-asl-svg');
@@ -113,25 +115,25 @@ export function initDemo() {
         clearTimeout(_demoTimer);
         _demoTimer = null;
         logCount = 0;
-        while (logEl.firstChild) logEl.removeChild(logEl.firstChild);
+        clearEl(logEl);
         const idle = document.createElement('div');
         idle.className = 'v2-demo-log-idle';
         idle.textContent = '$ waiting for input…';
         logEl.appendChild(idle);
 
-        while (bufferEl.firstChild) bufferEl.removeChild(bufferEl.firstChild);
+        clearEl(bufferEl);
         bufferEl.appendChild(cursorEl);
         cursorEl.classList.remove('hidden');
 
         grammarEl.className = 'v2-demo-grammar-box';
-        while (grammarEl.firstChild) grammarEl.removeChild(grammarEl.firstChild);
+        clearEl(grammarEl);
         const waiting = document.createElement('span');
         waiting.className = 'v2-demo-waiting';
         waiting.textContent = 'waiting for buffer…';
         grammarEl.appendChild(waiting);
 
         outputEl.className = 'v2-demo-output-box';
-        while (outputEl.firstChild) outputEl.removeChild(outputEl.firstChild);
+        clearEl(outputEl);
         const empty = document.createElement('span');
         empty.className = 'v2-demo-output-empty';
         empty.textContent = '\u00a0';
@@ -176,7 +178,7 @@ export function initDemo() {
                 const span = document.createElement('span');
                 span.textContent = c === ' ' ? '·' : c;
                 span.style.color = c === ' ' ? 'var(--v2-text-muted)' : 'var(--v2-text)';
-                span.style.animation = 'pop 280ms var(--spring-bounce)';
+                span.style.animation = `pop ${LETTER_POP_MS}ms var(--spring-bounce)`;
                 bufferEl.insertBefore(span, cursorEl);
             }
 
@@ -189,7 +191,7 @@ export function initDemo() {
                 addLog('langgraph', 'grammar pass · 10 rules');
 
                 grammarEl.className = 'v2-demo-grammar-box active';
-                while (grammarEl.firstChild) grammarEl.removeChild(grammarEl.firstChild);
+                clearEl(grammarEl);
 
                 const correcting = document.createElement('span');
                 correcting.style.color = 'var(--v2-neural)';
@@ -206,14 +208,14 @@ export function initDemo() {
                 addLog('out', `"${CORRECTED}"`);
 
                 grammarEl.className = 'v2-demo-grammar-box';
-                while (grammarEl.firstChild) grammarEl.removeChild(grammarEl.firstChild);
+                clearEl(grammarEl);
                 const doneSpan = document.createElement('span');
                 doneSpan.style.color = 'var(--v2-data)';
                 doneSpan.textContent = '✓ 3 rules applied · 10 available';
                 grammarEl.appendChild(doneSpan);
 
                 outputEl.className = 'v2-demo-output-box done';
-                while (outputEl.firstChild) outputEl.removeChild(outputEl.firstChild);
+                clearEl(outputEl);
                 const emojiSpan = document.createElement('span');
                 emojiSpan.textContent = '🔊';
                 emojiSpan.style.fontSize = '18px';
@@ -230,6 +232,7 @@ export function initDemo() {
     }
 
     const section = svg.closest('section');
+    if (!section) return;
     const io = new IntersectionObserver(entries => {
         if (entries[0].isIntersecting) { io.disconnect(); run(); }
     }, { threshold: 0.25 });

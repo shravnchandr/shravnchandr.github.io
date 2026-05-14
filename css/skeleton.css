@@ -91,7 +91,6 @@ body.loading .v2-skeleton { visibility: visible; }
 .v2-sk-asl-card { height: 380px; border-radius: 28px; width: 100%; }
 
 /* ── Impact skeleton ───────────────────────────────────────────────── */
-/* Matches .v2-impact { padding: 56px 0 } + .v2-inner { padding: 0 56px } */
 .v2-sk-impact {
     padding: 56px 0;
     border-top: 1px solid var(--v2-border);

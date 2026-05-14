@@ -5,7 +5,6 @@ export function initTabs() {
     initStoryTabs();
 }
 
-// ── Work section ──────────────────────────────────────────────
 function initWorkTabs() {
     const tabBtns = document.querySelectorAll('#work-tabs .v2-tab');
     if (!tabBtns.length) return;
@@ -27,7 +26,6 @@ function initWorkTabs() {
     });
 }
 
-// ── Story section ─────────────────────────────────────────────
 function initStoryTabs() {
     const topBtns  = document.querySelectorAll('#story-tabs .v2-tab');
     const roleBtns = document.querySelectorAll('#role-nav .v2-role-btn');

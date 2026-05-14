@@ -16,8 +16,6 @@ import { initWebcam }   from './js/webcam.js';
 import { initRecruiter }from './js/recruiter.js';
 
 function initApp() {
-    document.documentElement.classList.remove('no-js');
-
     document.getElementById('year').textContent = new Date().getFullYear();
 
     // Console Easter egg — for the curious engineer who opens DevTools

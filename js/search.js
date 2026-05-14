@@ -13,7 +13,7 @@
  *   substr match  → query word is substring of token, len ≥ 3 → +1
  */
 
-import { el as _el, makeOverlay } from './utils.js';
+import { el as _el, makeOverlay, clearEl } from './utils.js';
 
 /* ── Stop words (filtered before matching) ─────────────────────────── */
 const _STOP = new Set([
@@ -25,7 +25,6 @@ const _STOP = new Set([
 
 /* ── Search index ──────────────────────────────────────────────────── */
 const INDEX = [
-    // ── Projects ───────────────────────────────────────────────────────
     {
         type:  'project',
         id:    'asl-guide',
@@ -136,7 +135,6 @@ const INDEX = [
         action() { _scrollTo('#research'); },
     },
 
-    // ── Experience ─────────────────────────────────────────────────────
     {
         type:  'story',
         id:    'bosch-sr',
@@ -367,7 +365,7 @@ function _query(raw) {
 
 /* ── Rendering ─────────────────────────────────────────────────────── */
 function _renderResults(hits, query) {
-    while (_results.firstChild) _results.removeChild(_results.firstChild);
+    clearEl(_results);
 
     if (!hits.length) {
         const empty = _el('div', 'v2-search-empty');
@@ -411,7 +409,7 @@ function _renderResults(hits, query) {
 }
 
 function _showTips() {
-    while (_results.firstChild) _results.removeChild(_results.firstChild);
+    clearEl(_results);
 
     const tip = _el('div', 'v2-search-tip');
     const lines = [

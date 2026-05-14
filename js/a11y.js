@@ -9,7 +9,7 @@
  * accessibility design decisions behind this portfolio.
  */
 
-import { el as _el } from './utils.js';
+import { el as _el, clearEl } from './utils.js';
 
 const FEATURES = [
     {
@@ -68,6 +68,8 @@ export function initA11yLab() {
         btn.setAttribute('aria-pressed', String(on));
         panel.classList.toggle('v2-a11y-panel--open', on);
         panel.setAttribute('aria-hidden', String(!on));
+        // localStorage throws SecurityError in private-browsing / strict-CSP environments.
+        // Failing to persist the panel state is non-fatal — the toggle still works for the session.
         try { localStorage.setItem('a11y-lab', on ? '1' : '0'); } catch (_) {}
     }
 
@@ -83,7 +85,7 @@ export function initA11yLab() {
 }
 
 function _buildPanel(panel) {
-    while (panel.firstChild) panel.removeChild(panel.firstChild);
+    clearEl(panel);
 
     const hdr   = _el('div',    'v2-a11y-hdr');
     const title = _el('span',   'v2-a11y-title');

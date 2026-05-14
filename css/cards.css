@@ -25,12 +25,6 @@
     border-color: rgba(255, 109, 0, 0.32);
 }
 
-.v2-card-badge.badge-current {
-    background: rgba(0, 191, 165, 0.14);
-    color: var(--v2-data);
-    border-color: rgba(0, 191, 165, 0.32);
-}
-
 /* badge-n cycles through accent colours */
 .v2-card-badge.badge-1 { background:rgba(255,109,0,.14);  color:var(--v2-inference); border-color:rgba(255,109,0,.32); }
 .v2-card-badge.badge-2 { background:rgba(124,77,255,.14); color:var(--v2-neural);    border-color:rgba(124,77,255,.32); }

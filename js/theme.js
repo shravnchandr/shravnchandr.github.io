@@ -6,6 +6,8 @@ export function initTheme() {
 
     if (!btn) return;
 
+    // localStorage throws SecurityError in private-browsing / strict-CSP environments.
+    // Failing to read the saved preference is non-fatal — just start in the default theme.
     try {
         if (localStorage.getItem('theme-v2') === 'light') body.classList.add('light-theme');
     } catch (_) {}

@@ -24,19 +24,19 @@ const TEAM_FITS = [
     },
     {
         company:     'Meta',
-        color:       'var(--v2-neural)',    // #7c4dff purple
+        color:       'var(--v2-neural)',
         borderColor: '#7c4dff40',
         teams:   ['FAIR', 'PyTorch / AI Infra', 'AR/VR Accessibility'],
     },
     {
         company:     'Amazon',
-        color:       'var(--v2-inference)', // #ff6d00 orange
+        color:       'var(--v2-inference)',
         borderColor: '#ff6d0040',
         teams:   ['Alexa AI', 'AWS ML Platform', 'Devices Accessibility'],
     },
     {
         company:     'Microsoft',
-        color:       'var(--v2-data)',      // #00bfa5 teal
+        color:       'var(--v2-data)',
         borderColor: '#00bfa540',
         teams:   ['Azure AI', 'Microsoft Research', 'Accessibility Experiences'],
     },

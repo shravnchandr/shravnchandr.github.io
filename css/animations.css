@@ -3,7 +3,7 @@
  *
  * Loaded last in css/main.css so these selectors take highest precedence.
  * Defines:
- *   - M3 spring keyframes (m3LetterPop, pop, scan, blink, float, v2SlideUp)
+ *   - M3 spring keyframes (m3LetterPop, pop, scan, blink, v2SlideUp)
  *   - [data-m3-press]  — spring press-state for buttons
  *   - [data-m3-morph]  — shape-morph (pill) on hover
  *   - [data-hover-lift] — card hover lift
@@ -29,11 +29,6 @@
     50% { opacity: 0; }
 }
 
-@keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50%       { transform: translateY(-6px); }
-}
-
 /* M3 Expressive letter swap — spring overshoot then settle */
 @keyframes m3LetterPop {
     0%   { transform: scale(0.75) translateY(8px);  opacity: 0.4; }
@@ -52,7 +47,6 @@
     animation: v2SlideUp 720ms cubic-bezier(0.22, 1.18, 0.36, 1.03) both;
 }
 .animate-in.delay-2 { animation-delay: 180ms; }
-.animate-in.delay-3 { animation-delay: 360ms; }
 
 /* ── Stagger transition-delay helpers ─────────────────────── */
 .stagger-2 { transition-delay: 90ms; }
@@ -99,7 +93,6 @@
         border-radius 160ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Primary CTAs morph to pill on hover */
 [data-m3-morph]:hover { border-radius: 999px !important; }
 
 [data-hover-lift] {
@@ -114,8 +107,7 @@
 
 @media (prefers-reduced-motion: reduce) {
     .animate-in,
-    .animate-in.delay-2,
-    .animate-in.delay-3 {
+    .animate-in.delay-2 {
         animation: none;
         opacity: 1;
         transform: none;

@@ -6,7 +6,7 @@
  * DOM updates use textContent / setAttribute — no innerHTML anywhere.
  */
 
-import { makeTop3Row, updateLetterDisplay } from './utils.js';
+import { makeTop3Row, updateLetterDisplay, clearEl } from './utils.js';
 
 // ── Hand geometry constants ──────────────────────────────────
 const WRIST = [50, 112];
@@ -71,6 +71,13 @@ function buildPose(t, idx, mid, rng, pnk) {
 }
 
 // ── Sign dictionary (A-Z + 0-9) ─────────────────────────────
+/**
+ * @typedef {[string, string, string, string, string]} FingerSpec
+ * Each entry is [thumbState, indexState, middleState, ringState, pinkyState].
+ * Thumb states: 'up' | 'side' | 'side2' | 'across' | 'tuck' | 'curl'
+ * Finger states: 'ext' | 'extL' | 'extR' | 'side' | 'bent' | 'curl'
+ */
+/** @type {Object<string, FingerSpec>} */
 const SPEC = {
     A:['up','curl','curl','curl','curl'],   B:['across','ext','ext','ext','ext'],
     C:['side','bent','bent','bent','bent'], D:['tuck','ext','curl','curl','curl'],
@@ -240,7 +247,6 @@ export function initASL() {
                     if (_seqIdx < _seqQueue.length) {
                         nxtKey = _seqQueue[_seqIdx++];
                     } else {
-                        // Sequence complete — resume random cycle
                         _seqActive = false;
                         _seqQueue  = null;
                         nxtKey     = pickNext(curKey);
@@ -301,9 +307,9 @@ export function initASL() {
 
     function updatePanel(key, conf) {
         _prevLetter = updateLetterDisplay(letterEl, key, _prevLetter);
-        confValEl.textContent  = `${(conf*100).toFixed(1)}%`;
-        confFillEl.style.width = `${conf*100}%`;
-        signingEl.textContent  = `SIGNING: ${key} · ASL FINGERSPELL`;
+        if (confValEl)  confValEl.textContent  = `${(conf*100).toFixed(1)}%`;
+        if (confFillEl) confFillEl.style.width = `${conf*100}%`;
+        if (signingEl)  signingEl.textContent  = `SIGNING: ${key} · ASL FINGERSPELL`;
 
         const alts = ALTS[key] || ['E','S'];
         const rows = [
@@ -311,7 +317,7 @@ export function initASL() {
             {l:alts[0], p:0.04 + Math.random()*0.02},
             {l:alts[1], p:0.02 + Math.random()*0.015},
         ];
-        while (top3El.firstChild) top3El.removeChild(top3El.firstChild);
+        clearEl(top3El);
         rows.forEach((r, i) => top3El.appendChild(makeTop3Row(i+1, r.l, r.p, i===0)));
     }
 }
