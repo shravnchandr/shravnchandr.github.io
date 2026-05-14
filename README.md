@@ -66,7 +66,7 @@ DevTools console prints a styled `%c` banner: stack summary and a GitHub invite 
 
 - **Frontend**: HTML5, CSS3 (Custom Properties), Vanilla JavaScript ES modules — no build tools, no npm
 - **Design system**: Material 3 Expressive (custom CSS implementation)
-- **Icons**: Font Awesome 6.4 (UI + brand icons), Material Symbols Outlined (contact section)
+- **Icons**: Font Awesome 6.7.2 (UI + brand icons), Material Symbols Outlined (contact section)
 - **Fonts**: Google Sans Flex (local TTF), Fira Code + Outfit (Google Fonts CDN)
 
 ---
@@ -79,12 +79,12 @@ loader.js                   # Fetches html/*.html in parallel; sets window.__sec
 script.js                   # ES module entry point — imports js/* and calls initApp()
 
 js/
-  utils.js                  # Shared DOM helpers: el(), makeOverlay(), makeTop3Row(), updateLetterDisplay()
+  utils.js                  # Shared DOM helpers: el(), makeOverlay(), makeTop3Row(), updateLetterDisplay(), clearEl()
   theme.js                  # Dark/light toggle (localStorage key: 'theme-v2')
   nav.js                    # Hamburger, active-section highlight, logo Easter egg (spellSequence)
   scroll.js                 # Scroll-reveal, CountUp, back-to-top, smooth scroll
   tabs.js                   # Work tab switcher + Story dual-nav
-  asl.js                    # Procedural SVG ASL hand; exports initASL, SPEC, SIGNS, CONNECTIONS, spellSequence
+  asl.js                    # Procedural SVG ASL hand; exports initASL, SIGNS, CONNECTIONS, spellSequence, pauseASL, resumeASL, drawHandPose
   demo.js                   # Scripted ASL pipeline demo (HELLO WORLD)
   a11y.js                   # Accessibility Lab toggle + side panel
   search.js                 # ⌘K semantic search overlay (keyword index, keyboard nav)

@@ -167,8 +167,9 @@ Shared DOM/UI helpers imported by `a11y.js`, `search.js`, `recruiter.js`, `asl.j
 
 - `el(tag, cls, attrs)` — creates an element, sets className, applies attr key/value pairs
 - `makeOverlay(extraClass, ariaLabel)` — builds the standard modal overlay div with `role="dialog"`, `aria-modal`, `aria-hidden`; base styles from `.v2-modal-overlay` in `css/base.css`
-- `makeTop3Row(key, pct)` — builds a `.v2-t3-row` confidence bar row (label + fill bar)
+- `makeTop3Row(rank, letter, pct, isTop)` — builds a `.v2-t3-row` confidence bar row (label + fill bar)
 - `updateLetterDisplay(letterEl, key, prevKey)` — swaps letter text and re-triggers `m3LetterPop` animation via reflow
+- `clearEl(element)` — removes all child nodes from a DOM element; replaces the repeated `while (el.firstChild) el.removeChild(el.firstChild)` idiom
 
 ### `js/asl.js`
 Exports `initASL`, `SIGNS`, `CONNECTIONS`, `spellSequence`, `pauseASL`, `resumeASL`, `drawHandPose`.
@@ -278,7 +279,7 @@ body.light-theme {
 - `[data-m3-morph]` — primary CTAs morph to pill (`border-radius: 999px`) on hover
 - `[data-hover-lift]` — cards translateY(-3px) with spring easing on hover
 - `m3LetterPop` keyframe — spring-scale pop for the ASL prediction letter on change
-- `scan`, `pop`, `blink`, `float` keyframes — used by demo section
+- `scan`, `pop`, `blink` keyframes — used by demo section
 - `.animate-in` — fires on page load (hero columns), not scroll-gated
 - `.stagger-2` → `transition-delay: 90ms`, `.stagger-3` → 180ms, etc.
 - `@media (prefers-reduced-motion: reduce)` — disables all the above
@@ -324,7 +325,7 @@ The SVG viewBox is `0 0 100 125`. WRIST is at `[50, 112]`.
 
 | Dependency | Used for |
 |---|---|
-| Font Awesome 6.4.0 (cdnjs) | UI icons + brand icons (GitHub, LinkedIn) |
+| Font Awesome 6.7.2 (cdnjs) | UI icons + brand icons (GitHub, LinkedIn) |
 | Material Symbols Outlined (Google Fonts) | Contact section `mail` icon |
 | Fira Code, Outfit (Google Fonts) | Body and mono typography |
 | Google Sans Flex (local TTF) | Display headings |
