@@ -142,7 +142,7 @@ const INDEX = [
         sub:   'Autoencoder · Anomaly Detection · Azure · Power BI · Mentoring',
         icon:  '⚙',
         tokens: [
-            'bosch','senior','current','present','2025',
+            'bosch','senior','current','present','2025','valfred',
             'databricks','pyspark','spark','partition','telemetry','ingestion','ingest',
             'tb','80tb','80','high','frequency','sensor',
             'autoencoder','anomaly','anomaly detection','detection',
@@ -154,6 +154,10 @@ const INDEX = [
             'mentor','mentoring','mentored','interns','internship','onboarding',
             'machine','learning','engineer','infrastructure',
             'mlops','genai','generative','ai','llm','production','ml',
+            'multi-agent','multi','agent','agents','assistant','orchestrated',
+            'natural','language','nlq','query','querying','sql',
+            'vector','schema','retrieval','self-healing',
+            'mlflow','unity','catalog','leepa','webdvp','81','65',
         ],
         action() { _selectTab('[data-story="bosch-sr"]', '#story'); },
     },
@@ -221,6 +225,22 @@ const INDEX = [
             'cgpa','gpa','8.5','grade',
             '2017','2021','graduation','undergraduate','college',
             'bengaluru','bangalore',
+        ],
+        action() {
+            const section = document.querySelector('#story');
+            if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        },
+    },
+    {
+        type:  'story',
+        id:    'education-ubc',
+        label: 'University of British Columbia — MDS',
+        sub:   'Master of Data Science · Vancouver, Canada · 2026–2027',
+        icon:  '◆',
+        tokens: [
+            'ubc','british','columbia','university','masters','mds',
+            'data','science','degree','grad','graduate',
+            '2026','2027','vancouver','canada',
         ],
         action() {
             const section = document.querySelector('#story');

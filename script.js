@@ -20,7 +20,7 @@ function initApp() {
 
     // Console Easter egg — for the curious engineer who opens DevTools
     console.log(
-        '%c⬡ Portfolio · Shravan Chandra\n%cSenior ML Engineer · shravnchandr@gmail.com\n%cStack: TF.js · LangGraph · FastAPI · Gemini 2.5 Flash · MediaPipe\n%cYou found the console. Say hi → github.com/shravnchandr',
+        '%c⬡ Portfolio · Shravan Chandra\n%cSenior ML Engineer · shravanc.nyc@gmail.com\n%cStack: TF.js · LangGraph · FastAPI · Gemini 2.5 Flash · MediaPipe\n%cYou found the console. Say hi → github.com/shravnchandr',
         'color:#7c4dff;font-weight:700;font-size:14px;line-height:1.8',
         'color:#a0a9b8;font-size:12px;line-height:1.8',
         'color:#00bfa5;font-size:12px;line-height:1.8',

@@ -104,9 +104,9 @@ function _buildModal() {
     resumeLink.append(dlIco, dlTxt);
 
     const emailLink = _el('a', 'v2-btn-secondary v2-recruiter-email');
-    emailLink.href = 'mailto:shravnchandr@gmail.com';
+    emailLink.href = 'mailto:shravanc.nyc@gmail.com';
     const mlIco = _el('span', 'material-symbols-outlined'); mlIco.setAttribute('aria-hidden','true'); mlIco.textContent = 'mail';
-    const mlTxt = document.createTextNode('shravnchandr@gmail.com');
+    const mlTxt = document.createTextNode('shravanc.nyc@gmail.com');
     emailLink.append(mlIco, mlTxt);
 
     actions.append(resumeLink, emailLink);
