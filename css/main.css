@@ -3,7 +3,6 @@
 @import 'skeleton.css';
 @import 'a11y.css';
 @import 'nav.css';
-@import 'tabs.css';
 @import 'cards.css';
 @import 'hero.css';
 @import 'impact.css';
@@ -15,6 +14,5 @@
 @import 'contact.css';
 @import 'search.css';
 @import 'webcam.css';
-@import 'recruiter.css';
 /* M3 Expressive spring keyframes + interaction rules — must be last */
 @import 'animations.css';

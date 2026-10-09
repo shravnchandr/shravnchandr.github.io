@@ -1,28 +1,101 @@
 <section id="work" class="v2-section" aria-labelledby="work-heading">
     <div class="v2-inner">
         <div class="v2-section-header">
-            <span class="v2-code-label">// 03 · SELECTED PROJECTS</span>
-            <span class="v2-code-label">2 projects</span>
+            <span class="v2-code-label">// 03 · SELECTED WORK</span>
+            <span class="v2-code-label">3 case studies · problem → decision → result</span>
         </div>
-        <h2 id="work-heading" class="v2-section-h2 animate-on-scroll">Projects, shipped.</h2>
+        <h2 id="work-heading" class="v2-section-h2 animate-on-scroll">Selected work.</h2>
 
-        <div class="v2-tabs animate-on-scroll" role="tablist" id="work-tabs" aria-label="Project tabs">
-            <button id="tab-asl-guide" class="v2-tab active" data-tab="asl-guide" role="tab" aria-selected="true" aria-controls="panel-asl-guide">
-                <span class="v2-tab-star">★</span> ASL Guide
-            </button>
-            <button id="tab-retinopathy" class="v2-tab" data-tab="retinopathy" role="tab" aria-selected="false" aria-controls="panel-retinopathy">
-                Retinopathy Classifier
-            </button>
-        </div>
-
-        <!-- ASL Guide -->
-        <div id="panel-asl-guide" class="v2-tab-panel active v2-panel-chrome animate-on-scroll stagger-2"
-             data-tab-panel="asl-guide" role="tabpanel" aria-labelledby="tab-asl-guide">
+        <!-- Case study 1: predictive maintenance -->
+        <article id="case-maintenance" class="v2-case v2-panel-chrome animate-on-scroll" aria-labelledby="case-maintenance-h">
             <div>
-                <div class="v2-card-badge badge-featured">★ FEATURED · PRODUCTION</div>
-                <h3 class="v2-card-h3">ASL Guide</h3>
-                <div class="v2-card-tagline">Production ASL learning platform</div>
-                <p class="v2-card-desc">A full-stack ASL learning platform built for real learners — not a demo. LangGraph agentic workflow applies 10 documented ASL grammar rules for accurate English → ASL translation, powered by <strong>Gemini 2.5 Flash</strong> with context caching. Duolingo-style learning system with 100 MediaPipe-animated signs across 10 progressive levels, SM-2 spaced repetition, and 4 exercise types. In-browser TensorFlow.js classifier, PWA offline support, and dual-layer Redis + LRU caching.</p>
+                <div class="v2-card-badge badge-1">BOSCH · PRODUCTION ML</div>
+                <h3 id="case-maintenance-h" class="v2-card-h3">Predictive maintenance</h3>
+                <div class="v2-card-tagline">Autoencoder anomaly detection on 80+ TB of sensor telemetry</div>
+                <dl class="v2-case-facts">
+                    <dt>Problem</dt>
+                    <dd>Endurance tests run continuously for about six months, and failures typically appear only after two to three months, when a component fails or drifts outside its expected intervals. Catching that late meant long cycles and damaged parts.</dd>
+                    <dt>What I owned</dt>
+                    <dd>The model end to end: data handling and preprocessing of 80+ TB of high-frequency telemetry on Databricks/PySpark, training and validating the autoencoder, and running it in production.</dd>
+                    <dt>Result</dt>
+                    <dd>Testing cycles shortened by <strong>4 months</strong>, with <strong>€300K+</strong> in annual savings; per-partition processing time cut by over 50%.</dd>
+                    <dt>Key decision</dt>
+                    <dd>Whether a measurement is anomalous is judged over a 12-second window, across hundreds of components and 100+ ECUs. An autoencoder learns what those 12 seconds should look like and flags any window that doesn’t match — one approach that scales across every component, rather than a separate rule or model for each.</dd>
+                    <dt>How it’s measured</dt>
+                    <dd>€300K+ is an annualized estimate, from reduced test-bench downtime and fewer components damaged thanks to earlier detection. The model was validated on separate validation and test sets of measurements supplied by the hardware team before rollout.</dd>
+                </dl>
+            </div>
+            <div>
+                <div class="v2-right-label">// KEY RESULTS</div>
+                <div class="v2-metric-row"><span class="v2-mv" style="color:var(--v2-inference)">4 mo</span><span class="v2-ml">shorter testing cycles</span></div>
+                <div class="v2-metric-row"><span class="v2-mv" style="color:var(--v2-neural)">€300K+</span><span class="v2-ml">annual savings</span></div>
+                <div class="v2-metric-row"><span class="v2-mv" style="color:var(--v2-data)">&gt;50%</span><span class="v2-ml">faster per-partition processing</span></div>
+                <div class="v2-code-block">
+                    <div class="v2-cb-header">// public-safe overview</div>
+                    sensor telemetry · 80+ TB<br>
+                    &nbsp;&nbsp;↓ Databricks · PySpark · broadcast joins<br>
+                    12-second measurement windows<br>
+                    &nbsp;&nbsp;↓ autoencoder · expected behaviour<br>
+                    &nbsp;&nbsp;↓ window doesn’t match<br>
+                    anomaly flags → test engineers
+                </div>
+            </div>
+        </article>
+
+        <!-- Case study 2: GenAI data assistant -->
+        <article id="case-valfred" class="v2-case v2-panel-chrome animate-on-scroll" aria-labelledby="case-valfred-h">
+            <div>
+                <div class="v2-card-badge badge-2">BOSCH · APPLIED GENAI</div>
+                <h3 id="case-valfred-h" class="v2-card-h3">Valfred — GenAI data assistant</h3>
+                <div class="v2-card-tagline">Natural-language queries over Bosch testing platforms</div>
+                <dl class="v2-case-facts">
+                    <dt>Problem</dt>
+                    <dd>Finding data in Bosch’s LEEPA/WebDVP testing platforms took engineers 10–15 minutes of manual lookup per question.</dd>
+                    <dt>What I owned</dt>
+                    <dd>Orchestrated a multi-agent assistant with optional vector schema retrieval and self-healing SQL agents, deployed via MLflow and Unity Catalog on Databricks. Used by the hardware team in my department to pull measurement details from tests — about 30 users, in beta when I left.</dd>
+                    <dt>Result</dt>
+                    <dd>Lookups went from 10–15 minutes to <strong>a single query</strong>; <strong>~81%</strong> of test queries answered correctly within three attempts.</dd>
+                    <dt>Key decision</dt>
+                    <dd>By default the whole schema goes into the prompt. A vector mode sends only the columns closest to the question, shrinking the schema text about 4× in local tests and keeping prompts manageable as schemas grow — at the risk of leaving out a table the query needs. When generated SQL fails to execute, a repair step sends the failing query and its error back to the model and runs the rewrite; after two retries (three attempts) it stops and reports the error to the user.</dd>
+                    <dt>How it’s measured</dt>
+                    <dd>About 500 internal test queries, built with the hardware and data teams and each checked for correctness. 65% were answered correctly on the first pass; self-healing recovered 45% of the remaining 35%, for ~81% overall.</dd>
+                </dl>
+            </div>
+            <div>
+                <div class="v2-right-label">// KEY RESULTS</div>
+                <div class="v2-metric-row"><span class="v2-mv" style="color:var(--v2-neural)">1</span><span class="v2-ml">query instead of 10–15 min lookups</span></div>
+                <div class="v2-metric-row"><span class="v2-mv" style="color:var(--v2-data)">~81%</span><span class="v2-ml">correct within 3 attempts · ~500 test queries</span></div>
+                <div class="v2-code-block">
+                    <div class="v2-cb-header">// public-safe overview</div>
+                    engineer’s question<br>
+                    &nbsp;&nbsp;↓ schema: full, or vector (closest columns)<br>
+                    SQL agent → query testing data<br>
+                    &nbsp;&nbsp;↺ on SQL error: repair &amp; retry (max 2)<br>
+                    answer · MLflow + Unity Catalog
+                </div>
+            </div>
+        </article>
+
+        <!-- Case study 3: ASL Guide -->
+        <article id="case-asl-guide" class="v2-case v2-panel-chrome animate-on-scroll" aria-labelledby="case-asl-guide-h">
+            <div>
+                <div class="v2-card-badge badge-featured">★ PERSONAL PROJECT · END-TO-END</div>
+                <h3 id="case-asl-guide-h" class="v2-card-h3">ASL Guide</h3>
+                <div class="v2-card-tagline">ASL learning platform — recognition, translation, practice</div>
+                <dl class="v2-case-facts">
+                    <dt>Why I built it</dt>
+                    <dd>A left-handed user signed to my model and it failed — I’d built for an imaginary user. Afterwards I mirrored landmarks during training and gathered data from left-handed signers.</dd>
+                    <dt>What I built</dt>
+                    <dd>A full-stack platform: in-browser fingerspelling recognition (MediaPipe + TensorFlow.js), a two-agent <strong>Gemini 2.5 Flash</strong> pipeline in LangGraph that applies 11 documented ASL grammar rules for English → ASL translation, and a Duolingo-style course of 100 signs over 10 levels with SM-2 spaced repetition. FastAPI, React, PostgreSQL, Redis, PWA offline support.</dd>
+                    <dt>Result</dt>
+                    <dd><strong>95.5%</strong> classifier accuracy across 36 fingerspelling classes; Gemini context caching cut per-request input tokens by ~73%.</dd>
+                    <dt>Key decision</dt>
+                    <dd>Classification runs in the browser, so camera frames never leave the user’s device and recognition doesn’t wait on a server; the server is only used for translation.</dd>
+                    <dt>How it’s measured</dt>
+                    <dd>95.5% is accuracy on a held-out split of Kaggle’s ASL alphabet &amp; numbers dataset, stratified by sign class. The dataset’s frames carry no signer labels, so this isn’t a signer-independent result.</dd>
+                    <dt>Limitations</dt>
+                    <dd>A study aid, not a substitute for fluent signers. The hosted demo is currently offline; the source is on GitHub.</dd>
+                </dl>
                 <div class="v2-tech-tags">
                     <span class="v2-tag-gemini">Gemini 2.5 Flash</span>
                     <span>LangGraph</span><span>TensorFlow.js</span><span>MediaPipe</span>
@@ -30,25 +103,15 @@
                     <span>Redis</span><span>Docker</span>
                 </div>
                 <div class="v2-card-links">
-                    <a href="https://github.com/shravnchandr/ASL-App" target="_blank" rel="noopener" class="v2-btn-primary" data-m3-press data-m3-morph>GitHub ↗</a>
+                    <a href="https://github.com/shravnchandr/ASL-App" target="_blank" rel="noopener" class="v2-btn-primary" data-m3-press data-m3-morph>Source on GitHub ↗</a>
+                    <a href="#demo" class="v2-btn-secondary" data-m3-press>See the pipeline replay</a>
                 </div>
             </div>
             <div>
-                <div class="v2-right-label">// KEY METRICS</div>
-                <div class="v2-metric-row"><span class="v2-mv" style="color:var(--v2-inference)">95.5%</span><span class="v2-ml">classifier accuracy</span></div>
-                <div class="v2-metric-row"><span class="v2-mv" style="color:var(--v2-neural)">36</span><span class="v2-ml">real-time sign classes</span></div>
-                <div class="v2-metric-row"><span class="v2-mv" style="color:var(--v2-data)">100</span><span class="v2-ml">animated signs</span></div>
-                <div class="v2-metric-row"><span class="v2-mv" style="color:var(--v2-inference)">10</span><span class="v2-ml">grammar rules</span></div>
-                <div class="v2-metric-row"><span class="v2-mv" style="color:var(--v2-neural)">PWA</span><span class="v2-ml">offline-ready</span></div>
-                <div class="v2-code-block">
-                    <div class="v2-cb-header">// stack</div>
-                    browser → MediaPipe<br>
-                    &nbsp;&nbsp;↓ 21 landmarks · TF.js<br>
-                    FastAPI → LangGraph<br>
-                    &nbsp;&nbsp;↓ 10 ASL grammar rules<br>
-                    &nbsp;&nbsp;↓ Redis + LRU cache<br>
-                    Postgres → SM-2 scheduling
-                </div>
+                <div class="v2-right-label">// KEY RESULTS</div>
+                <div class="v2-metric-row"><span class="v2-mv" style="color:var(--v2-inference)">95.5%</span><span class="v2-ml">classifier accuracy · 36 classes</span></div>
+                <div class="v2-metric-row"><span class="v2-mv" style="color:var(--v2-neural)">~73%</span><span class="v2-ml">fewer input tokens via context caching</span></div>
+                <div class="v2-metric-row"><span class="v2-mv" style="color:var(--v2-data)">100</span><span class="v2-ml">signs across 10 levels</span></div>
             </div>
 
             <!-- Architecture Trace — spans both grid columns -->
@@ -81,7 +144,7 @@
                         <div class="v2-arch-body">
                             Rate limiter<span class="v2-arch-sep"> → </span>Cache check<span class="v2-arch-sep"> (</span><span class="v2-arch-chip chip-inference">Redis + LRU</span><span class="v2-arch-sep">)</span><br>
                             <span class="v2-arch-sep">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓ cache miss</span><br>
-                            <span class="v2-arch-chip chip-inference">Grammar Agent</span><span class="v2-arch-dim"> · Gemini 2.5 Flash · 10 ASL rules</span><br>
+                            <span class="v2-arch-chip chip-inference">Grammar Agent</span><span class="v2-arch-dim"> · Gemini 2.5 Flash · 11 ASL rules</span><br>
                             <span class="v2-arch-sep">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓ context cache · 24h TTL</span><br>
                             <span class="v2-arch-chip chip-inference">Translation Agent</span><span class="v2-arch-dim"> + KB grounding</span><br>
                             <span class="v2-arch-sep">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;100 verified signs · structured output</span><br>
@@ -104,28 +167,6 @@
                     </div>
                 </div>
             </details>
-        </div>
-
-        <!-- Retinopathy -->
-        <div id="panel-retinopathy" class="v2-tab-panel v2-panel-chrome"
-             data-tab-panel="retinopathy" role="tabpanel" aria-labelledby="tab-retinopathy">
-            <div>
-                <div class="v2-card-badge badge-2">CV · HEALTHCARE</div>
-                <h3 class="v2-card-h3">Diabetic Retinopathy Classifier</h3>
-                <div class="v2-card-tagline">Clinical-grade with Grad-CAM</div>
-                <p class="v2-card-desc">Xception-based classifier on fundus images with Grad-CAM lesion visualization for clinical interpretability.</p>
-                <div class="v2-tech-tags">
-                    <span>Keras</span><span>OpenCV</span><span>Xception</span><span>Grad-CAM</span>
-                </div>
-                <div class="v2-card-links">
-                    <a href="https://github.com/shravnchandr/Diabetic-Retinopathy" target="_blank" rel="noopener" class="v2-btn-secondary" data-m3-press>GitHub ↗</a>
-                </div>
-            </div>
-            <div>
-                <div class="v2-right-label">// KEY METRICS</div>
-                <div class="v2-metric-row"><span class="v2-mv" style="color:var(--v2-neural)">96%</span><span class="v2-ml">Kappa score</span></div>
-            </div>
-        </div>
-
+        </article>
     </div>
 </section>

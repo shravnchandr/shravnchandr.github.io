@@ -46,7 +46,7 @@ const FEATURES = [
         icon: 'fas fa-keyboard',
         accent: 'neural',
         title: 'Keyboard & skip nav',
-        note: 'Tab reveals a skip-to-main link. role="menubar" on the pill nav. Focus-visible ring on every interactive element.',
+        note: 'Tab reveals a skip-to-main link. Pill nav uses plain links (no menubar role). Focus-visible ring on every interactive element.',
     },
 ];
 

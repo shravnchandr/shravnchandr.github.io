@@ -60,3 +60,10 @@
     .v2-metrics-grid { grid-template-columns: repeat(2, 1fr); }
     .v2-metric-cell { padding: 20px 16px; }
 }
+
+.v2-metric-basis {
+    margin-top: 8px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--v2-text-muted);
+}

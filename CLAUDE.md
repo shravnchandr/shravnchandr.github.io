@@ -4,7 +4,7 @@ This file provides guidance to Claude Code when working with code in this reposi
 
 ## Project Overview
 
-Personal portfolio website for Shravan Chandra, Senior ML Engineer. Single-page application focused on accessibility AI, production GenAI, and end-to-end ML infrastructure.
+Personal portfolio website for Shravan Chandra, Machine Learning Engineer (Production ML & Applied GenAI). Single-page application: hero with hiring snapshot, impact metrics, experience timeline, three case studies, research, ASL demo.
 
 **Deployment target:** GitHub Pages (`shravnchandr.github.io`), auto-deploys on push to `master`.
 
@@ -38,21 +38,19 @@ js/
   theme.js                  # Dark/light toggle (localStorage key: 'theme-v2')
   nav.js                    # Mobile hamburger + active-section highlight + logo Easter egg
   scroll.js                 # Scroll-reveal, CountUp, back-to-top, smooth scroll
-  tabs.js                   # Work tab switcher + Story dual-nav (top tabs + role-nav)
   asl.js                    # Procedural SVG ASL hand; random cycle + spellSequence() override
   demo.js                   # Scripted ASL pipeline demo (HELLO WORLD → grammar → output)
   a11y.js                   # Accessibility Lab toggle + side panel (ARIA overlays)
   search.js                 # ⌘K semantic search overlay — keyword index, keyboard nav
   webcam.js                 # Live webcam ASL classifier: MediaPipe Hands + MLP inference
-  recruiter.js              # Recruiter modal overlay (pure DOM, spring-animated)
 
 html/
   nav.html                  # <nav>: logo, pill nav, search trigger, theme toggle, a11y btn, hire-me
   hero.html                 # Hero: headline, live ASL recognition CTA, ASL card
   impact.html               # 6 impact metrics (CountUp on scroll)
-  story.html                # Experience tabs + role-nav + education block  (02 · WORK)
-  work.html                 # Project tabs: ASL Guide (+ Architecture Trace), Retinopathy  (03 · SELECTED PROJECTS)
-  research.html             # Research & Publications: 4 papers  (04 · RESEARCH · PUBLICATIONS)
+  story.html                # Experience timeline (all roles visible) + education  (02 · EXPERIENCE)
+  work.html                 # 3 case studies: maintenance, Valfred, ASL Guide (+ Architecture Trace)  (03 · SELECTED WORK)
+  research.html             # Research & Publications: 4 sign-language papers + Retinopathy  (04 · RESEARCH · PUBLICATIONS)
   demo.html                 # Live Demo section: scripted ASL Guide pipeline replay  (05 · LIVE DEMO)
   stack.html                # 5-column skills grid  (06 · STACK)
   now.html                  # "What I'm on" + OSS contributions  (07 · NOW)
@@ -67,8 +65,7 @@ css/
   hero.css                  # Hero layout, ASL card, status badge, wavy underline SVG
   impact.css                # 6-cell metrics grid
   demo.css                  # Live demo section: webcam panel, pipeline panel, log
-  story.css                 # Experience tabs, role-nav, education
-  tabs.css                  # .v2-tab, .v2-tab-panel show/hide
+  story.css                 # Experience timeline, education
   cards.css                 # .v2-panel-chrome, badges, buttons (.v2-btn-*), Architecture Trace diagram
   research.css              # Research section: featured card, 2-col row, bullet list
   stack.css                 # 5-col skill categories grid
@@ -77,7 +74,6 @@ css/
   a11y.css                  # Accessibility Lab toggle btn, side panel, ARIA highlight overlays
   search.css                # ⌘K overlay, modal, results list, nav trigger btn
   webcam.css                # Webcam video overlay, toggle button (.v2-webcam-*), status dot
-  recruiter.css             # Recruiter modal overlay (z-index: 2100), team-fit grid
   animations.css            # M3 spring keyframes, [data-m3-press], [data-m3-morph],
                             #   [data-hover-lift], .animate-in, .stagger-2–5 — LOADED LAST
 
@@ -106,7 +102,7 @@ index.html parsed
   │
   └─ script.js (type="module", deferred by default)
        └─ __fragments.critical → initCore()     (theme, nav, back-to-top, skip link, ASL, a11y, search, webcam)
-          __fragments.all      → initSections() (active nav, scroll reveal, CountUp, tabs, demo, recruiter)
+          __fragments.all      → initSections() (active nav, scroll reveal, CountUp, demo) → markSectionsReady()
 ```
 
 Below-fold placeholders keep showing skeletons until their own fetch settles, so a stalled section never blocks the hero.
@@ -124,20 +120,26 @@ Sections load in this order (matching `loader.js` FRAGMENTS array):
 | 1 | nav.html | — | Sticky nav |
 | 2 | hero.html | — | Headline + ASL demo card |
 | 3 | impact.html | — | 6 impact metrics (01 · IMPACT) |
-| 4 | story.html | `#story` | Experience tabs (02 · WORK) |
-| 5 | work.html | `#work` | Project tabs (03 · SELECTED PROJECTS) |
+| 4 | story.html | `#story` | Experience timeline (02 · EXPERIENCE) |
+| 5 | work.html | `#work` | Case studies (03 · SELECTED WORK) |
 | 6 | research.html | `#research` | Research & Publications (04 · RESEARCH) |
 | 7 | demo.html | `#demo` | Live ASL pipeline demo (05 · LIVE DEMO) |
 | 8 | stack.html | `#stack` | Skills grid (06 · STACK) |
 | 9 | now.html | `#now` | Now + OSS (07 · NOW) |
 | 10 | contact.html | `#contact` | Contact (08 · NEXT) |
 
-### Project tabs (`#work`)
-`data-tab` buttons + `data-tab-panel` panels: `asl-guide`, `retinopathy`
+### Hero hiring snapshot
+`<dl class="v2-glance">` under the hero: based in / looking for / interviews / strengths. Keep it in sync with `now.html`, `contact.html` and the meta tags.
 
-### Experience tabs (`#story`)
-`data-story` top buttons + `data-story-panel` panels: `bosch-sr`, `bosch-ml`, `bosch-swe`, `goldman`
-`data-role` right-column role-nav buttons mirror the same keys.
+### Selected work (`#work`)
+`<article class="v2-case">` per case study: `#case-maintenance`, `#case-valfred`, `#case-asl-guide`. (Retinopathy lives in Research as `#research-retinopathy`.)
+Each uses a `<dl class="v2-case-facts">` (Problem / What I owned / Result / Key decision / How it's measured).
+
+### Experience (`#story`)
+`<ol class="v2-timeline">` with `#role-bosch-sr`, `#role-bosch-ml`, `#role-bosch-swe`, `#role-goldman`. Latest role is expanded; earlier roles use `<details class="v2-tl-more">`. Bullets lead with the result in `<strong>`.
+
+### Draft placeholders
+`<span class="v2-todo">TODO: …</span>` marks facts still to be supplied (styled as dashed orange chips). `grep -rn v2-todo html/` must return nothing before publishing.
 
 ---
 
@@ -150,13 +152,11 @@ All modules use ES module syntax (`export function init*()`).
 import { initTheme }    from './js/theme.js';
 import { initNav }      from './js/nav.js';
 import { initScroll }   from './js/scroll.js';
-import { initTabs }     from './js/tabs.js';
 import { initASL }      from './js/asl.js';
 import { initDemo }     from './js/demo.js';
 import { initA11yLab }  from './js/a11y.js';
 import { initSearch }   from './js/search.js';
 import { initWebcam }   from './js/webcam.js';
-import { initRecruiter }from './js/recruiter.js';
 
 function initApp() { /* calls all inits + console Easter egg */ }
 
@@ -165,7 +165,7 @@ else window.__onSectionsReady = initApp;
 ```
 
 ### `js/utils.js`
-Shared DOM/UI helpers imported by `a11y.js`, `search.js`, `recruiter.js`, `asl.js`, `webcam.js`.
+Shared DOM/UI helpers imported by `a11y.js`, `search.js`, `asl.js`, `webcam.js`, `scroll.js`, `nav.js`, `demo.js`.
 
 - `el(tag, cls, attrs)` — creates an element, sets className, applies attr key/value pairs
 - `makeOverlay(extraClass, ariaLabel)` — builds the standard modal overlay div with `role="dialog"`, `aria-modal`, `aria-hidden`; base styles from `.v2-modal-overlay` in `css/base.css`
@@ -203,14 +203,14 @@ Exports `initASL`, `SIGNS`, `CONNECTIONS`, `spellSequence`, `pauseASL`, `resumeA
 
 ### `js/search.js`
 - `initSearch()` — builds the search overlay via DOM, binds `⌘K`/`Ctrl+K`, wires `#search-trigger` in the nav
-- `INDEX`: 11 entries (2 projects + 4 research + 4 experience + 1 education), each with `tokens[]`, `label`, `sub`, `icon`, `action()`
+- `INDEX`: 14 entries (4 projects/case studies + 4 research + 4 experience + 2 education), each with `tokens[]`, `label`, `sub`, `icon`, `action()`
 - `_query(raw)` — tokenises query (strips stop words, normalises), scores against `INDEX`:
   - Exact match: `+5` (len ≥ 5), `+3` (len ≥ 3), `+1` (short)
   - Prefix match (query is prefix of token, len ≥ 3): `+2`
   - Substring match (query inside token, len ≥ 3): `+1`
   - **No `w.includes(t)` direction** — avoids false positives (e.g. token `"ecu"` inside query `"because"`)
 - Results grouped into Projects / Experience & Education; keyboard nav (↑↓ Enter Escape)
-- `action()` on project/experience entries calls `_selectTab(selector, sectionId)` which clicks the correct tab and scrolls; research entries call `_scrollTo('#research')`
+- `action()` on project/experience entries calls `_reveal(selector)`: waits for `sectionsReady`, opens any collapsed `<details>` in the target, scrolls to it; research entries call `_scrollTo('#research')`
 
 ### `js/demo.js`
 Imports `SIGNS`, `CONNECTIONS` from `./asl.js`.
@@ -233,22 +233,11 @@ Imports `SIGNS`, `CONNECTIONS` from `./asl.js`.
 - `_onResults` uses `multiHandLandmarks[0]` for SVG drawing (`drawHandPose`) and `multiHandWorldLandmarks[0]` for MLP inference
 - **Critical**: `asl_model.js` weights are transposed (`[in_features][out_features]`) — `_matMul` must iterate outer index over `in` and inner index over `out`, NOT the reverse (the original pre-v2 script had this swapped)
 
-### `js/recruiter.js`
-- `initRecruiter()` — builds a spring-animated overlay modal via pure DOM (no innerHTML)
-- `ROLE_TARGETS`: title, location, availability, focus areas
-- `TEAM_FITS`: 4 companies (Google, Meta, Amazon, Microsoft) with specific team names
-- Trigger button in contact section (`#recruiter-trigger`); close on overlay click or Escape
-- `z-index: 2100` (above everything else)
-
 ### `js/scroll.js`
 - `initScrollReveal`: adds `.show` to `.animate-on-scroll` on intersection (threshold 0.12)
 - `initCountUp`: parses `.v2-metric-val` text (e.g. `€300K+`) and counts up on intersection
 - `initBackToTop`: shows `#back-to-top` after 300px scroll
 - `initSkipLink`: in-page links use native fragment navigation (smooth via CSS `scroll-behavior`); the skip link also focuses `<main>`
-
-### `js/tabs.js`
-- `initWorkTabs`: `#work-tabs .v2-tab` → `data-tab` ↔ `data-tab-panel`
-- `initStoryTabs`: syncs `#story-tabs .v2-tab` (via `data-story`), `#role-nav .v2-role-btn` (via `data-role`), and `[data-story-panel]` panels
 
 ---
 
@@ -299,7 +288,7 @@ body.loading .v2-skeleton { visibility: visible; }
 This lets skeleton shimmer screens show while the real content stays hidden — no JS required.
 
 ### Architecture Trace
-The ASL Guide tab panel (`#panel-asl-guide`) contains a `<details class="v2-arch-trace">` as a third child of the grid. `css/tabs.css` sets `grid-column: 1 / -1` so it spans both columns. Styling lives in `css/cards.css` under the `/* ── Architecture Trace ── */` section.
+The ASL Guide case study (`#case-asl-guide`) contains a `<details class="v2-arch-trace">` as a third child of the grid. `.v2-case .v2-arch-trace` in `css/cards.css` sets `grid-column: 1 / -1` so it spans both columns. Styling lives in `css/cards.css` under the `/* ── Architecture Trace ── */` section.
 
 ### Transition rule
 Only `color` is transitioned on `body` and surface elements — never `background` shorthand (browsers can't interpolate multi-layer radial gradients and pin the computed value to the wrong theme).

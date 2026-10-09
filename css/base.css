@@ -42,6 +42,17 @@ a { text-decoration: none; color: inherit; }
     border: 0;
 }
 
+/* Draft placeholder — facts still to be supplied. grep "v2-todo" before publishing. */
+.v2-todo {
+    display: inline;
+    padding: 1px 6px;
+    border: 1px dashed var(--v2-inference);
+    border-radius: 6px;
+    color: var(--v2-inference);
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85em;
+}
+
 /* Focus ring — v2 palette */
 :focus-visible {
     outline: 2px solid var(--v2-neural);
@@ -148,6 +159,9 @@ body, .v2-nav, .v2-asl-card, .v2-metric-cell, .v2-tech-tags span {
     transition: color 220ms ease;
 }
 
+/* Keep in-page targets clear of the sticky nav */
+.v2-section, .v2-case, .v2-tl-item, #research-retinopathy, #education { scroll-margin-top: 88px; }
+
 .v2-section {
     padding: 96px 0;
     background: var(--v2-bg);
@@ -192,8 +206,7 @@ body, .v2-nav, .v2-asl-card, .v2-metric-cell, .v2-tech-tags span {
 }
 
 /* ── Shared panel close button ───────────────────────────────────
-   Used by a11y panel (.v2-a11y-close) and recruiter modal
-   (.v2-recruiter-close). Component files set font-size, padding,
+   Used by the a11y panel (.v2-a11y-close). Component files set font-size, padding,
    border-radius, and any extra properties (e.g. flex-shrink).
    ─────────────────────────────────────────────────────────────── */
 .v2-panel-close {
@@ -211,8 +224,7 @@ body, .v2-nav, .v2-asl-card, .v2-metric-cell, .v2-tech-tags span {
 }
 
 /* ── Shared modal overlay backdrop ──────────────────────────────
-   Used by search.css (.v2-search-overlay) and recruiter.css
-   (.v2-recruiter-overlay). Component files set z-index, padding,
+   Used by search.css (.v2-search-overlay). Component files set z-index, padding,
    and flex alignment on top of this base.
    ─────────────────────────────────────────────────────────────── */
 .v2-modal-overlay {

@@ -41,7 +41,7 @@ const INDEX = [
             'grammar','rules','grammar rules',
             'classifier','recognition','prediction','inference',
             'camera','live','browser','landmark','landmarks','21',
-            '95.5','36','10','accessibility',
+            '95.5','36','11','accessibility',
             'production','platform','learning','dictionary',
             'kl','divergence',
             'agent','agents','agentic','multiagent','multi',
@@ -50,7 +50,35 @@ const INDEX = [
             'rag','retrieval','augmented','generation',
             'orchestration','workflow','langchain','prompt','prompting',
         ],
-        action() { _selectTab('[data-tab="asl-guide"]', '#work'); },
+        action() { _reveal('#case-asl-guide'); },
+    },
+    {
+        type:  'project',
+        id:    'case-maintenance',
+        label: 'Predictive Maintenance — Bosch',
+        sub:   'Autoencoder anomaly detection · 80+ TB telemetry · €300K+ savings',
+        icon:  '⚙',
+        tokens: [
+            'predictive','maintenance','autoencoder','anomaly','detection',
+            'telemetry','sensor','databricks','pyspark','spark','80tb','80',
+            'savings','300k','testing','cycles','production','case','study',
+        ],
+        action() { _reveal('#case-maintenance'); },
+    },
+    {
+        type:  'project',
+        id:    'case-valfred',
+        label: 'Valfred — GenAI Data Assistant',
+        sub:   'Multi-agent · schema retrieval · self-healing SQL · Databricks',
+        icon:  '◆',
+        tokens: [
+            'valfred','genai','generative','llm','agent','agents','multiagent','multi',
+            'sql','text2sql','nlq','natural','language','query','querying',
+            'vector','schema','retrieval','rag','self-healing','healing',
+            'mlflow','unity','catalog','databricks','leepa','webdvp','81',
+            'assistant','case','study',
+        ],
+        action() { _reveal('#case-valfred'); },
     },
     {
         type:  'project',
@@ -66,7 +94,7 @@ const INDEX = [
             'vision','computer','cv','imaging','classification','lesion',
             'kaggle','dataset','benchmark',
         ],
-        action() { _selectTab('[data-tab="retinopathy"]', '#work'); },
+        action() { _reveal('#research-retinopathy'); },
     },
     {
         type:  'project',
@@ -159,13 +187,13 @@ const INDEX = [
             'vector','schema','retrieval','self-healing',
             'mlflow','unity','catalog','leepa','webdvp','81','65',
         ],
-        action() { _selectTab('[data-story="bosch-sr"]', '#story'); },
+        action() { _reveal('#role-bosch-sr'); },
     },
     {
         type:  'story',
         id:    'bosch-ml',
         label: 'ML Engineer — Bosch',
-        sub:   'TF 1.x → PyTorch · 48% faster · KL divergence drift · Power BI',
+        sub:   'TF 1.x → PyTorch · 48% shorter training · KL divergence drift · Power BI',
         icon:  '⚙',
         tokens: [
             'bosch','ml','2023','2024',
@@ -180,7 +208,7 @@ const INDEX = [
             'ecu','ecus','100','engineering','teams',
             'machine','learning','engineer',
         ],
-        action() { _selectTab('[data-story="bosch-ml"]', '#story'); },
+        action() { _reveal('#role-bosch-ml'); },
     },
     {
         type:  'story',
@@ -196,7 +224,7 @@ const INDEX = [
             'flask','apps','application','automotive',
             'test','visualization','visualize',
         ],
-        action() { _selectTab('[data-story="bosch-swe"]', '#story'); },
+        action() { _reveal('#role-bosch-swe'); },
     },
     {
         type:  'story',
@@ -211,7 +239,7 @@ const INDEX = [
             '65','faster','automated','automation',
             'python','script','2021',
         ],
-        action() { _selectTab('[data-story="goldman"]', '#story'); },
+        action() { _reveal('#role-goldman'); },
     },
     {
         type:  'story',
@@ -226,7 +254,7 @@ const INDEX = [
             '2017','2021','graduation','undergraduate','college',
             'bengaluru','bangalore',
         ],
-        action() { _scrollTo('#story'); },
+        action() { _reveal('#education'); },
     },
     {
         type:  'story',
@@ -239,7 +267,7 @@ const INDEX = [
             'data','science','degree','grad','graduate',
             '2026','2027','vancouver','canada',
         ],
-        action() { _scrollTo('#story'); },
+        action() { _reveal('#education'); },
     },
 ];
 
@@ -471,14 +499,15 @@ function _close() {
 }
 
 /* ── Helpers ───────────────────────────────────────────────────────── */
-// Tab handlers are wired only after every fragment settles; wait for that
-// rather than clicking a tab that has no listener yet.
-async function _selectTab(selector, sectionId) {
+// Section fragments may still be loading when search opens; wait for them,
+// expand a collapsed timeline entry if needed, then scroll it into view.
+async function _reveal(selector) {
     await sectionsReady;
-    const tab = document.querySelector(selector);
-    tab?.click();
-    scrollToEl(document.querySelector(sectionId));
-    tab?.focus({ preventScroll: true });
+    const target = document.querySelector(selector);
+    if (!target) return;
+    const details = target.querySelector('details');
+    if (details) details.open = true;
+    scrollToEl(target);
 }
 
 function _scrollTo(sectionId) {

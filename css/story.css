@@ -1,112 +1,85 @@
-/* v2 Story — 2-col layout: left content + right role-nav */
-.v2-story-layout {
-    display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: 48px;
-    min-height: 400px;
+/* v2 Story — all-visible experience timeline */
+.v2-timeline {
+    list-style: none;
+    margin: 0;
+    padding: 8px 40px;
     background: var(--v2-bg);
-    border-radius: 28px;
-    padding: 48px;
     border: 1px solid var(--v2-border);
+    border-radius: 28px;
 }
 
-.v2-exp-panel { display: none; }
-.v2-exp-panel.active { display: block; }
+.v2-tl-item {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 32px;
+    padding: 32px 0;
+}
+.v2-tl-item + .v2-tl-item { border-top: 1px dashed var(--v2-border); }
 
-.v2-exp-date {
+.v2-tl-dates {
     font-family: 'Fira Code', monospace;
     font-size: 12px;
     color: var(--v2-text-muted);
-    margin-top: 10px;
+    padding-top: 6px;
 }
 
-.v2-bullets-label {
-    font-family: 'Fira Code', monospace;
-    font-size: 11px;
-    color: var(--v2-text-muted);
-    letter-spacing: 1px;
-    margin: 24px 0 12px;
+.v2-tl-title {
+    font-family: 'Google Sans Flex', 'Outfit', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--v2-text);
 }
 
-.v2-exp-bullets {
-    list-style: none;
-    margin: 0; padding: 0;
-}
-
-.v2-exp-bullets li {
-    display: flex;
-    gap: 14px;
-    padding: 10px 0;
-    border-top: 1px dashed var(--v2-border);
+.v2-tl-org {
     font-size: 14px;
     color: var(--v2-text-dim);
+    margin-top: 4px;
+}
+
+.v2-tl-outcome {
+    margin-top: 12px;
+    font-size: 16px;
     line-height: 1.55;
-}
-
-.v2-exp-bullets li:first-child { border-top: none; }
-
-.v2-bullet-idx {
-    font-family: 'Fira Code', monospace;
-    font-size: 11px;
-    color: var(--v2-inference);
-    margin-top: 3px;
-    min-width: 20px;
-    flex-shrink: 0;
-}
-
-.v2-role-nav {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-bottom: 10px;
-}
-
-.v2-role-btn {
-    padding: 18px 20px;
-    border-radius: 16px;
-    background: var(--v2-surface);
-    border: 1px solid var(--v2-border);
     color: var(--v2-text);
-    cursor: pointer;
-    text-align: left;
-    transition: all 200ms ease;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    font-family: 'Outfit', sans-serif;
+    max-width: 760px;
 }
 
-.v2-role-btn:hover { background: var(--v2-surface-hi); }
-
-.v2-role-btn.active {
-    background: var(--v2-surface-hi);
-    border-color: var(--v2-inference);
+.v2-tl-bullets {
+    list-style: none;
+    margin: 16px 0 0;
+    padding: 0;
+    max-width: 820px;
 }
 
-.v2-role-btn-row {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 12px;
-}
-
-.v2-role-name {
+.v2-tl-bullets li {
+    position: relative;
+    padding: 10px 0 10px 20px;
     font-size: 14px;
-    font-weight: 700;
-    color: var(--v2-text);
-    letter-spacing: -0.2px;
+    line-height: 1.6;
+    color: var(--v2-text-dim);
 }
+.v2-tl-bullets li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--v2-data);
+}
+.v2-tl-bullets strong { color: var(--v2-text); font-weight: 600; }
 
-.v2-role-year {
+.v2-tl-more { margin-top: 12px; }
+.v2-tl-more > summary {
+    cursor: pointer;
     font-family: 'Fira Code', monospace;
-    font-size: 11px;
-    font-weight: 700;
-    white-space: nowrap;
-}
-
-.v2-role-company {
     font-size: 12px;
-    color: var(--v2-text-muted);
+    color: var(--v2-data);
+    width: fit-content;
+}
+.v2-tl-more > summary:hover { text-decoration: underline; }
+
+@media (max-width: 700px) {
+    .v2-timeline { padding: 4px 20px; border-radius: 20px; }
+    .v2-tl-item { grid-template-columns: 1fr; gap: 6px; padding: 24px 0; }
+    .v2-tl-dates { padding-top: 0; }
 }
 
 .v2-education {
@@ -158,14 +131,4 @@
     font-size: 12px;
     color: var(--v2-text-muted);
     margin-top: 6px;
-}
-
-@media (max-width: 900px) {
-    .v2-story-layout { grid-template-columns: 1fr; gap: 28px; }
-}
-
-@media (max-width: 600px) {
-    .v2-story-layout { padding: 24px 20px; }
-    .v2-role-btn { padding: 14px 16px; }
-    .v2-exp-bullets li { font-size: 13px; gap: 10px; }
 }

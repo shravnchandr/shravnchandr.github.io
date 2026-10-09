@@ -37,7 +37,7 @@ export function el(tag, cls = '') {
 
 /**
  * Create a modal overlay div with standard ARIA attributes.
- * Used by search.js and recruiter.js which share the same overlay pattern:
+ * Used by search.js for its overlay:
  * a full-screen backdrop + role="dialog" + aria-hidden="true" on init.
  *
  * @param {string} extraClass   Additional class to add alongside v2-modal-overlay

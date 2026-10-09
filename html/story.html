@@ -1,129 +1,75 @@
 <section id="story" class="v2-section v2-surface" aria-labelledby="story-heading">
     <div class="v2-inner">
         <div class="v2-section-header">
-            <span class="v2-code-label">// 02 · WORK</span>
-            <span class="v2-code-label">5 years · 4 roles</span>
+            <span class="v2-code-label">// 02 · EXPERIENCE</span>
+            <span class="v2-code-label">5+ years · 4 roles · 3 years in ML</span>
         </div>
         <h2 id="story-heading" class="v2-section-h2 animate-on-scroll">Production ML, in the wild.</h2>
 
-        <!-- Top tab buttons -->
-        <div class="v2-tabs animate-on-scroll" role="tablist" id="story-tabs" aria-label="Experience tabs">
-            <button id="tab-bosch-sr" class="v2-tab active" data-story="bosch-sr" role="tab" aria-selected="true" aria-controls="panel-bosch-sr">
-                <span class="v2-tab-year">2025</span><span class="v2-tab-sep">▸</span>Sr. ML Engineer
-            </button>
-            <button id="tab-bosch-ml" class="v2-tab" data-story="bosch-ml" role="tab" aria-selected="false" aria-controls="panel-bosch-ml">
-                <span class="v2-tab-year">2023</span><span class="v2-tab-sep">▸</span>ML Engineer
-            </button>
-            <button id="tab-bosch-swe" class="v2-tab" data-story="bosch-swe" role="tab" aria-selected="false" aria-controls="panel-bosch-swe">
-                <span class="v2-tab-year">2021</span><span class="v2-tab-sep">▸</span>Software Developer
-            </button>
-            <button id="tab-goldman" class="v2-tab" data-story="goldman" role="tab" aria-selected="false" aria-controls="panel-goldman">
-                <span class="v2-tab-year">2021</span><span class="v2-tab-sep">▸</span>Junior Analyst
-            </button>
-        </div>
-
-        <!-- 2-col layout: left=content panels, right=role nav -->
-        <div class="v2-story-layout animate-on-scroll stagger-2">
-            <!-- Left: switching experience panels -->
-            <div id="story-content">
-                <div id="panel-bosch-sr" class="v2-exp-panel active" data-story-panel="bosch-sr" role="tabpanel" aria-labelledby="tab-bosch-sr">
-                    <div class="v2-card-badge badge-1">ROLE 1 OF 4</div>
-                    <h3 class="v2-card-h3">Senior Machine Learning Engineer</h3>
-                    <div class="v2-card-tagline">Bosch Global Software Technologies</div>
-                    <div class="v2-exp-date">Jan 2025 – Jul 2026 · Bengaluru</div>
-                    <div class="v2-bullets-label">// WHAT I DID</div>
-                    <ul class="v2-exp-bullets">
-                        <li><span class="v2-bullet-idx">01</span>Orchestrated Valfred, a multi-agent GenAI data assistant for natural-language querying of Bosch's LEEPA/WebDVP testing platforms; vector-based schema retrieval and self-healing SQL agents cut manual data lookups from 10–15 minutes to a single query, reaching ~81% eventual accuracy, deployed via MLflow and Unity Catalog on Databricks.</li>
-                        <li><span class="v2-bullet-idx">02</span>Architected a scalable Databricks pipeline to ingest and process 80+ TB of high-frequency sensor telemetry for production anomaly detection; reduced per-partition processing time by over 50% with PySpark query optimizations and broadcast joins.</li>
-                        <li><span class="v2-bullet-idx">03</span>Engineered a production predictive-maintenance pipeline using Autoencoder-based anomaly detection, cutting component testing cycles by 4 months and saving €300K+ annually.</li>
-                        <li><span class="v2-bullet-idx">04</span>Drove ML architecture decisions and deployment workflows across India, Germany, and China as technical SPOC for 5+ concurrent initiatives, while mentoring 3 interns to full-time roles and authoring onboarding guides and infrastructure standards adopted team-wide.</li>
+        <!-- All roles visible; latest expanded, earlier roles expandable -->
+        <ol class="v2-timeline animate-on-scroll stagger-2">
+            <li class="v2-tl-item" id="role-bosch-sr">
+                <div class="v2-tl-dates">Jan 2025 – Jul 2026</div>
+                <div class="v2-tl-main">
+                    <h3 class="v2-tl-title">Senior Machine Learning Engineer</h3>
+                    <div class="v2-tl-org">Bosch Global Software Technologies · Bengaluru</div>
+                    <p class="v2-tl-outcome">Shortened component testing cycles by 4 months — €300K+ in annual savings — with a production anomaly-detection pipeline.</p>
+                    <ul class="v2-tl-bullets">
+                        <li><strong>Cut manual data lookups from 10–15 minutes to a single query.</strong> Orchestrated Valfred, a multi-agent GenAI assistant for natural-language querying of Bosch’s LEEPA/WebDVP testing platforms: vector-based schema retrieval and self-healing SQL agents, ~81% of test queries answered correctly within three attempts, deployed via MLflow and Unity Catalog on Databricks (beta, ~30 users).</li>
+                        <li><strong>Reduced per-partition telemetry processing time by over 50%.</strong> Architected a Databricks/PySpark pipeline ingesting 80+ TB of high-frequency sensor data, using query optimizations and broadcast joins.</li>
+                        <li><strong>Shortened component testing cycles by 4 months, saving €300K+ annually.</strong> Engineered an autoencoder-based predictive-maintenance pipeline and took it to production.</li>
+                        <li><strong>Technical point of contact for 5+ concurrent initiatives across India, Germany and China.</strong> Drove ML architecture and deployment decisions, mentored 3 interns into full-time roles, and wrote onboarding guides and infrastructure standards adopted team-wide.</li>
                     </ul>
                 </div>
+            </li>
 
-                <div id="panel-bosch-ml" class="v2-exp-panel" data-story-panel="bosch-ml" role="tabpanel" aria-labelledby="tab-bosch-ml">
-                    <div class="v2-card-badge badge-2">ROLE 2 OF 4</div>
-                    <h3 class="v2-card-h3">Machine Learning Engineer</h3>
-                    <div class="v2-card-tagline">Bosch Global Software Technologies</div>
-                    <div class="v2-exp-date">Aug 2023 – Dec 2024 · Bengaluru</div>
-                    <div class="v2-bullets-label">// WHAT I DID</div>
-                    <ul class="v2-exp-bullets">
-                        <li><span class="v2-bullet-idx">01</span>Developed a real-time predictive failure pipeline using Elastic Net regression on AUTOSAR DEM debounce signals to identify early-warning patterns; achieved a 0.92 recall rate and predicted system errors 30 seconds in advance.</li>
-                        <li><span class="v2-bullet-idx">02</span>Implemented online distribution-shift detection (KL divergence + hypothesis testing) across 100+ ECUs, flagging sensor anomalies with 95% accuracy under continuous high-frequency data ingestion.</li>
-                        <li><span class="v2-bullet-idx">03</span>Led TensorFlow 1.x → PyTorch migration across a multi-GPU Azure environment, achieving 48% faster training throughput and unblocking distributed training at scale.</li>
-                        <li><span class="v2-bullet-idx">04</span>Built and shipped Power BI dashboards for real-time model insight across 100+ ECUs, enabling faster test validation for distributed engineering teams.</li>
-                    </ul>
+            <li class="v2-tl-item" id="role-bosch-ml">
+                <div class="v2-tl-dates">Aug 2023 – Dec 2024</div>
+                <div class="v2-tl-main">
+                    <h3 class="v2-tl-title">Machine Learning Engineer</h3>
+                    <div class="v2-tl-org">Bosch Global Software Technologies · Bengaluru</div>
+                    <p class="v2-tl-outcome">Predicted system errors 30 seconds in advance at 0.92 recall, from AUTOSAR diagnostic signals.</p>
+                    <details class="v2-tl-more">
+                        <summary>More about this role</summary>
+                        <ul class="v2-tl-bullets">
+                            <li><strong>Predicted system errors 30 seconds in advance at 0.92 recall.</strong> Built a real-time failure-prediction pipeline using Elastic Net regression on AUTOSAR DEM debounce signals.</li>
+                            <li><strong>Flagged sensor anomalies across 100+ ECUs with 95% accuracy.</strong> Implemented online distribution-shift detection (KL divergence + hypothesis testing) on continuous high-frequency data.</li>
+                            <li><strong>Cut training time by 48% and unblocked distributed training.</strong> Led the TensorFlow 1.x → PyTorch migration across a multi-GPU Azure environment.</li>
+                            <li><strong>Sped up test validation for distributed engineering teams</strong> with Power BI dashboards giving real-time model insight across 100+ ECUs.</li>
+                        </ul>
+                    </details>
                 </div>
+            </li>
 
-                <div id="panel-bosch-swe" class="v2-exp-panel" data-story-panel="bosch-swe" role="tabpanel" aria-labelledby="tab-bosch-swe">
-                    <div class="v2-card-badge badge-3">ROLE 3 OF 4</div>
-                    <h3 class="v2-card-h3">Software Developer</h3>
-                    <div class="v2-card-tagline">Bosch Global Software Technologies</div>
-                    <div class="v2-exp-date">Aug 2021 – Aug 2023 · Bengaluru</div>
-                    <div class="v2-bullets-label">// WHAT I DID</div>
-                    <ul class="v2-exp-bullets">
-                        <li><span class="v2-bullet-idx">01</span>Built a comprehensive data analysis tool to monitor sensor and component behavior across humidity levels; integrated features for real-time visualization, GPS movement plotting, and time-series trend forecasting.</li>
-                        <li><span class="v2-bullet-idx">02</span>Developed automation tools and GUIs reducing manual data-analysis time by 45% for 25+ engineers.</li>
-                        <li><span class="v2-bullet-idx">03</span>Increased PCB pricing estimation accuracy by 30%, reducing processing time from 90 min to 5 min through automated pipeline design.</li>
-                    </ul>
+            <li class="v2-tl-item" id="role-bosch-swe">
+                <div class="v2-tl-dates">Aug 2021 – Aug 2023</div>
+                <div class="v2-tl-main">
+                    <h3 class="v2-tl-title">Software Developer</h3>
+                    <div class="v2-tl-org">Bosch Global Software Technologies · Bengaluru</div>
+                    <p class="v2-tl-outcome">Cut manual data-analysis time by 45% for 25+ engineers with automation tools and GUIs.</p>
+                    <details class="v2-tl-more">
+                        <summary>More about this role</summary>
+                        <ul class="v2-tl-bullets">
+                            <li><strong>Cut manual data-analysis time by 45% for 25+ engineers</strong> with automation tools and GUIs.</li>
+                            <li><strong>Improved PCB pricing-estimate accuracy by 30% and cut processing from 90 to 5 minutes</strong> by automating the estimation pipeline.</li>
+                            <li><strong>Built a sensor and component analysis tool</strong> tracking behavior across humidity levels, with real-time visualization, GPS movement plotting and time-series trend forecasting.</li>
+                        </ul>
+                    </details>
                 </div>
+            </li>
 
-                <div id="panel-goldman" class="v2-exp-panel" data-story-panel="goldman" role="tabpanel" aria-labelledby="tab-goldman">
-                    <div class="v2-card-badge badge-4">ROLE 4 OF 4</div>
-                    <h3 class="v2-card-h3">Junior Analyst</h3>
-                    <div class="v2-card-tagline">Goldman Sachs</div>
-                    <div class="v2-exp-date">Jan 2021 – Jul 2021 · Bengaluru · Remote</div>
-                    <div class="v2-bullets-label">// WHAT I DID</div>
-                    <ul class="v2-exp-bullets">
-                        <li><span class="v2-bullet-idx">01</span>Automated trade booking verification — 65% faster bookings.</li>
-                    </ul>
+            <li class="v2-tl-item" id="role-goldman">
+                <div class="v2-tl-dates">Jan 2021 – Jul 2021</div>
+                <div class="v2-tl-main">
+                    <h3 class="v2-tl-title">Junior Analyst</h3>
+                    <div class="v2-tl-org">Goldman Sachs · Bengaluru · Remote</div>
+                    <p class="v2-tl-outcome">Made trade bookings 65% faster by automating booking verification.</p>
                 </div>
-            </div>
-
-            <!-- Right: role-nav + summary -->
-            <div>
-                <div class="v2-right-label">// ROLE NAV</div>
-                <div class="v2-role-nav" id="role-nav">
-                    <button class="v2-role-btn active" data-role="bosch-sr">
-                        <div class="v2-role-btn-row">
-                            <span class="v2-role-name">Sr. ML Engineer</span>
-                            <span class="v2-role-year" style="color:var(--v2-inference)">2025 →</span>
-                        </div>
-                        <div class="v2-role-company">Bosch Global Software Technologies</div>
-                    </button>
-                    <button class="v2-role-btn" data-role="bosch-ml">
-                        <div class="v2-role-btn-row">
-                            <span class="v2-role-name">ML Engineer</span>
-                            <span class="v2-role-year" style="color:var(--v2-neural)">2023</span>
-                        </div>
-                        <div class="v2-role-company">Bosch Global Software Technologies</div>
-                    </button>
-                    <button class="v2-role-btn" data-role="bosch-swe">
-                        <div class="v2-role-btn-row">
-                            <span class="v2-role-name">Software Developer</span>
-                            <span class="v2-role-year" style="color:var(--v2-data)">2021</span>
-                        </div>
-                        <div class="v2-role-company">Bosch Global Software Technologies</div>
-                    </button>
-                    <button class="v2-role-btn" data-role="goldman">
-                        <div class="v2-role-btn-row">
-                            <span class="v2-role-name">Junior Analyst</span>
-                            <span class="v2-role-year" style="color:var(--v2-inference)">2021</span>
-                        </div>
-                        <div class="v2-role-company">Goldman Sachs</div>
-                    </button>
-                </div>
-                <div class="v2-code-block">
-                    <div class="v2-cb-header">// summary</div>
-                    5+ yrs production ML<br>
-                    €300K+ annual savings<br>
-                    3 interns mentored<br>
-                    India · Germany · China
-                </div>
-            </div>
-        </div>
+            </li>
+        </ol>
 
         <!-- Education -->
-        <div class="v2-education animate-on-scroll">
+        <div class="v2-education animate-on-scroll" id="education">
             <div class="v2-edu-label">// EDUCATION</div>
             <div class="v2-edu-entry">
                 <div>

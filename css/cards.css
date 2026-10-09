@@ -186,7 +186,45 @@
     .v2-panel-chrome { padding: 24px 20px; }
 }
 
-/* Architecture Trace — spans both grid columns of the active tab panel */
+/* ── Case studies (#work) ── */
+.v2-case {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 48px;
+}
+.v2-case + .v2-case { margin-top: 24px; }
+.v2-case .v2-arch-trace { grid-column: 1 / -1; }
+
+.v2-case-facts {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 14px 20px;
+}
+.v2-case-facts dt {
+    font-family: 'Fira Code', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--v2-text-muted);
+    padding-top: 3px;
+}
+.v2-case-facts dd {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--v2-text-dim);
+}
+.v2-case-facts strong { color: var(--v2-text); font-weight: 600; }
+
+@media (max-width: 900px) {
+    .v2-case { grid-template-columns: 1fr; gap: 28px; }
+}
+@media (max-width: 600px) {
+    .v2-case-facts { grid-template-columns: 1fr; gap: 4px; }
+    .v2-case-facts dd { margin-bottom: 10px; }
+}
+
+/* Architecture Trace — spans both grid columns of a case study */
 .v2-arch-trace {
     grid-column: 1 / -1;
     margin-top: 20px;

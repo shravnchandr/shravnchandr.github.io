@@ -201,7 +201,7 @@ export function initDemo() {
         if (step === SCRIPT.length) addLog('buffer', 'word complete: "WORLD"');
 
         if (step === SCRIPT.length + 1) {
-            addLog('langgraph', 'grammar pass · 10 rules');
+            addLog('langgraph', 'grammar pass · 11 rules');
 
             grammarEl.className = 'v2-demo-grammar-box active';
             clearEl(grammarEl);
@@ -225,7 +225,7 @@ export function initDemo() {
             clearEl(grammarEl);
             const doneSpan = document.createElement('span');
             doneSpan.style.color = 'var(--v2-data)';
-            doneSpan.textContent = '✓ 3 rules applied · 10 available';
+            doneSpan.textContent = '✓ 3 rules applied · 11 available';
             grammarEl.appendChild(doneSpan);
 
             outputEl.className = 'v2-demo-output-box done';

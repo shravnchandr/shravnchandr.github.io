@@ -17,7 +17,7 @@
     max-width: 1320px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1.15fr 0.85fr;   /* summary gets more room than the demo */
     gap: 56px;
     align-items: center;
 }
@@ -71,6 +71,22 @@
     margin: 0;
 }
 
+.v2-hero-role {
+    font-family: 'Google Sans Flex', 'Outfit', sans-serif;
+    font-size: clamp(18px, 2vw, 24px);
+    font-weight: 600;
+    color: var(--v2-data);
+    margin-top: 14px;
+}
+
+.v2-hero-tagline {
+    font-family: 'Google Sans Flex', 'Outfit', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--v2-text);
+    margin-top: 20px;
+}
+
 .v2-accent-word {
     position: relative;
     color: var(--v2-neural);
@@ -91,8 +107,8 @@
     font-size: 17px;
     color: var(--v2-text-dim);
     line-height: 1.6;
-    margin-top: 28px;
-    max-width: 520px;
+    margin-top: 20px;
+    max-width: 560px;
 }
 
 .v2-hero-desc strong { color: var(--v2-text); font-weight: 600; }
@@ -106,9 +122,61 @@
 
 .v2-hero-cta .v2-btn-primary,
 .v2-hero-cta .v2-btn-secondary {
-    padding: 16px 28px;
+    padding: 16px 24px;
     border-radius: 14px;
     font-size: 14px;
+}
+
+.v2-hero-download {
+    display: inline-block;
+    margin-top: 14px;
+    font-family: 'Fira Code', monospace;
+    font-size: 12px;
+    color: var(--v2-text-dim);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+.v2-hero-download:hover { color: var(--v2-text); }
+
+/* ── Hiring snapshot ── */
+.v2-glance {
+    position: relative;
+    max-width: 1320px;
+    margin: 48px auto 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border: 1px solid var(--v2-border);
+    border-radius: 20px;
+    background: var(--v2-surface);
+    overflow: hidden;
+}
+
+.v2-glance-cell { padding: 18px 20px; }
+.v2-glance-cell + .v2-glance-cell { border-left: 1px solid var(--v2-border); }
+
+.v2-glance dt {
+    font-family: 'Fira Code', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--v2-text-muted);
+    margin-bottom: 6px;
+}
+
+.v2-glance dd {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--v2-text);
+    line-height: 1.4;
+}
+
+.v2-glance dd span {
+    display: block;
+    margin-top: 4px;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--v2-text-dim);
+    overflow-wrap: anywhere;
 }
 
 /* ── Right column: ASL card ── */
@@ -263,6 +331,7 @@
     text-align: center;
     font-family: 'Fira Code', monospace;
     font-size: 11px;
+    line-height: 1.6;
     color: var(--v2-text-muted);
     margin-top: 12px;
 }
@@ -270,10 +339,16 @@
 @media (max-width: 1024px) {
     .v2-hero { padding: 48px 24px 64px; }
     .v2-hero-inner { grid-template-columns: 1fr; gap: 40px; }
+    .v2-glance { grid-template-columns: repeat(2, 1fr); }
+    .v2-glance-cell:nth-child(3) { border-left: none; }
+    .v2-glance-cell:nth-child(n+3) { border-top: 1px solid var(--v2-border); }
 }
 
 @media (max-width: 600px) {
     .v2-hero-h1 { font-size: clamp(36px, 10vw, 52px); letter-spacing: -2px; }
     .v2-asl-body { grid-template-columns: 1fr; }
     .v2-asl-canvas-wrap { border-right: none; border-bottom: 1px solid var(--v2-border); aspect-ratio: 4/3; }
+    .v2-glance { grid-template-columns: 1fr; }
+    .v2-glance-cell + .v2-glance-cell { border-left: none; border-top: 1px solid var(--v2-border); }
+    .v2-hero-cta > a { flex: 1 1 100%; justify-content: center; }
 }
