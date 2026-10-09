@@ -16,7 +16,7 @@
     --v2-border:      #2a3342;
     --v2-text:        #e6ebf2;
     --v2-text-dim:    #a0a9b8;
-    --v2-text-muted:  #828c9c;   /* ≥4.5:1 on bg/surface/surface-hi */
+    --v2-text-muted:  #8a94a4;   /* ≥4.5:1 on every surface incl. surface-hi2 hover */
     --v2-neural:      #9a76ff;   /* lightened from #7c4dff for text contrast */
     --v2-data:        #00bfa5;
     --v2-inference:   #ff6d00;
@@ -35,7 +35,7 @@ body.light-theme {
     --v2-border:      #d6cfbe;
     --v2-text:        #1a1a1a;
     --v2-text-dim:    #4a4a4a;
-    --v2-text-muted:  #6c6650;
+    --v2-text-muted:  #635d48;
     --v2-neural:      #6a3ff0;
     --v2-data:        #00796b;
     --v2-inference:   #b84800;

@@ -5,6 +5,12 @@
  * across modules. No side effects, no imports.
  */
 
+// Resolved by script.js once section-dependent features (tabs etc.) are wired,
+// so early callers (e.g. search, which initialises with the nav) can defer to it.
+let _markSectionsReady;
+export const sectionsReady = new Promise(r => { _markSectionsReady = r; });
+export function markSectionsReady() { _markSectionsReady(); }
+
 /** True when the user has asked the OS for reduced motion. */
 export function prefersReducedMotion() {
     return window.matchMedia('(prefers-reduced-motion: reduce)').matches;

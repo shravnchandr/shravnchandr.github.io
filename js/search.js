@@ -13,7 +13,7 @@
  *   substr match  → query word is substring of token, len ≥ 3 → +1
  */
 
-import { el as _el, makeOverlay, clearEl, createModal, isModalOpen, scrollToEl } from './utils.js';
+import { el as _el, makeOverlay, clearEl, createModal, isModalOpen, scrollToEl, sectionsReady } from './utils.js';
 
 /* ── Stop words (filtered before matching) ─────────────────────────── */
 const _STOP = new Set([
@@ -471,7 +471,10 @@ function _close() {
 }
 
 /* ── Helpers ───────────────────────────────────────────────────────── */
-function _selectTab(selector, sectionId) {
+// Tab handlers are wired only after every fragment settles; wait for that
+// rather than clicking a tab that has no listener yet.
+async function _selectTab(selector, sectionId) {
+    await sectionsReady;
     const tab = document.querySelector(selector);
     tab?.click();
     scrollToEl(document.querySelector(sectionId));

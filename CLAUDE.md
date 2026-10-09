@@ -222,8 +222,7 @@ Imports `SIGNS`, `CONNECTIONS` from `./asl.js`.
 - No innerHTML — all DOM updates via `createElement` / `textContent` / `appendChild`
 
 ### `js/webcam.js`
-- `initWebcam()` — wires `#webcam-toggle`, hides button if `getUserMedia` unavailable, kicks off `checkAppStatus()`
-- `checkAppStatus()` — pings `asl-guide.onrender.com` with `fetch` no-cors + 7s AbortController timeout; updates `#asl-status-dot` / `#asl-status-label` (live / waking up / offline)
+- `initWebcam()` — wires `#webcam-toggle`, hides button if `getUserMedia` unavailable
 - On button click: loads `asl_model.js` and `@mediapipe/hands` CDN **in parallel** via `_loadScript`, then initialises MediaPipe Hands and starts `getUserMedia`
 - `_classify(worldLandmarks)` — runs the MLP forward pass:
   1. Flatten 21 × `{x,y,z}` world landmarks → 63 floats

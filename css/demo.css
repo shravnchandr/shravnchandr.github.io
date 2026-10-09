@@ -14,23 +14,6 @@
     align-items: center;
 }
 
-.v2-demo-live-dot {
-    display: inline-block;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: #fff;
-    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25);
-    animation: v2-pulse 1.4s ease-in-out infinite;
-    flex-shrink: 0;
-}
-
-.v2-demo-camera-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-}
-
 .v2-demo-card {
     box-shadow: 0 24px 60px -12px rgba(124, 77, 255, 0.18);
 }

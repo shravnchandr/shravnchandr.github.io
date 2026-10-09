@@ -13,7 +13,6 @@
  *
  * Public API:
  *   initWebcam()      — wires #webcam-toggle button
- *   checkAppStatus()  — pings asl-guide.onrender.com, updates status badge
  */
 
 import { pauseASL, resumeASL, drawHandPose, hideHandPose } from './asl.js';
@@ -23,10 +22,7 @@ const MP_HANDS_VERSION = '@mediapipe/hands@0.4.1675469240';
 const MP_HANDS_CDN     = `https://cdn.jsdelivr.net/npm/${MP_HANDS_VERSION}/hands.js`;
 const MP_HANDS_BASE    = `https://cdn.jsdelivr.net/npm/${MP_HANDS_VERSION}/`;
 const MODEL_SRC        = './asl_model.js';
-const APP_URL          = 'https://asl-guide.onrender.com';
 
-const STATUS_TIMEOUT_MS = 7000;   // AbortController timeout for app-status ping
-const STATUS_FAST_MS    = 2500;   // response faster than this → "live" (vs "waking up")
 const CAM_WIDTH         = 640;
 const CAM_HEIGHT        = 480;
 const SVG_W             = 100;    // #asl-svg viewBox width
@@ -195,7 +191,7 @@ function _announce(key, conf) {
     // by per-frame confidence changes.
     if (key === _stableKey) _stableCount++;
     else { _stableKey = key; _stableCount = 1; }
-    if (_stableCount !== STABLE_FRAMES || conf < ANNOUNCE_MIN_CONF || key === _announced) return;
+    if (_stableCount < STABLE_FRAMES || conf < ANNOUNCE_MIN_CONF || key === _announced) return;
     _announced = key;
     const live = document.getElementById('asl-announce');
     if (live) live.textContent = `Detected ${key}`;
@@ -413,37 +409,6 @@ function _loadScript(src) {
     return p;
 }
 
-function checkAppStatus() {
-    const dot   = document.getElementById('asl-status-dot');
-    const label = document.getElementById('asl-status-label');
-    if (!dot || !label) return;
-
-    const ctrl = new AbortController();
-    const timer = setTimeout(() => ctrl.abort(), STATUS_TIMEOUT_MS);
-    const t0 = Date.now();
-
-    fetch(APP_URL, { method: 'HEAD', mode: 'no-cors', signal: ctrl.signal })
-        .then(() => {
-            clearTimeout(timer);
-            const ms = Date.now() - t0;
-            if (ms < STATUS_FAST_MS) {
-                dot.className   = 'v2-app-dot v2-app-dot--live';
-                label.textContent = '● live';
-            } else {
-                dot.className   = 'v2-app-dot v2-app-dot--slow';
-                label.textContent = '● waking up';
-            }
-        })
-        .catch(() => {
-            // In no-cors mode the fetch either resolves (server reachable) or rejects
-            // (network error, CORS block, or AbortController timeout above). All rejection
-            // reasons are indistinguishable and all mean the same thing: server is offline.
-            // Do not log — this rejection fires on every page load when the app is sleeping.
-            dot.className   = 'v2-app-dot v2-app-dot--offline';
-            label.textContent = '○ offline';
-        });
-}
-
 export function initWebcam() {
     _btn = document.getElementById('webcam-toggle');
     if (_btn) {
@@ -456,6 +421,4 @@ export function initWebcam() {
             });
         }
     }
-
-    checkAppStatus();
 }

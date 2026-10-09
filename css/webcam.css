@@ -3,7 +3,6 @@
  *
  * Webcam video overlays inside .v2-asl-canvas-wrap (position: relative).
  * Toggle button lives below the ASL card as .v2-webcam-cta.
- * App live-status badge sits in the ASL Guide project card.
  */
 
 .v2-webcam-video {
@@ -80,42 +79,6 @@
     font-family: 'Fira Code', monospace;
     font-size: 10px;
     color: var(--v2-text-muted);
-}
-
-.v2-app-status {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 3px 10px 3px 8px;
-    border-radius: 999px;
-    background: var(--v2-surface-hi);
-    border: 1px solid var(--v2-border);
-    font-family: 'Fira Code', monospace;
-    font-size: 10px;
-    color: var(--v2-text-muted);
-    margin-top: 10px;
-    margin-bottom: 4px;
-}
-
-.v2-app-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    background: var(--v2-text-muted);
-}
-
-.v2-app-dot--live {
-    background: var(--v2-data);
-    animation: v2-pulse 2s ease infinite;
-}
-
-.v2-app-dot--slow {
-    background: var(--v2-inference);
-}
-
-.v2-app-dot--offline {
-    background: var(--v2-text-muted);
 }
 
 .v2-tech-tags .v2-tag-gemini {
