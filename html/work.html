@@ -16,7 +16,7 @@
                     <dt>Problem</dt>
                     <dd>Endurance tests run continuously for about six months, and failures typically appear only after two to three months, when a component fails or drifts outside its expected intervals. Catching that late meant long cycles and damaged parts.</dd>
                     <dt>What I owned</dt>
-                    <dd>The model end to end: data handling and preprocessing of 80+ TB of high-frequency telemetry on Databricks/PySpark, training and validating the autoencoder, and running it in production.</dd>
+                    <dd>The model end to end: data handling and batch preprocessing of 80+ TB of high-frequency telemetry on Databricks/PySpark, training and validating the autoencoder, and running real-time detection in production.</dd>
                     <dt>Result</dt>
                     <dd>Testing cycles shortened by <strong>4 months</strong>, with <strong>€300K+</strong> in annual savings; per-partition processing time cut by over 50%.</dd>
                     <dt>Key decision</dt>
@@ -40,11 +40,11 @@
                 <div class="v2-code-block">
                     <div class="v2-cb-header">// public-safe overview</div>
                     sensor telemetry · 80+ TB<br>
-                    &nbsp;&nbsp;↓ Databricks · PySpark · broadcast joins<br>
+                    &nbsp;&nbsp;↓ batch processing · Databricks · PySpark<br>
                     12-second measurement windows<br>
                     &nbsp;&nbsp;↓ autoencoder · expected behaviour<br>
                     &nbsp;&nbsp;↓ window doesn’t match<br>
-                    anomaly flags → test engineers
+                    real-time anomaly flags → test engineers
                 </div>
             </div>
         </article>
@@ -105,7 +105,7 @@
                     <dt>What I built</dt>
                     <dd>A full-stack platform: in-browser fingerspelling recognition (MediaPipe + TensorFlow.js), a two-agent <strong>Gemini 2.5 Flash</strong> pipeline in LangGraph that applies 11 documented ASL grammar rules for English → ASL translation, and a Duolingo-style course of 100 signs over 10 levels with SM-2 spaced repetition. FastAPI, React, PostgreSQL, Redis, PWA offline support.</dd>
                     <dt>Result</dt>
-                    <dd><strong>95.5%</strong> classifier accuracy across 36 fingerspelling classes; Gemini context caching cut per-request input tokens by ~73%.</dd>
+                    <dd><strong>95.5%</strong> classifier accuracy across 36 fingerspelling classes, with in-browser inference under <strong>100 ms</strong>; Gemini context caching cut per-request input tokens by ~73%.</dd>
                     <dt>Key decision</dt>
                     <dd>Classification runs in the browser, so camera frames never leave the user’s device and recognition doesn’t wait on a server; the server is only used for translation.</dd>
                     <dt>Limitations</dt>

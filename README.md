@@ -39,7 +39,7 @@ Tab-switching panel for two projects, each with a left-column description + righ
 Four research entries in a featured + grid layout:
 - **VQ-VAE + Conformer Translation System** — 2026, sign-to-gloss-to-text pipeline
 - **ST-GCN Sign Language Recognition** — 2025, graph convolutional networks on skeletal sequences
-- **Temporal Modeling for Dynamic Signs** — 2024, CNN + Transformer on MS-ASL200
+- **LandmarkConformer** — 2024, multi-stream Conformer on Google ASL Signs (250 classes); 76.65% top-1 on a signer-independent split
 - **IEEE ICCAR 2022** — XGBoost + MediaPipe, dynamic sign language, published DOI
 
 ### Live Demo (`#demo`)

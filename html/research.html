@@ -11,7 +11,7 @@
             <!-- VQ-VAE + Conformer 2026 — Featured -->
             <div class="v2-panel-chrome v2-research-featured animate-on-scroll">
                 <div class="v2-research-main">
-                    <div class="v2-card-badge badge-featured">CURRENT · 2026</div>
+                    <div class="v2-card-badge badge-featured">IN PROGRESS · 2026</div>
                     <h3 class="v2-card-h3">VQ-VAE + Conformer Translation System</h3>
                     <div class="v2-card-tagline">Continuous sign language translation — hierarchical quantization + sequence modeling</div>
                     <div class="v2-tech-tags">
@@ -27,15 +27,15 @@
                     <div class="v2-right-label">// KEY CONTRIBUTIONS</div>
                     <div class="v2-research-bullet">
                         <span class="v2-research-num" style="color:var(--v2-inference)">01</span>
-                        <span>Factorized VQ-VAE discretizing continuous 3D landmark sequences into 4 hierarchical factors — Pose, Motion, Dynamics, Facial Expressions — reducing latent space complexity for translation.</span>
+                        <span>Designing a factorized VQ-VAE that discretizes 3D landmark sequences into 4 hierarchical factors — Pose, Motion, Dynamics, Facial Expressions — aiming to reduce latent-space complexity for translation.</span>
                     </div>
                     <div class="v2-research-bullet">
                         <span class="v2-research-num" style="color:var(--v2-inference)">02</span>
-                        <span>Conformer Seq2Seq with Joint CTC-Attention decoder; Beam Search + CTC Prefix Scoring for precise autoregressive alignment between visual tokens and glosses.</span>
+                        <span>Building a Conformer Seq2Seq model with a hybrid CTC + attention decoder and beam search with CTC prefix scoring, to align visual tokens with glosses. Training and evaluation in progress.</span>
                     </div>
                     <div class="v2-research-bullet">
                         <span class="v2-research-num" style="color:var(--v2-inference)">03</span>
-                        <span>Signer-Independent pipeline featuring Hand Dominance Normalization and Robust Coordinate Preprocessor — invariant to signer handedness and camera positioning.</span>
+                        <span>Implemented hand-dominance normalization and body-relative coordinate preprocessing, so evaluation can be signer-independent and robust to handedness and camera position.</span>
                     </div>
                 </div>
             </div>
@@ -46,7 +46,7 @@
                 <div class="v2-panel-chrome animate-on-scroll stagger-2">
                     <div class="v2-card-badge badge-2">ST-GCN · 2025</div>
                     <h3 class="v2-research-h3">Graph-Based Sign Recognition</h3>
-                    <div class="v2-research-tagline">Spatial-temporal graph network over 209 skeletal joints</div>
+                    <div class="v2-research-tagline">Graph-network baseline over 209 skeletal joints — underperformed the LandmarkConformer</div>
                     <div class="v2-tech-tags">
                         <span>ST-GCN</span><span>PyTorch</span><span>Graph Networks</span><span>MediaPipe</span>
                     </div>
@@ -68,25 +68,25 @@
                 </div>
 
                 <div class="v2-panel-chrome animate-on-scroll stagger-3">
-                    <div class="v2-card-badge badge-3">CNN-TRANSFORMER · 2024</div>
-                    <h3 class="v2-research-h3">Temporal Modeling &amp; Scaling</h3>
-                    <div class="v2-research-tagline">CNN + Transformer pipeline on MS-ASL200</div>
+                    <div class="v2-card-badge badge-3">CONFORMER · 2024</div>
+                    <h3 class="v2-research-h3">LandmarkConformer</h3>
+                    <div class="v2-research-tagline">Multi-stream Conformer (convolution + self-attention) over body landmarks · Google ASL Signs, 250 classes</div>
                     <div class="v2-tech-tags">
-                        <span>PyTorch</span><span>Transformers</span><span>AMP</span><span>MediaPipe</span>
+                        <span>PyTorch</span><span>Conformer</span><span>Gradient Reversal</span><span>MediaPipe</span>
                     </div>
                     <div class="v2-research-contribs-sm">
                         <div class="v2-right-label">// KEY CONTRIBUTIONS</div>
                         <div class="v2-research-bullet">
                             <span class="v2-research-num" style="color:var(--v2-data)">01</span>
-                            <span>CNN-Transformer pipeline on 543-keypoint frames; joint angles + frame-to-frame velocities as engineered temporal features.</span>
+                            <span>Three fused streams from 131 of MediaPipe’s 543 landmarks (hands, pose, eyebrows, mouth): body-relative positions, multi-scale velocities, and hand geometry (joint angles, fingertip distances, palm direction), fed to 4 Conformer blocks.</span>
                         </div>
                         <div class="v2-research-bullet">
                             <span class="v2-research-num" style="color:var(--v2-data)">02</span>
-                            <span>Mixup, Finger Dropout, Time Stretching + Signer-Independent Splitting → 80.85% top-1 accuracy on MS-ASL200.</span>
+                            <span>76.65% top-1 (76.69% with 5-pass TTA) across 250 signs, on a split by signer — no validation signer appears in training.</span>
                         </div>
                         <div class="v2-research-bullet">
                             <span class="v2-research-num" style="color:var(--v2-data)">03</span>
-                            <span>AMP + Focal Loss for class imbalance; TTA ensemble for reliable inference in production-simulated environments.</span>
+                            <span>Signer invariance from hand-dominance mirroring, shoulder-width scaling and an adversarial signer discriminator (gradient reversal); Mixup, finger dropout and focal loss for regularisation.</span>
                         </div>
                     </div>
                 </div>

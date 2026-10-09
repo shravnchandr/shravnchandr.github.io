@@ -25,3 +25,14 @@ desktop.ini
 
 # Font directory (font file is committed directly)
 Google_Sans_Flex/
+
+# Résumé source (contains phone number) — keep local only
+resume.tex
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+resume.pdf
