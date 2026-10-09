@@ -72,6 +72,17 @@
 </head>
 
 <body>
+    <!-- Apply the theme before first paint: saved choice, else the OS setting (see js/theme.js) -->
+    <script>
+        (function () {
+            var saved = null;
+            try { saved = localStorage.getItem('theme-v2'); } catch (e) {}
+            var light = saved ? saved === 'light'
+                              : window.matchMedia('(prefers-color-scheme: light)').matches;
+            if (light) document.body.classList.add('light-theme');
+        })();
+    </script>
+
     <!-- Accessibility skip link -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
 

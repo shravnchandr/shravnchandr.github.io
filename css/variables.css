@@ -6,6 +6,7 @@
      --spring-smooth  available for future JS use
    ───────────────────────────────────────────────────────────── */
 :root {
+    color-scheme: dark;   /* native scrollbars / form controls match the theme */
     /* Motion — used by JS for inline animation strings */
     --spring-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
     --spring-smooth: cubic-bezier(0.22, 0.61, 0.36, 1);
@@ -27,6 +28,7 @@
 }
 
 /* Light-mode overrides */
+:root:has(body.light-theme) { color-scheme: light; }
 body.light-theme {
     --v2-bg:          #f7f5f0;
     --v2-surface:     #ffffff;

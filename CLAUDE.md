@@ -35,7 +35,7 @@ script.js                   # ES module entry point — imports js/* and calls i
 
 js/
   utils.js                  # Shared DOM helpers: el(), makeOverlay(), makeTop3Row(), updateLetterDisplay()
-  theme.js                  # Dark/light toggle (localStorage key: 'theme-v2')
+  theme.js                  # Theme toggle; follows OS by default (localStorage 'theme-v2' = explicit choice)
   nav.js                    # Mobile hamburger + active-section highlight + logo Easter egg
   scroll.js                 # Scroll-reveal, CountUp, back-to-top, smooth scroll
   asl.js                    # Procedural SVG ASL hand; random cycle + spellSequence() override
@@ -243,8 +243,8 @@ Imports `SIGNS`, `CONNECTIONS` from `./asl.js`.
 
 ## CSS Design System
 
-### Dark-default theme
-`:root` in `css/variables.css` defines the dark palette. `body.light-theme` overrides to warm cream. Theme key in localStorage is `theme-v2` (the old key `theme` drove the legacy dark-theme/light-theme class system — do not reuse it).
+### Theme (follows OS by default)
+`:root` in `css/variables.css` defines the dark palette. `body.light-theme` overrides to warm cream. With no saved choice the page follows `prefers-color-scheme`; an inline script at the top of `<body>` in `index.html` applies the class before first paint, and `js/theme.js` wires the toggle and live OS changes. Choosing the OS's own theme clears the saved key. Theme key in localStorage is `theme-v2` (the old key `theme` drove the legacy dark-theme/light-theme class system — do not reuse it).
 
 ### v2 colour tokens (in `css/variables.css`)
 ```css

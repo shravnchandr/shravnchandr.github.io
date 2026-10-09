@@ -1,30 +1,44 @@
-/** theme.js — dark-default toggle (dark → light, never back to legacy dark-theme class) */
+/**
+ * theme.js — theme toggle that follows the OS setting by default.
+ *
+ * The initial theme is applied by an inline script at the top of <body>
+ * (index.html) so there is no flash; this module wires the toggle and keeps
+ * following the OS while the visitor hasn't made their own choice.
+ *
+ * localStorage key 'theme-v2': 'light' | 'dark' | absent (= follow the OS).
+ * Choosing the theme the OS already uses clears the key, so the page goes
+ * back to following the system.
+ */
+
+const KEY = 'theme-v2';
 
 export function initTheme() {
     const btn  = document.getElementById('theme-toggle');
     const body = document.body;
+    const mq   = window.matchMedia('(prefers-color-scheme: light)');
 
-    if (!btn) return;
+    // localStorage throws SecurityError in private-browsing / strict-CSP
+    // environments; treat that as "no saved choice".
+    const saved = () => { try { return localStorage.getItem(KEY); } catch (_) { return null; } };
 
-    // localStorage throws SecurityError in private-browsing / strict-CSP environments.
-    // Failing to read the saved preference is non-fatal — just start in the default theme.
-    try {
-        if (localStorage.getItem('theme-v2') === 'light') body.classList.add('light-theme');
-    } catch (_) {}
-
-    updateBtn();
-
-    btn.addEventListener('click', () => {
-        body.classList.toggle('light-theme');
-        try {
-            localStorage.setItem('theme-v2', body.classList.contains('light-theme') ? 'light' : 'dark');
-        } catch (_) {}
-        updateBtn();
-    });
-
-    function updateBtn() {
-        btn.textContent = body.classList.contains('light-theme') ? '☾' : '☀';
-        btn.setAttribute('aria-label',
-            body.classList.contains('light-theme') ? 'Switch to dark mode' : 'Switch to light mode');
+    function apply(light) {
+        body.classList.toggle('light-theme', light);
+        if (btn) {
+            btn.textContent = light ? '☾' : '☀';
+            btn.setAttribute('aria-label', light ? 'Switch to dark mode' : 'Switch to light mode');
+        }
     }
+
+    apply(body.classList.contains('light-theme'));
+
+    mq.addEventListener('change', e => { if (!saved()) apply(e.matches); });
+
+    btn?.addEventListener('click', () => {
+        const light = !body.classList.contains('light-theme');
+        apply(light);
+        try {
+            if (light === mq.matches) localStorage.removeItem(KEY);
+            else localStorage.setItem(KEY, light ? 'light' : 'dark');
+        } catch (_) {}
+    });
 }
