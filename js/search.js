@@ -111,7 +111,7 @@ const INDEX = [
             'pytorch','mediapipe','research','2026','current',
             'sign','language','gloss','landmark','landmarks',
         ],
-        action() { _scrollTo('#research'); },
+        action() { _reveal('#research'); },
     },
     {
         type:  'project',
@@ -128,7 +128,7 @@ const INDEX = [
             'pytorch','mediapipe','research','2025',
             'sign','language','recognition',
         ],
-        action() { _scrollTo('#research'); },
+        action() { _reveal('#research'); },
     },
     {
         type:  'project',
@@ -145,7 +145,7 @@ const INDEX = [
             'mixup','dropout','augmentation','tta','amp','focal','loss',
             'asl','sign','language','recognition','research','2024',
         ],
-        action() { _scrollTo('#research'); },
+        action() { _reveal('#research'); },
     },
     {
         type:  'project',
@@ -160,7 +160,7 @@ const INDEX = [
             '90','15','phrases','gesture',
             'computer','vision','cv',
         ],
-        action() { _scrollTo('#research'); },
+        action() { _reveal('#research'); },
     },
 
     {
@@ -505,11 +505,8 @@ async function _reveal(selector) {
     await sectionsReady;
     const target = document.querySelector(selector);
     if (!target) return;
-    const details = target.querySelector('details');
+    // Expand a collapsed experience entry; case-study details stay as the reader left them
+    const details = target.matches('.v2-tl-item') && target.querySelector('details');
     if (details) details.open = true;
     scrollToEl(target);
-}
-
-function _scrollTo(sectionId) {
-    scrollToEl(document.querySelector(sectionId));
 }

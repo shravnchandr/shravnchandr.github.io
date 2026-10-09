@@ -20,10 +20,17 @@
                     <dt>Result</dt>
                     <dd>Testing cycles shortened by <strong>4 months</strong>, with <strong>€300K+</strong> in annual savings; per-partition processing time cut by over 50%.</dd>
                     <dt>Key decision</dt>
-                    <dd>Whether a measurement is anomalous is judged over a 12-second window, across hundreds of components and 100+ ECUs. An autoencoder learns what those 12 seconds should look like and flags any window that doesn’t match — one approach that scales across every component, rather than a separate rule or model for each.</dd>
-                    <dt>How it’s measured</dt>
-                    <dd>€300K+ is an annualized estimate, from reduced test-bench downtime and fewer components damaged thanks to earlier detection. The model was validated on separate validation and test sets of measurements supplied by the hardware team before rollout.</dd>
+                    <dd>An autoencoder that learns what a normal 12-second measurement window looks like, so one model covers hundreds of components and 100+ ECUs.</dd>
                 </dl>
+                <details class="v2-case-more">
+                    <summary>Implementation &amp; evaluation details</summary>
+                    <dl class="v2-case-facts">
+                        <dt>Why an autoencoder</dt>
+                        <dd>Whether a measurement is anomalous is judged over a 12-second window, across hundreds of components and 100+ ECUs. An autoencoder learns what those 12 seconds should look like and flags any window that doesn’t match — one approach that scales across every component, rather than a separate rule or model for each.</dd>
+                        <dt>How it’s measured</dt>
+                        <dd>€300K+ is an annualized estimate, from reduced test-bench downtime and fewer components damaged thanks to earlier detection. The model was validated on separate validation and test sets of measurements supplied by the hardware team before rollout.</dd>
+                    </dl>
+                </details>
             </div>
             <div>
                 <div class="v2-right-label">// KEY RESULTS</div>
@@ -54,16 +61,26 @@
                     <dt>What I owned</dt>
                     <dd>Orchestrated a multi-agent assistant with optional vector schema retrieval and self-healing SQL agents, deployed via MLflow and Unity Catalog on Databricks. Used by the hardware team in my department to pull measurement details from tests — about 30 users, in beta when I left.</dd>
                     <dt>Result</dt>
-                    <dd>Lookups went from 10–15 minutes to <strong>a single query</strong>; <strong>~81%</strong> of test queries answered correctly within three attempts.</dd>
+                    <dd>A 10–15-minute manual lookup became a natural-language request answered in <strong>about 1–2 minutes</strong> — most of it data retrieval, not the agent. <strong>~81%</strong> of test queries answered correctly within three attempts.</dd>
                     <dt>Key decision</dt>
-                    <dd>By default the whole schema goes into the prompt. A vector mode sends only the columns closest to the question, shrinking the schema text about 4× in local tests and keeping prompts manageable as schemas grow — at the risk of leaving out a table the query needs. When generated SQL fails to execute, a repair step sends the failing query and its error back to the model and runs the rewrite; after two retries (three attempts) it stops and reports the error to the user.</dd>
-                    <dt>How it’s measured</dt>
-                    <dd>About 500 internal test queries, built with the hardware and data teams and each checked for correctness. 65% were answered correctly on the first pass; self-healing recovered 45% of the remaining 35%, for ~81% overall.</dd>
+                    <dd>Self-healing SQL: a query that fails is repaired from its own error message, with up to two retries before the error is reported.</dd>
                 </dl>
+                <details class="v2-case-more">
+                    <summary>Implementation &amp; evaluation details</summary>
+                    <dl class="v2-case-facts">
+                        <dt>Schema in the prompt</dt>
+                        <dd>By default the whole schema goes into the prompt. A vector mode sends only the columns closest to the question, shrinking the schema text about 4× in local tests and keeping prompts manageable as schemas grow — at the risk of leaving out a table the query needs.</dd>
+                        <dt>Self-healing</dt>
+                        <dd>When generated SQL fails to execute, a repair step sends the failing query and its error back to the model and runs the rewrite; after two retries (three attempts) it stops and reports the error to the user.</dd>
+                        <dt>How it’s measured</dt>
+                        <dd>About 500 internal test queries, built with the hardware and data teams and each checked for correctness. 65% were answered correctly on the first pass; self-healing recovered 45% of the remaining 35%, for ~81% overall.</dd>
+                    </dl>
+                </details>
             </div>
             <div>
                 <div class="v2-right-label">// KEY RESULTS</div>
-                <div class="v2-metric-row"><span class="v2-mv" style="color:var(--v2-neural)">1</span><span class="v2-ml">query instead of 10–15 min lookups</span></div>
+                <div class="v2-metric-row"><span class="v2-mv" style="color:var(--v2-inference)">1–2 min</span><span class="v2-ml">per answer, vs. 10–15 min manual lookup</span></div>
+                <div class="v2-metric-row"><span class="v2-mv" style="color:var(--v2-neural)">65%</span><span class="v2-ml">correct on the first pass</span></div>
                 <div class="v2-metric-row"><span class="v2-mv" style="color:var(--v2-data)">~81%</span><span class="v2-ml">correct within 3 attempts · ~500 test queries</span></div>
                 <div class="v2-code-block">
                     <div class="v2-cb-header">// public-safe overview</div>
@@ -91,11 +108,16 @@
                     <dd><strong>95.5%</strong> classifier accuracy across 36 fingerspelling classes; Gemini context caching cut per-request input tokens by ~73%.</dd>
                     <dt>Key decision</dt>
                     <dd>Classification runs in the browser, so camera frames never leave the user’s device and recognition doesn’t wait on a server; the server is only used for translation.</dd>
-                    <dt>How it’s measured</dt>
-                    <dd>95.5% is accuracy on a held-out split of Kaggle’s ASL alphabet &amp; numbers dataset, stratified by sign class. The dataset’s frames carry no signer labels, so this isn’t a signer-independent result.</dd>
                     <dt>Limitations</dt>
                     <dd>A study aid, not a substitute for fluent signers. The hosted demo is currently offline; the source is on GitHub.</dd>
                 </dl>
+                <details class="v2-case-more">
+                    <summary>Evaluation details</summary>
+                    <dl class="v2-case-facts">
+                        <dt>How it’s measured</dt>
+                        <dd>95.5% is accuracy on a held-out split of Kaggle’s ASL alphabet &amp; numbers dataset, stratified by sign class. The dataset’s frames carry no signer labels, so this isn’t a signer-independent result.</dd>
+                    </dl>
+                </details>
                 <div class="v2-tech-tags">
                     <span class="v2-tag-gemini">Gemini 2.5 Flash</span>
                     <span>LangGraph</span><span>TensorFlow.js</span><span>MediaPipe</span>

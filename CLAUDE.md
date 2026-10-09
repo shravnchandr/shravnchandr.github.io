@@ -210,7 +210,7 @@ Exports `initASL`, `SIGNS`, `CONNECTIONS`, `spellSequence`, `pauseASL`, `resumeA
   - Substring match (query inside token, len ≥ 3): `+1`
   - **No `w.includes(t)` direction** — avoids false positives (e.g. token `"ecu"` inside query `"because"`)
 - Results grouped into Projects / Experience & Education; keyboard nav (↑↓ Enter Escape)
-- `action()` on project/experience entries calls `_reveal(selector)`: waits for `sectionsReady`, opens any collapsed `<details>` in the target, scrolls to it; research entries call `_scrollTo('#research')`
+- `action()` on project/experience entries and research entries call `_reveal(selector)`: waits for `sectionsReady`, expands a collapsed timeline entry, scrolls to the target
 
 ### `js/demo.js`
 Imports `SIGNS`, `CONNECTIONS` from `./asl.js`.

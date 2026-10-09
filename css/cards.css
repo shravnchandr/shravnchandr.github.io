@@ -216,6 +216,21 @@
 }
 .v2-case-facts strong { color: var(--v2-text); font-weight: 600; }
 
+.v2-case-more { margin-top: 18px; }
+.v2-case-more > summary {
+    cursor: pointer;
+    width: fit-content;
+    font-family: 'Fira Code', monospace;
+    font-size: 12px;
+    color: var(--v2-data);
+}
+.v2-case-more > summary:hover { text-decoration: underline; }
+.v2-case-more > .v2-case-facts {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--v2-border);
+}
+
 @media (max-width: 900px) {
     .v2-case { grid-template-columns: 1fr; gap: 28px; }
 }
