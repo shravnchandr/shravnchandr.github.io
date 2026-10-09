@@ -6,7 +6,7 @@
  * DOM updates use textContent / setAttribute — no innerHTML anywhere.
  */
 
-import { makeTop3Row, updateLetterDisplay, clearEl } from './utils.js';
+import { renderTop3, updateLetterDisplay, prefersReducedMotion } from './utils.js';
 
 // ── Hand geometry constants ──────────────────────────────────
 const WRIST = [50, 112];
@@ -145,6 +145,7 @@ function svgEl(tag, attrs) {
 let _pauseFn  = null;
 let _resumeFn = null;
 let _drawFn   = null;
+let _hideFn   = null;
 
 /** Pause the random-cycle RAF (call before activating webcam). */
 export function pauseASL() { if (_pauseFn) _pauseFn(); }
@@ -158,6 +159,9 @@ export function resumeASL() { if (_resumeFn) _resumeFn(); }
  * @param {Array<[number,number]>} pose  21 [x,y] pairs in SVG coords
  */
 export function drawHandPose(pose) { if (_drawFn) _drawFn(pose); }
+
+/** Hide the hand skeleton (e.g. webcam lost the hand). */
+export function hideHandPose() { if (_hideFn) _hideFn(); }
 
 // ── Sequence override (logo Easter egg) ─────────────────────
 // Set by spellSequence(); consumed by tick() on next frame.
@@ -190,33 +194,57 @@ export function initASL() {
 
     if (!svg) return;
 
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    // Drawing infrastructure is built in every mode — webcam.js draws through it
+    // even when the procedural animation is disabled by reduced motion.
+    const reducedMotion = prefersReducedMotion();
 
     for (let i = 0; i <= 10; i++)
         svg.appendChild(svgEl('line',{x1:i*10,y1:0,x2:i*10,y2:125,stroke:'#2a3342','stroke-width':0.15}));
     for (let i = 0; i <= 13; i++)
         svg.appendChild(svgEl('line',{x1:0,y1:i*10,x2:100,y2:i*10,stroke:'#2a3342','stroke-width':0.15}));
 
+    const hand = svg.appendChild(svgEl('g', {}));
     const connLines = CONNECTIONS.map(() =>
-        svg.appendChild(svgEl('line',{stroke:'#00bfa5','stroke-width':1.1,'stroke-linecap':'round',opacity:0.85}))
+        hand.appendChild(svgEl('line',{stroke:'#00bfa5','stroke-width':1.1,'stroke-linecap':'round',opacity:0.85}))
     );
     const jointDots = Array.from({length:21},(_,i) =>
-        svg.appendChild(svgEl('circle',{r:i===0?2.2:(i%4===0?1.8:1.3),fill:'#ff6d00',stroke:'#0b0f14','stroke-width':0.3}))
+        hand.appendChild(svgEl('circle',{r:i===0?2.2:(i%4===0?1.8:1.3),fill:'#ff6d00',stroke:'#0b0f14','stroke-width':0.3}))
     );
-    const bbox = svg.appendChild(svgEl('rect',{fill:'none',stroke:'#7c4dff','stroke-width':0.4,'stroke-dasharray':'2 2'}));
+    const bbox = hand.appendChild(svgEl('rect',{fill:'none',stroke:'#7c4dff','stroke-width':0.4,'stroke-dasharray':'2 2'}));
 
     const HOLD_MS      = 1100;
     const MORPH_MS     = 420;
     const SEQ_HOLD_MS  = 550;   // 2× speed for Easter egg sequence
     const SEQ_MORPH_MS = 280;
+    const CONF_TEXT_MS = 150;   // throttle for the oscillating confidence readout
 
     let curKey     = KEYS[Math.floor(Math.random() * KEYS.length)];
     let nxtKey     = pickNext(curKey);
     let phase      = 'hold';
     let phaseStart = performance.now();
-    let raf;
+
+    // Loop ownership: exactly one RAF chain, running only when nothing blocks it.
+    let raf      = null;
+    let paused   = false;   // webcam owns the hand
+    let onscreen = true;
+
+    function canRun() { return !reducedMotion && !paused && onscreen && !document.hidden; }
+
+    function startLoop() {
+        if (raf !== null || !canRun()) return;
+        phaseStart = performance.now();
+        raf = requestAnimationFrame(tick);
+    }
+
+    function stopLoop() {
+        if (raf !== null) cancelAnimationFrame(raf);
+        raf = null;
+    }
 
     function tick(now) {
+        raf = null;
+        if (!canRun()) return;
+
         if (_seqQueue && !_seqActive) {
             _seqActive = true;
             curKey     = _seqQueue[0];
@@ -261,28 +289,48 @@ export function initASL() {
         }
 
         drawSVG(pose);
-        updatePanel(displayKey, conf);
+        updatePanel(displayKey, conf, now);
         raf = requestAnimationFrame(tick);
     }
 
-    _pauseFn  = () => cancelAnimationFrame(raf);
-    _resumeFn = () => { phaseStart = performance.now(); raf = requestAnimationFrame(tick); };
-    _drawFn   = drawSVG;
+    function renderStatic() {
+        drawSVG(SIGNS[curKey]);
+        updatePanel(curKey, 0.95, Infinity);
+    }
+
+    _pauseFn  = () => { paused = true; stopLoop(); };
+    _resumeFn = () => {
+        paused = false;
+        hand.removeAttribute('visibility');
+        _prevLetter = null; _prevTop3Key = null; _lastPose = null;
+        if (reducedMotion) renderStatic();
+        else startLoop();
+    };
+    _drawFn   = pose => { hand.removeAttribute('visibility'); drawSVG(pose); };
+    _hideFn   = () => { hand.setAttribute('visibility', 'hidden'); _lastPose = null; };
 
     document.addEventListener('visibilitychange', () => {
-        if (document.hidden) {
-            cancelAnimationFrame(raf);
-        } else {
-            phaseStart = performance.now();
-            raf = requestAnimationFrame(tick);
-        }
+        if (document.hidden) stopLoop(); else startLoop();
     });
 
-    raf = requestAnimationFrame(tick);
+    // Pause the procedural cycle while the hero card is scrolled out of view.
+    new IntersectionObserver(entries => {
+        onscreen = entries[0].isIntersecting;
+        if (onscreen) startLoop(); else stopLoop();
+    }).observe(svg);
 
-    let _prevLetter = null;
+    let _prevLetter  = null;
+    let _prevTop3Key = null;
+    let _lastPose    = null;
+    let _lastConfAt  = -Infinity;
+
+    if (reducedMotion) renderStatic();
+    else startLoop();
 
     function drawSVG(pose) {
+        if (pose === _lastPose) return;   // held sign — geometry unchanged
+        _lastPose = pose;
+
         CONNECTIONS.forEach(([a, b], i) => {
             connLines[i].setAttribute('x1', pose[a][0]);
             connLines[i].setAttribute('y1', pose[a][1]);
@@ -305,19 +353,28 @@ export function initASL() {
         bbox.setAttribute('height', Math.max(...ys) - y0 + 8);
     }
 
-    function updatePanel(key, conf) {
+    function updatePanel(key, conf, now) {
+        const keyChanged = key !== _prevLetter;
         _prevLetter = updateLetterDisplay(letterEl, key, _prevLetter);
-        if (confValEl)  confValEl.textContent  = `${(conf*100).toFixed(1)}%`;
-        if (confFillEl) confFillEl.style.width = `${conf*100}%`;
-        if (signingEl)  signingEl.textContent  = `SIGNING: ${key} · ASL FINGERSPELL`;
 
-        const alts = ALTS[key] || ['E','S'];
-        const rows = [
-            {l:key,     p:conf},
-            {l:alts[0], p:0.04 + Math.random()*0.02},
-            {l:alts[1], p:0.02 + Math.random()*0.015},
-        ];
-        clearEl(top3El);
-        rows.forEach((r, i) => top3El.appendChild(makeTop3Row(i+1, r.l, r.p, i===0)));
+        // Alternates are re-rolled only when the sign changes, not every frame.
+        if (key !== _prevTop3Key) {
+            _prevTop3Key = key;
+            if (signingEl) signingEl.textContent = `SIGNING: ${key} · ASL FINGERSPELL`;
+            const alts = ALTS[key] || ['E','S'];
+            renderTop3(top3El, [
+                {key,          conf},
+                {key: alts[0], conf: 0.04 + Math.random()*0.02},
+                {key: alts[1], conf: 0.02 + Math.random()*0.015},
+            ]);
+        }
+
+        if (keyChanged || now - _lastConfAt >= CONF_TEXT_MS) {
+            _lastConfAt = now;
+            const pct = `${(conf*100).toFixed(1)}%`;
+            if (confValEl)  confValEl.textContent  = pct;
+            if (confFillEl) confFillEl.style.width = `${conf*100}%`;
+            if (top3El?.firstChild) top3El.firstChild.children[2].textContent = pct;
+        }
     }
 }

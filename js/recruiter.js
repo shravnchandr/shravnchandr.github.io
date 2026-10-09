@@ -6,7 +6,7 @@
  * Pure DOM construction — no innerHTML.
  */
 
-import { el as _el, makeOverlay } from './utils.js';
+import { el as _el, makeOverlay, createModal } from './utils.js';
 
 const ROLE_TARGETS = [
     { label: 'Title',        value: 'Senior ML Engineer · L5 / L6 equivalent' },
@@ -116,17 +116,6 @@ function _buildModal() {
     return overlay;
 }
 
-function _open(overlay) {
-    overlay.classList.add('v2-recruiter-overlay--open');
-    overlay.setAttribute('aria-hidden', 'false');
-    overlay.querySelector('.v2-recruiter-close').focus();
-}
-
-function _close(overlay) {
-    overlay.classList.remove('v2-recruiter-overlay--open');
-    overlay.setAttribute('aria-hidden', 'true');
-}
-
 export function initRecruiter() {
     const btn = document.getElementById('recruiter-btn');
     if (!btn) return;
@@ -134,18 +123,12 @@ export function initRecruiter() {
     const overlay = _buildModal();
     document.body.appendChild(overlay);
 
-    btn.addEventListener('click', () => _open(overlay));
+    const modal    = createModal(overlay, 'v2-recruiter-overlay--open');
+    const closeBtn = overlay.querySelector('.v2-recruiter-close');
 
+    btn.addEventListener('click', () => modal.open(closeBtn));
+    closeBtn.addEventListener('click', modal.close);
     overlay.addEventListener('click', e => {
-        if (e.target === overlay) _close(overlay);
-    });
-
-    overlay.querySelector('.v2-recruiter-close')
-        .addEventListener('click', () => _close(overlay));
-
-    document.addEventListener('keydown', e => {
-        if (e.key === 'Escape' && overlay.classList.contains('v2-recruiter-overlay--open')) {
-            _close(overlay);
-        }
+        if (e.target === overlay) modal.close();
     });
 }

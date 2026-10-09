@@ -5,6 +5,16 @@
  * across modules. No side effects, no imports.
  */
 
+/** True when the user has asked the OS for reduced motion. */
+export function prefersReducedMotion() {
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+
+/** Smooth scroll unless the user prefers reduced motion. */
+export function scrollToEl(target, block = 'start') {
+    target?.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block });
+}
+
 /**
  * Create a DOM element with an optional className.
  * Avoids repeating document.createElement + el.className in every module.
@@ -37,6 +47,66 @@ export function makeOverlay(extraClass, ariaLabel) {
     return overlay;
 }
 
+const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])';
+let _openModal = null;
+
+/** True while any modal created by createModal() is open. */
+export function isModalOpen() { return _openModal !== null; }
+
+/**
+ * Open/close behaviour for a makeOverlay() dialog, following the W3C APG
+ * modal pattern: the rest of the page is made inert while open, Tab is
+ * contained inside the dialog, Escape closes it, and focus returns to the
+ * element that opened it. Only one modal can be open at a time.
+ *
+ * @param {HTMLElement} overlay    Element from makeOverlay(), already in the DOM
+ * @param {string}      openClass  Class that makes the overlay visible
+ * @returns {{open(focusEl?: HTMLElement): void, close(): void, isOpen(): boolean}}
+ */
+export function createModal(overlay, openClass) {
+    let returnFocus = null;
+    let inerted = [];
+    const isOpen = () => _openModal === overlay;
+
+    function open(focusEl) {
+        if (_openModal) return;
+        _openModal  = overlay;
+        returnFocus = document.activeElement;
+        inerted = [...document.body.children].filter(c => c !== overlay && !c.inert);
+        inerted.forEach(c => { c.inert = true; });
+        overlay.inert = false;
+        overlay.classList.add(openClass);
+        overlay.setAttribute('aria-hidden', 'false');
+        (focusEl || overlay.querySelector(FOCUSABLE))?.focus();
+    }
+
+    function close() {
+        if (!isOpen()) return;
+        _openModal = null;
+        inerted.forEach(c => { c.inert = false; });
+        inerted = [];
+        overlay.classList.remove(openClass);
+        overlay.setAttribute('aria-hidden', 'true');
+        overlay.inert = true;
+        if (returnFocus?.isConnected) returnFocus.focus();
+        returnFocus = null;
+    }
+
+    overlay.inert = true;   // closed overlays are out of the tab order
+    overlay.addEventListener('keydown', e => {
+        if (!isOpen()) return;
+        if (e.key === 'Escape') { e.preventDefault(); close(); return; }
+        if (e.key !== 'Tab') return;
+        const items = [...overlay.querySelectorAll(FOCUSABLE)];
+        if (!items.length) { e.preventDefault(); return; }
+        const first = items[0], last = items[items.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+
+    return { open, close, isOpen };
+}
+
 /**
  * Build a Top-3 prediction row for the ASL panel.
  * Used by both asl.js (procedural animation) and webcam.js (live classifier)
@@ -62,6 +132,27 @@ export function makeTop3Row(rank, letter, pct, isTop) {
 
     row.append(idx, ltr, pctEl);
     return row;
+}
+
+/**
+ * Render Top-3 rows into a container, reusing existing row nodes so
+ * per-frame updates only touch text instead of rebuilding DOM.
+ *
+ * @param {HTMLElement|null} container
+ * @param {Array<{key: string, conf: number}>} rows
+ */
+export function renderTop3(container, rows) {
+    if (!container) return;
+    if (container.children.length !== rows.length) {
+        clearEl(container);
+        rows.forEach((r, i) => container.appendChild(makeTop3Row(i + 1, r.key, r.conf, i === 0)));
+        return;
+    }
+    rows.forEach((r, i) => {
+        const row = container.children[i];
+        row.children[1].textContent = r.key;
+        row.children[2].textContent = `${(r.conf * 100).toFixed(1)}%`;
+    });
 }
 
 /**
@@ -94,6 +185,5 @@ export function updateLetterDisplay(letterEl, key, prevKey) {
         letterEl.style.animation = 'm3LetterPop 520ms var(--spring-bounce)';
         return key;
     }
-    letterEl.textContent = key;
     return prevKey;
 }

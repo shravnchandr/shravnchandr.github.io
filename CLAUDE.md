@@ -99,15 +99,17 @@ Shravan_Chandra_Resume.pdf  # Downloadable resume
 index.html parsed
   │
   ├─ loader.js (plain <script>, runs immediately)
-  │    └─ bootstrap() — fetch html/*.html in parallel
+  │    └─ bootstrap() — fetch html/*.html in parallel (6s timeout per attempt, 3 retries)
   │         └─ each placeholder <div id="frag-*"> replaced by outerHTML of fetched fragment
-  │         └─ body.classList.remove('loading')  ← FOUC guard
-  │         └─ calls window.__onSectionsReady() or sets window.__sectionsReady = true
+  │         └─ window.__fragments = { critical, all }  (promises; never reject)
+  │         └─ critical (nav + hero) settled → body.classList.remove('loading')  ← FOUC guard
   │
   └─ script.js (type="module", deferred by default)
-       └─ if (window.__sectionsReady) initApp();
-          else window.__onSectionsReady = initApp;
+       └─ __fragments.critical → initCore()     (theme, nav, back-to-top, skip link, ASL, a11y, search, webcam)
+          __fragments.all      → initSections() (active nav, scroll reveal, CountUp, tabs, demo, recruiter)
 ```
+
+Below-fold placeholders keep showing skeletons until their own fetch settles, so a stalled section never blocks the hero.
 
 `body.loading { visibility: hidden }` (in `css/base.css`) prevents any flash while fragments are being fetched.
 
@@ -169,6 +171,9 @@ Shared DOM/UI helpers imported by `a11y.js`, `search.js`, `recruiter.js`, `asl.j
 - `makeOverlay(extraClass, ariaLabel)` — builds the standard modal overlay div with `role="dialog"`, `aria-modal`, `aria-hidden`; base styles from `.v2-modal-overlay` in `css/base.css`
 - `makeTop3Row(rank, letter, pct, isTop)` — builds a `.v2-t3-row` confidence bar row (label + fill bar)
 - `updateLetterDisplay(letterEl, key, prevKey)` — swaps letter text and re-triggers `m3LetterPop` animation via reflow
+- `createModal(overlay, openClass)` — APG modal behaviour: inerts the rest of `<body>`, traps Tab, Escape closes, restores focus; one modal at a time (`isModalOpen()`)
+- `renderTop3(container, rows)` — renders Top-3 rows, reusing existing nodes
+- `prefersReducedMotion()` / `scrollToEl(el)` — motion-aware helpers
 - `clearEl(element)` — removes all child nodes from a DOM element; replaces the repeated `while (el.firstChild) el.removeChild(el.firstChild)` idiom
 
 ### `js/asl.js`
@@ -180,9 +185,10 @@ Exports `initASL`, `SIGNS`, `CONNECTIONS`, `spellSequence`, `pauseASL`, `resumeA
 - `buildPose(thumb, index, middle, ring, pinky)`: composes pose from per-finger states
 - State machine: **hold** 1100ms → **morph** 420ms, lerped with `easeIO`
 - `updatePanel(key, conf)`: re-triggers `m3LetterPop` CSS animation on letter change
-- Pauses on `document.hidden`; respects `prefers-reduced-motion`
+- Single RAF loop, runs only when not paused (webcam), visible (`document.hidden`) and on-screen (IntersectionObserver)
+- Reduced motion: SVG infrastructure + `drawHandPose` still built; a static pose is shown instead of the cycle
 - `spellSequence(letters, onDone?)`: module-level override — sets `_seqQueue`; on the next `tick()` frame the state machine hijacks to the sequence at 2× speed (hold 550ms / morph 280ms) then resumes random cycle. Silently ignored if a sequence is already playing.
-- `pauseASL()` / `resumeASL()` / `drawHandPose(pose)`: refs wired inside `initASL`; called by `webcam.js` to pause the random cycle and draw live MediaPipe landmarks instead.
+- `pauseASL()` / `resumeASL()` / `drawHandPose(pose)` / `hideHandPose()`: refs wired inside `initASL`; called by `webcam.js` to pause the random cycle and draw live MediaPipe landmarks instead.
 
 ### `js/nav.js`
 - `initMobileMenu`: hamburger toggle, close on link click or outside click
@@ -239,7 +245,7 @@ Imports `SIGNS`, `CONNECTIONS` from `./asl.js`.
 - `initScrollReveal`: adds `.show` to `.animate-on-scroll` on intersection (threshold 0.12)
 - `initCountUp`: parses `.v2-metric-val` text (e.g. `€300K+`) and counts up on intersection
 - `initBackToTop`: shows `#back-to-top` after 300px scroll
-- `initSmoothScroll`: all `a[href^="#"]` → `scrollIntoView({behavior:'smooth'})`
+- `initSkipLink`: in-page links use native fragment navigation (smooth via CSS `scroll-behavior`); the skip link also focuses `<main>`
 
 ### `js/tabs.js`
 - `initWorkTabs`: `#work-tabs .v2-tab` → `data-tab` ↔ `data-tab-panel`

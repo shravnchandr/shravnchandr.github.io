@@ -13,7 +13,7 @@
  *   substr match  → query word is substring of token, len ≥ 3 → +1
  */
 
-import { el as _el, makeOverlay, clearEl } from './utils.js';
+import { el as _el, makeOverlay, clearEl, createModal, isModalOpen, scrollToEl } from './utils.js';
 
 /* ── Stop words (filtered before matching) ─────────────────────────── */
 const _STOP = new Set([
@@ -226,10 +226,7 @@ const INDEX = [
             '2017','2021','graduation','undergraduate','college',
             'bengaluru','bangalore',
         ],
-        action() {
-            const section = document.querySelector('#story');
-            if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        },
+        action() { _scrollTo('#story'); },
     },
     {
         type:  'story',
@@ -242,10 +239,7 @@ const INDEX = [
             'data','science','degree','grad','graduate',
             '2026','2027','vancouver','canada',
         ],
-        action() {
-            const section = document.querySelector('#story');
-            if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        },
+        action() { _scrollTo('#story'); },
     },
 ];
 
@@ -254,6 +248,7 @@ let _overlay = null;
 let _input   = null;
 let _results = null;
 let _active  = -1;
+let _modal   = null;
 
 /* ── Public init ───────────────────────────────────────────────────── */
 export function initSearch() {
@@ -261,12 +256,10 @@ export function initSearch() {
 
     // ⌘K / Ctrl+K
     document.addEventListener('keydown', e => {
-        if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
             e.preventDefault();
-            _open();
-        }
-        if (e.key === 'Escape' && _overlay.classList.contains('v2-search-overlay--open')) {
-            _close();
+            if (_modal.isOpen()) _close();
+            else if (!isModalOpen()) _open();   // never stack on top of another modal
         }
     });
 
@@ -290,7 +283,9 @@ function _buildOverlay() {
     _input.setAttribute('autocomplete', 'off');
     _input.setAttribute('spellcheck',   'false');
     _input.setAttribute('aria-label',   'Search query');
+    _input.setAttribute('role',              'combobox');
     _input.setAttribute('aria-autocomplete', 'list');
+    _input.setAttribute('aria-expanded',     'true');
     _input.setAttribute('aria-controls',     'search-results-list');
 
     const esc  = _el('kbd', 'v2-search-esc');
@@ -304,10 +299,12 @@ function _buildOverlay() {
     _results = _el('div', 'v2-search-results');
     _results.setAttribute('role', 'listbox');
     _results.id = 'search-results-list';
+    _results.setAttribute('aria-label', 'Search results');
     modal.appendChild(_results);
 
     _overlay.appendChild(modal);
     document.body.appendChild(_overlay);
+    _modal = createModal(_overlay, 'v2-search-overlay--open');
 
     _overlay.addEventListener('click', e => { if (e.target === _overlay) _close(); });
     _input.addEventListener('input',   _onInput);
@@ -316,7 +313,7 @@ function _buildOverlay() {
 
 function _onInput() {
     const q = _input.value.trim();
-    _active = -1;
+    _setActive(-1);
     if (!q) { _showTips(); return; }
     _renderResults(_query(q), q);
 }
@@ -327,21 +324,31 @@ function _onKeyDown(e) {
 
     if (e.key === 'ArrowDown') {
         e.preventDefault();
-        _active = Math.min(_active + 1, items.length - 1);
-        _updateCursor(items);
+        _setActive(Math.min(_active + 1, items.length - 1));
     } else if (e.key === 'ArrowUp') {
         e.preventDefault();
-        _active = Math.max(_active - 1, 0);
-        _updateCursor(items);
+        _setActive(Math.max(_active - 1, 0));
     } else if (e.key === 'Enter' && _active >= 0) {
         e.preventDefault();
         items[_active].click();
     }
 }
 
-function _updateCursor(items) {
-    items.forEach((el, i) => el.classList.toggle('v2-search-item--active', i === _active));
-    items[_active].scrollIntoView({ block: 'nearest' });
+// Focus stays in the input; the highlighted option is exposed to assistive
+// tech via aria-activedescendant + aria-selected (APG combobox pattern).
+function _setActive(idx) {
+    _active = idx;
+    const items = _results.querySelectorAll('.v2-search-item');
+    items.forEach((el, i) => {
+        el.classList.toggle('v2-search-item--active', i === idx);
+        el.setAttribute('aria-selected', String(i === idx));
+    });
+    if (idx >= 0 && items[idx]) {
+        _input.setAttribute('aria-activedescendant', items[idx].id);
+        items[idx].scrollIntoView({ block: 'nearest' });
+    } else {
+        _input.removeAttribute('aria-activedescendant');
+    }
 }
 
 /* ── Query engine ──────────────────────────────────────────────────── */
@@ -394,6 +401,7 @@ function _renderResults(hits, query) {
         return;
     }
 
+    let optIdx = 0;
     const groups = { project: [], story: [] };
     hits.forEach(h => groups[h.type].push(h));
 
@@ -406,8 +414,9 @@ function _renderResults(hits, query) {
 
         groups[type].forEach(item => {
             const el  = _el('div', 'v2-search-item');
+            el.id = `search-opt-${optIdx++}`;
             el.setAttribute('role', 'option');
-            el.setAttribute('tabindex', '-1');
+            el.setAttribute('aria-selected', 'false');
 
             const ico  = _el('span', 'v2-search-item-ico');
             ico.textContent = item.icon;
@@ -423,6 +432,7 @@ function _renderResults(hits, query) {
             el.appendChild(ico);
             el.appendChild(body);
             el.addEventListener('click', () => { _close(); item.action(); });
+            el.addEventListener('mousedown', e => e.preventDefault()); // keep focus in input
             _results.appendChild(el);
         });
     });
@@ -450,25 +460,24 @@ function _showTips() {
 
 /* ── Open / close ──────────────────────────────────────────────────── */
 function _open() {
-    _overlay.classList.add('v2-search-overlay--open');
-    _overlay.setAttribute('aria-hidden', 'false');
     _input.value = '';
-    _active = -1;
     _showTips();
-    requestAnimationFrame(() => _input.focus());
+    _setActive(-1);
+    _modal.open(_input);
 }
 
 function _close() {
-    _overlay.classList.remove('v2-search-overlay--open');
-    _overlay.setAttribute('aria-hidden', 'true');
+    _modal.close();
 }
 
 /* ── Helpers ───────────────────────────────────────────────────────── */
 function _selectTab(selector, sectionId) {
-    document.querySelector(selector)?.click();
-    document.querySelector(sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const tab = document.querySelector(selector);
+    tab?.click();
+    scrollToEl(document.querySelector(sectionId));
+    tab?.focus({ preventScroll: true });
 }
 
 function _scrollTo(sectionId) {
-    document.querySelector(sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    scrollToEl(document.querySelector(sectionId));
 }

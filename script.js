@@ -1,12 +1,13 @@
 /**
  * script.js — ES module entry point.
- * Imports each concern from js/*, waits for loader.js to finish
- * injecting HTML fragments, then initialises everything.
+ * Imports each concern from js/*. Nav/hero features initialise as soon as
+ * loader.js has injected the critical fragments; section-dependent features
+ * initialise once every fragment has settled.
  */
 
 import { initTheme }    from './js/theme.js';
-import { initNav }      from './js/nav.js';
-import { initScroll }   from './js/scroll.js';
+import { initNav, initActiveNav } from './js/nav.js';
+import { initScroll, initSectionScroll } from './js/scroll.js';
 import { initTabs }     from './js/tabs.js';
 import { initASL }      from './js/asl.js';
 import { initDemo }     from './js/demo.js';
@@ -15,7 +16,7 @@ import { initSearch }   from './js/search.js';
 import { initWebcam }   from './js/webcam.js';
 import { initRecruiter }from './js/recruiter.js';
 
-function initApp() {
+function initCore() {
     document.getElementById('year').textContent = new Date().getFullYear();
 
     // Console Easter egg — for the curious engineer who opens DevTools
@@ -30,19 +31,19 @@ function initApp() {
     initTheme();
     initNav();
     initScroll();
-    initTabs();
     initASL();
-    initDemo();
     initA11yLab();
     initSearch();
     initWebcam();
+}
+
+function initSections() {
+    initActiveNav();
+    initSectionScroll();
+    initTabs();
+    initDemo();
     initRecruiter();
 }
 
-// loader.js sets window.__sectionsReady = true after all fragments are injected,
-// or calls window.__onSectionsReady() if it fires after us.
-if (window.__sectionsReady) {
-    initApp();
-} else {
-    window.__onSectionsReady = initApp;
-}
+// loader.js exposes promises that resolve once fragments have settled.
+window.__fragments.critical.then(initCore).then(() => window.__fragments.all).then(initSections);

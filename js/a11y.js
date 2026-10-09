@@ -62,12 +62,14 @@ export function initA11yLab() {
     if (!btn || !panel) return;
 
     _buildPanel(panel);
+    panel.inert = true;
 
     function setActive(on) {
         document.body.classList.toggle('a11y-lab', on);
         btn.setAttribute('aria-pressed', String(on));
         panel.classList.toggle('v2-a11y-panel--open', on);
         panel.setAttribute('aria-hidden', String(!on));
+        panel.inert = !on;   // off-screen panel controls must not be tabbable
         // localStorage throws SecurityError in private-browsing / strict-CSP environments.
         // Failing to persist the panel state is non-fatal — the toggle still works for the session.
         try { localStorage.setItem('a11y-lab', on ? '1' : '0'); } catch (_) {}

@@ -1,13 +1,20 @@
-/** scroll.js — scroll-reveal animations + CountUp + back-to-top + smooth scroll */
+/** scroll.js — scroll-reveal animations + CountUp + back-to-top + skip link */
+
+import { prefersReducedMotion } from './utils.js';
 
 const COUNTUP_DURATION_MS    = 1400;  // total animation duration for metric count-up
 const BACK_TO_TOP_SCROLL_PX  = 300;   // scroll depth at which the back-to-top button appears
 
+/** Persistent UI (index.html) — safe to run before section fragments land. */
 export function initScroll() {
+    initBackToTop();
+    initSkipLink();
+}
+
+/** Section-dependent behaviour — run once every fragment has settled. */
+export function initSectionScroll() {
     initScrollReveal();
     initCountUp();
-    initBackToTop();
-    initSmoothScroll();
 }
 
 function initScrollReveal() {
@@ -24,6 +31,7 @@ function initScrollReveal() {
 }
 
 function initCountUp() {
+    if (prefersReducedMotion()) return;   // leave the final values in place
     // Parse "€300K+" → { pre:"€", num:300, suf:"K+", decimals:0 }
     function parse(str) {
         const m = String(str).match(/^([^\d]*)(\d+(?:\.\d+)?)(.*)$/);
@@ -81,16 +89,18 @@ function initBackToTop() {
         });
     });
 
-    btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    btn.addEventListener('click', () =>
+        window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? 'auto' : 'smooth' }));
 }
 
-function initSmoothScroll() {
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-        a.addEventListener('click', e => {
-            const target = document.querySelector(a.getAttribute('href'));
-            if (!target) return;
-            e.preventDefault();
-            target.scrollIntoView({ behavior: 'smooth' });
-        });
-    });
+// In-page links use native fragment navigation (smooth via `scroll-behavior` in
+// base.css), which keeps the URL hash in sync. The skip link additionally moves
+// keyboard focus into <main> so the next Tab lands past the navigation.
+function initSkipLink() {
+    const link = document.querySelector('.skip-link');
+    const main = document.getElementById('main-content');
+    if (!link || !main) return;
+
+    if (!main.hasAttribute('tabindex')) main.setAttribute('tabindex', '-1');
+    link.addEventListener('click', () => main.focus({ preventScroll: true }));
 }

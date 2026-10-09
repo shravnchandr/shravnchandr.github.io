@@ -61,16 +61,17 @@
                         <svg id="asl-svg" class="v2-asl-svg" viewBox="0 0 100 125"
                              aria-label="Animated ASL hand sign"></svg>
                         <div class="v2-asl-meta" aria-hidden="true">
-                            <div>MediaPipe · 21 landmarks</div>
-                            <div>TF.js · in-browser</div>
-                            <div class="v2-data-text">latency: 18ms</div>
+                            <div>21 hand landmarks</div>
+                            <div id="asl-meta-engine">procedural demo cycle</div>
+                            <div class="v2-data-text" id="asl-meta-latency">latency: —</div>
                         </div>
-                        <div class="v2-signing-label" id="asl-signing-label" aria-live="polite">
+                        <div class="v2-signing-label" id="asl-signing-label">
                             SIGNING: A · ASL FINGERSPELL
                         </div>
                     </div>
 
-                    <div class="v2-asl-pred" aria-live="polite">
+                    <div class="v2-asl-pred">
+                        <div class="v2-sr-only" id="asl-announce" aria-live="polite"></div>
                         <div class="v2-pred-micro">PREDICTION</div>
                         <div class="v2-pred-letter" id="asl-pred-letter">A</div>
                         <div class="v2-conf-row">
@@ -83,8 +84,8 @@
                         <div class="v2-pred-micro" style="margin-top:4px">TOP-3</div>
                         <div id="asl-top3" class="v2-top3" aria-hidden="true"></div>
                         <div class="v2-asl-stats">
-                            95.5% acc · 36 classes<br>
-                            10 ASL grammar rules
+                            ASL Guide app: 95.5% acc<br>
+                            36 classes · 10 grammar rules
                         </div>
                     </div>
                 </div>
@@ -95,7 +96,7 @@
                         <span class="v2-webcam-dot" aria-hidden="true"></span>
                         <span class="v2-webcam-label">Try live →</span>
                     </button>
-                    <span class="v2-webcam-hint" aria-hidden="true">your camera · 36 classes</span>
+                    <span class="v2-webcam-hint" id="webcam-hint" role="status">in-browser MLP · A–Z + DEL/SPC</span>
                 </div>
             </div>
             <div class="v2-asl-caption" aria-hidden="true">

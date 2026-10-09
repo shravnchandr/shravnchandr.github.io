@@ -86,7 +86,7 @@
     padding: 12px 20px;
     border-radius: 12px;
     background: var(--v2-inference);
-    color: #fff;
+    color: var(--v2-on-inference);
     text-decoration: none;
     font-weight: 700;
     font-size: 13px;

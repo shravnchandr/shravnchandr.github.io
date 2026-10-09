@@ -16,8 +16,8 @@
  *   checkAppStatus()  — pings asl-guide.onrender.com, updates status badge
  */
 
-import { pauseASL, resumeASL, drawHandPose } from './asl.js';
-import { updateLetterDisplay, makeTop3Row, clearEl } from './utils.js';
+import { pauseASL, resumeASL, drawHandPose, hideHandPose } from './asl.js';
+import { updateLetterDisplay, renderTop3, clearEl } from './utils.js';
 
 const MP_HANDS_VERSION = '@mediapipe/hands@0.4.1675469240';
 const MP_HANDS_CDN     = `https://cdn.jsdelivr.net/npm/${MP_HANDS_VERSION}/hands.js`;
@@ -29,6 +29,10 @@ const STATUS_TIMEOUT_MS = 7000;   // AbortController timeout for app-status ping
 const STATUS_FAST_MS    = 2500;   // response faster than this → "live" (vs "waking up")
 const CAM_WIDTH         = 640;
 const CAM_HEIGHT        = 480;
+const SVG_W             = 100;    // #asl-svg viewBox width
+const SVG_H             = 125;    // #asl-svg viewBox height
+const STABLE_FRAMES     = 8;      // consecutive frames before a letter is announced
+const ANNOUNCE_MIN_CONF = 0.6;
 
 const BTN_STATE_LOADING = 'loading';
 const BTN_STATE_ACTIVE  = 'active';
@@ -104,23 +108,59 @@ function _classify(worldLandmarks) {
 }
 
 let _active  = false;
+let _session = 0;        // bumped on every start/stop; stale async work checks it
+let _btn     = null;
 let _hands   = null;
 let _stream  = null;
 let _video   = null;
 let _rafId   = null;
 
-let _prevLetter = null;
+let _prevLetter  = null;
+let _handVisible = false;
+let _stableKey   = null;
+let _stableCount = 0;
+let _announced   = null;
+
+/**
+ * Map a normalised MediaPipe landmark (relative to the raw video frame) into
+ * #asl-svg user space. The video is drawn with object-fit: cover and mirrored,
+ * and the SVG uses the default xMidYMid meet, so both transforms are applied
+ * against the element's current box.
+ */
+function _makeProjector() {
+    const vw = _video.videoWidth  || CAM_WIDTH;
+    const vh = _video.videoHeight || CAM_HEIGHT;
+    const cw = _video.clientWidth;
+    const ch = _video.clientHeight;
+    if (!cw || !ch) return ({ x, y }) => [(1 - x) * SVG_W, y * SVG_H];
+
+    const cover = Math.max(cw / vw, ch / vh);
+    const dw = vw * cover, dh = vh * cover;
+    const ox = (cw - dw) / 2, oy = (ch - dh) / 2;
+
+    const meet = Math.min(cw / SVG_W, ch / SVG_H);
+    const sx = (cw - SVG_W * meet) / 2, sy = (ch - SVG_H * meet) / 2;
+
+    return ({ x, y }) => {
+        const px = cw - (ox + x * dw);   // mirrored, matching scaleX(-1) on the video
+        const py = oy + y * dh;
+        return [(px - sx) / meet, (py - sy) / meet];
+    };
+}
 
 function _onResults(results) {
     if (!_active) return;
-    if (!results.multiHandLandmarks?.length) return;
+    if (!results.multiHandLandmarks?.length) {
+        if (_handVisible) _showNoHand();
+        return;
+    }
+    _handVisible = true;
 
     const lms      = results.multiHandLandmarks[0];
     const worldLms = results.multiHandWorldLandmarks?.[0];
 
-    // Mirror x: front-facing camera gives laterally-flipped coordinates
-    const svgPose = lms.map(({ x, y }) => [(1 - x) * 100, y * 125]);
-    drawHandPose(svgPose);
+    const project = _makeProjector();
+    drawHandPose(lms.map(project));
 
     if (worldLms && _modelData) {
         const preds = _classify(worldLms);
@@ -128,111 +168,185 @@ function _onResults(results) {
     }
 }
 
+function _panelEls() {
+    return {
+        letterEl:   document.getElementById('asl-pred-letter'),
+        confValEl:  document.getElementById('asl-conf-val'),
+        confFillEl: document.getElementById('asl-conf-fill'),
+        signingEl:  document.getElementById('asl-signing-label'),
+        top3El:     document.getElementById('asl-top3'),
+    };
+}
+
+function _showNoHand() {
+    _handVisible = false;
+    _stableKey = null; _stableCount = 0;
+    hideHandPose();
+    const { letterEl, confValEl, confFillEl, signingEl, top3El } = _panelEls();
+    _prevLetter = updateLetterDisplay(letterEl, '—', _prevLetter);
+    if (confValEl)  confValEl.textContent  = '—';
+    if (confFillEl) confFillEl.style.width = '0%';
+    if (signingEl)  signingEl.textContent  = 'NO HAND DETECTED · LIVE CAM';
+    if (top3El)     clearEl(top3El);
+}
+
+function _announce(key, conf) {
+    // Announce only letters that hold steady, so screen readers aren't flooded
+    // by per-frame confidence changes.
+    if (key === _stableKey) _stableCount++;
+    else { _stableKey = key; _stableCount = 1; }
+    if (_stableCount !== STABLE_FRAMES || conf < ANNOUNCE_MIN_CONF || key === _announced) return;
+    _announced = key;
+    const live = document.getElementById('asl-announce');
+    if (live) live.textContent = `Detected ${key}`;
+}
+
 function _updatePanel([top, ...rest]) {
-    const letterEl   = document.getElementById('asl-pred-letter');
-    const confValEl  = document.getElementById('asl-conf-val');
-    const confFillEl = document.getElementById('asl-conf-fill');
-    const signingEl  = document.getElementById('asl-signing-label');
-    const top3El     = document.getElementById('asl-top3');
+    const { letterEl, confValEl, confFillEl, signingEl, top3El } = _panelEls();
 
     _prevLetter = updateLetterDisplay(letterEl, top.key, _prevLetter);
     if (confValEl)  confValEl.textContent  = `${(top.conf * 100).toFixed(1)}%`;
     if (confFillEl) confFillEl.style.width = `${top.conf * 100}%`;
     if (signingEl)  signingEl.textContent  = `SIGNING: ${top.key} · LIVE CAM`;
-
-    if (top3El) {
-        clearEl(top3El);
-        [top, ...rest].forEach(({ key, conf }, i) => {
-            top3El.appendChild(makeTop3Row(i + 1, key, conf, i === 0));
-        });
-    }
+    renderTop3(top3El, [top, ...rest]);
+    _announce(top.key, top.conf);
 }
 
-async function _sendFrame() {
-    if (!_active) return;
-    if (_video && _video.readyState >= 2) {
-        await _hands.send({ image: _video });
-    }
-    _rafId = requestAnimationFrame(_sendFrame);
+function _setMeta(engine, latency) {
+    const engineEl  = document.getElementById('asl-meta-engine');
+    const latencyEl = document.getElementById('asl-meta-latency');
+    if (engineEl)  engineEl.textContent  = engine;
+    if (latencyEl) latencyEl.textContent = `latency: ${latency}`;
 }
 
-async function _start(btn) {
-    _setBtnState(btn, BTN_STATE_LOADING);
+function _setHint(text) {
+    const hint = document.getElementById('webcam-hint');
+    if (hint) hint.textContent = text;
+}
 
-    // Load model weights + MediaPipe lazily on first activation.
-    // External CDN or local script load can genuinely fail (offline, CDN outage, 404).
-    // Partial failure must not crash the page — reset button to idle so user can retry.
-    try {
-        const loads = [];
-        if (!_modelData) loads.push(_loadScript(MODEL_SRC));
-        if (!_hands)     loads.push(_loadScript(MP_HANDS_CDN));
-        await Promise.all(loads);
-    } catch (err) {
-        console.error('[webcam] Failed to load dependencies:', err);
-        _setBtnState(btn, BTN_STATE_IDLE);
-        return;
-    }
+let _lastLatencyAt = 0;
+let _warmedUp      = false;   // first send() includes WASM/model warm-up — don't report it
 
-    // ASL_MODEL_DATA is a top-level const in a non-module script — accessible via window
-    if (!_modelData) {
-        /* global ASL_MODEL_DATA */
-        if (typeof ASL_MODEL_DATA !== 'undefined') {
-            _modelData = ASL_MODEL_DATA; // eslint-disable-line no-undef
-        } else {
-            console.warn('[webcam] ASL_MODEL_DATA not found after script load');
-        }
-    }
-
-    if (!_hands) {
-        // MediaPipe Hands initialisation downloads WASM and model assets from CDN.
-        // This can fail if the CDN is unreachable, the browser blocks WASM, or WebGL
-        // is unavailable. Failure must not crash the page — reset button to idle.
+async function _sendFrame(session) {
+    if (session !== _session) return;
+    if (_video.readyState >= 2) {
+        const t0 = performance.now();
         try {
-            _hands = new window.Hands({
-                locateFile: f => `${MP_HANDS_BASE}${f}`,
-            });
-            _hands.setOptions({
-                maxNumHands:          1,
-                modelComplexity:      1,
-                minDetectionConfidence: 0.7,
-                minTrackingConfidence:  0.6,
-            });
-            _hands.onResults(_onResults);
-            await _hands.initialize();
+            await _hands.send({ image: _video });
         } catch (err) {
-            console.error('[webcam] MediaPipe init failed:', err);
-            _setBtnState(btn, BTN_STATE_IDLE);
+            if (session !== _session) return;
+            console.error('[webcam] Hand tracking failed:', err);
+            _stop('Hand tracking stopped — try again');
             return;
         }
+        if (session !== _session) return;   // stopped while the send was in flight
+        const now = performance.now();
+        if (!_warmedUp) _warmedUp = true;
+        else if (now - _lastLatencyAt > 500) {
+            _lastLatencyAt = now;
+            _setMeta('MediaPipe + MLP · in-browser', `${Math.round(now - t0)}ms`);
+        }
     }
-
-    // getUserMedia rejects when the user denies camera permission, no camera is present,
-    // or the context is not secure (non-HTTPS). This is expected user input, not a bug —
-    // reset button to idle so the user can see the feature is unavailable.
-    try {
-        _stream = await navigator.mediaDevices.getUserMedia({
-            video: { width: CAM_WIDTH, height: CAM_HEIGHT, facingMode: 'user' },
-        });
-    } catch (err) {
-        console.warn('[webcam] Camera access denied:', err);
-        _setBtnState(btn, BTN_STATE_IDLE);
-        return;
-    }
-
-    _video = document.getElementById('webcam-video');
-    if (!_video) { _stop(btn); return; }
-
-    _video.srcObject = _stream;
-    await _video.play();
-    _video.classList.add(CLS_VIDEO_ACTIVE);
-
-    _active = true;
-    pauseASL();
-    _setBtnState(btn, BTN_STATE_ACTIVE);
-    _rafId = requestAnimationFrame(_sendFrame);
+    _rafId = requestAnimationFrame(() => _sendFrame(session));
 }
 
-function _stop(btn) {
+function _cameraErrorMessage(err) {
+    switch (err?.name) {
+        case 'NotAllowedError':  return 'Camera permission denied';
+        case 'NotFoundError':    return 'No camera found';
+        case 'NotReadableError': return 'Camera is in use by another app';
+        default:                 return 'Couldn’t start the camera — try again';
+    }
+}
+
+async function _ensureHands() {
+    if (_hands) return;
+    // Only cache the instance once initialize() succeeds, so a failed
+    // WASM/model download is retried on the next click.
+    const hands = new window.Hands({ locateFile: f => `${MP_HANDS_BASE}${f}` });
+    try {
+        hands.setOptions({
+            maxNumHands:            1,
+            modelComplexity:        1,
+            minDetectionConfidence: 0.7,
+            minTrackingConfidence:  0.6,
+        });
+        hands.onResults(_onResults);
+        await hands.initialize();
+    } catch (err) {
+        try { await hands.close?.(); } catch (_) { /* already broken */ }
+        throw err;
+    }
+    _hands = hands;
+}
+
+async function _start() {
+    const session = ++_session;
+    _setBtnState(_btn, BTN_STATE_LOADING);
+    _setHint('Loading model…');
+    let stream = null;
+
+    // Every step can fail (CDN outage, WASM blocked, permission denied, autoplay
+    // policy). Any failure releases what was acquired and returns the button to idle.
+    try {
+        let message = 'Couldn’t load the classifier — try again';
+        try {
+            await Promise.all([_loadScript(MODEL_SRC), _loadScript(MP_HANDS_CDN)]);
+            if (!_modelData) {
+                /* global ASL_MODEL_DATA */
+                if (typeof ASL_MODEL_DATA === 'undefined') throw new Error('ASL_MODEL_DATA missing');
+                _modelData = ASL_MODEL_DATA; // eslint-disable-line no-undef
+            }
+            await _ensureHands();
+        } catch (err) {
+            err.userMessage = message;
+            throw err;
+        }
+        if (session !== _session) return;
+
+        _setHint('Waiting for camera…');
+        try {
+            stream = await navigator.mediaDevices.getUserMedia({
+                video: { width: CAM_WIDTH, height: CAM_HEIGHT, facingMode: 'user' },
+            });
+        } catch (err) {
+            err.userMessage = _cameraErrorMessage(err);
+            throw err;
+        }
+        if (session !== _session) { stream.getTracks().forEach(t => t.stop()); return; }
+
+        _video = document.getElementById('webcam-video');
+        if (!_video) throw new Error('#webcam-video missing');
+        _stream = stream;
+        _video.srcObject = stream;
+        await _video.play();
+        if (session !== _session) return;
+
+        stream.getVideoTracks().forEach(t => t.addEventListener('ended', () => {
+            if (session === _session) _stop('Camera disconnected');
+        }));
+
+        _video.classList.add(CLS_VIDEO_ACTIVE);
+        _active = true;
+        _handVisible = true;
+        _announced = null;
+        pauseASL();
+        _showNoHand();
+        _setMeta('MediaPipe + MLP · in-browser', '—');
+        _setHint(`in-browser MLP · ${_modelData.metadata?.output_classes ?? 28} classes`);
+        _setBtnState(_btn, BTN_STATE_ACTIVE);
+        _rafId = requestAnimationFrame(() => _sendFrame(session));
+    } catch (err) {
+        if (session !== _session) return;
+        console.error('[webcam] Failed to start:', err);
+        if (stream && stream !== _stream) stream.getTracks().forEach(t => t.stop());
+        _stop(err.userMessage || 'Couldn’t start the camera — try again');
+    }
+}
+
+function _stop(message) {
+    const wasActive = _active;
+    _session++;
     _active = false;
     cancelAnimationFrame(_rafId);
     _rafId = null;
@@ -247,8 +361,13 @@ function _stop(btn) {
         _video.classList.remove(CLS_VIDEO_ACTIVE);
     }
 
-    resumeASL();
-    _setBtnState(btn, BTN_STATE_IDLE);
+    if (wasActive) {
+        hideHandPose();
+        resumeASL();
+    }
+    _setMeta('procedural demo cycle', '—');
+    _setHint(message || 'in-browser MLP · A–Z + DEL/SPC');
+    _setBtnState(_btn, BTN_STATE_IDLE);
 }
 
 function _setBtnState(btn, state) {
@@ -272,16 +391,26 @@ function _setBtnState(btn, state) {
     }
 }
 
+// One promise per src. Failed loads drop their <script> and cache entry so a
+// retry issues a fresh request; in-flight loads are shared, not assumed ready.
+const _scriptLoads = new Map();
+
 function _loadScript(src) {
-    return new Promise((resolve, reject) => {
-        if (document.querySelector(`script[src="${src}"]`)) { resolve(); return; }
+    if (_scriptLoads.has(src)) return _scriptLoads.get(src);
+    const p = new Promise((resolve, reject) => {
         const s = document.createElement('script');
         s.src = src;
         s.crossOrigin = 'anonymous';
         s.onload  = resolve;
-        s.onerror = () => reject(new Error(`Could not load ${src}`));
+        s.onerror = () => {
+            s.remove();
+            _scriptLoads.delete(src);
+            reject(new Error(`Could not load ${src}`));
+        };
         document.head.appendChild(s);
     });
+    _scriptLoads.set(src, p);
+    return p;
 }
 
 function checkAppStatus() {
@@ -316,14 +445,14 @@ function checkAppStatus() {
 }
 
 export function initWebcam() {
-    const btn = document.getElementById('webcam-toggle');
-    if (btn) {
+    _btn = document.getElementById('webcam-toggle');
+    if (_btn) {
         if (!navigator.mediaDevices?.getUserMedia) {
-            btn.closest('.v2-webcam-cta')?.remove();
+            _btn.closest('.v2-webcam-cta')?.remove();
         } else {
-            btn.addEventListener('click', () => {
-                if (_active) _stop(btn);
-                else         _start(btn);
+            _btn.addEventListener('click', () => {
+                if (_active) _stop();
+                else         _start();
             });
         }
     }

@@ -123,3 +123,17 @@
     [data-m3-morph]:hover  { border-radius: inherit !important; }
     [data-hover-lift]:hover { transform: none; box-shadow: none; }
 }
+
+/* Catch-all for remaining motion (demo scanlines, pulses, cursor blink,
+   skeleton shimmer, panel slides, inline letter-pop animations). */
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        /* 0s (not a tiny duration): with the default transition-property of
+           `all`, any nonzero value would start animating visibility too,
+           leaving modal inputs unfocusable for a frame. */
+        transition-duration: 0s !important;
+    }
+}
