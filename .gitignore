@@ -36,3 +36,7 @@ resume.tex
 *.fdb_latexmk
 *.synctex.gz
 resume.pdf
+
+# LinkedIn profile drafts, screenshots and banner — keep local only
+LinkedIn/
+dev/linkedin-banner.html
