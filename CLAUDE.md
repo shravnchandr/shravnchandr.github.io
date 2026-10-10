@@ -82,7 +82,8 @@ asl_model.js                # Trained MLP weights + StandardScaler; loaded lazil
                             # Format: { model: {fc1_w,fc1_b,fc2_w,fc2_b,fc3_w,fc3_b}, scaler: {mean,scale} }
                             # Weights stored TRANSPOSED: shape [in_features][out_features]
 dev/export_model.py         # PyTorch → JSON export script (generates asl_model.js; gitignored)
-og-image.png                # 1200×630 social share image
+social-card.jpg             # 1200×630 link-preview card (og:image / twitter:image), rendered from link_preview.png
+link_preview.png            # Square headshot (JSON-LD image; source photo for the card)
 favicon.svg                 # SVG favicon
 Shravan_Chandra_Resume.pdf  # Downloadable resume
 ```
@@ -129,7 +130,7 @@ Sections load in this order (matching `loader.js` FRAGMENTS array):
 | 10 | contact.html | `#contact` | Contact (08 · NEXT) |
 
 ### Hero hiring snapshot
-`<dl class="v2-glance">` under the hero: based in / looking for / interviews / strengths. Keep it in sync with `now.html`, `contact.html` and the meta tags.
+`<dl class="v2-glance">` under the hero: based in / looking for / work authorization / strengths. Keep it in sync with `now.html`, `contact.html` and the meta tags.
 
 ### Selected work (`#work`)
 `<article class="v2-case">` per case study: `#case-maintenance`, `#case-valfred`, `#case-asl-guide`. (Retinopathy lives in Research as `#research-retinopathy`.)
@@ -333,7 +334,7 @@ No npm, no webpack, no React.
 - `<meta name="description">` — plain text for crawlers
 - Open Graph + Twitter card tags — for social link unfurls
 - JSON-LD `Person` schema — for Google rich results
-- `og-image.png` — 1200×630 preview image
+- `social-card.jpg` — 1200×630 link-preview card; regenerate it when the title or availability changes (source: `dev/social-card.html`, screenshot at 1200×630 in Chrome)
 
 When updating bio copy, keep all four in sync: hero text, `<meta name="description">`, `og:description`, and JSON-LD `description`.
 
