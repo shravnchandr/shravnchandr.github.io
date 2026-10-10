@@ -56,7 +56,7 @@ const INDEX = [
         type:  'project',
         id:    'case-maintenance',
         label: 'Predictive Maintenance — Bosch',
-        sub:   'Autoencoder anomaly detection · 80+ TB telemetry · €300K+ savings',
+        sub:   'Autoencoder anomaly detection · 80+ TB telemetry · est. €300K+ annualized savings',
         icon:  '⚙',
         tokens: [
             'predictive','maintenance','autoencoder','anomaly','detection',
@@ -229,7 +229,7 @@ const INDEX = [
     {
         type:  'story',
         id:    'goldman',
-        label: 'Goldman Sachs — Junior Analyst',
+        label: 'Goldman Sachs — Junior Analyst (Intern)',
         sub:   'Trade Booking Automation · Finance · Python · 65% faster',
         icon:  '♦',
         tokens: [
