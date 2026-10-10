@@ -209,6 +209,8 @@ Exports `initASL`, `SIGNS`, `CONNECTIONS`, `spellSequence`, `pauseASL`, `resumeA
   - Exact match: `+5` (len ≥ 5), `+3` (len ≥ 3), `+1` (short)
   - Prefix match (query is prefix of token, len ≥ 3): `+2`
   - Substring match (query inside token, len ≥ 3): `+1`
+  - A trailing plural `s` is also tried (`projects` → `project`)
+  - Every entry carries section words (`project`/`work`, `research`/`paper`, `experience`/`job`, `education`) so category queries return the whole group
   - **No `w.includes(t)` direction** — avoids false positives (e.g. token `"ecu"` inside query `"because"`)
 - Results grouped into Projects / Experience & Education; keyboard nav (↑↓ Enter Escape)
 - `action()` on project/experience entries and research entries call `_reveal(selector)`: waits for `sectionsReady`, expands a collapsed timeline entry, scrolls to the target

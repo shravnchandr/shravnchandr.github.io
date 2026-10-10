@@ -32,6 +32,7 @@ const INDEX = [
         sub:   'LangGraph · TF.js · MediaPipe · FastAPI · Redis · PWA',
         icon:  '★',
         tokens: [
+            'project','work','case','study','studies','portfolio',  // section words
             'asl','guide','sign','language','fingerspell','fingerspelling',
             'tensorflow','tfjs','mediapipe','fastapi','react','redis',
             'langgraph','docker','postgresql','postgres',
@@ -59,9 +60,10 @@ const INDEX = [
         sub:   'Autoencoder anomaly detection · 80+ TB telemetry · est. €300K+ annualized savings',
         icon:  '⚙',
         tokens: [
+            'project','work','case','study','studies','portfolio',  // section words
             'predictive','maintenance','autoencoder','anomaly','detection',
             'telemetry','sensor','databricks','pyspark','spark','80tb','80',
-            'savings','300k','testing','cycles','production','case','study',
+            'savings','300k','testing','cycles','production',
         ],
         action() { _reveal('#case-maintenance'); },
     },
@@ -72,11 +74,12 @@ const INDEX = [
         sub:   'Multi-agent · schema retrieval · self-healing SQL · Databricks',
         icon:  '◆',
         tokens: [
+            'project','work','case','study','studies','portfolio',  // section words
             'valfred','genai','generative','llm','agent','agents','multiagent','multi',
             'sql','text2sql','nlq','natural','language','query','querying',
             'vector','schema','retrieval','rag','self-healing','healing',
             'mlflow','unity','catalog','databricks','leepa','webdvp','81',
-            'assistant','case','study',
+            'assistant',
         ],
         action() { _reveal('#case-valfred'); },
     },
@@ -87,6 +90,7 @@ const INDEX = [
         sub:   'Keras · Xception · Grad-CAM · Healthcare · 96% Kappa',
         icon:  '◉',
         tokens: [
+            'project','research','paper','publication',  // section words
             'retinopathy','diabetic','fundus','kappa','96',
             'xception','gradcam','grad','cam','interpretability','explainability',
             'clinical','healthcare','medical','health','eye','disease','diagnosis',
@@ -103,6 +107,7 @@ const INDEX = [
         sub:   'VQ-VAE · Conformer · CTC-Attention · Beam Search · PyTorch',
         icon:  '◎',
         tokens: [
+            'project','research','paper','publication',  // section words
             'vqvae','vq','vae','conformer','quantization','quantize',
             'ctc','attention','beam','search','prefix','scoring',
             'continuous','slt','translation','sequence','seq2seq',
@@ -120,6 +125,7 @@ const INDEX = [
         sub:   'ST-GCN · 209 joints · Edge Importance · Spatial Attention',
         icon:  '◇',
         tokens: [
+            'project','research','paper','publication',  // section words
             'stgcn','st','gcn','graph','convolutional','network',
             'skeletal','skeleton','joints','adjacency','matrix',
             'edge','importance','spatial','attention','weighting',
@@ -137,6 +143,7 @@ const INDEX = [
         sub:   'Multi-stream Conformer · Google ASL Signs (250 classes) · 76.65% · signer-independent',
         icon:  '◈',
         tokens: [
+            'project','research','paper','publication',  // section words
             'temporal','modeling','sequence','video',
             'google','asl-signs','aslsigns','isolated','kaggle','250',
             'cnn','transformer','attention','architecture',
@@ -154,6 +161,7 @@ const INDEX = [
         sub:   'MediaPipe · XGBoost · Dynamic Sign Language · Published',
         icon:  '⬡',
         tokens: [
+            'project','research','paper','publication',  // section words
             'ieee','iccar','2022','publication','paper','published','doi',
             'xgboost','mediapipe','dynamic','static',
             'research','sign','language','recognition',
@@ -170,6 +178,7 @@ const INDEX = [
         sub:   'Autoencoder · Anomaly Detection · Azure · Power BI · Mentoring',
         icon:  '⚙',
         tokens: [
+            'experience','career','job','role','employment',  // section words
             'bosch','senior','2025','2026','valfred',
             'databricks','pyspark','spark','partition','telemetry','ingestion','ingest',
             'tb','80tb','80','high','frequency','sensor',
@@ -196,6 +205,7 @@ const INDEX = [
         sub:   'TF 1.x → PyTorch · 48% shorter training · KL divergence drift · Power BI',
         icon:  '⚙',
         tokens: [
+            'experience','career','job','role','employment',  // section words
             'bosch','ml','2023','2024',
             'elastic','net','regression','autosar','dem','debounce','recall','0.92',
             'failure','predictive','early','warning','30','seconds',
@@ -217,6 +227,7 @@ const INDEX = [
         sub:   'Automation Tools · Flask · PCB Pricing · Automotive Test Data',
         icon:  '⚙',
         tokens: [
+            'experience','career','job','role','employment',  // section words
             'bosch','software','developer','2021','2023',
             'automation','automated','tools','gui','guis',
             '45','manual','data','analysis','analysts','engineers','25',
@@ -233,6 +244,7 @@ const INDEX = [
         sub:   'Trade Booking Automation · Finance · Python · 65% faster',
         icon:  '♦',
         tokens: [
+            'experience','career','job','role','employment',  // section words
             'goldman','sachs','gs',
             'junior','analyst','finance','banking','financial','bank',
             'trade','trading','booking','verification','bookings',
@@ -248,6 +260,7 @@ const INDEX = [
         sub:   'Electrical & Electronics · CGPA 8.5 · 2017–2021',
         icon:  '◆',
         tokens: [
+            'education','school',  // section words
             'pes','university','btech','btech','degree',
             'electrical','electronics','eee',
             'cgpa','gpa','8.5','grade',
@@ -263,6 +276,7 @@ const INDEX = [
         sub:   'Master of Data Science · Vancouver, Canada · 2026–2027',
         icon:  '◆',
         tokens: [
+            'education','school',  // section words
             'ubc','british','columbia','university','masters','mds',
             'data','science','degree','grad','graduate',
             '2026','2027','vancouver','canada',
@@ -396,7 +410,7 @@ function _query(raw) {
             let score = 0;
             words.forEach(w => {
                 item.tokens.forEach(t => {
-                    if (t === w) {
+                    if (t === w || t === _singular(w)) {
                         // Exact match — reward specificity: longer tokens are rarer
                         score += t.length >= 5 ? 5 : t.length >= 3 ? 3 : 1;
                     } else if (w.length >= 3 && t.startsWith(w)) {
@@ -414,8 +428,13 @@ function _query(raw) {
         })
         .filter(({ score }) => score > 0)
         .sort((a, b) => b.score - a.score)
-        .slice(0, 7)
+        .slice(0, 8)
         .map(({ item }) => item);
+}
+
+// "projects" → "project", "papers" → "paper"; leaves "ss" words like "class" alone
+function _singular(w) {
+    return w.length >= 4 && w.endsWith('s') && !w.endsWith('ss') ? w.slice(0, -1) : w;
 }
 
 /* ── Rendering ─────────────────────────────────────────────────────── */
