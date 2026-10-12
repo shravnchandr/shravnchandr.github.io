@@ -199,7 +199,7 @@ Exports `initASL`, `SIGNS`, `CONNECTIONS`, `spellSequence`, `pauseASL`, `resumeA
 - `pauseASL()` / `resumeASL()` / `drawHandPose(pose)` / `hideHandPose()`: refs wired inside `initASL`; called by `webcam.js` to pause the random cycle and draw live MediaPipe landmarks instead.
 
 ### `js/nav.js`
-- `initMobileMenu`: hamburger toggle, close on link click or outside click
+- `initMobileMenu`: hamburger toggle, close on link click or outside click. Compact menu at ≤1240px (`MOBILE_MQ`, matching `css/nav.css`): measured, the full link row needs ~1330px and the tightened one (1241–1339px) ~1220px — re-measure if links change
 - `initActiveNav`: IntersectionObserver highlights the active nav link
 - `initLogoEasterEgg`: clicking `.v2-logo` calls `spellSequence(['S','H','R','A','V','A','N'])` and smooth-scrolls to top; `preventDefault` suppresses the `href="/"` reload
 
@@ -211,7 +211,7 @@ Exports `initASL`, `SIGNS`, `CONNECTIONS`, `spellSequence`, `pauseASL`, `resumeA
 
 ### `js/search.js`
 - `initSearch()` — builds the search overlay via DOM, binds `⌘K`/`Ctrl+K`, wires `#search-trigger` in the nav
-- `INDEX`: 14 entries (4 projects/case studies + 4 research + 4 experience + 2 education), each with `tokens[]`, `label`, `sub`, `icon`, `action()`. The UBC entry jumps to `#role-ubc`, PES to `#education`
+- `INDEX`: 14 entries (4 projects/case studies + 4 research + 4 experience + 2 education), each with `tokens[]`, `label`, `sub`, `route` (`[letter, colour]`, shown as a route bullet in results), `action()`. The UBC entry jumps to `#role-ubc`, PES to `#education`
 - `_query(raw)` — tokenises query (strips stop words, normalises), scores against `INDEX`:
   - Exact match: `+5` (len ≥ 5), `+3` (len ≥ 3), `+1` (short)
   - Prefix match (query is prefix of token, len ≥ 3): `+2`
@@ -306,6 +306,9 @@ This lets skeleton shimmer screens show while the real content stays hidden — 
 ### Architecture Trace
 The ASL Guide case study (`#case-asl-guide`) contains a `<details class="v2-arch-trace">` as a third child of the grid. `.v2-case .v2-arch-trace` in `css/cards.css` sets `grid-column: 1 / -1` so it spans both columns. Each layer is a line (browser green, API orange, data purple). Styling lives in `css/cards.css`.
 
+### Layout grid
+One container for every section, hero included: 1320px max width, 56px gutters (24px ≤1024px, 16px ≤600px) — `.v2-inner` in `base.css`, `.v2-hero-inner` in `hero.css`. The contact sign is a named narrower variant (1000px). Key-result rows are a `max-content | 1fr` grid so values never shrink into their descriptions, stacking ≤400px. Stack titles reserve two lines (≥520px) so tag rows start level. Header controls are 44px. On phones (≤768px) the floating résumé button is hidden (the hero has one) and the footer clears back-to-top.
+
 ### Transition rule
 Only `color` is transitioned on `body` and surface elements — never `background` shorthand (it flashes the wrong theme's surface on toggle).
 
@@ -335,8 +338,7 @@ The SVG viewBox is `0 0 100 125`. WRIST is at `[50, 112]`.
 
 | Dependency | Used for |
 |---|---|
-| Font Awesome 6.7.2 (cdnjs) | UI icons + brand icons (GitHub, LinkedIn) |
-| Material Symbols Outlined (Google Fonts) | Contact section `mail` icon |
+| Font Awesome 6.7.2 (cdnjs) | Every UI icon (theme sun/moon, search, download, replay, chevrons, mail) + brand icons — the only icon family; route bullets are their own system |
 | Fira Code (Google Fonts) | Code, logs and live data only |
 | Helvetica Neue / Helvetica / Arial (system) | All other type — no download |
 

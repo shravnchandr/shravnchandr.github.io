@@ -19,6 +19,10 @@
     margin-bottom: 14px;
 }
 .v2-stack-cat-name .v2-bullet { --b: 26px; }
+/* Multi-column: every title reserves two lines, so the tag rows start level */
+@media (min-width: 520px) {
+    .v2-stack-cat-name { min-height: calc(2 * 1.25em); }
+}
 
 .v2-stack-tags {
     display: flex;
@@ -43,6 +47,6 @@
     .v2-stack-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 519px) {
     .v2-stack-grid { grid-template-columns: 1fr; }
 }

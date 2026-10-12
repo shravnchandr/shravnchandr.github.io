@@ -2,6 +2,7 @@
    inside use the sign colours rather than the page's. */
 .v2-contact { padding: 96px 0 112px; }
 
+/* Named variant: a narrower focal sign, centred inside the shared grid */
 .v2-contact-inner {
     max-width: 1000px;
     margin: 0 auto;
@@ -47,14 +48,7 @@
 .v2-contact-actions .v2-btn-secondary { background: transparent; color: var(--sign-text); }
 .v2-contact-actions .v2-btn-secondary:hover { background: rgba(255, 255, 255, 0.1); }
 
-.v2-contact-actions .material-symbols-outlined {
-    font-size: 18px;
-    line-height: 1;
-}
-
-.v2-contact-actions .fa-brands {
-    font-size: 15px;
-}
+.v2-contact-actions i { font-size: 15px; }
 
 @media (max-width: 768px) {
     .v2-contact-inner { padding: 0 16px; }

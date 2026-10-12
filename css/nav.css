@@ -54,6 +54,7 @@ body.light-theme .v2-nav {
     text-decoration: none;
     font-size: 14px;
     font-weight: 700;
+    white-space: nowrap;
     transition: background 180ms ease, color 180ms ease;
 }
 .v2-nav-links a .v2-bullet { --b: 20px; }
@@ -116,20 +117,17 @@ body.light-theme .v2-nav {
     justify-content: center;
 }
 
-/* Mid widths: the bullets add ~100px, so tighten the links */
-@media (max-width: 1240px) {
+/* Measured: the full link row needs ~1330px, the tightened one ~1220px.
+   1241–1339px: tighten the links. ≤1240px: compact menu. */
+@media (max-width: 1339px) {
     .v2-nav-links a { padding: 6px 7px; font-size: 13px; gap: 5px; }
     .v2-nav-links a .v2-bullet { --b: 18px; }
 }
 
-@media (max-width: 1024px) {
-    .v2-nav { padding: 12px 24px; }
+/* Compact menu. Keep in sync with MOBILE_MQ in js/nav.js. */
+@media (max-width: 1240px) {
+    .v2-nav { padding: 10px 24px; position: relative; }
     .v2-hire-btn { display: none; }
-}
-
-@media (max-width: 768px) {
-    .v2-nav { padding: 10px 16px; position: relative; }
-    .v2-logo-text { display: none; }
     .v2-mobile-btn { display: flex; }
 
     /* Menu: a solid panel under the platform edge, large tap targets */
@@ -161,4 +159,9 @@ body.light-theme .v2-nav {
         text-decoration: underline;
         text-underline-offset: 4px;
     }
+}
+
+@media (max-width: 768px) {
+    .v2-nav { padding: 10px 16px; }
+    .v2-logo-text { display: none; }
 }

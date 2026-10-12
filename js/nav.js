@@ -5,7 +5,7 @@ import { prefersReducedMotion } from './utils.js';
 
 const ICON_OPEN  = 'fas fa-bars';
 const ICON_CLOSE = 'fas fa-times';
-const MOBILE_MQ  = '(max-width: 768px)';   // matches the hamburger breakpoint in css/nav.css
+const MOBILE_MQ  = '(max-width: 1240px)';  // matches the compact-menu breakpoint in css/nav.css
 
 export function initNav() {
     initMobileMenu();

@@ -111,11 +111,14 @@
     margin-bottom: 10px;
 }
 
-/* Key results: plain ruled rows */
+/* Key results: plain ruled rows — value | description. The value column is
+   sized to its content (never shrinks into the description); on narrow phones
+   the description drops below the value. */
 .v2-metric-row {
     padding: 14px 0;
     border-top: 1px solid var(--v2-border);
-    display: flex;
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
     align-items: baseline;
     gap: 14px;
 }
@@ -126,7 +129,12 @@
     letter-spacing: -0.03em;
     min-width: 70px;
     line-height: 1;
+    white-space: nowrap;
     color: var(--v2-text);
+}
+
+@media (max-width: 400px) {
+    .v2-metric-row { grid-template-columns: 1fr; gap: 6px; }
 }
 
 .v2-metric-row .v2-ml {
@@ -243,8 +251,10 @@
 
 .v2-arch-toggle-ico {
     color: var(--v2-text-muted);
-    font-size: 14px;
+    font-size: 12px;
+    transition: transform 200ms ease;
 }
+.v2-arch-trace[open] .v2-arch-toggle-ico { transform: rotate(90deg); }
 
 .v2-arch-toggle-sub {
     color: var(--v2-text-muted);
@@ -253,10 +263,9 @@
     margin-left: auto;
 }
 
-.v2-arch-trace[open] .v2-arch-toggle-sub::after { content: '↑ collapse'; }
-.v2-arch-trace:not([open]) .v2-arch-toggle-sub::after { content: '↓ expand'; }
-.v2-arch-trace .v2-arch-toggle-sub { font-size: 0; } /* hide static text */
-.v2-arch-trace .v2-arch-toggle-sub::after { font-size: 10px; }
+.v2-arch-trace[open] .v2-arch-toggle-sub::after { content: 'Hide'; }
+.v2-arch-trace:not([open]) .v2-arch-toggle-sub::after { content: 'Show'; }
+.v2-arch-trace .v2-arch-toggle-sub::after { font-size: 12px; font-weight: 700; }
 
 .v2-arch-diagram {
     margin-top: 18px;

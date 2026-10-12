@@ -91,7 +91,7 @@ function _buildPanel(panel) {
 
     const hdr   = _el('div',    'v2-a11y-hdr');
     const title = _el('span',   'v2-a11y-title');
-    title.textContent = '⬡ Accessibility Lab';
+    title.textContent = 'Accessibility Lab';
     const close = _el('button', 'v2-panel-close v2-a11y-close');
     close.setAttribute('aria-label', 'Close Accessibility Lab');
     close.textContent = '×';

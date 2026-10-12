@@ -78,6 +78,5 @@ body.light-theme {
     --v2-on-neural:    #ffffff;
     --v2-focus:       #0062cf;
 
-    --r-orange: #e4540f;
-    --r-none:   #3a3a3a;
+    --r-none:   #3a3a3a;   /* route fills otherwise stay the same in both themes */
 }

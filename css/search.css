@@ -106,13 +106,7 @@
     background: var(--v2-surface-hi);
 }
 
-.v2-search-item-ico {
-    font-size: 16px;
-    width: 22px;
-    text-align: center;
-    flex-shrink: 0;
-    color: var(--v2-text-dim);
-}
+.v2-search-item-ico { --b: 24px; }   /* each result shows its route bullet */
 
 .v2-search-item-body { flex: 1; min-width: 0; }
 
@@ -160,7 +154,8 @@
     display: flex;
     align-items: center;
     gap: 6px;
-    padding: 7px 12px;
+    height: 44px;
+    padding: 0 12px;
     border-radius: var(--radius);
     border: 1px solid var(--v2-border);
     background: var(--v2-surface);

@@ -30,7 +30,7 @@ const INDEX = [
         id:    'asl-guide',
         label: 'ASL Guide',
         sub:   'LangGraph · TF.js · MediaPipe · FastAPI · Redis · PWA',
-        icon:  '★',
+        route: ['A', 'yellow'],   // route bullet shown in results
         tokens: [
             'project','work','case','study','studies','portfolio',  // section words
             'asl','guide','sign','language','fingerspell','fingerspelling',
@@ -58,7 +58,7 @@ const INDEX = [
         id:    'case-maintenance',
         label: 'Predictive Maintenance — Bosch',
         sub:   'Autoencoder anomaly detection · 40+ TB telemetry · est. €300K+ annualized savings',
-        icon:  '⚙',
+        route: ['M', 'blue'],   // route bullet shown in results
         tokens: [
             'project','work','case','study','studies','portfolio',  // section words
             'predictive','maintenance','autoencoder','anomaly','detection',
@@ -72,7 +72,7 @@ const INDEX = [
         id:    'case-valfred',
         label: 'Valfred — GenAI Data Assistant',
         sub:   'Multi-agent · schema retrieval · self-healing SQL · Databricks',
-        icon:  '◆',
+        route: ['G', 'purple'],   // route bullet shown in results
         tokens: [
             'project','work','case','study','studies','portfolio',  // section words
             'valfred','genai','generative','llm','agent','agents','multiagent','multi',
@@ -88,7 +88,7 @@ const INDEX = [
         id:    'retinopathy',
         label: 'Diabetic Retinopathy Classifier',
         sub:   'Keras · Xception · Grad-CAM · Healthcare · 96% Kappa',
-        icon:  '◉',
+        route: ['M', 'blue'],   // route bullet shown in results
         tokens: [
             'project','research','paper','publication',  // section words
             'retinopathy','diabetic','fundus','kappa','96',
@@ -105,7 +105,7 @@ const INDEX = [
         id:    'vqvae-conformer',
         label: 'VQ-VAE + Conformer Translation System',
         sub:   'VQ-VAE · Conformer · CTC-Attention · Beam Search · PyTorch',
-        icon:  '◎',
+        route: ['A', 'yellow'],   // route bullet shown in results
         tokens: [
             'project','research','paper','publication',  // section words
             'vqvae','vq','vae','conformer','quantization','quantize',
@@ -123,7 +123,7 @@ const INDEX = [
         id:    'stgcn',
         label: 'Graph-Based Sign Language Recognition',
         sub:   'ST-GCN · 209 joints · Edge Importance · Spatial Attention',
-        icon:  '◇',
+        route: ['A', 'yellow'],   // route bullet shown in results
         tokens: [
             'project','research','paper','publication',  // section words
             'stgcn','st','gcn','graph','convolutional','network',
@@ -141,7 +141,7 @@ const INDEX = [
         id:    'temporal-asl',
         label: 'LandmarkConformer — Sign Recognition',
         sub:   'Multi-stream Conformer · Google ASL Signs (250 classes) · 76.65% · signer-independent',
-        icon:  '◈',
+        route: ['A', 'yellow'],   // route bullet shown in results
         tokens: [
             'project','research','paper','publication',  // section words
             'temporal','modeling','sequence','video',
@@ -159,7 +159,7 @@ const INDEX = [
         id:    'iccar',
         label: 'IEEE ICCAR 2022 Publication',
         sub:   'MediaPipe · XGBoost · Dynamic Sign Language · Published',
-        icon:  '⬡',
+        route: ['A', 'yellow'],   // route bullet shown in results
         tokens: [
             'project','research','paper','publication',  // section words
             'ieee','iccar','2022','publication','paper','published','doi',
@@ -176,7 +176,7 @@ const INDEX = [
         id:    'bosch-sr',
         label: 'Senior ML Engineer — Bosch',
         sub:   'Autoencoder · Anomaly Detection · Azure · Power BI · Mentoring',
-        icon:  '⚙',
+        route: ['M', 'blue'],   // route bullet shown in results
         tokens: [
             'experience','career','job','role','employment',  // section words
             'bosch','senior','2025','2026','valfred',
@@ -203,7 +203,7 @@ const INDEX = [
         id:    'bosch-ml',
         label: 'ML Engineer — Bosch',
         sub:   'TF 1.x → PyTorch · 48% shorter training · KL divergence drift · Power BI',
-        icon:  '⚙',
+        route: ['M', 'blue'],   // route bullet shown in results
         tokens: [
             'experience','career','job','role','employment',  // section words
             'bosch','ml','2023','2024',
@@ -225,7 +225,7 @@ const INDEX = [
         id:    'bosch-swe',
         label: 'Software Developer — Bosch',
         sub:   'Automation Tools · Flask · PCB Pricing · Automotive Test Data',
-        icon:  '⚙',
+        route: ['S', 'green'],   // route bullet shown in results
         tokens: [
             'experience','career','job','role','employment',  // section words
             'bosch','software','developer','2021','2023',
@@ -242,7 +242,7 @@ const INDEX = [
         id:    'goldman',
         label: 'Goldman Sachs — Junior Analyst (Intern)',
         sub:   'Trade Booking Automation · Finance · Python · 65% faster',
-        icon:  '♦',
+        route: ['S', 'green'],   // route bullet shown in results
         tokens: [
             'experience','career','job','role','employment',  // section words
             'goldman','sachs','gs',
@@ -258,7 +258,7 @@ const INDEX = [
         id:    'education',
         label: 'PES University — BTech EEE',
         sub:   'Electrical & Electronics · CGPA 8.5 · 2017–2021',
-        icon:  '◆',
+        route: ['M', 'blue'],   // route bullet shown in results
         tokens: [
             'education','school',  // section words
             'pes','university','btech','btech','degree',
@@ -274,7 +274,7 @@ const INDEX = [
         id:    'education-ubc',
         label: 'University of British Columbia — MDS',
         sub:   'Master of Data Science · Vancouver, Canada · 2026–2027',
-        icon:  '◆',
+        route: ['M', 'blue'],   // route bullet shown in results
         tokens: [
             'education','school',  // section words
             'ubc','british','columbia','university','masters','mds',
@@ -465,8 +465,10 @@ function _renderResults(hits, query) {
             el.setAttribute('role', 'option');
             el.setAttribute('aria-selected', 'false');
 
-            const ico  = _el('span', 'v2-search-item-ico');
-            ico.textContent = item.icon;
+            const ico  = _el('span', 'v2-bullet v2-search-item-ico');
+            ico.textContent = item.route[0];
+            ico.dataset.r   = item.route[1];
+            ico.setAttribute('aria-hidden', 'true');
 
             const body = _el('div', 'v2-search-item-body');
             const lbl  = _el('div', 'v2-search-item-label');

@@ -108,9 +108,12 @@ textarea:focus-visible { outline: none; }
     color: var(--v2-text);
     transform: translateY(-4px);
 }
+/* Phones: the hero's résumé button is enough — drop the floating duplicate,
+   and keep back-to-top clear of the footer text */
 @media (max-width: 768px) {
-    .back-to-top { bottom: 16px; left: 16px; width: 44px; height: 44px; }
-    .resume-fab  { bottom: 16px; right: 16px; width: 44px; height: 44px; font-size: 17px; }
+    .back-to-top { bottom: 16px; right: 16px; left: auto; width: 44px; height: 44px; }
+    .resume-fab  { display: none; }
+    body > footer { padding-bottom: 76px; }   /* more specific than the footer rule below */
 }
 
 /* Footer */
@@ -205,9 +208,15 @@ body, .v2-nav, .v2-asl-card, .v2-tech-tags span {
     .v2-section-meta { text-align: left; }
 }
 
-@media (max-width: 900px) {
+/* Gutters: 56px desktop · 24px tablet · 16px phone (the hero uses the same) */
+@media (max-width: 1024px) {
     .v2-inner { padding: 0 24px; }
+}
+@media (max-width: 900px) {
     .v2-section { padding: 64px 0; }
+}
+@media (max-width: 600px) {
+    .v2-inner { padding: 0 16px; }
 }
 
 /* ── Shared panel close button ───────────────────────────────────

@@ -24,7 +24,11 @@ export function initTheme() {
     function apply(light) {
         body.classList.toggle('light-theme', light);
         if (btn) {
-            btn.textContent = light ? '☾' : '☀';
+            // Font Awesome, like every other UI icon
+            const icon = document.createElement('i');
+            icon.className = light ? 'fas fa-moon' : 'fas fa-sun';
+            icon.setAttribute('aria-hidden', 'true');
+            btn.replaceChildren(icon);
             btn.setAttribute('aria-label', light ? 'Switch to dark mode' : 'Switch to light mode');
         }
     }
