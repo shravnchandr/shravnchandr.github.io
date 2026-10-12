@@ -13,6 +13,7 @@ import { initDemo }     from './js/demo.js';
 import { initA11yLab }  from './js/a11y.js';
 import { initSearch }   from './js/search.js';
 import { initWebcam }   from './js/webcam.js';
+import { initHeroDemoPlacement } from './js/layout.js';
 import { markSectionsReady } from './js/utils.js';
 
 function initCore() {
@@ -40,6 +41,7 @@ function initSections() {
     initActiveNav();
     initSectionScroll();
     initDemo();
+    initHeroDemoPlacement();
     markSectionsReady();
 }
 

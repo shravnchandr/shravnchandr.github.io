@@ -72,12 +72,12 @@
     .v2-tile-val { margin-top: 16px; }
 }
 
-/* Phones: name, number and label only — the case study has the rest */
+/* Phones: tighter tiles; the one-line ownership stays */
 @media (max-width: 600px) {
     .v2-impact { padding: 40px 0 48px; }
     .v2-tiles { gap: 12px; }
     .v2-tile { padding: 24px 18px 18px; }
-    .v2-tile-owned { display: none; }
+    .v2-tile-owned { margin-top: 10px; padding-top: 10px; font-size: 14px; }
     .v2-tile-val { font-size: 40px; margin-top: 12px; }
     .v2-tile-link { margin-top: 12px; }
 }
@@ -85,3 +85,6 @@
 @media (prefers-reduced-motion: reduce) {
     .v2-tile:hover { transform: none; }
 }
+
+/* The hero's ASL demo card, moved here on single-column layouts (js/layout.js) */
+.v2-overview-demo:not(:empty) { margin-top: 32px; max-width: 640px; }

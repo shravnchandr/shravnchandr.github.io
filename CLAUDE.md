@@ -43,11 +43,12 @@ js/
   a11y.js                   # Accessibility Lab toggle + side panel (ARIA overlays)
   search.js                 # ⌘K semantic search overlay — keyword index, keyboard nav
   webcam.js                 # Live webcam ASL classifier: MediaPipe Hands + MLP inference
+  layout.js                 # Moves the hero's ASL demo card below the project overview on single-column layouts
 
 html/
   nav.html                  # <nav>: logo (S bullet + shravnchandr.nyc), links with section bullets, search, theme, a11y btn, hire-me
   hero.html                 # Hero: headline, live ASL recognition CTA, ASL card
-  impact.html               # At a glance: 3 project tiles, one result each, linking to the case studies  (01 · AT A GLANCE)
+  impact.html               # At a glance: 3 project tiles (result + one-line ownership) linking to the case studies, + #overview-demo-slot  (01 · AT A GLANCE)
   story.html                # Experience line map (UBC now → Bosch roles → Goldman) + earlier education  (02 · EXPERIENCE)
   work.html                 # 3 case studies: maintenance, Valfred, ASL Guide (+ Architecture Trace)  (03 · SELECTED WORK)
   research.html             # Research & Publications: 4 sign-language papers + Retinopathy  (04 · RESEARCH · PUBLICATIONS)
@@ -104,7 +105,7 @@ index.html parsed
   │
   └─ script.js (type="module", deferred by default)
        └─ __fragments.critical → initCore()     (theme, nav, back-to-top, skip link, ASL, a11y, search, webcam)
-          __fragments.all      → initSections() (active nav, scroll reveal, CountUp, demo) → markSectionsReady()
+          __fragments.all      → initSections() (active nav, scroll reveal, CountUp, demo, demo-card placement) → markSectionsReady()
 ```
 
 Below-fold placeholders keep showing skeletons until their own fetch settles, so a stalled section never blocks the hero.
@@ -140,6 +141,9 @@ Each opens with a one-sentence `<p class="v2-case-summary">` (what I owned + the
 ### Experience (`#story`)
 `<ol class="v2-timeline">` drawn as a line map, with `#role-ubc` (current stop, "Now"), `#role-bosch-sr`, `#role-bosch-ml`, `#role-bosch-swe`, `#role-goldman`. Lines: M Production ML (blue), G Applied GenAI (purple), D Data infrastructure (orange), S Software (green); track columns M 0 · G 1 · D 2 · S 3.
 Each stop has a `.v2-tl-station` spanning the columns it serves (`--from`/`--to`) and a `.v2-tl-stripe` (`--i`) for each line shared with the **next** stop — update both when roles change. The senior role shows an outcome + 3 short bullets, with the full versions in `<details class="v2-tl-more">`; earlier roles show only the outcome. Bullets lead with the result in `<strong>`. `#education` holds earlier education (PES).
+
+### Responsive demo placement
+On single-column layouts (≤1024px) `js/layout.js` moves `.v2-hero-right` (the ASL demo card) into `#overview-demo-slot`, after the three project tiles, and back when the layout widens; `hero.css` hides it inside the hero at that width so it never flashes there first.
 
 ### Draft placeholders
 `<span class="v2-todo">TODO: …</span>` marks facts still to be supplied (styled as dashed orange chips). `grep -rn v2-todo html/` must return nothing before publishing.
@@ -241,7 +245,7 @@ Imports `SIGNS`, `CONNECTIONS` from `./asl.js`.
 
 ### `js/scroll.js`
 - `initScrollReveal`: adds `.show` to `.animate-on-scroll` on intersection (threshold 0.12)
-- `initCountUp`: parses `.v2-metric-val` text (e.g. `€300K+`) and counts up on intersection
+- `initCountUp`: parses `.v2-metric-val` text (e.g. `€300K+`) and counts up on intersection. Nothing uses it at the moment: the overview tiles and the experience line deliberately have no count-up or scroll reveal, so they're complete on first paint for quick scanning
 - `initBackToTop`: shows `#back-to-top` after 300px scroll
 - `initSkipLink`: in-page links use native fragment navigation (smooth via CSS `scroll-behavior`); the skip link also focuses `<main>`
 

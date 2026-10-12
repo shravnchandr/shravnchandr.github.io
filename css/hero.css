@@ -327,7 +327,8 @@
     /* Single column: hiring facts straight after the intro, demo after that */
     .v2-hero-left  { order: 1; }
     .v2-glance     { order: 2; }
-    .v2-hero-right { order: 3; }
+    /* The demo card moves below the project overview (js/layout.js) */
+    .v2-hero .v2-hero-right { display: none; }
     .v2-glance { grid-template-columns: repeat(2, 1fr); }
     .v2-glance-cell:nth-child(3) { border-left: none; }
     .v2-glance-cell:nth-child(n+3) { border-top: 1px solid rgba(255, 255, 255, 0.14); }

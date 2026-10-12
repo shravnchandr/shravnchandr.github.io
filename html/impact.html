@@ -1,5 +1,6 @@
 <!-- At a glance: the three strongest projects, one result each, straight after the intro.
-     Each tile links to its full case study. .v2-metric-val values count up (scroll.js). -->
+     Each tile links to its full case study. No scroll reveal or count-up here: these are
+     read at a glance, so they must be complete on first paint. -->
 <section id="overview" class="v2-impact" aria-labelledby="overview-heading">
     <div class="v2-inner">
         <div class="v2-section-header v2-sign">
@@ -9,30 +10,34 @@
         <h2 id="overview-heading" class="v2-sr-only">Selected work at a glance</h2>
 
         <div class="v2-tiles">
-            <a class="v2-tile v2-line-card animate-on-scroll" data-r="blue" href="#case-maintenance">
+            <a class="v2-tile v2-line-card" data-r="blue" href="#case-maintenance">
                 <span class="v2-card-badge"><span class="v2-bullet" data-r="blue" aria-hidden="true">M</span>Bosch · Production ML</span>
                 <span class="v2-tile-name">Predictive maintenance</span>
-                <span class="v2-tile-val v2-metric-val">4 months</span>
+                <span class="v2-tile-val">4 months</span>
                 <span class="v2-tile-label">shorter testing cycles · an estimated €300K+ a year</span>
-                <span class="v2-tile-owned">Owned the anomaly-detection model end to end, on 80+ TB of sensor data.</span>
+                <span class="v2-tile-owned">Owned the anomaly-detection model, from data to production.</span>
                 <span class="v2-tile-link">Case study →</span>
             </a>
-            <a class="v2-tile v2-line-card animate-on-scroll stagger-2" data-r="purple" href="#case-valfred">
+            <a class="v2-tile v2-line-card" data-r="purple" href="#case-valfred">
                 <span class="v2-card-badge"><span class="v2-bullet" data-r="purple" aria-hidden="true">G</span>Bosch · Applied GenAI</span>
                 <span class="v2-tile-name">Valfred — GenAI data assistant</span>
                 <span class="v2-tile-val">1–2 min</span>
                 <span class="v2-tile-label">per data lookup, down from 10–15 minutes</span>
-                <span class="v2-tile-owned">Orchestrated the multi-agent assistant and deployed it on Databricks (beta, ~30 users).</span>
+                <span class="v2-tile-owned">Orchestrated the multi-agent assistant; deployed on Databricks.</span>
                 <span class="v2-tile-link">Case study →</span>
             </a>
-            <a class="v2-tile v2-line-card animate-on-scroll stagger-3" data-r="yellow" href="#case-asl-guide">
+            <a class="v2-tile v2-line-card" data-r="yellow" href="#case-asl-guide">
                 <span class="v2-card-badge"><span class="v2-bullet" data-r="yellow" aria-hidden="true">A</span>Personal project</span>
                 <span class="v2-tile-name">ASL Guide</span>
-                <span class="v2-tile-val v2-metric-val">95.5%</span>
+                <span class="v2-tile-val">95.5%</span>
                 <span class="v2-tile-label">fingerspelling accuracy · 36 classes, held-out split</span>
-                <span class="v2-tile-owned">Built the whole platform: in-browser recognition, LangGraph translation, practice.</span>
+                <span class="v2-tile-owned">Built the whole platform: recognition, translation, practice.</span>
                 <span class="v2-tile-link">Case study →</span>
             </a>
         </div>
+
+        <!-- Single-column layouts: js/layout.js moves the hero's ASL demo card here,
+             so recruiters reach the three projects first -->
+        <div class="v2-overview-demo" id="overview-demo-slot"></div>
     </div>
 </section>
