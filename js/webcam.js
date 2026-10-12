@@ -29,6 +29,10 @@ const SVG_W             = 100;    // #asl-svg viewBox width
 const SVG_H             = 125;    // #asl-svg viewBox height
 const STABLE_FRAMES     = 8;      // consecutive frames before a letter is announced
 const ANNOUNCE_MIN_CONF = 0.6;
+// Easter egg: fingerspell H then I to the live camera → a "next stop" message.
+// Only reachable after the visitor starts the camera; nothing extra downloads.
+const SECRET            = ['H', 'I'];
+const SECRET_WINDOW_MS  = 6000;   // both letters within this time
 
 const BTN_STATE_LOADING = 'loading';
 const BTN_STATE_ACTIVE  = 'active';
@@ -195,6 +199,45 @@ function _announce(key, conf) {
     _announced = key;
     const live = document.getElementById('asl-announce');
     if (live) live.textContent = `Detected ${key}`;
+    _checkSecret(key);
+}
+
+// Letters that held steady (the same ones announced), newest last
+let _committed = [];
+let _secretShown = false;
+
+function _checkSecret(key) {
+    const now = performance.now();
+    _committed = [..._committed, { key, at: now }].filter(c => now - c.at < SECRET_WINDOW_MS).slice(-SECRET.length);
+    if (_secretShown || _committed.map(c => c.key).join('') !== SECRET.join('')) return;
+    _secretShown = true;
+    _showSecret();
+}
+
+function _showSecret() {
+    const wrap = document.querySelector('.v2-asl-canvas-wrap');
+    if (!wrap || wrap.querySelector('.v2-secret')) return;
+    // Overlays the canvas (absolute) — the layout never moves
+    const card = document.createElement('div');
+    card.className = 'v2-secret v2-sign';
+    card.setAttribute('role', 'status');
+    const title = document.createElement('p');
+    title.className = 'v2-secret-title';
+    title.textContent = 'Next stop: a conversation.';
+    const mail = document.createElement('a');
+    mail.href = 'mailto:schandra.nyc@gmail.com';
+    mail.textContent = 'schandra.nyc@gmail.com';
+    const note = document.createElement('p');
+    note.className = 'v2-secret-note';
+    note.textContent = 'You just signed H-I to a model running in your browser.';
+    const close = document.createElement('button');
+    close.type = 'button';
+    close.className = 'v2-secret-close';
+    close.setAttribute('aria-label', 'Close message');
+    close.textContent = '×';
+    close.addEventListener('click', () => card.remove());
+    card.append(close, title, mail, note);
+    wrap.appendChild(card);
 }
 
 function _updatePanel([top, ...rest]) {
@@ -329,7 +372,7 @@ async function _start() {
         pauseASL();
         _showNoHand();
         _setMeta('MediaPipe + MLP · in-browser', '—');
-        _setHint(`in-browser MLP · ${_modelData.metadata?.output_classes ?? 28} classes`);
+        _setHint('psst — try signing H-I');
         _setBtnState(_btn, BTN_STATE_ACTIVE);
         _rafId = requestAnimationFrame(() => _sendFrame(session));
     } catch (err) {
@@ -361,6 +404,7 @@ function _stop(message) {
         hideHandPose();
         resumeASL();
     }
+    _committed = [];
     _setMeta('procedural demo cycle', '—');
     _setHint(message || 'in-browser MLP · A–Z + DEL/SPC');
     _setBtnState(_btn, BTN_STATE_IDLE);

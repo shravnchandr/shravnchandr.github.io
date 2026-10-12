@@ -84,6 +84,7 @@ asl_model.js                # Trained MLP weights + StandardScaler; loaded lazil
                             # Format: { model: {fc1_w,fc1_b,fc2_w,fc2_b,fc3_w,fc3_b}, scaler: {mean,scale} }
                             # Weights stored TRANSPOSED: shape [in_features][out_features]
 dev/export_model.py         # PyTorch → JSON export script (generates asl_model.js; gitignored)
+404.html                    # Service-notice 404 page (GitHub Pages serves it for missing paths)
 social-card.jpg             # 1200×630 link-preview card (og:image / twitter:image), subway style, photo from link_preview.png
 link_preview.png            # Square headshot (JSON-LD image; source photo for the card)
 favicon.svg                 # SVG favicon (favicon.ico: 48px fallback for crawlers/link previews)
@@ -145,6 +146,11 @@ Each stop has a `.v2-tl-station` spanning the columns it serves (`--from`/`--to`
 
 ### Responsive demo placement
 On single-column layouts (≤1024px) `js/layout.js` moves `.v2-hero-right` (the ASL demo card) into `#overview-demo-slot`, after the three project tiles, and back when the layout widens; `hero.css` hides it inside the hero at that width so it never flashes there first.
+
+### Easter eggs (opt-in only — nothing triggers on its own, moves the layout or plays sound)
+- **Fingerspell H-I** in "Try live" (`js/webcam.js`, `SECRET`): two letters that hold steady (the same ones announced to screen readers) within 6s show a small "Next stop: a conversation" sign over the canvas, with the email. The hint "psst — try signing H-I" appears only once the camera runs.
+- **404 page** (`404.html`, root): a service notice with the line map back to each section. Self-contained (inline CSS, absolute links) because GitHub Pages serves it for any missing path.
+- **Console note** in `script.js` for engineers who open DevTools.
 
 ### Draft placeholders
 `<span class="v2-todo">TODO: …</span>` marks facts still to be supplied (styled as dashed orange chips). `grep -rn v2-todo html/` must return nothing before publishing.

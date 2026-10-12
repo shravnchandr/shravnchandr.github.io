@@ -19,13 +19,17 @@ import { markSectionsReady } from './js/utils.js';
 function initCore() {
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Console Easter egg — for the curious engineer who opens DevTools
+    // Console note — for the engineer who opens DevTools
     console.log(
-        '%c⬡ Portfolio · Shravan Chandra\n%cMachine Learning Engineer · schandra.nyc@gmail.com\n%cStack: TF.js · LangGraph · FastAPI · Gemini 2.5 Flash · MediaPipe\n%cYou found the console. Say hi → github.com/shravnchandr',
-        'color:#7c4dff;font-weight:700;font-size:14px;line-height:1.8',
-        'color:#a0a9b8;font-size:12px;line-height:1.8',
-        'color:#00bfa5;font-size:12px;line-height:1.8',
-        'color:#6b7585;font-size:12px;line-height:1.8'
+        '%c S %c Shravan Chandra · Machine Learning Engineer\n\n' +
+        '%cHow this page works:\n' +
+        '  · plain HTML partials fetched by loader.js — no framework, no build step\n' +
+        '  · the ASL classifier (“Try live”) is a small MLP running in your browser: MediaPipe landmarks → softmax\n' +
+        '  · the design is a subway signage system: route bullets, line map, one CSS token file\n\n' +
+        'Source: github.com/shravnchandr/shravnchandr.github.io · Say hi: schandra.nyc@gmail.com',
+        'background:#6d6e71;color:#fff;border-radius:50%;padding:2px 7px;font-weight:700',
+        'color:inherit;font-weight:700;font-size:13px',
+        'color:inherit;font-size:12px;line-height:1.6'
     );
 
     initTheme();
