@@ -69,7 +69,7 @@ body.light-theme {
     --v2-surface-hi2: #e0e0dd;
     --v2-border:      #d4d4d0;
     --v2-text:        #111111;
-    --v2-text-dim:    #444444;
+    --v2-text-dim:    #333333;   /* 12.6:1 on white */
     --v2-text-muted:  #5c5c5c;
     --v2-neural:      #a3249a;
     --v2-data:        #007a33;

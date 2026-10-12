@@ -55,7 +55,7 @@
 .v2-hero-role {
     font-size: clamp(18px, 2vw, 24px);
     font-weight: 700;
-    color: var(--v2-text-dim);
+    color: var(--v2-text);
     margin-top: 14px;
 }
 
@@ -207,10 +207,16 @@
 }
 
 .v2-asl-canvas-wrap {
-    aspect-ratio: 4 / 5;
+    min-height: 320px;          /* fills the row, so the black panel meets the prediction column */
     position: relative;
-    background: var(--v2-bg);
     border-right: 1px solid var(--v2-border);
+    /* Always black, like the demo section's webcam — the hand's colours are made for it,
+       and on the light theme a white canvas all but disappears. Local tokens keep the
+       overlay text readable in both themes. */
+    background: #050505;
+    --v2-text: #f2f2f2;
+    --v2-text-dim: #b4b4b4;
+    --v2-text-muted: #949494;
 }
 
 .v2-asl-svg { width: 100%; height: 100%; display: block; }
@@ -355,7 +361,7 @@
     .v2-glance dd span { font-size: 13px; }
 
     /* Demo card stays two columns, just smaller */
-    .v2-asl-canvas-wrap { aspect-ratio: 3 / 4; }
+    .v2-asl-canvas-wrap { min-height: 260px; }   /* no aspect-ratio: with a min-height it would force the column wider */
     .v2-asl-pred { padding: 14px 12px; gap: 10px; }
     .v2-pred-letter { width: 76px; height: 76px; font-size: 48px; }
     .v2-asl-meta { font-size: 9px; }

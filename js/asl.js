@@ -199,18 +199,18 @@ export function initASL() {
     const reducedMotion = prefersReducedMotion();
 
     for (let i = 0; i <= 10; i++)
-        svg.appendChild(svgEl('line',{x1:i*10,y1:0,x2:i*10,y2:125,stroke:'#2a3342','stroke-width':0.15}));
+        svg.appendChild(svgEl('line',{x1:i*10,y1:0,x2:i*10,y2:125,stroke:'#262626','stroke-width':0.15}));
     for (let i = 0; i <= 13; i++)
-        svg.appendChild(svgEl('line',{x1:0,y1:i*10,x2:100,y2:i*10,stroke:'#2a3342','stroke-width':0.15}));
+        svg.appendChild(svgEl('line',{x1:0,y1:i*10,x2:100,y2:i*10,stroke:'#262626','stroke-width':0.15}));
 
     const hand = svg.appendChild(svgEl('g', {}));
     const connLines = CONNECTIONS.map(() =>
         hand.appendChild(svgEl('line',{stroke:'#00bfa5','stroke-width':1.1,'stroke-linecap':'round',opacity:0.85}))
     );
     const jointDots = Array.from({length:21},(_,i) =>
-        hand.appendChild(svgEl('circle',{r:i===0?2.2:(i%4===0?1.8:1.3),fill:'#ff6d00',stroke:'#0b0f14','stroke-width':0.3}))
+        hand.appendChild(svgEl('circle',{r:i===0?2.2:(i%4===0?1.8:1.3),fill:'#ff6319',stroke:'#050505','stroke-width':0.3}))
     );
-    const bbox = hand.appendChild(svgEl('rect',{fill:'none',stroke:'#7c4dff','stroke-width':0.4,'stroke-dasharray':'2 2'}));
+    const bbox = hand.appendChild(svgEl('rect',{fill:'none',stroke:'#949494','stroke-width':0.4,'stroke-dasharray':'2 2'}));
 
     const HOLD_MS      = 1100;
     const MORPH_MS     = 420;

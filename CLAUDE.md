@@ -132,7 +132,7 @@ Sections load in this order (matching `loader.js` FRAGMENTS array):
 | 10 | contact.html | `#contact` | Contact (08 · NEXT STOP) |
 
 ### Hero hiring snapshot
-`<dl class="v2-glance v2-sign">` under the hero, an information board: current stop (location) / next stop (target roles + availability) / work authorization / strengths. Keep it in sync with `now.html`, `contact.html`, the UBC stop in `story.html` and the meta tags.
+`<dl class="v2-glance v2-sign">` under the hero, an information board: based in / looking for (target roles + availability) / work authorization / strengths. Keep it in sync with `now.html`, `contact.html`, the UBC stop in `story.html` and the meta tags.
 
 ### Selected work (`#work`)
 `<article class="v2-case">` per case study: `#case-maintenance`, `#case-valfred`, `#case-asl-guide`. (Retinopathy lives in Research as `#research-retinopathy`.)
