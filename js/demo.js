@@ -10,7 +10,7 @@
  */
 
 import { SIGNS, CONNECTIONS } from './asl.js';
-import { clearEl, prefersReducedMotion } from './utils.js';
+import { clearEl, prefersReducedMotion, routeFor } from './utils.js';
 
 const NS = 'http://www.w3.org/2000/svg';
 
@@ -175,6 +175,7 @@ export function initDemo() {
         if (sign) {
             letterEl.textContent = sign;
             letterEl.className = 'v2-demo-sign-letter';
+            letterEl.dataset.r = routeFor(sign);
             void letterEl.offsetWidth;
             letterEl.classList.add('pop');
         } else {

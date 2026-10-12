@@ -40,13 +40,13 @@ const FEATURES = [
         icon: 'fas fa-circle-half-stroke',
         accent: 'data',
         title: 'WCAG-AA contrast',
-        note: 'v2-text on v2-bg: 12.3 : 1. v2-text-dim on v2-surface: 5.1 : 1. Both exceed the 4.5 : 1 AA minimum.',
+        note: 'Text on the page: 17.4 : 1 (dark) / 18.9 : 1 (light). Secondary text: 8.9 : 1 / 9.3 : 1. Every route bullet\'s letter is ≥ 4.5 : 1 on its colour.',
     },
     {
         icon: 'fas fa-keyboard',
         accent: 'neural',
         title: 'Keyboard & skip nav',
-        note: 'Tab reveals a skip-to-main link. Pill nav uses plain links (no menubar role). Focus-visible ring on every interactive element.',
+        note: 'Tab reveals a skip-to-main link. The nav uses plain links (no menubar role). Focus-visible ring on every interactive element.',
     },
 ];
 

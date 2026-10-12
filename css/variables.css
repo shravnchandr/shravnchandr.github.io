@@ -1,48 +1,83 @@
 /* ─────────────────────────────────────────────────────────────
-   v2 Lab palette — Dark is the default
+   Subway signage palette — Dark is the default
    ─────────────────────────────────────────────────────────────
+   Rules the rest of the CSS follows:
+     · Colour = route. Accents only on route bullets and lines; text stays
+       black or white. --v2-neural / --v2-data / --v2-inference are the
+       text-safe versions, for the few places colour carries meaning in text.
+     · Signs (--sign-*) are black with white type in BOTH themes.
+     · Circles are reserved for route bullets; everything else is a rectangle.
+     · No gradients, glows or tinted shadows.
+
+   Route fills (--r-*) and the letters on them (--r-*-on) reach ≥4.5:1.
+   Fills reach ≥3:1 against the dark page; on the light page, yellow and
+   lime don't, so bullets and lines carry a thin outline there (signage.css).
+
    Motion tokens referenced by JS (utils.js, demo.js):
      --spring-bounce  used in updateLetterDisplay() and demo tick()
      --spring-smooth  available for future JS use
    ───────────────────────────────────────────────────────────── */
 :root {
     color-scheme: dark;   /* native scrollbars / form controls match the theme */
-    /* Motion — used by JS for inline animation strings */
     --spring-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
     --spring-smooth: cubic-bezier(0.22, 0.61, 0.36, 1);
-    --v2-bg:          #0b0f14;
-    --v2-surface:     #131820;
-    --v2-surface-hi:  #1a212c;
-    --v2-surface-hi2: #222a36;
-    --v2-border:      #2a3342;
-    --v2-text:        #e6ebf2;
-    --v2-text-dim:    #a0a9b8;
-    --v2-text-muted:  #8a94a4;   /* ≥4.5:1 on every surface incl. surface-hi2 hover */
-    --v2-neural:      #9a76ff;   /* lightened from #7c4dff for text contrast */
-    --v2-data:        #00bfa5;
-    --v2-inference:   #ff6d00;
-    --v2-on-inference: #0b0f14;  /* text on inference fills (white fails at 2.8:1) */
-    --v2-on-neural:    #0b0f14;
-    --v2-hero-glow:   radial-gradient(circle at 70% 20%, #7c4dff22, transparent 60%),
-                      radial-gradient(circle at 20% 80%,  #00bfa522, transparent 60%);
+
+    --font-sign: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+    --font-mono: 'Fira Code', ui-monospace, Menlo, monospace;   /* code, logs, live data only */
+    --radius: 4px;
+
+    --v2-bg:          #0d0d0d;
+    --v2-surface:     #141414;
+    --v2-surface-hi:  #1e1e1e;
+    --v2-surface-hi2: #282828;
+    --v2-border:      #2c2c2c;
+    --v2-text:        #f2f2f2;
+    --v2-text-dim:    #b4b4b4;
+    --v2-text-muted:  #949494;   /* ≥4.8:1 on every surface incl. surface-hi2 */
+    --v2-neural:      #d264c8;   /* purple — the 7 */
+    --v2-data:        #2fae5a;   /* green — the 4 5 6 */
+    --v2-inference:   #ff6319;   /* orange — the B D F M */
+    --v2-on-inference: #0a0a0a;
+    --v2-on-neural:    #0a0a0a;
+    --v2-focus:       #fccc0a;
+
+    /* Signs */
+    --sign-bg:   #050505;
+    --sign-text: #f5f5f5;
+    --sign-dim:  #bdbdbd;
+    --sign-rule: #f5f5f5;
+
+    /* Route fills + the letter colour on each */
+    --r-blue:   #0062cf; --r-blue-on:   #ffffff;
+    --r-orange: #ff6319; --r-orange-on: #0a0a0a;
+    --r-lime:   #6cbe45; --r-lime-on:   #0a0a0a;
+    --r-brown:  #996633; --r-brown-on:  #ffffff;
+    --r-grey:   #6d6e71; --r-grey-on:   #ffffff;
+    --r-yellow: #fccc0a; --r-yellow-on: #0a0a0a;
+    --r-red:    #d6302a; --r-red-on:    #ffffff;
+    --r-green:  #00873c; --r-green-on:  #ffffff;
+    --r-purple: #b933ad; --r-purple-on: #ffffff;
+    --r-none:   #262626; --r-none-on:   #ffffff;   /* letter with no route */
 }
 
-/* Light-mode overrides */
+/* Light theme = the map: white ground, saturated lines, signs stay black */
 :root:has(body.light-theme) { color-scheme: light; }
 body.light-theme {
-    --v2-bg:          #f7f5f0;
-    --v2-surface:     #ffffff;
-    --v2-surface-hi:  #f1ede4;
-    --v2-surface-hi2: #e7e2d6;
-    --v2-border:      #d6cfbe;
-    --v2-text:        #1a1a1a;
-    --v2-text-dim:    #4a4a4a;
-    --v2-text-muted:  #635d48;
-    --v2-neural:      #6a3ff0;
-    --v2-data:        #00796b;
-    --v2-inference:   #b84800;
+    --v2-bg:          #ffffff;
+    --v2-surface:     #fafafa;
+    --v2-surface-hi:  #ececea;
+    --v2-surface-hi2: #e0e0dd;
+    --v2-border:      #d4d4d0;
+    --v2-text:        #111111;
+    --v2-text-dim:    #444444;
+    --v2-text-muted:  #5c5c5c;
+    --v2-neural:      #a3249a;
+    --v2-data:        #007a33;
+    --v2-inference:   #c2410c;
     --v2-on-inference: #ffffff;
     --v2-on-neural:    #ffffff;
-    --v2-hero-glow:   radial-gradient(circle at 70% 20%, #7c4dff18, transparent 60%),
-                      radial-gradient(circle at 20% 80%,  #00a18918, transparent 60%);
+    --v2-focus:       #0062cf;
+
+    --r-orange: #e4540f;
+    --r-none:   #3a3a3a;
 }

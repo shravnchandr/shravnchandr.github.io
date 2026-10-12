@@ -172,8 +172,22 @@ export function clearEl(element) {
     while (element.firstChild) element.removeChild(element.firstChild);
 }
 
+// Fingerspelled letter → the subway route that shares it. Letters with no
+// route (H, I, K, O, P, T, U, V, X, Y, 8, 9, 0) get the dark bullet, as on the poster.
+const ROUTES = {};
+[['ACE', 'blue'], ['BDFM', 'orange'], ['G', 'lime'], ['JZ', 'brown'], ['LS', 'grey'],
+ ['NQRW', 'yellow'], ['123', 'red'], ['456', 'green'], ['7', 'purple']]
+    .forEach(([keys, r]) => { for (const k of keys) ROUTES[k] = r; });
+
+/** Route colour name for a sign key (used as the element's data-r). */
+export function routeFor(key) {
+    return ROUTES[key] || 'none';
+}
+
 /**
  * Update the ASL prediction letter display with an M3 spring pop animation.
+ * The display is a route bullet: its colour follows the letter (routeFor).
+ * Multi-character keys (DEL, SPC, —) are marked data-long for a smaller size.
  * Shared between the procedural cycle (asl.js) and the live webcam classifier
  * (webcam.js) to avoid duplicating the reflow-trigger pattern.
  *
@@ -186,6 +200,8 @@ export function updateLetterDisplay(letterEl, key, prevKey) {
     if (!letterEl) return prevKey;
     if (key !== prevKey) {
         letterEl.textContent = key;
+        letterEl.dataset.r = routeFor(key);
+        letterEl.toggleAttribute('data-long', key.length > 1);
         letterEl.style.animation = 'none';
         void letterEl.offsetWidth; // force reflow
         letterEl.style.animation = 'm3LetterPop 520ms var(--spring-bounce)';

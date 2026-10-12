@@ -4,7 +4,7 @@ This file provides guidance to Claude Code when working with code in this reposi
 
 ## Project Overview
 
-Personal portfolio website for Shravan Chandra, Machine Learning Engineer (Production ML & Applied GenAI). Single-page application: hero with hiring snapshot, impact metrics, experience timeline, three case studies, research, ASL demo.
+Personal portfolio website for Shravan Chandra, Machine Learning Engineer (Production ML & Applied GenAI). Single-page application: hero with hiring snapshot, three-project overview, experience line map, three case studies, research, ASL demo.
 
 **Deployment target:** GitHub Pages (`shravnchandr.github.io`), auto-deploys on push to `master`.
 
@@ -24,7 +24,7 @@ python3 -m http.server
 
 **Fully static site** — no build tools, bundlers, package managers, or compilation step. Edit files and refresh the browser.
 
-The site uses a **v2 Dark Bold · Lab** design (Material 3 Expressive). All styles are under `css/`, all HTML fragments in `html/`, all JS in `js/`. The old `script.js` (single-file) has been replaced by ES modules.
+The site uses an **NYC Subway signage** design (after the 1970 NYCTA Graphics Standards Manual): black station signs with a thin white rule, Helvetica, coloured route bullets, and a line map for the career. See *CSS Design System* below for the rules. All styles are under `css/`, all HTML fragments in `html/`, all JS in `js/`. The old `script.js` (single-file) has been replaced by ES modules.
 
 ### File Map
 
@@ -45,44 +45,45 @@ js/
   webcam.js                 # Live webcam ASL classifier: MediaPipe Hands + MLP inference
 
 html/
-  nav.html                  # <nav>: logo, pill nav, search trigger, theme toggle, a11y btn, hire-me
+  nav.html                  # <nav>: logo (S bullet + shravnchandr.nyc), links with section bullets, search, theme, a11y btn, hire-me
   hero.html                 # Hero: headline, live ASL recognition CTA, ASL card
-  impact.html               # 6 impact metrics (CountUp on scroll)
-  story.html                # Experience timeline (all roles visible) + education  (02 · EXPERIENCE)
+  impact.html               # At a glance: 3 project tiles, one result each, linking to the case studies  (01 · AT A GLANCE)
+  story.html                # Experience line map (UBC now → Bosch roles → Goldman) + earlier education  (02 · EXPERIENCE)
   work.html                 # 3 case studies: maintenance, Valfred, ASL Guide (+ Architecture Trace)  (03 · SELECTED WORK)
   research.html             # Research & Publications: 4 sign-language papers + Retinopathy  (04 · RESEARCH · PUBLICATIONS)
   demo.html                 # Live Demo section: scripted ASL Guide pipeline replay  (05 · LIVE DEMO)
   stack.html                # 5-column skills grid  (06 · STACK)
   now.html                  # "What I'm on" + OSS contributions  (07 · NOW)
-  contact.html              # Contact h2, 3 CTA buttons (Email / LinkedIn / GitHub)  (08 · NEXT)
+  contact.html              # One large "Next Stop" sign: h2, 3 CTA buttons, accessibility line  (08 · NEXT STOP)
 
 css/
   main.css                  # @import entry point — no legacy layers
-  variables.css             # All design tokens (dark + light-theme palette)
-  base.css                  # body/reset rules, @font-face, .v2-section, .v2-modal-overlay, .v2-panel-close, FOUC guard
+  variables.css             # All design tokens: page palette (dark + light), sign colours, route colours (--r-*)
+  base.css                  # body/reset rules, focus ring, .v2-section, section-header signs, .v2-modal-overlay, .v2-panel-close, FOUC guard
+  signage.css               # Route bullets (.v2-bullet[data-r]), diamonds, .v2-sign, .v2-line-card, .v2-legend, .v2-card-badge, .v2-access
   skeleton.css              # Shimmer screens for nav/hero/impact/below-fold (visibility override trick)
   nav.css                   # .v2-nav sticky + mobile responsive
   hero.css                  # Hero layout, ASL card, status badge, wavy underline SVG
-  impact.css                # 6-cell metrics grid
+  impact.css                # At-a-glance project tiles
   demo.css                  # Live demo section: webcam panel, pipeline panel, log
-  story.css                 # Experience timeline, education
-  cards.css                 # .v2-panel-chrome, badges, buttons (.v2-btn-*), Architecture Trace diagram
+  story.css                 # Experience line map (stripes + stations), earlier education
+  cards.css                 # .v2-panel-chrome, buttons (.v2-btn-*), case-study facts + summary, key-result rows, Architecture Trace
   research.css              # Research section: featured card, 2-col row, bullet list
-  stack.css                 # 5-col skill categories grid
+  stack.css                 # 5-col route tiles, one per skill category
   now.css                   # Now + OSS cards
   contact.css               # Contact section gradient bg + icon sizing
   a11y.css                  # Accessibility Lab toggle btn, side panel, ARIA highlight overlays
   search.css                # ⌘K overlay, modal, results list, nav trigger btn
   webcam.css                # Webcam video overlay, toggle button (.v2-webcam-*), status dot
-  animations.css            # M3 spring keyframes, [data-m3-press], [data-m3-morph],
-                            #   [data-hover-lift], .animate-in, .stagger-2–5 — LOADED LAST
+  animations.css            # Spring keyframes, [data-m3-press], [data-hover-lift],
+                            #   .animate-in, .stagger-2–5 — LOADED LAST
 
 asl_model.js                # Trained MLP weights + StandardScaler; loaded lazily by webcam.js
                             # Defines two globals: ASL_MODEL_DATA and ASL_SCALER_DATA
                             # Format: { model: {fc1_w,fc1_b,fc2_w,fc2_b,fc3_w,fc3_b}, scaler: {mean,scale} }
                             # Weights stored TRANSPOSED: shape [in_features][out_features]
 dev/export_model.py         # PyTorch → JSON export script (generates asl_model.js; gitignored)
-social-card.jpg             # 1200×630 link-preview card (og:image / twitter:image), rendered from link_preview.png
+social-card.jpg             # 1200×630 link-preview card (og:image / twitter:image), rendered from link_preview.png — still the pre-subway design
 link_preview.png            # Square headshot (JSON-LD image; source photo for the card)
 favicon.svg                 # SVG favicon
 Shravan_Chandra_Resume.pdf  # Downloadable resume
@@ -120,24 +121,25 @@ Sections load in this order (matching `loader.js` FRAGMENTS array):
 |---|---|---|---|
 | 1 | nav.html | — | Sticky nav |
 | 2 | hero.html | — | Headline + ASL demo card |
-| 3 | impact.html | — | 6 impact metrics (01 · IMPACT) |
-| 4 | story.html | `#story` | Experience timeline (02 · EXPERIENCE) |
+| 3 | impact.html | `#overview` | Three project tiles (01 · AT A GLANCE) |
+| 4 | story.html | `#story` | Experience line map (02 · EXPERIENCE) |
 | 5 | work.html | `#work` | Case studies (03 · SELECTED WORK) |
 | 6 | research.html | `#research` | Research & Publications (04 · RESEARCH) |
 | 7 | demo.html | `#demo` | Live ASL pipeline demo (05 · LIVE DEMO) |
 | 8 | stack.html | `#stack` | Skills grid (06 · STACK) |
 | 9 | now.html | `#now` | Now + OSS (07 · NOW) |
-| 10 | contact.html | `#contact` | Contact (08 · NEXT) |
+| 10 | contact.html | `#contact` | Contact (08 · NEXT STOP) |
 
 ### Hero hiring snapshot
-`<dl class="v2-glance">` under the hero: based in / looking for / work authorization / strengths. Keep it in sync with `now.html`, `contact.html` and the meta tags.
+`<dl class="v2-glance v2-sign">` under the hero, an information board: based in / next stop (target roles + availability) / work authorization / strengths. Keep it in sync with `now.html`, `contact.html`, the UBC stop in `story.html` and the meta tags.
 
 ### Selected work (`#work`)
 `<article class="v2-case">` per case study: `#case-maintenance`, `#case-valfred`, `#case-asl-guide`. (Retinopathy lives in Research as `#research-retinopathy`.)
-Each uses a `<dl class="v2-case-facts">` (Problem / What I owned / Result / Key decision / How it's measured).
+Each opens with a one-sentence `<p class="v2-case-summary">` (what I owned + the result), then a `<dl class="v2-case-facts">` (Problem / What I owned / Result / Key decision / How it's measured). The `#overview` tiles link here.
 
 ### Experience (`#story`)
-`<ol class="v2-timeline">` with `#role-bosch-sr`, `#role-bosch-ml`, `#role-bosch-swe`, `#role-goldman`. Latest role is expanded; earlier roles use `<details class="v2-tl-more">`. Bullets lead with the result in `<strong>`.
+`<ol class="v2-timeline">` drawn as a line map, with `#role-ubc` (current stop, "Now"), `#role-bosch-sr`, `#role-bosch-ml`, `#role-bosch-swe`, `#role-goldman`. Lines: M Production ML (blue), G Applied GenAI (purple), D Data infrastructure (orange), S Software (green); track columns M 0 · G 1 · D 2 · S 3.
+Each stop has a `.v2-tl-station` spanning the columns it serves (`--from`/`--to`) and a `.v2-tl-stripe` (`--i`) for each line shared with the **next** stop — update both when roles change. The senior role shows an outcome + 3 short bullets, with the full versions in `<details class="v2-tl-more">`; earlier roles show only the outcome. Bullets lead with the result in `<strong>`. `#education` holds earlier education (PES).
 
 ### Draft placeholders
 `<span class="v2-todo">TODO: …</span>` marks facts still to be supplied (styled as dashed orange chips). `grep -rn v2-todo html/` must return nothing before publishing.
@@ -176,6 +178,7 @@ Shared DOM/UI helpers imported by `a11y.js`, `search.js`, `asl.js`, `webcam.js`,
 - `renderTop3(container, rows)` — renders Top-3 rows, reusing existing nodes
 - `prefersReducedMotion()` / `scrollToEl(el)` — motion-aware helpers
 - `clearEl(element)` — removes all child nodes from a DOM element; replaces the repeated `while (el.firstChild) el.removeChild(el.firstChild)` idiom
+- `routeFor(key)` — subway route colour for a sign key (A/C/E → blue, N/Q/R/W → yellow, …; no route → `none`). `updateLetterDisplay` sets it as `data-r`, so the prediction letter is a route bullet; `demo.js` does the same for its overlay letter
 
 ### `js/asl.js`
 Exports `initASL`, `SIGNS`, `CONNECTIONS`, `spellSequence`, `pauseASL`, `resumeASL`, `drawHandPose`.
@@ -193,7 +196,7 @@ Exports `initASL`, `SIGNS`, `CONNECTIONS`, `spellSequence`, `pauseASL`, `resumeA
 
 ### `js/nav.js`
 - `initMobileMenu`: hamburger toggle, close on link click or outside click
-- `initActiveNav`: IntersectionObserver highlights the active pill nav link
+- `initActiveNav`: IntersectionObserver highlights the active nav link
 - `initLogoEasterEgg`: clicking `.v2-logo` calls `spellSequence(['S','H','R','A','V','A','N'])` and smooth-scrolls to top; `preventDefault` suppresses the `href="/"` reload
 
 ### `js/a11y.js`
@@ -204,7 +207,7 @@ Exports `initASL`, `SIGNS`, `CONNECTIONS`, `spellSequence`, `pauseASL`, `resumeA
 
 ### `js/search.js`
 - `initSearch()` — builds the search overlay via DOM, binds `⌘K`/`Ctrl+K`, wires `#search-trigger` in the nav
-- `INDEX`: 14 entries (4 projects/case studies + 4 research + 4 experience + 2 education), each with `tokens[]`, `label`, `sub`, `icon`, `action()`
+- `INDEX`: 14 entries (4 projects/case studies + 4 research + 4 experience + 2 education), each with `tokens[]`, `label`, `sub`, `icon`, `action()`. The UBC entry jumps to `#role-ubc`, PES to `#education`
 - `_query(raw)` — tokenises query (strips stop words, normalises), scores against `INDEX`:
   - Exact match: `+5` (len ≥ 5), `+3` (len ≥ 3), `+1` (short)
   - Prefix match (query is prefix of token, len ≥ 3): `+2`
@@ -246,37 +249,43 @@ Imports `SIGNS`, `CONNECTIONS` from `./asl.js`.
 
 ## CSS Design System
 
-### Theme (follows OS by default)
-`:root` in `css/variables.css` defines the dark palette. `body.light-theme` overrides to warm cream. With no saved choice the page follows `prefers-color-scheme`; an inline script at the top of `<body>` in `index.html` applies the class before first paint, and `js/theme.js` wires the toggle and live OS changes. Choosing the OS's own theme clears the saved key. Theme key in localStorage is `theme-v2` (the old key `theme` drove the legacy dark-theme/light-theme class system — do not reuse it).
+### Subway signage rules
+Based on the 1970 NYCTA Graphics Standards Manual (Vignelli/Noorda, Unimark). Keep to these when adding anything:
+- **Colour = route.** Accent colours appear only on route bullets and lines (`--r-*`); text, numbers and links stay black/white. Cards carry their route via `data-r` on a `.v2-line-card` (6px line on top).
+- **Signs are black in both themes** (`.v2-sign`: `--sign-bg`, white text, thin white rule near the top). Signs are for wayfinding: section headers, the hiring snapshot, the ASL card strips, earlier education, contact. Content cards are `.v2-line-card`, not signs.
+- **One sans:** the Helvetica stack (`--font-sign`). Sign names are Medium (500), bullets Bold (700), as in the manual. Fira Code (`--font-mono`) only for code, logs and live data.
+- **Circles are reserved for route bullets**; everything else is a rectangle (`--radius: 4px`). A diamond bullet (`.v2-bullet--diamond`, label wrapped in `<span>`) marks work in progress — "limited service".
+- **No gradients, glows or tinted shadows.**
+- Sections and their routes: 1 At a Glance (red) · 2 Experience (blue) · 3 Selected Work (orange) · 4 Research (purple) · 5 Pipeline Replay (yellow) · 6 Stack (green) · 7 Now (brown) · 8 Next Stop (grey). Nav links carry the same bullets.
+- Bullet letters reach ≥4.5:1 on their fill. On the light theme, bullets and lines get a thin outline, because yellow and lime are under 3:1 on white.
 
-### v2 colour tokens (in `css/variables.css`)
-```css
-:root {
-  --v2-bg: #0b0f14;           /* page background */
-  --v2-surface: #131820;      /* card surface */
-  --v2-surface-hi: #1a212c;   /* elevated surface */
-  --v2-surface-hi2: #222a36;  /* hover state */
-  --v2-border: #2a3342;
-  --v2-text: #e6ebf2;
-  --v2-text-dim: #a0a9b8;
-  --v2-text-muted: #6b7585;
-  --v2-neural: #7c4dff;       /* purple accent */
-  --v2-data: #00bfa5;         /* teal accent */
-  --v2-inference: #ff6d00;    /* orange accent */
-}
-body.light-theme {
-  --v2-bg: #f7f5f0;           /* warm cream */
-  --v2-surface: #ffffff;
-  /* … overrides … */
-}
+Section header markup:
+```html
+<div class="v2-section-header v2-sign">
+    <div class="v2-section-name"><span class="v2-bullet" data-r="blue" aria-hidden="true">2</span>Experience</div>
+    <div class="v2-section-meta">short summary</div>
+</div>
 ```
 
-### M3 Expressive motion (`css/animations.css`)
+### Theme (follows OS by default)
+`:root` in `css/variables.css` defines the dark palette; `body.light-theme` overrides it ("the map": white ground, signs stay black). With no saved choice the page follows `prefers-color-scheme`; an inline script at the top of `<body>` in `index.html` applies the class before first paint, and `js/theme.js` wires the toggle and live OS changes. Choosing the OS's own theme clears the saved key. Theme key in localStorage is `theme-v2` (the old key `theme` drove the legacy dark-theme/light-theme class system — do not reuse it).
+
+### Tokens (in `css/variables.css`)
+```css
+--v2-bg / --v2-surface / --v2-surface-hi / --v2-surface-hi2 / --v2-border   /* page surfaces */
+--v2-text / --v2-text-dim / --v2-text-muted                                 /* text; muted ≥4.8:1 everywhere */
+--v2-neural / --v2-data / --v2-inference   /* text-safe purple / green / orange, for rare meaningful colour */
+--sign-bg / --sign-text / --sign-dim / --sign-rule                           /* signs, same in both themes */
+--r-blue … --r-none, each with --r-*-on                                     /* route fills + letter colour */
+--font-sign / --font-mono / --radius / --v2-focus
+```
+`[data-r="blue"]` etc. (in `signage.css`) expose a route as `--c` / `--on` to the element and its children. Components read them with a fallback (`var(--c, …)`) — never set `--c` as a default on a class, or it will beat `[data-r]` on the same element.
+
+### Motion (`css/animations.css`)
 - `[data-m3-press]` — spring press-state on buttons (scale 0.94 on active, bounce back)
-- `[data-m3-morph]` — primary CTAs morph to pill (`border-radius: 999px`) on hover
 - `[data-hover-lift]` — cards translateY(-3px) with spring easing on hover
 - `m3LetterPop` keyframe — spring-scale pop for the ASL prediction letter on change
-- `scan`, `pop`, `blink` keyframes — used by demo section
+- `pop`, `blink` keyframes — used by demo section
 - `.animate-in` — fires on page load (hero columns), not scroll-gated
 - `.stagger-2` → `transition-delay: 90ms`, `.stagger-3` → 180ms, etc.
 - `@media (prefers-reduced-motion: reduce)` — disables all the above
@@ -291,10 +300,10 @@ body.loading .v2-skeleton { visibility: visible; }
 This lets skeleton shimmer screens show while the real content stays hidden — no JS required.
 
 ### Architecture Trace
-The ASL Guide case study (`#case-asl-guide`) contains a `<details class="v2-arch-trace">` as a third child of the grid. `.v2-case .v2-arch-trace` in `css/cards.css` sets `grid-column: 1 / -1` so it spans both columns. Styling lives in `css/cards.css` under the `/* ── Architecture Trace ── */` section.
+The ASL Guide case study (`#case-asl-guide`) contains a `<details class="v2-arch-trace">` as a third child of the grid. `.v2-case .v2-arch-trace` in `css/cards.css` sets `grid-column: 1 / -1` so it spans both columns. Each layer is a line (browser green, API orange, data purple). Styling lives in `css/cards.css`.
 
 ### Transition rule
-Only `color` is transitioned on `body` and surface elements — never `background` shorthand (browsers can't interpolate multi-layer radial gradients and pin the computed value to the wrong theme).
+Only `color` is transitioned on `body` and surface elements — never `background` shorthand (it flashes the wrong theme's surface on toggle).
 
 ---
 
@@ -324,8 +333,8 @@ The SVG viewBox is `0 0 100 125`. WRIST is at `[50, 112]`.
 |---|---|
 | Font Awesome 6.7.2 (cdnjs) | UI icons + brand icons (GitHub, LinkedIn) |
 | Material Symbols Outlined (Google Fonts) | Contact section `mail` icon |
-| Fira Code, Outfit (Google Fonts) | Body and mono typography |
-| Google Sans Flex (local TTF) | Display headings |
+| Fira Code (Google Fonts) | Code, logs and live data only |
+| Helvetica Neue / Helvetica / Arial (system) | All other type — no download |
 
 No npm, no webpack, no React.
 
@@ -336,7 +345,7 @@ No npm, no webpack, no React.
 - `<meta name="description">` — plain text for crawlers
 - Open Graph + Twitter card tags — for social link unfurls
 - JSON-LD `Person` schema — for Google rich results
-- `social-card.jpg` — 1200×630 link-preview card; regenerate it when the title or availability changes (source: `dev/social-card.html`, screenshot at 1200×630 in Chrome)
+- `social-card.jpg` — 1200×630 link-preview card; regenerate it when the title or availability changes (source: `dev/social-card.html`, screenshot at 1200×630 in Chrome). It still uses the pre-subway design and `GoogleSansFlex-subset.woff2`, which the site itself no longer loads
 
 When updating bio copy, keep all four in sync: hero text, `<meta name="description">`, `og:description`, and JSON-LD `description`.
 

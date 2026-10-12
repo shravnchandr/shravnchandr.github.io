@@ -1,17 +1,17 @@
 <section id="research" class="v2-section" aria-labelledby="research-heading">
     <div class="v2-inner">
-        <div class="v2-section-header">
-            <span class="v2-code-label">// 04 · RESEARCH · PUBLICATIONS</span>
-            <span class="v2-code-label">5 projects · 1 IEEE publication</span>
+        <div class="v2-section-header v2-sign">
+            <div class="v2-section-name"><span class="v2-bullet" data-r="purple" aria-hidden="true">4</span>Research</div>
+            <div class="v2-section-meta">5 projects · 1 IEEE publication</div>
         </div>
         <h2 id="research-heading" class="v2-section-h2 animate-on-scroll">Deep work, documented.</h2>
 
         <div class="v2-research-stack">
 
             <!-- VQ-VAE + Conformer 2026 — Featured -->
-            <div class="v2-panel-chrome v2-research-featured animate-on-scroll">
+            <div class="v2-panel-chrome v2-line-card v2-research-featured animate-on-scroll" data-r="yellow">
                 <div class="v2-research-main">
-                    <div class="v2-card-badge badge-featured">IN PROGRESS · 2026</div>
+                    <div class="v2-card-badge"><span class="v2-bullet v2-bullet--diamond" data-r="yellow" aria-hidden="true"><span>A</span></span>In progress · 2026</div>
                     <h3 class="v2-card-h3">VQ-VAE + Conformer Translation System</h3>
                     <div class="v2-card-tagline">Continuous sign language translation — hierarchical quantization + sequence modeling</div>
                     <div class="v2-tech-tags">
@@ -24,17 +24,17 @@
                     </div>
                 </div>
                 <div class="v2-research-contribs">
-                    <div class="v2-right-label">// KEY CONTRIBUTIONS</div>
+                    <div class="v2-right-label">Key contributions</div>
                     <div class="v2-research-bullet">
-                        <span class="v2-research-num" style="color:var(--v2-inference)">01</span>
+                        <span class="v2-research-num">01</span>
                         <span>Designing a factorized VQ-VAE that discretizes 3D landmark sequences into 4 hierarchical factors — Pose, Motion, Dynamics, Facial Expressions — aiming to reduce latent-space complexity for translation.</span>
                     </div>
                     <div class="v2-research-bullet">
-                        <span class="v2-research-num" style="color:var(--v2-inference)">02</span>
+                        <span class="v2-research-num">02</span>
                         <span>Building a Conformer Seq2Seq model with a hybrid CTC + attention decoder and beam search with CTC prefix scoring, to align visual tokens with glosses. Training and evaluation in progress.</span>
                     </div>
                     <div class="v2-research-bullet">
-                        <span class="v2-research-num" style="color:var(--v2-inference)">03</span>
+                        <span class="v2-research-num">03</span>
                         <span>Implemented hand-dominance normalization and body-relative coordinate preprocessing, so evaluation can be signer-independent and robust to handedness and camera position.</span>
                     </div>
                 </div>
@@ -43,49 +43,49 @@
             <!-- ST-GCN 2025 + Temporal 2024 -->
             <div class="v2-research-row">
 
-                <div class="v2-panel-chrome animate-on-scroll stagger-2">
-                    <div class="v2-card-badge badge-2">ST-GCN · 2025</div>
+                <div class="v2-panel-chrome v2-line-card animate-on-scroll stagger-2" data-r="yellow">
+                    <div class="v2-card-badge"><span class="v2-bullet" data-r="yellow" aria-hidden="true">A</span>ST-GCN · 2025</div>
                     <h3 class="v2-research-h3">Graph-Based Sign Recognition</h3>
                     <div class="v2-research-tagline">Graph-network baseline over 209 skeletal joints — underperformed the LandmarkConformer</div>
                     <div class="v2-tech-tags">
                         <span>ST-GCN</span><span>PyTorch</span><span>Graph Networks</span><span>MediaPipe</span>
                     </div>
                     <div class="v2-research-contribs-sm">
-                        <div class="v2-right-label">// KEY CONTRIBUTIONS</div>
+                        <div class="v2-right-label">Key contributions</div>
                         <div class="v2-research-bullet">
-                            <span class="v2-research-num" style="color:var(--v2-neural)">01</span>
+                            <span class="v2-research-num">01</span>
                             <span>ST-GCN modeling 209 skeletal joints as a dynamic graph; D⁻¹/²AD⁻¹/² normalization on a custom adjacency matrix for stable feature aggregation.</span>
                         </div>
                         <div class="v2-research-bullet">
-                            <span class="v2-research-num" style="color:var(--v2-neural)">02</span>
+                            <span class="v2-research-num">02</span>
                             <span>Edge Importance Weighting + Spatial Attention to dynamically prioritize key physiological connections (e.g., fingertips) during high-velocity signs.</span>
                         </div>
                         <div class="v2-research-bullet">
-                            <span class="v2-research-num" style="color:var(--v2-neural)">03</span>
+                            <span class="v2-research-num">03</span>
                             <span>Residual Graph Blocks with Multi-Scale Temporal Kernels capturing motion from rapid finger movements to full postural transitions.</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="v2-panel-chrome animate-on-scroll stagger-3">
-                    <div class="v2-card-badge badge-3">CONFORMER · 2024</div>
+                <div class="v2-panel-chrome v2-line-card animate-on-scroll stagger-3" data-r="yellow">
+                    <div class="v2-card-badge"><span class="v2-bullet" data-r="yellow" aria-hidden="true">A</span>Conformer · 2024</div>
                     <h3 class="v2-research-h3">LandmarkConformer</h3>
                     <div class="v2-research-tagline">Multi-stream Conformer (convolution + self-attention) over body landmarks · Google ASL Signs, 250 classes</div>
                     <div class="v2-tech-tags">
                         <span>PyTorch</span><span>Conformer</span><span>Gradient Reversal</span><span>MediaPipe</span>
                     </div>
                     <div class="v2-research-contribs-sm">
-                        <div class="v2-right-label">// KEY CONTRIBUTIONS</div>
+                        <div class="v2-right-label">Key contributions</div>
                         <div class="v2-research-bullet">
-                            <span class="v2-research-num" style="color:var(--v2-data)">01</span>
+                            <span class="v2-research-num">01</span>
                             <span>Three fused streams from 131 of MediaPipe’s 543 landmarks (hands, pose, eyebrows, mouth): body-relative positions, multi-scale velocities, and hand geometry (joint angles, fingertip distances, palm direction), fed to 4 Conformer blocks.</span>
                         </div>
                         <div class="v2-research-bullet">
-                            <span class="v2-research-num" style="color:var(--v2-data)">02</span>
+                            <span class="v2-research-num">02</span>
                             <span>76.65% top-1 (76.69% with 5-pass TTA) across 250 signs, on a split by signer — no validation signer appears in training.</span>
                         </div>
                         <div class="v2-research-bullet">
-                            <span class="v2-research-num" style="color:var(--v2-data)">03</span>
+                            <span class="v2-research-num">03</span>
                             <span>Signer invariance from hand-dominance mirroring, shoulder-width scaling and an adversarial signer discriminator (gradient reversal); Mixup, finger dropout and focal loss for regularisation.</span>
                         </div>
                     </div>
@@ -94,10 +94,10 @@
             </div>
 
             <!-- IEEE ICCAR 2022 -->
-            <div class="v2-panel-chrome animate-on-scroll">
+            <div class="v2-panel-chrome v2-line-card animate-on-scroll" data-r="yellow">
                 <div class="v2-research-featured">
                     <div>
-                        <div class="v2-card-badge">IEEE · ICCAR 2022</div>
+                        <div class="v2-card-badge"><span class="v2-bullet" data-r="yellow" aria-hidden="true">A</span>IEEE · ICCAR 2022</div>
                         <h3 class="v2-card-h3">Dynamic Sign Language Translator</h3>
                         <div class="v2-card-tagline">Published — IEEE ICCAR 2022</div>
                         <p class="v2-card-desc">Lightweight real-time sign language recognition system using MediaPipe hand landmarks and XGBoost classification. Presented at the 8th International Conference on Control, Automation and Robotics.</p>
@@ -110,18 +110,18 @@
                         </div>
                     </div>
                     <div class="v2-research-contribs">
-                        <div class="v2-right-label">// KEY METRICS</div>
-                        <div class="v2-metric-row"><span class="v2-mv" style="color:var(--v2-inference)">90%+</span><span class="v2-ml">accuracy</span></div>
-                        <div class="v2-metric-row"><span class="v2-mv" style="color:var(--v2-neural)">15</span><span class="v2-ml">sign phrases</span></div>
+                        <div class="v2-right-label">Key metrics</div>
+                        <div class="v2-metric-row"><span class="v2-mv">90%+</span><span class="v2-ml">accuracy</span></div>
+                        <div class="v2-metric-row"><span class="v2-mv">15</span><span class="v2-ml">sign phrases</span></div>
                     </div>
                 </div>
             </div>
 
             <!-- Diabetic Retinopathy Classifier -->
-            <div id="research-retinopathy" class="v2-panel-chrome animate-on-scroll">
+            <div id="research-retinopathy" class="v2-panel-chrome v2-line-card animate-on-scroll" data-r="blue">
                 <div class="v2-research-featured">
                     <div>
-                        <div class="v2-card-badge badge-3">CV · HEALTHCARE</div>
+                        <div class="v2-card-badge"><span class="v2-bullet" data-r="blue" aria-hidden="true">M</span>CV · Healthcare</div>
                         <h3 class="v2-card-h3">Diabetic Retinopathy Classifier</h3>
                         <div class="v2-card-tagline">Interpretable severity grading from fundus images</div>
                         <p class="v2-card-desc">Xception-based classifier on fundus images, with Grad-CAM lesion visualization so each prediction can be checked against the regions that drove it.</p>
@@ -133,8 +133,8 @@
                         </div>
                     </div>
                     <div class="v2-research-contribs">
-                        <div class="v2-right-label">// KEY METRICS</div>
-                        <div class="v2-metric-row"><span class="v2-mv" style="color:var(--v2-data)">96%</span><span class="v2-ml">Kappa score</span></div>
+                        <div class="v2-right-label">Key metrics</div>
+                        <div class="v2-metric-row"><span class="v2-mv">96%</span><span class="v2-ml">Kappa score</span></div>
                     </div>
                 </div>
             </div>

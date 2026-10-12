@@ -18,19 +18,18 @@
 }
 
 .v2-research-h3 {
-    font-family: 'Google Sans Flex', 'Outfit', sans-serif;
     font-size: clamp(20px, 2.5vw, 26px);
-    font-weight: 800;
-    letter-spacing: -0.6px;
+    font-weight: 700;
+    letter-spacing: -0.015em;
     margin: 10px 0 0;
     color: var(--v2-text);
     line-height: 1.15;
 }
 
 .v2-research-tagline {
-    font-size: 13px;
-    color: var(--v2-data);
-    font-weight: 500;
+    font-size: 14px;
+    color: var(--v2-text-dim);
+    font-weight: 700;
     margin-top: 5px;
 }
 
@@ -48,17 +47,18 @@
     display: flex;
     gap: 12px;
     padding: 11px 0;
-    border-top: 1px dashed var(--v2-border);
+    border-top: 1px solid var(--v2-border);
     color: var(--v2-text-dim);
-    font-size: 13px;
+    font-size: 14px;
     line-height: 1.6;
 }
 
 .v2-research-bullet:first-of-type { border-top: none; }
 
 .v2-research-num {
-    font-family: 'Fira Code', monospace;
-    font-size: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--v2-text-muted);
     margin-top: 3px;
     min-width: 18px;
     flex-shrink: 0;
@@ -72,6 +72,6 @@
 @media (max-width: 600px) {
     .v2-research-stack { gap: 14px; }
     .v2-research-featured { gap: 20px; }
-    .v2-research-bullet { gap: 8px; font-size: 12px; padding: 9px 0; }
+    .v2-research-bullet { gap: 8px; font-size: 13px; padding: 9px 0; }
     .v2-research-h3 { font-size: 20px; }
 }

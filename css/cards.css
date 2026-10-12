@@ -1,41 +1,14 @@
+/* Content card: theme surface, route-coloured line on top (.v2-line-card in signage.css) */
 .v2-panel-chrome {
-    background: var(--v2-surface);
-    border-radius: 28px;
-    padding: 48px;
-    border: 1px solid var(--v2-border);
+    padding: 40px 48px 48px;
 }
 
-.v2-card-badge {
-    display: inline-block;
-    padding: 4px 12px;
-    border-radius: 999px;
-    font-family: 'Fira Code', monospace;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    margin-bottom: 16px;
-    background: rgba(124, 77, 255, 0.14);
-    color: var(--v2-neural);
-    border: 1px solid rgba(124, 77, 255, 0.32);
-}
-
-.v2-card-badge.badge-featured {
-    background: rgba(255, 109, 0, 0.14);
-    color: var(--v2-inference);
-    border-color: rgba(255, 109, 0, 0.32);
-}
-
-/* badge-n cycles through accent colours */
-.v2-card-badge.badge-1 { background:rgba(255,109,0,.14);  color:var(--v2-inference); border-color:rgba(255,109,0,.32); }
-.v2-card-badge.badge-2 { background:rgba(124,77,255,.14); color:var(--v2-neural);    border-color:rgba(124,77,255,.32); }
-.v2-card-badge.badge-3 { background:rgba(0,191,165,.14);  color:var(--v2-data);      border-color:rgba(0,191,165,.32); }
-.v2-card-badge.badge-4 { background:rgba(255,109,0,.14);  color:var(--v2-inference); border-color:rgba(255,109,0,.32); }
+/* .v2-card-badge lives in signage.css (route bullet + label) */
 
 .v2-card-h3 {
-    font-family: 'Google Sans Flex', 'Outfit', sans-serif;
     font-size: clamp(24px, 3.5vw, 38px);
-    font-weight: 800;
-    letter-spacing: -1px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
     margin: 0;
     color: var(--v2-text);
     line-height: 1.1;
@@ -43,9 +16,21 @@
 
 .v2-card-tagline {
     font-size: 16px;
-    color: var(--v2-data);
-    font-weight: 500;
+    color: var(--v2-text-dim);
+    font-weight: 700;
     margin-top: 6px;
+}
+
+/* One-sentence ownership + result, for readers who stop here */
+.v2-case-summary {
+    margin-top: 16px;
+    padding: 14px 16px;
+    border-left: 4px solid var(--c, var(--v2-text));
+    background: var(--v2-surface-hi);
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--v2-text);
+    max-width: 640px;
 }
 
 .v2-card-desc {
@@ -63,12 +48,12 @@
 }
 
 .v2-tech-tags span {
-    padding: 5px 12px;
-    border-radius: 999px;
+    padding: 5px 10px;
+    border-radius: var(--radius);
     background: var(--v2-surface-hi);
-    color: var(--v2-text-dim);
-    font-size: 12px;
-    font-family: 'Fira Code', monospace;
+    color: var(--v2-text);
+    font-size: 13px;
+    font-weight: 500;
     border: 1px solid var(--v2-border);
 }
 
@@ -79,88 +64,69 @@
     flex-wrap: wrap;
 }
 
-.v2-btn-primary {
+/* Buttons: rectangles. Primary is solid black/white, secondary is outlined. */
+.v2-btn-primary,
+.v2-btn-secondary,
+.v2-btn-neural {
     display: inline-flex;
     align-items: center;
     gap: 8px;
     padding: 12px 20px;
-    border-radius: 12px;
-    background: var(--v2-inference);
-    color: var(--v2-on-inference);
+    border-radius: var(--radius);
     text-decoration: none;
     font-weight: 700;
-    font-size: 13px;
+    font-size: 14px;
+    border: 2px solid var(--v2-text);
 }
 
+.v2-btn-primary { background: var(--v2-text); color: var(--v2-bg); }
 .v2-btn-primary:hover { opacity: 0.88; }
 
-.v2-btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 20px;
-    border-radius: 12px;
-    background: var(--v2-surface-hi);
-    color: var(--v2-text);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 13px;
-    border: 1px solid var(--v2-border);
-}
-
-.v2-btn-secondary:hover { background: var(--v2-surface-hi2); }
-
-.v2-btn-neural {
-    display: inline-block;
-    padding: 12px 20px;
-    border-radius: 12px;
-    background: rgba(124, 77, 255, 0.14);
-    color: var(--v2-neural);
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 13px;
-    border: 1px solid rgba(124, 77, 255, 0.32);
-}
+.v2-btn-secondary,
+.v2-btn-neural { background: transparent; color: var(--v2-text); }
+.v2-btn-secondary:hover,
+.v2-btn-neural:hover { background: var(--v2-surface-hi); }
 
 .v2-btn-text {
     display: inline-block;
     padding: 12px 20px;
-    border-radius: 12px;
+    border-radius: var(--radius);
     background: transparent;
     color: var(--v2-text-dim);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 13px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    font-weight: 700;
+    font-size: 14px;
     transition: color 200ms ease;
 }
 .v2-btn-text:hover { color: var(--v2-text); }
 
+/* Small uppercase label (KEY RESULTS, KEY CONTRIBUTIONS…) */
 .v2-right-label {
-    font-family: 'Fira Code', monospace;
-    font-size: 11px;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     color: var(--v2-text-muted);
-    letter-spacing: 1px;
     margin-bottom: 10px;
 }
 
+/* Key results: plain ruled rows */
 .v2-metric-row {
-    padding: 18px 20px;
-    border-radius: 16px;
-    background: var(--v2-surface-hi);
-    border: 1px solid var(--v2-border);
+    padding: 14px 0;
+    border-top: 1px solid var(--v2-border);
     display: flex;
     align-items: baseline;
     gap: 14px;
-    margin-bottom: 8px;
 }
 
 .v2-metric-row .v2-mv {
-    font-family: 'Google Sans Flex', 'Outfit', sans-serif;
     font-size: 34px;
-    font-weight: 800;
-    letter-spacing: -1px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
     min-width: 70px;
     line-height: 1;
+    color: var(--v2-text);
 }
 
 .v2-metric-row .v2-ml {
@@ -168,22 +134,30 @@
     color: var(--v2-text-dim);
 }
 
+/* Overview diagram: always on black, like the demo log */
 .v2-code-block {
     padding: 16px 18px;
-    border-radius: 14px;
-    background: var(--v2-surface-hi);
-    border: 1px dashed var(--v2-border);
-    font-family: 'Fira Code', monospace;
+    border-radius: var(--radius);
+    background: var(--sign-bg);
+    font-family: var(--font-mono);
     font-size: 12px;
-    color: var(--v2-text-dim);
+    color: var(--sign-dim);
     line-height: 1.75;
-    margin-top: 8px;
+    margin-top: 12px;
 }
 
-.v2-code-block .v2-cb-header { color: var(--v2-data); margin-bottom: 4px; }
+.v2-code-block .v2-cb-header {
+    font-family: var(--font-sign);
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--sign-text);
+    margin-bottom: 6px;
+}
 
 @media (max-width: 600px) {
-    .v2-panel-chrome { padding: 24px 20px; }
+    .v2-panel-chrome { padding: 32px 20px 24px; }
 }
 
 /* ── Case studies (#work) ── */
@@ -202,9 +176,9 @@
     gap: 14px 20px;
 }
 .v2-case-facts dt {
-    font-family: 'Fira Code', monospace;
-    font-size: 11px;
-    letter-spacing: 1px;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--v2-text-muted);
     padding-top: 3px;
@@ -220,15 +194,18 @@
 .v2-case-more > summary {
     cursor: pointer;
     width: fit-content;
-    font-family: 'Fira Code', monospace;
-    font-size: 12px;
-    color: var(--v2-data);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--v2-text);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
 }
-.v2-case-more > summary:hover { text-decoration: underline; }
+.v2-case-more > summary:hover { text-decoration-color: var(--r-yellow); }
 .v2-case-more > .v2-case-facts {
     margin-top: 14px;
     padding-top: 14px;
-    border-top: 1px dashed var(--v2-border);
+    border-top: 1px solid var(--v2-border);
 }
 
 @media (max-width: 900px) {
@@ -253,10 +230,9 @@
     gap: 8px;
     cursor: pointer;
     list-style: none;
-    font-family: 'Fira Code', monospace;
-    font-size: 12px;
-    color: var(--v2-text-dim);
-    letter-spacing: 0.5px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--v2-text);
     user-select: none;
     transition: color 180ms ease;
 }
@@ -266,7 +242,7 @@
 .v2-arch-toggle:hover { color: var(--v2-text); }
 
 .v2-arch-toggle-ico {
-    color: var(--v2-neural);
+    color: var(--v2-text-muted);
     font-size: 14px;
 }
 
@@ -287,34 +263,34 @@
     display: flex;
     flex-direction: column;
     gap: 0;
-    font-family: 'Fira Code', monospace;
+    font-family: var(--font-mono);
     font-size: 12px;
     line-height: 1.7;
 }
 
 .v2-arch-layer {
     padding: 16px 20px;
-    border-radius: 14px;
+    border-radius: var(--radius);
     border: 1px solid var(--v2-border);
+    border-left: 6px solid var(--c, var(--v2-border));
     background: var(--v2-surface-hi);
 }
 
 .v2-arch-lbl {
-    font-size: 9px;
-    letter-spacing: 2px;
+    font-family: var(--font-sign);
+    font-size: 11px;
+    letter-spacing: 0.08em;
     font-weight: 700;
+    color: var(--v2-text);
     margin-bottom: 10px;
 }
 
 .v2-arch-body { color: var(--v2-text-dim); }
 
-.v2-arch-browser .v2-arch-lbl { color: var(--v2-data); }
-.v2-arch-api     .v2-arch-lbl { color: var(--v2-inference); }
-.v2-arch-data    .v2-arch-lbl { color: var(--v2-neural); }
-
-.v2-arch-browser { border-color: rgba(0, 191, 165, 0.25); }
-.v2-arch-api     { border-color: rgba(255, 109, 0, 0.25); }
-.v2-arch-data    { border-color: rgba(124, 77, 255, 0.25); }
+/* Each layer is a line: browser = green, API = orange, data = purple */
+.v2-arch-browser { --c: var(--r-green); }
+.v2-arch-api     { --c: var(--r-orange); }
+.v2-arch-data    { --c: var(--r-purple); }
 
 .v2-arch-chip {
     display: inline;
@@ -323,9 +299,11 @@
     font-size: 11px;
 }
 
-.chip-data      { background: rgba(0,191,165,.14);  color: var(--v2-data);      border: 1px solid rgba(0,191,165,.28); }
-.chip-inference { background: rgba(255,109,0,.14);  color: var(--v2-inference); border: 1px solid rgba(255,109,0,.28); }
-.chip-neural    { background: rgba(124,77,255,.14); color: var(--v2-neural);    border: 1px solid rgba(124,77,255,.28); }
+.chip-data, .chip-inference, .chip-neural {
+    background: var(--v2-surface);
+    color: var(--v2-text);
+    border: 1px solid var(--v2-border);
+}
 
 .v2-arch-sep { color: var(--v2-text-muted); }
 .v2-arch-dim { color: var(--v2-text-muted); font-size: 11px; }
@@ -335,7 +313,7 @@
     align-items: center;
     gap: 8px;
     padding: 4px 24px;
-    font-family: 'Fira Code', monospace;
+    font-family: var(--font-mono);
     font-size: 10px;
     color: var(--v2-text-muted);
     letter-spacing: 1px;

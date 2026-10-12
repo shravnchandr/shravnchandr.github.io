@@ -37,27 +37,24 @@
     align-items: center;
     gap: 7px;
     padding: 6px 14px;
-    border-radius: 10px;
+    border-radius: var(--radius);
     border: 1px solid var(--v2-border);
     background: var(--v2-surface-hi);
-    color: var(--v2-text-dim);
-    font-family: 'Fira Code', monospace;
-    font-size: 11px;
+    color: var(--v2-text);
+    font-size: 13px;
+    font-weight: 700;
     cursor: pointer;
     transition: background 180ms ease, color 180ms ease, border-color 180ms ease;
 }
 
-.v2-webcam-btn:hover:not(:disabled) {
-    background: rgba(0, 191, 165, 0.12);
-    border-color: rgba(0, 191, 165, 0.4);
-    color: var(--v2-data);
-}
+.v2-webcam-btn:hover:not(:disabled) { border-color: var(--v2-text); }
 
+/* Live: inverted, like a lit sign */
 .v2-webcam-btn--active,
 .v2-webcam-btn--active:hover {
-    background: rgba(255, 109, 0, 0.12);
-    border-color: rgba(255, 109, 0, 0.4);
-    color: var(--v2-inference);
+    background: var(--v2-text);
+    border-color: var(--v2-text);
+    color: var(--v2-bg);
 }
 
 .v2-webcam-btn:disabled { opacity: 0.55; cursor: wait; }
@@ -66,7 +63,7 @@
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: var(--v2-data);
+    background: var(--r-lime);
     flex-shrink: 0;
     transition: background 300ms ease;
 }
@@ -76,17 +73,11 @@
 }
 
 .v2-webcam-hint {
-    font-family: 'Fira Code', monospace;
-    font-size: 10px;
+    font-size: 12px;
     color: var(--v2-text-muted);
 }
 
-.v2-tech-tags .v2-tag-gemini {
-    background: rgba(66, 133, 244, 0.12);
-    color: #6da4f8;
-    border-color: rgba(66, 133, 244, 0.3);
-    font-weight: 700;
-}
+.v2-tech-tags .v2-tag-gemini { font-weight: 700; }
 
 @media (prefers-reduced-motion: reduce) {
     .v2-webcam-video,

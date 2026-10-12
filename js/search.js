@@ -279,9 +279,9 @@ const INDEX = [
             'education','school',  // section words
             'ubc','british','columbia','university','masters','mds',
             'data','science','degree','grad','graduate',
-            '2026','2027','vancouver','canada',
+            '2026','2027','vancouver','canada','current','now',
         ],
-        action() { _reveal('#education'); },
+        action() { _reveal('#role-ubc'); },   // the current stop on the experience line
     },
 ];
 

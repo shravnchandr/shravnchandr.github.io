@@ -9,10 +9,10 @@
 .v2-a11y-btn {
     width: 38px;
     height: 38px;
-    border-radius: 12px;
+    border-radius: var(--radius);
     border: 1px solid var(--v2-border);
     background: var(--v2-surface);
-    color: var(--v2-text-muted);
+    color: var(--v2-text-dim);
     font-size: 15px;
     cursor: pointer;
     display: flex;
@@ -24,14 +24,14 @@
 
 .v2-a11y-btn:hover {
     background: var(--v2-surface-hi);
-    color: var(--v2-neural);
-    border-color: rgba(124, 77, 255, 0.5);
+    color: var(--v2-text);
 }
 
+/* On: inverted, like a lit sign */
 .v2-a11y-btn[aria-pressed="true"] {
-    background: rgba(124, 77, 255, 0.16);
-    color: var(--v2-neural);
-    border-color: rgba(124, 77, 255, 0.5);
+    background: var(--v2-text);
+    color: var(--v2-bg);
+    border-color: var(--v2-text);
 }
 
 #a11y-panel {
@@ -44,9 +44,9 @@
     background: var(--v2-surface);
     border: 1px solid var(--v2-border);
     border-right: none;
-    border-radius: 16px 0 0 16px;
+    border-top: 6px solid var(--r-yellow);
+    border-radius: var(--radius) 0 0 var(--radius);
     z-index: 500;
-    box-shadow: -6px 0 28px rgba(0, 0, 0, 0.32);
 
     width: min(288px, calc(100vw - 48px));
     transform: translateX(calc(100% + 2px));
@@ -77,18 +77,17 @@
 }
 
 .v2-a11y-title {
-    font-family: 'Fira Code', monospace;
-    font-size: 11px;
-    color: var(--v2-neural);
-    letter-spacing: 1.5px;
-    font-weight: 600;
+    font-size: 14px;
+    color: var(--v2-text);
+    letter-spacing: 0.02em;
+    font-weight: 700;
 }
 
 /* Base styles in v2/base.css (.v2-panel-close) */
 .v2-a11y-close {
     font-size: 20px;
     padding: 2px 5px;
-    border-radius: 6px;
+    border-radius: var(--radius);
 }
 
 .v2-a11y-legend {
@@ -97,10 +96,11 @@
 }
 
 .v2-a11y-legend-title {
-    font-family: 'Fira Code', monospace;
-    font-size: 9px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
     color: var(--v2-text-muted);
-    letter-spacing: 2px;
+    letter-spacing: 0.08em;
     margin-bottom: 8px;
 }
 
@@ -119,8 +119,7 @@
 }
 
 .v2-a11y-legend-row span:last-child {
-    font-family: 'Fira Code', monospace;
-    font-size: 10px;
+    font-size: 12px;
     color: var(--v2-text-dim);
 }
 
@@ -200,9 +199,9 @@ body.a11y-lab .skip-link {
     background: var(--v2-inference);
     color: var(--v2-on-inference);
     padding: 8px 14px;
-    border-radius: 8px;
-    font-size: 12px;
-    font-family: 'Fira Code', monospace;
+    border-radius: var(--radius);
+    font-size: 13px;
+    font-weight: 700;
     text-decoration: none;
     z-index: 9999;
 }

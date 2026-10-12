@@ -1,8 +1,8 @@
 <section id="demo" class="v2-section" aria-labelledby="demo-heading">
     <div class="v2-inner">
-        <div class="v2-section-header">
-            <span class="v2-code-label">// 05 · PIPELINE REPLAY — ASL GUIDE</span>
-            <span class="v2-code-label">end-to-end pipeline · browser → server → back</span>
+        <div class="v2-section-header v2-sign">
+            <div class="v2-section-name"><span class="v2-bullet" data-r="yellow" aria-hidden="true">5</span>Pipeline Replay</div>
+            <div class="v2-section-meta">end-to-end pipeline · browser → server → back</div>
         </div>
         <h2 id="demo-heading" class="v2-section-h2 animate-on-scroll">Sign → word → sentence.</h2>
 
@@ -17,20 +17,19 @@
             <a href="https://github.com/shravnchandr/ASL-App"
                target="_blank" rel="noopener"
                class="v2-btn-primary"
-               data-m3-press data-m3-morph>
+               data-m3-press>
                 <i class="fab fa-github" aria-hidden="true"></i>
                 View the source on GitHub ↗
             </a>
         </div>
 
         <!-- Demo card -->
-        <div class="v2-demo-card v2-panel-chrome animate-on-scroll stagger-3">
-            <!-- Chrome bar -->
+        <div class="v2-demo-card v2-panel-chrome v2-line-card animate-on-scroll stagger-3" data-r="yellow">
+            <!-- Sign strip -->
             <div class="v2-asl-chrome">
-                <span class="v2-chrome-dot dot-red"    aria-hidden="true"></span>
-                <span class="v2-chrome-dot dot-yellow" aria-hidden="true"></span>
-                <span class="v2-chrome-dot dot-green"  aria-hidden="true"></span>
-                <div class="v2-asl-url">github.com/shravnchandr/ASL-App — pipeline replay</div>
+                <span class="v2-bullet" data-r="yellow" aria-hidden="true">A</span>
+                <span class="v2-asl-name">ASL Guide</span>
+                <div class="v2-asl-url">pipeline replay</div>
                 <button id="demo-replay-btn" class="v2-demo-replay" aria-label="Replay demo">↻ replay</button>
             </div>
 
@@ -38,9 +37,6 @@
                 <!-- Left: webcam simulation -->
                 <div class="v2-demo-webcam"
                      aria-label="Simulated webcam feed with ASL hand sign recognition">
-                    <!-- Scanline sweep -->
-                    <div class="v2-demo-scanline" aria-hidden="true"></div>
-
                     <!-- Corner tracking brackets -->
                     <svg class="v2-demo-bracket v2-demo-bracket-tl" viewBox="0 0 22 22" aria-hidden="true">
                         <path d="M2,10 L2,2 L10,2" stroke-width="2" fill="none" stroke-linecap="round"/>
@@ -64,7 +60,7 @@
                     <div class="v2-demo-hud" aria-hidden="true">
                         <div class="v2-demo-hud-live">
                             <span class="v2-demo-hud-dot"></span>
-                            <span class="v2-demo-hud-live-text">● REPLAY</span>
+                            <span class="v2-demo-hud-live-text">REPLAY</span>
                         </div>
                         <div class="v2-demo-hud-sub">1280×720 · 30fps</div>
                         <div class="v2-demo-hud-sub">webgl backend</div>
@@ -80,25 +76,29 @@
                 <!-- Right: pipeline panel -->
                 <div class="v2-demo-pipeline" aria-live="polite"
                      aria-label="ASL translation pipeline">
+                    <!-- Three stops on one line -->
                     <!-- Stage 1: sign buffer -->
-                    <div class="v2-demo-stage">
-                        <div class="v2-demo-stage-label">① SIGN BUFFER</div>
+                    <div class="v2-demo-stage v2-stop">
+                        <span class="v2-bullet" data-r="yellow" aria-hidden="true">1</span>
+                        <div class="v2-demo-stage-label">Sign buffer</div>
                         <div id="demo-buffer" class="v2-demo-buffer">
                             <span id="demo-cursor" class="v2-demo-cursor" aria-hidden="true">▍</span>
                         </div>
                     </div>
 
                     <!-- Stage 2: LangGraph grammar -->
-                    <div class="v2-demo-stage">
-                        <div class="v2-demo-stage-label">② LANGGRAPH · GRAMMAR PASS</div>
+                    <div class="v2-demo-stage v2-stop">
+                        <span class="v2-bullet" data-r="yellow" aria-hidden="true">2</span>
+                        <div class="v2-demo-stage-label">LangGraph · grammar pass</div>
                         <div id="demo-grammar" class="v2-demo-grammar-box">
                             <span class="v2-demo-waiting">waiting for buffer…</span>
                         </div>
                     </div>
 
                     <!-- Stage 3: spoken output -->
-                    <div class="v2-demo-stage">
-                        <div class="v2-demo-stage-label">③ SPOKEN OUTPUT</div>
+                    <div class="v2-demo-stage v2-stop v2-stop--last">
+                        <span class="v2-bullet" data-r="yellow" aria-hidden="true">3</span>
+                        <div class="v2-demo-stage-label">Spoken output</div>
                         <div id="demo-output" class="v2-demo-output-box">
                             <span class="v2-demo-output-empty">&nbsp;</span>
                         </div>
@@ -106,7 +106,7 @@
 
                     <!-- Live log -->
                     <div class="v2-demo-stage v2-demo-log-stage">
-                        <div class="v2-demo-stage-label">// LIVE LOG</div>
+                        <div class="v2-demo-stage-label">Live log</div>
                         <div id="demo-log" class="v2-demo-log" aria-live="polite">
                             <div class="v2-demo-log-idle">$ waiting for input…</div>
                         </div>

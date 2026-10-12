@@ -5,40 +5,17 @@
     margin-top: 32px;
 }
 
+/* Cards are .v2-line-card (route line on top) */
 .v2-now-card,
-.v2-oss-card {
-    position: relative;
-    background: var(--v2-bg);
-    border-radius: 24px;
-    padding: 36px;
-    border: 1px solid var(--v2-border);
-    overflow: hidden;
-}
+.v2-oss-card { padding: 40px 36px 36px; }
 
-.v2-now-card::before {
-    content: '';
-    position: absolute;
-    top: -60px; right: -50px;
-    width: 200px; height: 200px;
-    border-radius: 50%;
-    background: rgba(0, 191, 165, 0.08);
-    filter: blur(30px);
-    pointer-events: none;
-}
-
-.v2-now-label {
-    font-family: 'Fira Code', monospace;
-    font-size: 12px;
-    color: var(--v2-data);
-    letter-spacing: 2px;
-    margin-bottom: 6px;
-}
-
+.v2-now-label,
 .v2-oss-label {
-    font-family: 'Fira Code', monospace;
     font-size: 12px;
-    color: var(--v2-neural);
-    letter-spacing: 2px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--v2-text-muted);
     margin-bottom: 6px;
 }
 
@@ -46,7 +23,7 @@
     font-size: 28px;
     font-weight: 700;
     color: var(--v2-text);
-    letter-spacing: -0.8px;
+    letter-spacing: -0.02em;
     margin: 0 0 24px;
 }
 
@@ -54,23 +31,16 @@
     display: flex;
     gap: 14px;
     padding: 12px 0;
-    border-top: 1px dashed var(--v2-border);
+    border-top: 1px solid var(--v2-border);
     color: var(--v2-text-dim);
-    font-size: 14px;
+    font-size: 15px;
     line-height: 1.5;
     position: relative;
 }
 
 .v2-now-item:first-of-type { border-top: none; }
 
-.v2-now-num {
-    font-family: 'Fira Code', monospace;
-    font-size: 11px;
-    color: var(--v2-inference);
-    margin-top: 3px;
-    min-width: 20px;
-    flex-shrink: 0;
-}
+.v2-now-num { --b: 22px; }
 
 .v2-oss-list {
     display: flex;
@@ -83,7 +53,7 @@
     align-items: center;
     gap: 14px;
     padding: 14px 16px;
-    border-radius: 14px;
+    border-radius: var(--radius);
     background: var(--v2-surface-hi);
     border: 1px solid var(--v2-border);
     text-decoration: none;
@@ -92,22 +62,10 @@
 
 .v2-oss-item:hover { background: var(--v2-surface-hi2); }
 
-.v2-oss-icon {
-    width: 36px; height: 36px;
-    border-radius: 10px;
-    background: var(--v2-neural);
-    color: var(--v2-on-neural);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    flex-shrink: 0;
-}
-
 .v2-oss-info { flex: 1; }
 
 .v2-oss-repo {
-    font-family: 'Fira Code', monospace;
+    font-family: var(--font-mono);
     font-size: 13px;
     color: var(--v2-text);
     font-weight: 600;
@@ -120,13 +78,13 @@
 }
 
 .v2-oss-badge {
-    font-size: 10px;
-    padding: 4px 8px;
-    background: rgba(0, 191, 165, 0.14);
-    color: var(--v2-data);
-    border-radius: 6px;
+    font-size: 11px;
     font-weight: 700;
-    font-family: 'Fira Code', monospace;
+    letter-spacing: 0.06em;
+    padding: 4px 8px;
+    color: var(--v2-text-dim);
+    border: 1px solid var(--v2-border);
+    border-radius: var(--radius);
 }
 
 @media (max-width: 768px) {
@@ -134,5 +92,5 @@
 }
 
 @media (max-width: 600px) {
-    .v2-now-card, .v2-oss-card { padding: 24px 20px; }
+    .v2-now-card, .v2-oss-card { padding: 32px 20px 24px; }
 }

@@ -1,72 +1,51 @@
-.v2-contact {
-    padding: 120px 0;
-    position: relative;
-    overflow: hidden;
-}
-
-.v2-contact::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-        radial-gradient(circle at 30% 30%, rgba(124,77,255,0.18), transparent 55%),
-        radial-gradient(circle at 70% 70%, rgba(0,191,165,0.18), transparent 55%);
-    pointer-events: none;
-}
+/* Contact — one large sign. Signs are black in both themes, so the buttons
+   inside use the sign colours rather than the page's. */
+.v2-contact { padding: 96px 0 112px; }
 
 .v2-contact-inner {
-    position: relative;
-    max-width: 900px;
+    max-width: 1000px;
     margin: 0 auto;
     padding: 0 56px;
-    text-align: center;
 }
+
+.v2-contact-sign { padding: 48px 40px 40px; }
+.v2-contact-sign .v2-section-name { font-size: 22px; }
+.v2-contact-sign .v2-section-name .v2-bullet { --b: 30px; }
 
 .v2-contact-h2 {
-    font-family: 'Google Sans Flex', 'Outfit', sans-serif;
-    font-size: clamp(48px, 8vw, 80px);
-    font-weight: 800;
-    letter-spacing: -2.5px;
+    font-size: clamp(44px, 8vw, 80px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
     line-height: 1;
-    margin: 16px 0 24px;
-    color: var(--v2-text);
+    margin: 22px 0 24px;
+    color: var(--sign-text);
 }
 
-.v2-contact-accent {
-    background: linear-gradient(90deg, var(--v2-neural), var(--v2-data), var(--v2-inference));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
+.v2-contact-accent { color: var(--r-yellow); }
 
 .v2-contact-desc {
     font-size: 17px;
-    color: var(--v2-text-dim);
+    color: var(--sign-dim);
     max-width: 560px;
-    margin: 0 auto;
     line-height: 1.55;
 }
 
 .v2-contact-actions {
     display: flex;
     gap: 12px;
-    justify-content: center;
-    margin-top: 40px;
+    margin-top: 36px;
     flex-wrap: wrap;
 }
 
-.v2-contact-actions .v2-btn-primary {
-    padding: 20px 36px;
-    border-radius: 18px;
-    font-family: 'Fira Code', monospace;
-    font-size: 14px;
-}
-
+.v2-contact-actions .v2-btn-primary,
 .v2-contact-actions .v2-btn-secondary {
-    padding: 20px 36px;
-    border-radius: 18px;
-    font-size: 14px;
+    padding: 18px 28px;
+    font-size: 15px;
+    border-color: var(--sign-text);
 }
+.v2-contact-actions .v2-btn-primary   { background: var(--sign-text); color: var(--sign-bg); }
+.v2-contact-actions .v2-btn-secondary { background: transparent; color: var(--sign-text); }
+.v2-contact-actions .v2-btn-secondary:hover { background: rgba(255, 255, 255, 0.1); }
 
 .v2-contact-actions .material-symbols-outlined {
     font-size: 18px;
@@ -78,13 +57,14 @@
 }
 
 @media (max-width: 768px) {
-    .v2-contact-inner { padding: 0 24px; }
-    .v2-contact { padding: 80px 0; }
+    .v2-contact-inner { padding: 0 16px; }
+    .v2-contact { padding: 64px 0 80px; }
+    .v2-contact-sign { padding: 40px 22px 28px; }
 }
 
 @media (max-width: 600px) {
     .v2-contact-actions .v2-btn-primary,
-    .v2-contact-actions .v2-btn-secondary { padding: 16px 24px; width: 100%; justify-content: center; }
+    .v2-contact-actions .v2-btn-secondary { padding: 16px 20px; width: 100%; justify-content: center; }
     .v2-contact-actions { flex-direction: column; align-items: stretch; }
     .v2-contact-desc { font-size: 15px; }
 }
