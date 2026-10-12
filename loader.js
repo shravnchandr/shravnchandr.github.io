@@ -16,6 +16,10 @@
  *   window.__fragments.all      — every fragment settled
  */
 
+// Asset version: bump with index.html and css/main.css whenever CSS or html/ changes,
+// so a returning visitor's cache can't pair new HTML with old CSS.
+const ASSET_VERSION = '20261012';
+
 const FRAGMENTS = [
     { id: 'frag-nav',      src: 'html/nav.html',      critical: true  },
     { id: 'frag-hero',     src: 'html/hero.html',     critical: true  },
@@ -41,7 +45,7 @@ async function fetchWithRetry(src, retries = MAX_RETRIES) {
         const ctrl  = new AbortController();
         const timer = setTimeout(() => ctrl.abort(), ATTEMPT_TIMEOUT_MS);
         try {
-            const res = await fetch(src, { signal: ctrl.signal });
+            const res = await fetch(`${src}?v=${ASSET_VERSION}`, { signal: ctrl.signal });
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
             return await res.text();
         } catch (err) {

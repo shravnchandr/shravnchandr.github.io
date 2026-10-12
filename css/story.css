@@ -131,6 +131,8 @@ body:not(.light-theme) .v2-tl-station { box-shadow: 0 0 0 2px var(--v2-surface),
 .v2-tl-more { margin-top: 12px; }
 .v2-tl-more > summary {
     cursor: pointer;
+    padding: 10px 0;            /* taller hit area, same visual spacing */
+    margin: -10px 0;
     font-size: 14px;
     font-weight: 700;
     color: var(--v2-text);

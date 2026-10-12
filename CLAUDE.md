@@ -307,7 +307,7 @@ This lets skeleton shimmer screens show while the real content stays hidden — 
 The ASL Guide case study (`#case-asl-guide`) contains a `<details class="v2-arch-trace">` as a third child of the grid. `.v2-case .v2-arch-trace` in `css/cards.css` sets `grid-column: 1 / -1` so it spans both columns. Each layer is a line (browser green, API orange, data purple). Styling lives in `css/cards.css`.
 
 ### Layout grid
-One container for every section, hero included: 1320px max width, 56px gutters (24px ≤1024px, 16px ≤600px) — `.v2-inner` in `base.css`, `.v2-hero-inner` in `hero.css`. The contact sign is a named narrower variant (1000px). Key-result rows are a `max-content | 1fr` grid so values never shrink into their descriptions, stacking ≤400px. Stack titles reserve two lines (≥520px) so tag rows start level. Header controls are 44px. On phones (≤768px) the floating résumé button is hidden (the hero has one) and the footer clears back-to-top.
+One container for every section, hero included: 1320px max width, 56px gutters (24px ≤1024px, 16px ≤600px) — `.v2-inner` in `base.css`, `.v2-hero-inner` in `hero.css`. The contact sign is a named narrower variant (1000px). Key-result rows are a `max-content | 1fr` grid so values never shrink into their descriptions, stacking ≤400px. Stack: 5 columns above 1320px, 3 down to 701px, 2 down to 520px, then 1; titles reserve two lines (≥520px) so tag rows start level. Header controls are 44px. On phones (≤768px) the floating résumé button is hidden (the hero has one), and back-to-top steps aside while the footer is on screen (`js/scroll.js`).
 
 ### Transition rule
 Only `color` is transitioned on `body` and surface elements — never `background` shorthand (it flashes the wrong theme's surface on toggle).
@@ -358,6 +358,9 @@ When updating bio copy, keep all four in sync: hero text, `<meta name="descripti
 ---
 
 ## Deployment
+
+**Asset version:** `index.html` (stylesheet + prefetch links), `css/main.css` (every `@import`) and `loader.js` (`ASSET_VERSION`) append `?v=<version>`. Bump it in all three whenever CSS or `html/` changes, or returning visitors can pair new HTML with cached old CSS (GitHub Pages caches for 10 minutes; local `python3 -m http.server` relies on heuristic caching — hard-refresh with ⌘⇧R when testing).
+
 
 Push to `master` → GitHub Pages deploys automatically. Allow 2–3 minutes for propagation.
 

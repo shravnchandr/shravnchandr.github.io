@@ -91,6 +91,14 @@ function initBackToTop() {
 
     btn.addEventListener('click', () =>
         window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? 'auto' : 'smooth' }));
+
+    // Phones: step aside while the footer is on screen, so the button never sits on its text
+    // (css/base.css hides .back-to-top.over-footer at ≤768px)
+    const footer = document.querySelector('footer');
+    if (footer) {
+        new IntersectionObserver(([entry]) => btn.classList.toggle('over-footer', entry.isIntersecting))
+            .observe(footer);
+    }
 }
 
 // In-page links use native fragment navigation (smooth via `scroll-behavior` in

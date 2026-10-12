@@ -19,8 +19,8 @@
 
 .v2-demo-replay {
     margin-left: auto;
-    min-height: 32px;
-    padding: 5px 12px;
+    min-height: 40px;
+    padding: 5px 14px;
     border-radius: var(--radius);
     border: 1px solid var(--sign-text);
     background: transparent;

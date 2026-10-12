@@ -202,6 +202,8 @@
 .v2-case-more > summary {
     cursor: pointer;
     width: fit-content;
+    padding: 10px 0;            /* taller hit area, same visual spacing */
+    margin: -10px 0;
     font-size: 14px;
     font-weight: 700;
     color: var(--v2-text);
@@ -238,6 +240,7 @@
     gap: 8px;
     cursor: pointer;
     list-style: none;
+    min-height: 44px;
     font-size: 14px;
     font-weight: 700;
     color: var(--v2-text);

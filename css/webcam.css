@@ -36,7 +36,7 @@
     display: inline-flex;
     align-items: center;
     gap: 7px;
-    min-height: 36px;
+    min-height: 44px;
     padding: 6px 14px;
     border-radius: var(--radius);
     border: 1px solid var(--v2-border);

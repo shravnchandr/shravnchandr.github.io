@@ -39,7 +39,9 @@
     font-weight: 500;
 }
 
-@media (max-width: 1100px) {
+/* Below ~1320px a fifth of the row is too narrow for "Machine Learning & Deep Learning"
+   in two lines, so switch to three columns there */
+@media (max-width: 1320px) {
     .v2-stack-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
