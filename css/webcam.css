@@ -113,3 +113,4 @@
     color: var(--sign-dim); font-size: 20px; line-height: 1;
 }
 .v2-secret-close:hover { color: var(--sign-text); }
+.v2-asl-canvas-wrap.has-secret .v2-signing-label { visibility: hidden; }   /* card covers it otherwise */

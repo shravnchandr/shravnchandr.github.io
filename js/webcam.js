@@ -235,9 +235,10 @@ function _showSecret() {
     close.className = 'v2-secret-close';
     close.setAttribute('aria-label', 'Close message');
     close.textContent = '×';
-    close.addEventListener('click', () => card.remove());
+    close.addEventListener('click', () => { card.remove(); wrap.classList.remove('has-secret'); });
     card.append(close, title, mail, note);
     wrap.appendChild(card);
+    wrap.classList.add('has-secret');   // hides the status line underneath (css/webcam.css)
 }
 
 function _updatePanel([top, ...rest]) {
@@ -256,6 +257,17 @@ function _setMeta(engine, latency) {
     const latencyEl = document.getElementById('asl-meta-latency');
     if (engineEl)  engineEl.textContent  = engine;
     if (latencyEl) latencyEl.textContent = `latency: ${latency}`;
+}
+
+// The caption under the demo describes what's on screen: the procedural cycle,
+// or — while the camera runs — the live feed (and that nothing leaves the browser)
+const CAPTION_LIVE = 'Live: your camera, classified in your browser. Nothing is uploaded.';
+let _captionDemo = null;
+function _setCaption(live) {
+    const cap = document.querySelector('.v2-asl-caption');
+    if (!cap) return;
+    if (_captionDemo === null) _captionDemo = cap.textContent;
+    cap.textContent = live ? CAPTION_LIVE : _captionDemo;
 }
 
 function _setHint(text) {
@@ -373,6 +385,7 @@ async function _start() {
         _showNoHand();
         _setMeta('MediaPipe + MLP · in-browser', '—');
         _setHint('psst — try signing H-I');
+        _setCaption(true);
         _setBtnState(_btn, BTN_STATE_ACTIVE);
         _rafId = requestAnimationFrame(() => _sendFrame(session));
     } catch (err) {
@@ -405,6 +418,9 @@ function _stop(message) {
         resumeASL();
     }
     _committed = [];
+    _setCaption(false);
+    document.querySelector('.v2-secret')?.remove();
+    document.querySelector('.v2-asl-canvas-wrap')?.classList.remove('has-secret');
     _setMeta('procedural demo cycle', '—');
     _setHint(message || 'in-browser MLP · A–Z + DEL/SPC');
     _setBtnState(_btn, BTN_STATE_IDLE);

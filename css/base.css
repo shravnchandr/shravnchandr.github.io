@@ -150,7 +150,7 @@ body, .v2-nav, .v2-asl-card, .v2-tech-tags span {
 }
 
 /* Keep in-page targets clear of the sticky nav */
-.v2-section, .v2-case, .v2-tl-item, #research-retinopathy, #education { scroll-margin-top: 88px; }
+.v2-section, .v2-impact, .v2-case, .v2-tl-item, #research-retinopathy, #education { scroll-margin-top: 88px; }
 
 .v2-section {
     padding: 96px 0;
