@@ -4,10 +4,10 @@
 :root { --bg:#050505; --text:#f5f5f5; --dim:#bdbdbd; --sign:"Helvetica Neue", Helvetica, Arial, sans-serif; }
 * { margin:0; padding:0; box-sizing:border-box; }
 body { width:1200px; height:630px; background:var(--bg); color:var(--text); font-family:var(--sign); overflow:hidden; position:relative; -webkit-font-smoothing:antialiased; }
-body::before { content:""; position:absolute; left:0; right:0; top:22px; height:3px; background:var(--text); z-index:1; }   /* the sign's white rule */
+body::before { content:""; position:absolute; left:0; right:430px; top:22px; height:3px; background:var(--text); }   /* the sign's white rule, up to the photo */   /* the sign's white rule */
 
-/* Photo: a hard-edged panel on the right — no fade */
-.photo { position:absolute; right:0; top:44px; bottom:0; width:430px; background:url('../link_preview.png') center 18%/cover no-repeat; }
+/* Photo: a hard-edged panel bleeding off the top, right and bottom edges — no fade */
+.photo { position:absolute; right:0; top:0; bottom:0; width:430px; background:url('../link_preview.png') center 18%/cover no-repeat; }
 
 .bullet { display:inline-grid; place-items:center; flex:none; width:var(--b,40px); height:var(--b,40px); border-radius:50%;
           font-weight:700; font-size:calc(var(--b,40px)*.62); line-height:1; background:var(--c); color:var(--on); }
@@ -21,13 +21,13 @@ h1 { font-size:92px; line-height:.95; font-weight:700; letter-spacing:-.04em; }
 .routes { margin-top:24px; display:flex; flex-wrap:wrap; gap:12px 24px; }
 .route { display:flex; align-items:center; gap:10px; font-size:26px; font-weight:500; }
 .route .bullet { --b:34px; }
-.desc { margin-top:26px; font-size:22px; color:var(--dim); line-height:1.45; }
-.url { margin-top:30px; display:flex; align-items:center; gap:10px; font-size:22px; font-weight:500; color:var(--text); }
-.url .avatar { width:34px; height:34px; border-radius:50%; object-fit:cover; box-shadow:0 0 0 1.5px #5a5a5a; }   /* memoji, as in the site logo; ring because its background is near-black */
+.desc { margin-top:24px; font-size:25px; color:#e6e6e6; line-height:1.4; }
+.url { margin-top:26px; display:flex; align-items:center; gap:12px; font-size:25px; font-weight:500; color:var(--text); }
+.url .avatar { width:38px; height:38px; border-radius:50%; object-fit:cover; box-shadow:0 0 0 1.5px #5a5a5a; }   /* memoji, as in the site logo; ring because its background is near-black */
 </style></head><body>
 <div class="photo"></div>
 <div class="text">
-  <div class="status"><i></i>PART-TIME JAN 2027 · FULL-TIME JUL 2027</div>
+  <div class="status"><i></i>PART-TIME FROM JAN 2027 · FULL-TIME FROM JUL 2027</div>
   <h1>Shravan<br>Chandra</h1>
   <div class="role">Machine Learning Engineer</div>
   <div class="routes">
@@ -35,6 +35,6 @@ h1 { font-size:92px; line-height:.95; font-weight:700; letter-spacing:-.04em; }
     <span class="route"><span class="bullet purple">G</span>Applied GenAI</span>
     <span class="route"><span class="bullet yellow">A</span>Accessible AI</span>
   </div>
-  <div class="desc">Nearly five years at Bosch<br>UBC Master of Data Science, June 2027</div>
+  <div class="desc">Former Senior ML Engineer, Bosch · ~5 years<br>UBC Master of Data Science, June 2027</div>
   <div class="url"><img class="avatar" src="../memoji-128.jpg" alt="">shravnchandr.github.io</div>
 </div></body></html>
