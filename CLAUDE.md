@@ -61,7 +61,7 @@ css/
   main.css                  # @import entry point — no legacy layers
   variables.css             # All design tokens: page palette (dark + light), sign colours, route colours (--r-*)
   base.css                  # body/reset rules, focus ring, .v2-section, section-header signs, .v2-modal-overlay, .v2-panel-close, FOUC guard
-  signage.css               # Route bullets (.v2-bullet[data-r]), diamonds, .v2-sign, .v2-line-card, .v2-legend, .v2-card-badge, .v2-access
+  signage.css               # Route bullets (.v2-bullet[data-r]), .v2-sign, .v2-line-card, .v2-legend, .v2-card-badge, .v2-access
   skeleton.css              # Shimmer screens for nav/hero/impact/below-fold (visibility override trick)
   nav.css                   # .v2-nav sticky + mobile responsive
   hero.css                  # Hero layout, ASL card, status badge, wavy underline SVG
@@ -140,7 +140,7 @@ Under the name, `.v2-hero-routes` lists the specialties as route bullets (M Prod
 Each opens with a one-sentence `<p class="v2-case-summary">` (what I owned + the result), then a `<dl class="v2-case-facts">` (Problem / What I owned / Result / Key decision / How it's measured). The `#overview` tiles link here.
 
 ### Experience (`#story`)
-`<ol class="v2-timeline">` drawn as a line map, with `#role-ubc` (current stop, "Now"), `#role-bosch-sr`, `#role-bosch-ml`, `#role-bosch-swe`, `#role-goldman`. Lines: M Production ML (blue), G Applied GenAI (purple), D Data infrastructure (orange), S Software (green); track columns M 0 · G 1 · D 2 · S 3. The key also lists A Accessibility & sign language (yellow), used on PES, ASL Guide and the research cards (no track column).
+`<ol class="v2-timeline">` drawn as a line map, with `#role-ubc` (current stop, "Now"), `#role-bosch-sr`, `#role-bosch-ml`, `#role-bosch-swe`, `#role-goldman`. Lines: M Production ML (blue), G Applied GenAI (purple), D Data infrastructure (orange), S Software (green); track columns M 0 · G 1 · D 2 · S 3. The key also lists A Accessibility & sign language (yellow: ASL Guide, sign-language research) and R Research & coursework (lime: retinopathy, PES and the student projects on LinkedIn) — neither has a track column. **M is only for production ML**; academic and student work uses R. The same meanings apply to the LinkedIn thumbnails, where a card's badge and its coloured bar always match.
 Each stop has a `.v2-tl-station` spanning the columns it serves (`--from`/`--to`) and a `.v2-tl-stripe` (`--i`) for each line shared with the **next** stop — update both when roles change. The senior role shows an outcome + 3 short bullets, with the full versions in `<details class="v2-tl-more">`; earlier roles show only the outcome. Bullets lead with the result in `<strong>`. `#education` holds earlier education (PES).
 
 ### Responsive demo placement
@@ -259,7 +259,7 @@ Based on the 1970 NYCTA Graphics Standards Manual (Vignelli/Noorda, Unimark). Ke
 - **Colour = route.** Accent colours appear only on route bullets and lines (`--r-*`); text, numbers and links stay black/white. Cards carry their route via `data-r` on a `.v2-line-card` (6px line on top).
 - **Signs are black in both themes** (`.v2-sign`: `--sign-bg`, white text, thin white rule near the top), kept for focal points: the hero availability badge, the hiring snapshot, the ASL card strips and canvas, earlier education, contact. Section headers are lighter **route strips**: a 6px rule in the section's colour (`data-r` on the header) above the bullet + name. Content cards are `.v2-line-card`.
 - **One sans:** the Helvetica stack (`--font-sign`). Sign names are Medium (500), bullets Bold (700), as in the manual. Fira Code (`--font-mono`) only for code, logs and live data.
-- **Circles are reserved for route bullets**; everything else is a rectangle (`--radius: 4px`). A diamond bullet (`.v2-bullet--diamond`, label wrapped in `<span>`) marks work in progress — "limited service".
+- **Circles are reserved for route bullets**; everything else is a rectangle (`--radius: 4px`). Work in progress is labelled in words ("In progress"), not with a different bullet shape.
 - **No gradients, glows or tinted shadows.**
 - Sections and their routes: 1 At a Glance (red) · 2 Experience (blue) · 3 Selected Work (orange) · 4 Research (purple) · 5 Pipeline Replay (yellow) · 6 Stack (green) · 7 Now (brown) · 8 Next Stop (grey). Nav links carry the same bullets.
 - Bullet letters reach ≥4.5:1 on their fill. On the light theme, bullets and lines get a thin outline, because yellow and lime are under 3:1 on white.

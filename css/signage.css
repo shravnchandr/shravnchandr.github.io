@@ -2,7 +2,6 @@
    Signage system — route bullets, signs, line keys
    ─────────────────────────────────────────────────────────────
    .v2-bullet[data-r]   route bullet; data-r picks the route colour
-   .v2-bullet--diamond  limited service (= work in progress); wrap the label in <span>
    .v2-bullets          a row of bullets
    .v2-sign             black panel, thin white rule near the top
    .v2-line-card        content card with a route-coloured line on top (--line)
@@ -28,8 +27,6 @@
 }
 body.light-theme .v2-bullet { box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.18); }
 
-.v2-bullet--diamond { border-radius: 3px; transform: rotate(45deg) scale(0.86); }
-.v2-bullet--diamond > span { display: block; transform: rotate(-45deg); }
 
 .v2-bullets { display: inline-flex; flex-wrap: wrap; gap: 5px; vertical-align: middle; }
 

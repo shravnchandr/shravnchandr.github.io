@@ -11,7 +11,7 @@
             <!-- VQ-VAE + Conformer 2026 — Featured -->
             <div class="v2-panel-chrome v2-line-card v2-research-featured animate-on-scroll" data-r="yellow">
                 <div class="v2-research-main">
-                    <div class="v2-card-badge"><span class="v2-bullet v2-bullet--diamond" data-r="yellow" aria-hidden="true"><span>A</span></span>In progress · 2026</div>
+                    <div class="v2-card-badge"><span class="v2-bullet" data-r="yellow" aria-hidden="true">A</span>In progress · 2026</div>
                     <h3 class="v2-card-h3">VQ-VAE + Conformer Translation System</h3>
                     <div class="v2-card-tagline">Continuous sign language translation — hierarchical quantization + sequence modeling</div>
                     <div class="v2-tech-tags">
@@ -118,15 +118,15 @@
             </div>
 
             <!-- Diabetic Retinopathy Classifier -->
-            <div id="research-retinopathy" class="v2-panel-chrome v2-line-card animate-on-scroll" data-r="blue">
+            <div id="research-retinopathy" class="v2-panel-chrome v2-line-card animate-on-scroll" data-r="lime">
                 <div class="v2-research-featured">
                     <div>
-                        <div class="v2-card-badge"><span class="v2-bullet" data-r="blue" aria-hidden="true">M</span>CV · Healthcare</div>
+                        <div class="v2-card-badge"><span class="v2-bullet" data-r="lime" aria-hidden="true">R</span>Research · CV · Healthcare</div>
                         <h3 class="v2-card-h3">Diabetic Retinopathy Classifier</h3>
                         <div class="v2-card-tagline">Interpretable severity grading from fundus images</div>
-                        <p class="v2-card-desc">Xception-based classifier on fundus images, with Grad-CAM lesion visualization so each prediction can be checked against the regions that drove it.</p>
+                        <p class="v2-card-desc">ResNet50 transfer-learning classifier on fundus images (pre-trained on EyePACS, retrained on APTOS), with Grad-CAM, Grad-CAM++ and Score-CAM saliency maps so each prediction can be checked against the regions that drove it.</p>
                         <div class="v2-tech-tags">
-                            <span>Keras</span><span>Xception</span><span>Grad-CAM</span><span>OpenCV</span>
+                            <span>PyTorch</span><span>fastai</span><span>ResNet50</span><span>Grad-CAM</span><span>OpenCV</span>
                         </div>
                         <div class="v2-card-links">
                             <a href="https://github.com/shravnchandr/Diabetic-Retinopathy" target="_blank" rel="noopener" class="v2-btn-secondary" data-m3-press>GitHub ↗</a>
@@ -134,7 +134,8 @@
                     </div>
                     <div class="v2-research-contribs">
                         <div class="v2-right-label">Key metrics</div>
-                        <div class="v2-metric-row"><span class="v2-mv">96%</span><span class="v2-ml">Kappa score</span></div>
+                        <div class="v2-metric-row"><span class="v2-mv">0.96</span><span class="v2-ml">quadratic weighted kappa (agreement with expert grades, corrected for chance)</span></div>
+                        <div class="v2-metric-row"><span class="v2-mv">92.95%</span><span class="v2-ml">accuracy on hold-out data · 5 severity grades</span></div>
                     </div>
                 </div>
             </div>

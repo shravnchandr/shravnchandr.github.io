@@ -87,12 +87,12 @@ const INDEX = [
         type:  'project',
         id:    'retinopathy',
         label: 'Diabetic Retinopathy Classifier',
-        sub:   'Keras · Xception · Grad-CAM · Healthcare · 96% Kappa',
-        route: ['M', 'blue'],   // route bullet shown in results
+        sub:   'ResNet50 · fastai · Grad-CAM · Healthcare · 0.96 quadratic weighted kappa',
+        route: ['R', 'lime'],   // route bullet shown in results
         tokens: [
             'project','research','paper','publication',  // section words
             'retinopathy','diabetic','fundus','kappa','96',
-            'xception','gradcam','grad','cam','interpretability','explainability',
+            'resnet','resnet50','fastai','pytorch','gradcam','grad','cam','interpretability','explainability',
             'clinical','healthcare','medical','health','eye','disease','diagnosis',
             'keras','opencv','cnn','convolution','convolutional',
             'vision','computer','cv','imaging','classification','lesion',
@@ -258,7 +258,7 @@ const INDEX = [
         id:    'education',
         label: 'PES University — BTech EEE',
         sub:   'Electrical & Electronics · CGPA 8.5 · 2017–2021',
-        route: ['M', 'blue'],   // route bullet shown in results
+        route: ['R', 'lime'],   // route bullet shown in results
         tokens: [
             'education','school',  // section words
             'pes','university','btech','btech','degree',
