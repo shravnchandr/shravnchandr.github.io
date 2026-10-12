@@ -44,7 +44,10 @@
 }
 
 .v2-hero-h1 {
-    font-size: clamp(48px, 7vw, 92px);
+    /* One line on desktop: the name is ~7.6× the font size wide, and the left
+       column is ~0.4 of the viewport, so ~6vw (capped) always fits */
+    font-size: clamp(48px, 6vw, 84px);
+    white-space: nowrap;
     line-height: 0.97;
     font-weight: 700;
     letter-spacing: -0.04em;
@@ -58,6 +61,18 @@
     color: var(--v2-text);
     margin-top: 14px;
 }
+
+.v2-hero-routes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 22px;
+    margin-top: 16px;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--v2-text);
+}
+.v2-hero-routes > span { display: inline-flex; align-items: center; gap: 10px; }
+.v2-hero-routes .v2-bullet { --b: 30px; }
 
 .v2-hero-tagline {
     font-size: 20px;
@@ -348,8 +363,10 @@
     .v2-hero { padding: 28px 0 48px; }
     .v2-hero-inner { padding: 0 16px; }
     .v2-status-badge { margin-bottom: 18px; font-size: 11px; }
-    .v2-hero-h1 { font-size: clamp(40px, 12vw, 52px); }
+    .v2-hero-h1 { font-size: clamp(40px, 12vw, 52px); white-space: normal; }
     .v2-hero-role { font-size: 17px; margin-top: 10px; }
+    .v2-hero-routes { font-size: 17px; gap: 8px 16px; margin-top: 12px; }
+    .v2-hero-routes .v2-bullet { --b: 26px; }
     .v2-hero-desc { font-size: 16px; margin-top: 14px; }
     .v2-hero-tagline { font-size: 18px; margin-top: 16px; }
     .v2-hero-cta { margin-top: 22px; gap: 10px; }

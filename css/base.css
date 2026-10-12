@@ -167,16 +167,20 @@ body, .v2-nav, .v2-asl-card, .v2-tech-tags span {
     padding: 0 56px;
 }
 
-/* Section header = a station sign (.v2-sign in signage.css):
-   route bullet + section name on the left, a short summary on the right */
+/* Section header = a route strip: the section's line colour as a rule on top
+   (data-r on the header), route bullet + name, short summary on the right.
+   Lighter than a full black sign; black signs are kept for focal points
+   (hiring snapshot, education, contact). */
 .v2-section-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
     flex-wrap: wrap;
-    gap: 14px 32px;
-    padding: 24px 26px 20px;
-    margin-bottom: 28px;
+    gap: 10px 32px;
+    padding: 18px 0 0;
+    margin-bottom: 20px;
+    border-top: 6px solid var(--c, var(--v2-text));
+    color: var(--v2-text);
 }
 
 .v2-section-name {
@@ -192,9 +196,11 @@ body, .v2-nav, .v2-asl-card, .v2-tech-tags span {
 
 .v2-section-meta {
     font-size: 15px;
-    color: var(--sign-dim);
+    color: var(--v2-text-dim);
     text-align: right;
 }
+/* The contact sign keeps the black-sign treatment */
+.v2-sign .v2-section-meta { color: var(--sign-dim); }
 
 .v2-section-h2 {
     font-size: clamp(36px, 5vw, 56px);

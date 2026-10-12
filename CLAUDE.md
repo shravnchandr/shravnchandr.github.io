@@ -132,6 +132,7 @@ Sections load in this order (matching `loader.js` FRAGMENTS array):
 | 10 | contact.html | `#contact` | Contact (08 · NEXT STOP) |
 
 ### Hero hiring snapshot
+Under the name, `.v2-hero-routes` lists the specialties as route bullets (M Production ML · G Applied GenAI · A Accessible AI), matching the banner and social card. The name stays on one line from 390px (`clamp(48px, 6vw, 84px)`, `nowrap` above phones).
 `<dl class="v2-glance v2-sign">` under the hero, an information board: based in / looking for (target roles + availability) / work authorization / strengths. Keep it in sync with `now.html`, `contact.html`, the UBC stop in `story.html` and the meta tags.
 
 ### Selected work (`#work`)
@@ -256,7 +257,7 @@ Imports `SIGNS`, `CONNECTIONS` from `./asl.js`.
 ### Subway signage rules
 Based on the 1970 NYCTA Graphics Standards Manual (Vignelli/Noorda, Unimark). Keep to these when adding anything:
 - **Colour = route.** Accent colours appear only on route bullets and lines (`--r-*`); text, numbers and links stay black/white. Cards carry their route via `data-r` on a `.v2-line-card` (6px line on top).
-- **Signs are black in both themes** (`.v2-sign`: `--sign-bg`, white text, thin white rule near the top). Signs are for wayfinding: section headers, the hiring snapshot, the ASL card strips, earlier education, contact. Content cards are `.v2-line-card`, not signs.
+- **Signs are black in both themes** (`.v2-sign`: `--sign-bg`, white text, thin white rule near the top), kept for focal points: the hero availability badge, the hiring snapshot, the ASL card strips and canvas, earlier education, contact. Section headers are lighter **route strips**: a 6px rule in the section's colour (`data-r` on the header) above the bullet + name. Content cards are `.v2-line-card`.
 - **One sans:** the Helvetica stack (`--font-sign`). Sign names are Medium (500), bullets Bold (700), as in the manual. Fira Code (`--font-mono`) only for code, logs and live data.
 - **Circles are reserved for route bullets**; everything else is a rectangle (`--radius: 4px`). A diamond bullet (`.v2-bullet--diamond`, label wrapped in `<span>`) marks work in progress — "limited service".
 - **No gradients, glows or tinted shadows.**
@@ -265,7 +266,7 @@ Based on the 1970 NYCTA Graphics Standards Manual (Vignelli/Noorda, Unimark). Ke
 
 Section header markup:
 ```html
-<div class="v2-section-header v2-sign">
+<div class="v2-section-header" data-r="blue">
     <div class="v2-section-name"><span class="v2-bullet" data-r="blue" aria-hidden="true">2</span>Experience</div>
     <div class="v2-section-meta">short summary</div>
 </div>

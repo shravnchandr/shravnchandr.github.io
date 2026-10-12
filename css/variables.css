@@ -32,7 +32,7 @@
     --v2-surface-hi2: #282828;
     --v2-border:      #2c2c2c;
     --v2-text:        #f2f2f2;
-    --v2-text-dim:    #b4b4b4;
+    --v2-text-dim:    #cccccc;   /* 12.5:1 on the page — signage wants high contrast */
     --v2-text-muted:  #949494;   /* ≥4.8:1 on every surface incl. surface-hi2 */
     --v2-neural:      #d264c8;   /* purple — the 7 */
     --v2-data:        #2fae5a;   /* green — the 4 5 6 */
