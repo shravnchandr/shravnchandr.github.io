@@ -132,14 +132,14 @@ Sections load in this order (matching `loader.js` FRAGMENTS array):
 | 10 | contact.html | `#contact` | Contact (08 · NEXT STOP) |
 
 ### Hero hiring snapshot
-`<dl class="v2-glance v2-sign">` under the hero, an information board: based in / next stop (target roles + availability) / work authorization / strengths. Keep it in sync with `now.html`, `contact.html`, the UBC stop in `story.html` and the meta tags.
+`<dl class="v2-glance v2-sign">` under the hero, an information board: current stop (location) / next stop (target roles + availability) / work authorization / strengths. Keep it in sync with `now.html`, `contact.html`, the UBC stop in `story.html` and the meta tags.
 
 ### Selected work (`#work`)
 `<article class="v2-case">` per case study: `#case-maintenance`, `#case-valfred`, `#case-asl-guide`. (Retinopathy lives in Research as `#research-retinopathy`.)
 Each opens with a one-sentence `<p class="v2-case-summary">` (what I owned + the result), then a `<dl class="v2-case-facts">` (Problem / What I owned / Result / Key decision / How it's measured). The `#overview` tiles link here.
 
 ### Experience (`#story`)
-`<ol class="v2-timeline">` drawn as a line map, with `#role-ubc` (current stop, "Now"), `#role-bosch-sr`, `#role-bosch-ml`, `#role-bosch-swe`, `#role-goldman`. Lines: M Production ML (blue), G Applied GenAI (purple), D Data infrastructure (orange), S Software (green); track columns M 0 · G 1 · D 2 · S 3.
+`<ol class="v2-timeline">` drawn as a line map, with `#role-ubc` (current stop, "Now"), `#role-bosch-sr`, `#role-bosch-ml`, `#role-bosch-swe`, `#role-goldman`. Lines: M Production ML (blue), G Applied GenAI (purple), D Data infrastructure (orange), S Software (green); track columns M 0 · G 1 · D 2 · S 3. The key also lists A Accessibility & sign language (yellow), used on PES, ASL Guide and the research cards (no track column).
 Each stop has a `.v2-tl-station` spanning the columns it serves (`--from`/`--to`) and a `.v2-tl-stripe` (`--i`) for each line shared with the **next** stop — update both when roles change. The senior role shows an outcome + 3 short bullets, with the full versions in `<details class="v2-tl-more">`; earlier roles show only the outcome. Bullets lead with the result in `<strong>`. `#education` holds earlier education (PES).
 
 ### Responsive demo placement

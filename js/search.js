@@ -57,12 +57,12 @@ const INDEX = [
         type:  'project',
         id:    'case-maintenance',
         label: 'Predictive Maintenance — Bosch',
-        sub:   'Autoencoder anomaly detection · 80+ TB telemetry · est. €300K+ annualized savings',
+        sub:   'Autoencoder anomaly detection · 40+ TB telemetry · est. €300K+ annualized savings',
         icon:  '⚙',
         tokens: [
             'project','work','case','study','studies','portfolio',  // section words
             'predictive','maintenance','autoencoder','anomaly','detection',
-            'telemetry','sensor','databricks','pyspark','spark','80tb','80',
+            'telemetry','sensor','databricks','pyspark','spark','40tb','40',
             'savings','300k','testing','cycles','production',
         ],
         action() { _reveal('#case-maintenance'); },
@@ -181,7 +181,7 @@ const INDEX = [
             'experience','career','job','role','employment',  // section words
             'bosch','senior','2025','2026','valfred',
             'databricks','pyspark','spark','partition','telemetry','ingestion','ingest',
-            'tb','80tb','80','high','frequency','sensor',
+            'tb','40tb','40','high','frequency','sensor',
             'autoencoder','anomaly','anomaly detection','detection',
             'predictive','maintenance','pipeline','production',
             'cycles','testing','saving','savings',
@@ -491,7 +491,7 @@ function _showTips() {
     const tip = _el('div', 'v2-search-tip');
     const lines = [
         '"autoencoder anomaly detection"',
-        '"Databricks PySpark 80TB"',
+        '"Databricks PySpark 40TB"',
         '"VQ-VAE Conformer translation"',
         '"spaced repetition"',
         '"trade booking Goldman"',
