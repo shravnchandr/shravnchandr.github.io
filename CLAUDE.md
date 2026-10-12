@@ -86,7 +86,7 @@ asl_model.js                # Trained MLP weights + StandardScaler; loaded lazil
 dev/export_model.py         # PyTorch → JSON export script (generates asl_model.js; gitignored)
 social-card.jpg             # 1200×630 link-preview card (og:image / twitter:image), subway style, photo from link_preview.png
 link_preview.png            # Square headshot (JSON-LD image; source photo for the card)
-favicon.svg                 # SVG favicon
+favicon.svg                 # SVG favicon (favicon.ico: 48px fallback for crawlers/link previews)
 Shravan_Chandra_Resume.pdf  # Downloadable resume
 ```
 
@@ -308,7 +308,7 @@ This lets skeleton shimmer screens show while the real content stays hidden — 
 The ASL Guide case study (`#case-asl-guide`) contains a `<details class="v2-arch-trace">` as a third child of the grid. `.v2-case .v2-arch-trace` in `css/cards.css` sets `grid-column: 1 / -1` so it spans both columns. Each layer is a line (browser green, API orange, data purple). Styling lives in `css/cards.css`.
 
 ### Layout grid
-One container for every section, hero included: 1320px max width, 56px gutters (24px ≤1024px, 16px ≤600px) — `.v2-inner` in `base.css`, `.v2-hero-inner` in `hero.css`. The contact sign is a named narrower variant (1000px). Key-result rows are a `max-content | 1fr` grid so values never shrink into their descriptions, stacking ≤400px. Stack: 5 columns above 1320px, 3 down to 701px, 2 down to 520px, then 1; titles reserve two lines (≥520px) so tag rows start level. Header controls are 44px. On phones (≤768px) the floating résumé button is hidden (the hero has one), and back-to-top steps aside while the footer is on screen (`js/scroll.js`).
+One container for every section, hero included: 1320px max width, 56px gutters (24px ≤1024px, 16px ≤600px) — `.v2-inner` in `base.css`, `.v2-hero-inner` in `hero.css`. The contact sign is a named narrower variant (1000px). Key-result rows are a `max-content | 1fr` grid so values never shrink into their descriptions, stacking ≤400px. Stack: 5 columns above 1320px, 3 down to 701px, 2 down to 520px, then 1; titles reserve two lines (≥520px) so tag rows start level. Header controls are 44px. On phones (≤768px) the floating résumé button is hidden (the hero has one), and back-to-top shows only while scrolling up and steps aside over the footer (`js/scroll.js`).
 
 ### Transition rule
 Only `color` is transitioned on `body` and surface elements — never `background` shorthand (it flashes the wrong theme's surface on toggle).

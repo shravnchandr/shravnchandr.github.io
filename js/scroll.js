@@ -79,12 +79,23 @@ function initBackToTop() {
     const btn = document.getElementById('back-to-top');
     if (!btn) return;
     let _ticking = false;
+    let _lastY = window.scrollY;
+    // Phones: only while scrolling up — when you'd reach for it — so it never
+    // sits on top of the text you're reading on the way down
+    const phone = window.matchMedia('(max-width: 768px)');
 
     window.addEventListener('scroll', () => {
         if (_ticking) return;
         _ticking = true;
         requestAnimationFrame(() => {
-            btn.classList.toggle('visible', window.scrollY > BACK_TO_TOP_SCROLL_PX);
+            const y = window.scrollY;
+            const pastTop = y > BACK_TO_TOP_SCROLL_PX;
+            const up = y < _lastY - 4;
+            const down = y > _lastY + 4;
+            if (!phone.matches) btn.classList.toggle('visible', pastTop);
+            else if (!pastTop || down) btn.classList.remove('visible');
+            else if (up) btn.classList.add('visible');
+            if (up || down) _lastY = y;
             _ticking = false;
         });
     });
