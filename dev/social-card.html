@@ -1,22 +1,40 @@
 <!doctype html><html><head><meta charset="utf-8"><style>
-@font-face { font-family: 'GSF'; src: url('../GoogleSansFlex-subset.woff2') format('woff2'); font-weight: 100 900; }
+/* Link-preview card · 1200×630 (og:image / twitter:image) · subway signage, matching the site.
+   Render: screenshot at 1200×630 in Chrome, save as ../social-card.jpg */
+:root { --bg:#050505; --text:#f5f5f5; --dim:#bdbdbd; --sign:"Helvetica Neue", Helvetica, Arial, sans-serif; }
 * { margin:0; padding:0; box-sizing:border-box; }
-body { width:1200px; height:630px; background:#0b0f14; font-family:'GSF', system-ui, sans-serif; overflow:hidden; position:relative; }
-.glow { position:absolute; inset:0; background: radial-gradient(circle at 20% 85%, #00bfa522, transparent 55%), radial-gradient(circle at 60% 10%, #9a76ff22, transparent 55%); }
-.photo { position:absolute; right:0; top:0; width:600px; height:630px; background:url('../link_preview.png') center 18%/cover no-repeat; }
-.fade { position:absolute; right:0; top:0; width:600px; height:630px; background:linear-gradient(90deg, #0b0f14 0%, #0b0f14b3 18%, transparent 50%); }
-.text { position:absolute; left:72px; top:0; height:630px; width:640px; display:flex; flex-direction:column; justify-content:center; }
-.badge { align-self:flex-start; font-family:'Fira Code', ui-monospace, Menlo, monospace; font-size:21px; font-weight:600; letter-spacing:1px; white-space:nowrap; color:#00bfa5; border:2px solid #00bfa555; background:#00bfa51a; padding:8px 16px; border-radius:999px; margin-bottom:34px; }
-h1 { font-size:88px; line-height:0.95; font-weight:800; letter-spacing:-3px; color:#e6ebf2; }
-.role { margin-top:22px; font-size:34px; font-weight:600; color:#00bfa5; line-height:1.2; }
-.desc { margin-top:22px; font-size:24px; color:#a0a9b8; line-height:1.45; max-width:560px; }
-.url { margin-top:40px; font-family:'Fira Code', ui-monospace, Menlo, monospace; font-size:22px; color:#9a76ff; }
+body { width:1200px; height:630px; background:var(--bg); color:var(--text); font-family:var(--sign); overflow:hidden; position:relative; -webkit-font-smoothing:antialiased; }
+body::before { content:""; position:absolute; left:0; right:0; top:22px; height:3px; background:var(--text); z-index:1; }   /* the sign's white rule */
+
+/* Photo: a hard-edged panel on the right — no fade */
+.photo { position:absolute; right:0; top:44px; bottom:0; width:430px; background:url('../link_preview.png') center 18%/cover no-repeat; }
+
+.bullet { display:inline-grid; place-items:center; flex:none; width:var(--b,40px); height:var(--b,40px); border-radius:50%;
+          font-weight:700; font-size:calc(var(--b,40px)*.62); line-height:1; background:var(--c); color:var(--on); }
+.blue { --c:#0062cf; --on:#fff; } .purple { --c:#b933ad; --on:#fff; } .yellow { --c:#fccc0a; --on:#0a0a0a; } .grey { --c:#6d6e71; --on:#fff; }
+
+.text { position:absolute; left:72px; top:44px; bottom:0; width:660px; display:flex; flex-direction:column; justify-content:center; }
+.status { align-self:flex-start; display:flex; align-items:center; gap:12px; font-size:19px; font-weight:700; letter-spacing:.06em; color:var(--text); margin-bottom:30px; }
+.status i { width:10px; height:10px; border-radius:50%; background:#6cbe45; }
+h1 { font-size:92px; line-height:.95; font-weight:700; letter-spacing:-.04em; }
+.role { margin-top:20px; font-size:30px; font-weight:700; color:var(--dim); }
+.routes { margin-top:24px; display:flex; flex-wrap:wrap; gap:12px 24px; }
+.route { display:flex; align-items:center; gap:10px; font-size:26px; font-weight:500; }
+.route .bullet { --b:34px; }
+.desc { margin-top:26px; font-size:22px; color:var(--dim); line-height:1.45; }
+.url { margin-top:30px; display:flex; align-items:center; gap:10px; font-size:22px; font-weight:500; color:var(--text); }
+.url .bullet { --b:30px; }
 </style></head><body>
-<div class="glow"></div><div class="photo"></div><div class="fade"></div>
+<div class="photo"></div>
 <div class="text">
-  <div class="badge">PART-TIME JAN 2027 · FULL-TIME JUL 2027</div>
+  <div class="status"><i></i>PART-TIME JAN 2027 · FULL-TIME JUL 2027</div>
   <h1>Shravan<br>Chandra</h1>
-  <div class="role">Machine Learning Engineer<br>Production ML &amp; Applied GenAI</div>
+  <div class="role">Machine Learning Engineer</div>
+  <div class="routes">
+    <span class="route"><span class="bullet blue">M</span>Production ML</span>
+    <span class="route"><span class="bullet purple">G</span>Applied GenAI</span>
+    <span class="route"><span class="bullet yellow">A</span>Accessible AI</span>
+  </div>
   <div class="desc">Nearly five years at Bosch<br>UBC Master of Data Science, June 2027</div>
-  <div class="url">shravnchandr.github.io</div>
+  <div class="url"><span class="bullet grey">S</span>shravnchandr.github.io</div>
 </div></body></html>

@@ -84,7 +84,7 @@ asl_model.js                # Trained MLP weights + StandardScaler; loaded lazil
                             # Format: { model: {fc1_w,fc1_b,fc2_w,fc2_b,fc3_w,fc3_b}, scaler: {mean,scale} }
                             # Weights stored TRANSPOSED: shape [in_features][out_features]
 dev/export_model.py         # PyTorch → JSON export script (generates asl_model.js; gitignored)
-social-card.jpg             # 1200×630 link-preview card (og:image / twitter:image), rendered from link_preview.png — still the pre-subway design
+social-card.jpg             # 1200×630 link-preview card (og:image / twitter:image), subway style, photo from link_preview.png
 link_preview.png            # Square headshot (JSON-LD image; source photo for the card)
 favicon.svg                 # SVG favicon
 Shravan_Chandra_Resume.pdf  # Downloadable resume
@@ -349,7 +349,7 @@ No npm, no webpack, no React.
 - `<meta name="description">` — plain text for crawlers
 - Open Graph + Twitter card tags — for social link unfurls
 - JSON-LD `Person` schema — for Google rich results
-- `social-card.jpg` — 1200×630 link-preview card; regenerate it when the title or availability changes (source: `dev/social-card.html`, screenshot at 1200×630 in Chrome). It still uses the pre-subway design and `GoogleSansFlex-subset.woff2`, which the site itself no longer loads
+- `social-card.jpg` — 1200×630 link-preview card; regenerate it when the title or availability changes (source: `dev/social-card.html`, screenshot at 1200×630 in Chrome). Export as JPEG: `sips -s format jpeg -s formatOptions 88 card.png --out social-card.jpg`
 
 When updating bio copy, keep all four in sync: hero text, `<meta name="description">`, `og:description`, and JSON-LD `description`.
 
