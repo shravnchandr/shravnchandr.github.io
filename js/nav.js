@@ -1,10 +1,10 @@
 /** nav.js — mobile hamburger + active-section highlight */
 
 import { spellSequence } from './asl.js';
-import { prefersReducedMotion } from './utils.js';
+import { prefersReducedMotion, setIcon } from './utils.js';
 
-const ICON_OPEN  = 'fas fa-bars';
-const ICON_CLOSE = 'fas fa-times';
+const ICON_OPEN  = 'bars';
+const ICON_CLOSE = 'xmark';
 const MOBILE_MQ  = '(max-width: 1240px)';  // matches the compact-menu breakpoint in css/nav.css
 
 export function initNav() {
@@ -27,12 +27,12 @@ function initMobileMenu() {
     const links = document.getElementById('nav-links');
     if (!btn || !links) return;
 
-    const icon = btn.querySelector('i');
+    const icon = btn.querySelector('svg.icon');
 
     function setOpen(open) {
         links.classList.toggle('active', open);
         btn.setAttribute('aria-expanded', String(open));
-        if (icon) icon.className = open ? ICON_CLOSE : ICON_OPEN;
+        setIcon(icon, open ? ICON_CLOSE : ICON_OPEN);
         document.body.style.overflow = open ? 'hidden' : '';
     }
     const isOpen = () => links.classList.contains('active');

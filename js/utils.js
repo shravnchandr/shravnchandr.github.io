@@ -179,6 +179,29 @@ const ROUTES = {};
  ['NQRW', 'yellow'], ['123', 'red'], ['456', 'green'], ['7', 'purple']]
     .forEach(([keys, r]) => { for (const k of keys) ROUTES[k] = r; });
 
+const SVG_NS = 'http://www.w3.org/2000/svg';
+
+/**
+ * A UI icon from the inline sprite in index.html (Font Awesome Free 6.7.2 paths):
+ * <svg class="icon …" aria-hidden="true"><use href="#i-NAME"/></svg>
+ * @param {string} name   symbol name without the "i-" prefix, e.g. 'sun'
+ * @param {string} [cls]  extra classes
+ */
+export function icon(name, cls = '') {
+    const svg = document.createElementNS(SVG_NS, 'svg');
+    svg.setAttribute('class', `icon ${cls}`.trim());
+    svg.setAttribute('aria-hidden', 'true');
+    const use = document.createElementNS(SVG_NS, 'use');
+    use.setAttribute('href', `#i-${name}`);
+    svg.appendChild(use);
+    return svg;
+}
+
+/** Point an existing sprite icon at another symbol. */
+export function setIcon(svg, name) {
+    svg?.querySelector('use')?.setAttribute('href', `#i-${name}`);
+}
+
 /** Route colour name for a sign key (used as the element's data-r). */
 export function routeFor(key) {
     return ROUTES[key] || 'none';

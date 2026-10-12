@@ -341,11 +341,11 @@ The SVG viewBox is `0 0 100 125`. WRIST is at `[50, 112]`.
 
 ---
 
-## External Dependencies (CDN only)
+## External Dependencies
 
 | Dependency | Used for |
 |---|---|
-| Font Awesome 6.7.2 (cdnjs) | Every UI icon (theme sun/moon, search, download, replay, chevrons, mail) + brand icons — the only icon family; route bullets are their own system |
+| Font Awesome Free 6.7.2 icons | **Inlined** as an SVG sprite at the top of `<body>` in `index.html` (20 symbols, CC BY 4.0) — no icon font or CDN request. Use `<svg class="icon" aria-hidden="true"><use href="#i-NAME"/></svg>` in HTML, or `icon()` / `setIcon()` from `js/utils.js`. To add one: copy its path from `@fortawesome/fontawesome-free@6.7.2/svgs/` into a new `<symbol id="i-NAME">` |
 | Fira Code (Google Fonts) | Code, logs and live data only |
 | Helvetica Neue / Helvetica / Arial (system) | All other type — no download |
 

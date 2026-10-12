@@ -21,6 +21,16 @@ a { text-decoration: none; color: inherit; }
 }
 .skip-link:focus { top: 16px; outline: none; }
 
+/* UI icons (inline SVG sprite in index.html): sized and coloured like text, as the icon font was */
+.icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+    vertical-align: -0.125em;
+    flex: none;
+}
+
 /* Screen-reader-only text */
 .v2-sr-only {
     position: absolute;

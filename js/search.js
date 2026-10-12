@@ -13,7 +13,7 @@
  *   substr match  → query word is substring of token, len ≥ 3 → +1
  */
 
-import { el as _el, makeOverlay, clearEl, createModal, isModalOpen, scrollToEl, sectionsReady } from './utils.js';
+import { el as _el, makeOverlay, clearEl, createModal, isModalOpen, scrollToEl, sectionsReady, icon } from './utils.js';
 
 /* ── Stop words (filtered before matching) ─────────────────────────── */
 const _STOP = new Set([
@@ -316,8 +316,7 @@ function _buildOverlay() {
     const modal = _el('div', 'v2-search-modal');
 
     const row  = _el('div', 'v2-search-row');
-    const ico  = _el('i', 'fas fa-search v2-search-icon');
-    ico.setAttribute('aria-hidden', 'true');
+    const ico  = icon('magnifying-glass', 'v2-search-icon');
 
     _input = _el('input', 'v2-search-input');
     _input.type        = 'text';

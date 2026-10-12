@@ -18,7 +18,7 @@
 
 // Asset version: bump with index.html and css/main.css whenever CSS or html/ changes,
 // so a returning visitor's cache can't pair new HTML with old CSS.
-const ASSET_VERSION = '2026101210';
+const ASSET_VERSION = '2026101211';
 
 const FRAGMENTS = [
     { id: 'frag-nav',      src: 'html/nav.html',      critical: true  },

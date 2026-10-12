@@ -10,6 +10,8 @@
  * back to following the system.
  */
 
+import { icon } from './utils.js';
+
 const KEY = 'theme-v2';
 
 export function initTheme() {
@@ -24,11 +26,7 @@ export function initTheme() {
     function apply(light) {
         body.classList.toggle('light-theme', light);
         if (btn) {
-            // Font Awesome, like every other UI icon
-            const icon = document.createElement('i');
-            icon.className = light ? 'fas fa-moon' : 'fas fa-sun';
-            icon.setAttribute('aria-hidden', 'true');
-            btn.replaceChildren(icon);
+            btn.replaceChildren(icon(light ? 'moon' : 'sun'));
             btn.setAttribute('aria-label', light ? 'Switch to dark mode' : 'Switch to light mode');
         }
     }

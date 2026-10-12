@@ -173,7 +173,7 @@
     border-color: var(--v2-text-dim);
 }
 
-.v2-search-trigger i { font-size: 10px; }
+.v2-search-trigger .icon { font-size: 11px; }
 
 .v2-search-trigger kbd {
     font-size: 10px;
@@ -200,5 +200,5 @@
         align-items: center;
         justify-content: center;
     }
-    .v2-search-trigger i { font-size: 16px; }
+    .v2-search-trigger .icon { font-size: 16px; }
 }

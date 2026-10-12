@@ -9,41 +9,41 @@
  * accessibility design decisions behind this portfolio.
  */
 
-import { el as _el, clearEl } from './utils.js';
+import { el as _el, clearEl, icon as makeIcon } from './utils.js';
 
 const FEATURES = [
     {
-        icon: 'fas fa-route',
+        icon: 'route',
         accent: 'inference',
         title: 'ARIA landmarks',
         note: 'nav, main, and section[aria-label] give screen readers a named page map — users jump between sections with a single keystroke.',
     },
     {
-        icon: 'fas fa-tag',
+        icon: 'tag',
         accent: 'data',
         title: 'Descriptive labels',
         note: 'Every icon button carries aria-label so VoiceOver / NVDA announces intent ("Toggle theme"), not just "button".',
     },
     {
-        icon: 'fas fa-wifi',
+        icon: 'wifi',
         accent: 'neural',
         title: 'Live regions',
         note: 'aria-live="polite" on the ASL prediction panel — the letter is announced after the current utterance, never interrupting.',
     },
     {
-        icon: 'fas fa-wind',
+        icon: 'wind',
         accent: 'inference',
         title: 'Reduced-motion fallback',
         note: '@media (prefers-reduced-motion: reduce) disables every spring keyframe and CSS transition — no exceptions, no overrides.',
     },
     {
-        icon: 'fas fa-circle-half-stroke',
+        icon: 'circle-half-stroke',
         accent: 'data',
         title: 'WCAG-AA contrast',
         note: 'Text on the page: 17.4 : 1 (dark) / 18.9 : 1 (light). Secondary text: 8.9 : 1 / 9.3 : 1. Every route bullet\'s letter is ≥ 4.5 : 1 on its colour.',
     },
     {
-        icon: 'fas fa-keyboard',
+        icon: 'keyboard',
         accent: 'neural',
         title: 'Keyboard & skip nav',
         note: 'Tab reveals a skip-to-main link. The nav uses plain links (no menubar role). Focus-visible ring on every interactive element.',
@@ -118,8 +118,7 @@ function _buildPanel(panel) {
     const list = _el('ul', 'v2-a11y-list');
     FEATURES.forEach(({ icon, accent, title: featureTitle, note }) => {
         const li   = _el('li',  'v2-a11y-item');
-        const ico  = _el('i',   `${icon} v2-a11y-ico v2-a11y-ico--${accent}`);
-        ico.setAttribute('aria-hidden', 'true');
+        const ico  = makeIcon(icon, `v2-a11y-ico v2-a11y-ico--${accent}`);
         const body = _el('div', 'v2-a11y-body');
         const ttl  = _el('strong');
         ttl.textContent = featureTitle;
