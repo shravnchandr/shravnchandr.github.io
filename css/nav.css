@@ -27,8 +27,14 @@ body.light-theme .v2-nav {
     flex-shrink: 0;
 }
 
-/* The S shuttle bullet */
-.v2-logo-badge { --b: 32px; }
+/* Memoji avatar, round like a route bullet (memoji-128.jpg: 128px for 2–4× screens) */
+.v2-logo-badge {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex: none;
+}
 
 .v2-logo-text {
     font-size: 16px;
@@ -37,7 +43,6 @@ body.light-theme .v2-nav {
     color: var(--v2-text);
 }
 
-.v2-logo-accent { color: var(--v2-text-muted); }
 
 .v2-nav-links {
     display: flex;

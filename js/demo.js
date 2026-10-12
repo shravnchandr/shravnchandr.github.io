@@ -169,8 +169,9 @@ export function initDemo() {
         const ch   = SCRIPT[step - 1];
         const sign = (ch && ch !== ' ') ? ch : null;
 
+        // Spaces and the post-replay steps keep the last sign on screen, so the panel
+        // is never an empty black box (and with reduced motion it ends on "D")
         if (sign && SIGNS[sign]) drawPose(SIGNS[sign]);
-        else hidePose();
 
         if (sign) {
             letterEl.textContent = sign;
@@ -178,9 +179,6 @@ export function initDemo() {
             letterEl.dataset.r = routeFor(sign);
             void letterEl.offsetWidth;
             letterEl.classList.add('pop');
-        } else {
-            letterEl.textContent = '';
-            letterEl.className = 'v2-demo-sign-letter';
         }
 
         if (sign) {
