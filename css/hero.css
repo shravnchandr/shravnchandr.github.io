@@ -201,7 +201,7 @@
 
 .v2-asl-body {
     display: grid;
-    grid-template-columns: 1.3fr 1fr;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);   /* minmax(0,…) lets columns shrink below their content */
 }
 
 .v2-asl-canvas-wrap {
@@ -358,6 +358,15 @@
     .v2-asl-url { display: none; }
     .v2-asl-stats { display: none; }
     .v2-asl-caption { display: none; }
+}
+
+/* Small phones: an even split, tighter prediction column */
+@media (max-width: 400px) {
+    .v2-asl-body { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    .v2-pred-letter { width: 64px; height: 64px; font-size: 40px; }
+    .v2-conf-row { flex-wrap: wrap; gap: 0 6px; font-size: 11px; }
+    .v2-webcam-hint { display: none; }
+    .v2-signing-label { right: 8px; font-size: 9px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 }
 
 @media (max-width: 360px) {
