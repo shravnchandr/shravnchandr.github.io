@@ -29,7 +29,7 @@ The site uses an **NYC Subway signage** design (after the 1970 NYCTA Graphics St
 ### File Map
 
 ```
-index.html                  # Shell: head, <link rel="prefetch"> for all fragments, skeleton screens, persistent UI
+index.html                  # Shell: head, icon sprite, skeleton screens, persistent UI
 loader.js                   # Fetches html/*.html fragments in parallel, sets __sectionsReady
 script.js                   # ES module entry point — imports js/* and calls initApp()
 
@@ -366,7 +366,7 @@ When updating bio copy, keep all four in sync: hero text, `<meta name="descripti
 
 ## Deployment
 
-**Asset version:** `index.html` (stylesheet + prefetch links), `css/main.css` (every `@import`) and `loader.js` (`ASSET_VERSION`) append `?v=<version>`. Bump it in all three whenever CSS or `html/` changes, or returning visitors can pair new HTML with cached old CSS (GitHub Pages caches for 10 minutes; local `python3 -m http.server` relies on heuristic caching — hard-refresh with ⌘⇧R when testing).
+**Asset version:** `index.html` (stylesheet link), `css/main.css` (every `@import`) and `loader.js` (`ASSET_VERSION`) append `?v=<version>`. Bump it in all three whenever CSS or `html/` changes, or returning visitors can pair new HTML with cached old CSS (GitHub Pages caches for 10 minutes; local `python3 -m http.server` relies on heuristic caching — hard-refresh with ⌘⇧R when testing).
 
 
 Push to `master` → GitHub Pages deploys automatically. Allow 2–3 minutes for propagation.
