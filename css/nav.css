@@ -27,7 +27,7 @@ body.light-theme .v2-nav {
     flex-shrink: 0;
 }
 
-/* Memoji avatar, round like a route bullet (memoji-128.jpg: 128px for 2–4× screens) */
+/* Memoji avatar, round like a route bullet (assets/img/memoji-128.jpg: 128px for 2–4× screens) */
 .v2-logo-badge {
     width: 32px;
     height: 32px;

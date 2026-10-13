@@ -21,7 +21,7 @@ import { updateLetterDisplay, renderTop3, clearEl } from './utils.js';
 const MP_HANDS_VERSION = '@mediapipe/hands@0.4.1675469240';
 const MP_HANDS_CDN     = `https://cdn.jsdelivr.net/npm/${MP_HANDS_VERSION}/hands.js`;
 const MP_HANDS_BASE    = `https://cdn.jsdelivr.net/npm/${MP_HANDS_VERSION}/`;
-const MODEL_SRC        = './asl_model.js';
+const MODEL_SRC        = './js/asl_model.js';   // loaded by a <script> tag, so relative to the page
 
 const CAM_WIDTH         = 640;
 const CAM_HEIGHT        = 480;

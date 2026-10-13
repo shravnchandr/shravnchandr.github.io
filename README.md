@@ -36,9 +36,9 @@ Sections are numbered stations (1 At a Glance … 8 Next Stop). Full rules: [`CL
 
 Fully static — no framework, no build step, no package manager.
 
-- `index.html` is a shell; `loader.js` fetches the `html/*.html` sections in parallel
-- `script.js` is the ES-module entry point for `js/*`; styles are `css/*`, imported by `css/main.css`
-- `asl_model.js` holds the trained MLP weights, loaded only when "Try live" is clicked
+- `index.html` is a shell; `js/loader.js` fetches the `html/*.html` sections in parallel
+- `js/main.js` is the ES-module entry point; styles are `css/*`, imported by `css/main.css`
+- `js/asl_model.js` holds the trained MLP weights, loaded only when "Try live" is clicked
 - Icons are an inline SVG sprite (Font Awesome Free paths) — no icon font or CDN
 - Stylesheets and sections carry an asset version (`?v=…`) so a deploy never mixes new HTML with cached CSS
 
@@ -51,7 +51,7 @@ python3 -m http.server   # ES modules and fetch() need a server (file:// won't w
 
 ## Deployment
 
-Push to `master` → GitHub Pages deploys automatically (about a minute). When CSS or `html/` changes, bump the asset version in `index.html`, `css/main.css` and `loader.js`.
+Push to `master` → GitHub Pages deploys automatically (about a minute). When CSS or `html/` changes, bump the asset version in `index.html`, `css/main.css` and `js/loader.js`. Images live in `assets/img/`; the root keeps only files that must be there (pages, icons, robots/sitemap, the public résumé PDF).
 
 ---
 

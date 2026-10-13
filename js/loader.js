@@ -11,7 +11,7 @@
  * The page is revealed as soon as the critical fragments settle — below-fold
  * placeholders keep showing their skeletons until their own fetch settles.
  *
- * Exposes two promises for script.js:
+ * Exposes two promises for js/main.js:
  *   window.__fragments.critical — nav + hero settled (loaded or failed)
  *   window.__fragments.all      — every fragment settled
  */

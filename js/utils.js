@@ -5,7 +5,7 @@
  * across modules. No side effects, no imports.
  */
 
-// Resolved by script.js once section-dependent features (tabs etc.) are wired,
+// Resolved by js/main.js once section-dependent features (tabs etc.) are wired,
 // so early callers (e.g. search, which initialises with the nav) can defer to it.
 let _markSectionsReady;
 export const sectionsReady = new Promise(r => { _markSectionsReady = r; });

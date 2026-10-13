@@ -29,11 +29,25 @@ The site uses an **NYC Subway signage** design (after the 1970 NYCTA Graphics St
 ### File Map
 
 ```
+Root keeps only what must live there: the pages, files crawlers/browsers request
+by fixed name, and the public résumé URL (already shared — never move it).
+
 index.html                  # Shell: head, icon sprite, skeleton screens, persistent UI
-loader.js                   # Fetches html/*.html fragments in parallel, sets __sectionsReady
-script.js                   # ES module entry point — imports js/* and calls initApp()
+404.html                    # Service-notice 404 page (GitHub Pages serves it for missing paths)
+robots.txt · sitemap.xml    # Crawl rules + URL index
+favicon.ico · favicon.svg · apple-touch-icon.png   # Icons (crawlers request /favicon.ico directly)
+Shravan_Chandra_Resume.pdf  # Downloadable résumé — public URL, keep at root
+
+assets/img/
+  memoji-128.jpg            # Logo avatar (nav, 404, social card, LinkedIn thumbnails)
+  social-card.jpg           # 1200×630 link-preview card (og:image / twitter:image); source dev/social-card.html
+  link_preview.jpg          # Square headshot, 800px (JSON-LD image; source photo for the card)
 
 js/
+  loader.js                 # Plain <script>: fetches html/*.html fragments in parallel, sets __sectionsReady
+  main.js                   # ES module entry point — imports the other js/* modules and boots the app
+  asl_model.js              # Trained MLP weights + StandardScaler; loaded lazily by webcam.js (<script>, path relative to the page)
+                            #   Defines ASL_MODEL_DATA and ASL_SCALER_DATA; weights stored TRANSPOSED [in][out]
   utils.js                  # Shared DOM helpers: el(), makeOverlay(), makeTop3Row(), updateLetterDisplay()
   theme.js                  # Theme toggle; follows OS by default (localStorage 'theme-v2' = explicit choice)
   nav.js                    # Mobile hamburger + active-section highlight + logo Easter egg
@@ -79,16 +93,10 @@ css/
   animations.css            # Spring keyframes, [data-m3-press], [data-hover-lift],
                             #   .animate-in, .stagger-2–5 — LOADED LAST
 
-asl_model.js                # Trained MLP weights + StandardScaler; loaded lazily by webcam.js
-                            # Defines two globals: ASL_MODEL_DATA and ASL_SCALER_DATA
-                            # Format: { model: {fc1_w,fc1_b,fc2_w,fc2_b,fc3_w,fc3_b}, scaler: {mean,scale} }
-                            # Weights stored TRANSPOSED: shape [in_features][out_features]
-dev/export_model.py         # PyTorch → JSON export script (generates asl_model.js; gitignored)
-404.html                    # Service-notice 404 page (GitHub Pages serves it for missing paths)
-social-card.jpg             # 1200×630 link-preview card (og:image / twitter:image), subway style, photo from link_preview.jpg
-link_preview.jpg            # Square headshot, 800px (JSON-LD image; source photo for the card)
-favicon.svg                 # SVG favicon (favicon.ico: 48px fallback for crawlers/link previews)
-Shravan_Chandra_Resume.pdf  # Downloadable resume
+dev/
+  social-card.html          # Source of assets/img/social-card.jpg
+  export_model.py           # PyTorch → JSON export (weights for js/asl_model.js; gitignored)
+  linkedin-banner.html      # LinkedIn banner source (gitignored)
 ```
 
 ---
@@ -98,13 +106,13 @@ Shravan_Chandra_Resume.pdf  # Downloadable resume
 ```
 index.html parsed
   │
-  ├─ loader.js (plain <script>, runs immediately)
+  ├─ js/loader.js (plain <script>, runs immediately)
   │    └─ bootstrap() — fetch html/*.html in parallel (6s timeout per attempt, 3 retries)
   │         └─ each placeholder <div id="frag-*"> replaced by outerHTML of fetched fragment
   │         └─ window.__fragments = { critical, all }  (promises; never reject)
   │         └─ critical (nav + hero) settled → body.classList.remove('loading')  ← FOUC guard
   │
-  └─ script.js (type="module", deferred by default)
+  └─ js/main.js (type="module", deferred by default)
        └─ __fragments.critical → initCore()     (theme, nav, back-to-top, skip link, ASL, a11y, search, webcam)
           __fragments.all      → initSections() (active nav, scroll reveal, CountUp, demo, demo-card placement) → markSectionsReady()
 ```
@@ -117,7 +125,7 @@ Below-fold placeholders keep showing skeletons until their own fetch settles, so
 
 ## Page Structure
 
-Sections load in this order (matching `loader.js` FRAGMENTS array):
+Sections load in this order (matching `js/loader.js` FRAGMENTS array):
 
 | # | Fragment | Section id | Description |
 |---|---|---|---|
@@ -150,7 +158,7 @@ On single-column layouts (≤1024px) `js/layout.js` moves `.v2-hero-right` (the 
 ### Easter eggs (opt-in only — nothing triggers on its own, moves the layout or plays sound)
 - **Fingerspell H-I** in "Try live" (`js/webcam.js`, `SECRET`): two letters that hold steady (the same ones announced to screen readers) within 6s show a small "Next stop: a conversation" sign over the canvas, with the email. The hint "psst — try signing H-I" appears only once the camera runs.
 - **404 page** (`404.html`, root): a service notice with the line map back to each section. Self-contained (inline CSS, absolute links) because GitHub Pages serves it for any missing path.
-- **Console note** in `script.js` for engineers who open DevTools.
+- **Console note** in `js/main.js` for engineers who open DevTools.
 
 ### Draft placeholders
 `<span class="v2-todo">TODO: …</span>` marks facts still to be supplied (styled as dashed orange chips). `grep -rn v2-todo html/` must return nothing before publishing.
@@ -161,16 +169,16 @@ On single-column layouts (≤1024px) `js/layout.js` moves `.v2-hero-right` (the 
 
 All modules use ES module syntax (`export function init*()`).
 
-### `script.js` (entry point)
+### `js/main.js` (entry point)
 ```js
-import { initTheme }    from './js/theme.js';
-import { initNav }      from './js/nav.js';
-import { initScroll }   from './js/scroll.js';
-import { initASL }      from './js/asl.js';
-import { initDemo }     from './js/demo.js';
-import { initA11yLab }  from './js/a11y.js';
-import { initSearch }   from './js/search.js';
-import { initWebcam }   from './js/webcam.js';
+import { initTheme }    from './theme.js';
+import { initNav }      from './nav.js';
+import { initScroll }   from './scroll.js';
+import { initASL }      from './asl.js';
+import { initDemo }     from './demo.js';
+import { initA11yLab }  from './a11y.js';
+import { initSearch }   from './search.js';
+import { initWebcam }   from './webcam.js';
 
 function initApp() { /* calls all inits + console Easter egg */ }
 
@@ -240,7 +248,7 @@ Imports `SIGNS`, `CONNECTIONS` from `./asl.js`.
 
 ### `js/webcam.js`
 - `initWebcam()` — wires `#webcam-toggle`, hides button if `getUserMedia` unavailable
-- On button click: loads `asl_model.js` and `@mediapipe/hands` CDN **in parallel** via `_loadScript`, then initialises MediaPipe Hands and starts `getUserMedia`
+- On button click: loads `js/asl_model.js` and `@mediapipe/hands` CDN **in parallel** via `_loadScript`, then initialises MediaPipe Hands and starts `getUserMedia`
 - `_classify(worldLandmarks)` — runs the MLP forward pass:
   1. Flatten 21 × `{x,y,z}` world landmarks → 63 floats
   2. StandardScaler: `(val − mean[i]) / scale[i]` (from `ASL_MODEL_DATA.scaler`)
@@ -248,7 +256,7 @@ Imports `SIGNS`, `CONNECTIONS` from `./asl.js`.
   4. Softmax → top-3 `{key, conf}` (keys: A–Z, DEL, SPC)
 - `_matMul(input, W, bias)` — correct transposed-weight multiply: `out[j] = Σ_i(input[i] × W[i][j]) + bias[j]`
 - `_onResults` uses `multiHandLandmarks[0]` for SVG drawing (`drawHandPose`) and `multiHandWorldLandmarks[0]` for MLP inference
-- **Critical**: `asl_model.js` weights are transposed (`[in_features][out_features]`) — `_matMul` must iterate outer index over `in` and inner index over `out`, NOT the reverse (the original pre-v2 script had this swapped)
+- **Critical**: `js/asl_model.js` weights are transposed (`[in_features][out_features]`) — `_matMul` must iterate outer index over `in` and inner index over `out`, NOT the reverse (the original pre-v2 script had this swapped)
 
 ### `js/scroll.js`
 - `initScrollReveal`: adds `.show` to `.animate-on-scroll` on intersection (threshold 0.12)
@@ -302,7 +310,7 @@ Section header markup:
 - `@media (prefers-reduced-motion: reduce)` — disables all the above
 
 ### `body.loading` FOUC guard
-`loader.js` adds `body.loading` before fetching; `css/base.css` has `body.loading { visibility: hidden }`. Removed once all fragments are injected.
+`js/loader.js` adds `body.loading` before fetching; `css/base.css` has `body.loading { visibility: hidden }`. Removed once all fragments are injected.
 
 CSS `visibility` is inherited but can be overridden by descendants. `css/skeleton.css` uses this:
 ```css
@@ -358,7 +366,7 @@ No npm, no webpack, no React.
 - `<meta name="description">` — plain text for crawlers
 - Open Graph + Twitter card tags — for social link unfurls
 - JSON-LD `Person` schema — for Google rich results
-- `social-card.jpg` — 1200×630 link-preview card; regenerate it when the title or availability changes (source: `dev/social-card.html`, screenshot at 1200×630 in Chrome). Export as JPEG: `sips -s format jpeg -s formatOptions 88 card.png --out social-card.jpg`
+- `assets/img/social-card.jpg` — 1200×630 link-preview card; regenerate it when the title or availability changes (source: `dev/social-card.html`, screenshot at 1200×630 in Chrome). Export as JPEG: `sips -s format jpeg -s formatOptions 88 card.png --out social-card.jpg`
 
 When updating bio copy, keep all four in sync: hero text, `<meta name="description">`, `og:description`, and JSON-LD `description`.
 
@@ -366,7 +374,7 @@ When updating bio copy, keep all four in sync: hero text, `<meta name="descripti
 
 ## Deployment
 
-**Asset version:** `index.html` (stylesheet link), `css/main.css` (every `@import`) and `loader.js` (`ASSET_VERSION`) append `?v=<version>`. Bump it in all three whenever CSS or `html/` changes, or returning visitors can pair new HTML with cached old CSS (GitHub Pages caches for 10 minutes; local `python3 -m http.server` relies on heuristic caching — hard-refresh with ⌘⇧R when testing).
+**Asset version:** `index.html` (stylesheet link), `css/main.css` (every `@import`) and `js/loader.js` (`ASSET_VERSION`) append `?v=<version>`. Bump it in all three whenever CSS or `html/` changes, or returning visitors can pair new HTML with cached old CSS (GitHub Pages caches for 10 minutes; local `python3 -m http.server` relies on heuristic caching — hard-refresh with ⌘⇧R when testing).
 
 
 Push to `master` → GitHub Pages deploys automatically. Allow 2–3 minutes for propagation.
