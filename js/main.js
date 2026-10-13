@@ -41,12 +41,43 @@ function initCore() {
     initWebcam();
 }
 
+// Deep links (/#work, links from the 404 page or LinkedIn): the browser looks for the
+// target before loader.js has injected the sections, misses it and stays at the top.
+// Once everything is in, jump to it — unless the visitor has already started scrolling.
+let _userScrolled = false;
+['wheel', 'touchmove', 'keydown'].forEach(ev =>
+    window.addEventListener(ev, () => { _userScrolled = true; }, { once: true, passive: true }));
+
+function scrollToHash() {
+    if (_userScrolled || location.hash.length < 2) return;
+    let target = null;
+    try { target = document.querySelector(decodeURIComponent(location.hash)); } catch (_) { return; }
+    if (!target) return;
+    // Expand a collapsed experience entry, as search does
+    const details = target.matches('.v2-tl-item') && target.querySelector('details');
+    if (details) details.open = true;
+    // A scroll-reveal card starts translated down; show it first so we land on its final spot
+    // (without the slide, which would still be moving when we measure)
+    if (target.matches('.animate-on-scroll') && !target.classList.contains('show')) {
+        target.style.transition = 'none';
+        target.classList.add('show');
+        void target.offsetWidth;            // apply the final position now
+        target.style.transition = '';
+    }
+    target.scrollIntoView({ block: 'start' });   // instant; scroll-margin-top clears the nav
+}
+
 function initSections() {
     initActiveNav();
     initSectionScroll();
     initDemo();
-    initHeroDemoPlacement();
+    initHeroDemoPlacement();   // may move the demo card, so scroll after it
     markSectionsReady();
+    scrollToHash();
+    // Late layout shifts (web font swap, images) can push the target off its mark — re-settle
+    document.fonts?.ready.then(() => requestAnimationFrame(scrollToHash));
+    if (document.readyState === 'complete') requestAnimationFrame(scrollToHash);
+    else window.addEventListener('load', () => requestAnimationFrame(scrollToHash), { once: true });
 }
 
 // loader.js exposes promises that resolve once fragments have settled.
