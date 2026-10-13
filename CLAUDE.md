@@ -189,7 +189,7 @@ Shared DOM/UI helpers imported by `a11y.js`, `search.js`, `asl.js`, `webcam.js`,
 - `renderTop3(container, rows)` — renders Top-3 rows, reusing existing nodes
 - `prefersReducedMotion()` / `scrollToEl(el)` — motion-aware helpers
 - `clearEl(element)` — removes all child nodes from a DOM element; replaces the repeated `while (el.firstChild) el.removeChild(el.firstChild)` idiom
-- `routeFor(key)` — subway route colour for a sign key (A/C/E → blue, N/Q/R/W → yellow, …; no route → `none`). `updateLetterDisplay` sets it as `data-r`, so the prediction letter is a route bullet; `demo.js` does the same for its overlay letter
+- `routeFor(key)` — subway route colour for a sign key (the site's own lines first — M blue, G purple, D orange, S green, A yellow, R teal — then MTA colours for other letters, e.g. C/E blue, N/Q/W yellow, L grey; no route → `none`). `updateLetterDisplay` sets it as `data-r`, so the prediction letter is a route bullet; `demo.js` does the same for its overlay letter
 
 ### `js/asl.js`
 Exports `initASL`, `SIGNS`, `CONNECTIONS`, `spellSequence`, `pauseASL`, `resumeASL`, `drawHandPose`.

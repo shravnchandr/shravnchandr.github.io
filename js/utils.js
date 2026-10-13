@@ -178,6 +178,10 @@ const ROUTES = {};
 [['ACE', 'blue'], ['BDFM', 'orange'], ['G', 'lime'], ['JZ', 'brown'], ['LS', 'grey'],
  ['NQRW', 'yellow'], ['123', 'red'], ['456', 'green'], ['7', 'purple']]
     .forEach(([keys, r]) => { for (const k of keys) ROUTES[k] = r; });
+// The site's own lines win over the real subway's, so the line key holds
+// everywhere (M production ML, G GenAI, D data, S software, A accessibility,
+// R research). The other letters keep their MTA colours.
+Object.assign(ROUTES, { M: 'blue', G: 'purple', D: 'orange', S: 'green', A: 'yellow', R: 'teal' });
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
 
