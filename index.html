@@ -3,6 +3,12 @@
 
 <head>
     <meta charset="UTF-8">
+    <!-- Scroll-reveal cards are hidden only under html.js. If the reveal code never
+         reports in (module failed to load or crashed), drop the class so nothing stays invisible. -->
+    <script>
+        document.documentElement.classList.add('js');
+        setTimeout(function () { if (!window.__revealReady) document.documentElement.classList.remove('js'); }, 4000);
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shravan Chandra | Machine Learning Engineer · Production ML &amp; Applied GenAI</title>
     <meta name="description"
@@ -36,7 +42,7 @@
     <!-- Styles -->
     <!-- ?v= is the asset version: bump it (here, in css/main.css and in js/loader.js) whenever CSS or html/ changes,
          so returning visitors never mix new HTML with cached old CSS -->
-    <link rel="stylesheet" href="css/main.css?v=2026101217">
+    <link rel="stylesheet" href="css/main.css?v=2026101218">
 
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">

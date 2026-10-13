@@ -28,6 +28,7 @@ function initScrollReveal() {
     }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
 
     document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+    window.__revealReady = true;   // tells the <head> fallback the reveal is running
 }
 
 function initCountUp() {
