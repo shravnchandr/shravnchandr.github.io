@@ -40,12 +40,12 @@
                 <div class="v2-metric-row"><span class="v2-mv">&gt;50%</span><span class="v2-ml">faster per-partition processing</span></div>
                 <div class="v2-code-block">
                     <div class="v2-cb-header">Public-safe overview</div>
-                    sensor telemetry · 40+ TB<br>
-                    &nbsp;&nbsp;↓ batch processing · Databricks · PySpark<br>
-                    12-second measurement windows<br>
-                    &nbsp;&nbsp;↓ autoencoder · expected behaviour<br>
-                    &nbsp;&nbsp;↓ window doesn’t match<br>
-                    real-time anomaly flags → test engineers
+                    <div class="v2-cb-line">sensor telemetry · 40+ TB</div>
+                    <div class="v2-cb-line v2-cb-sub">↓ batch processing · Databricks · PySpark</div>
+                    <div class="v2-cb-line">12-second measurement windows</div>
+                    <div class="v2-cb-line v2-cb-sub">↓ autoencoder · expected behaviour</div>
+                    <div class="v2-cb-line v2-cb-sub">↓ window doesn’t match</div>
+                    <div class="v2-cb-line">real-time anomaly flags → test engineers</div>
                 </div>
             </div>
         </article>
@@ -63,7 +63,7 @@
                     <dt>What I owned</dt>
                     <dd>Orchestrated a multi-agent assistant with optional vector schema retrieval and self-healing SQL agents, deployed via MLflow and Unity Catalog on Databricks. Used by the hardware team in my department to pull measurement details from tests — about 30 users, in beta when I left.</dd>
                     <dt>Result</dt>
-                    <dd>A 10–15-minute manual lookup became a natural-language request answered in <strong>about 1–2 minutes</strong> — most of it data retrieval, not the agent. <strong>~81%</strong> of test queries answered correctly within three attempts.</dd>
+                    <dd>A 10–15-minute manual lookup became a natural-language request answered in <strong>about 1–2 minutes</strong> — most of it data retrieval, not the agent. On ~500 internal test queries: <strong>65%</strong> answered correctly on the first pass, <strong>~81%</strong> within three attempts.</dd>
                     <dt>Key decision</dt>
                     <dd>Self-healing SQL: a query that fails is repaired from its own error message, with up to two retries before the error is reported.</dd>
                 </dl>
@@ -86,11 +86,11 @@
                 <div class="v2-metric-row"><span class="v2-mv">~81%</span><span class="v2-ml">correct within 3 attempts · ~500 test queries</span></div>
                 <div class="v2-code-block">
                     <div class="v2-cb-header">Public-safe overview</div>
-                    engineer’s question<br>
-                    &nbsp;&nbsp;↓ schema: full, or vector (closest columns)<br>
-                    SQL agent → query testing data<br>
-                    &nbsp;&nbsp;↺ on SQL error: repair &amp; retry (max 2)<br>
-                    answer · MLflow + Unity Catalog
+                    <div class="v2-cb-line">engineer’s question</div>
+                    <div class="v2-cb-line v2-cb-sub">↓ schema: full, or vector (closest columns)</div>
+                    <div class="v2-cb-line">SQL agent → query testing data</div>
+                    <div class="v2-cb-line v2-cb-sub">↺ on SQL error: repair &amp; retry (max 2)</div>
+                    <div class="v2-cb-line">answer · MLflow + Unity Catalog</div>
                 </div>
             </div>
         </article>

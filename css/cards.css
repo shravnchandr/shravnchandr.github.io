@@ -154,6 +154,11 @@
     margin-top: 12px;
 }
 
+/* One line per step: a wrapped line hangs under its own text rather than
+   leaving a word alone at the left edge; "↓" steps are indented */
+.v2-cb-line { padding-left: 2ch; text-indent: -2ch; }
+.v2-cb-sub  { margin-left: 2ch; }
+
 .v2-code-block .v2-cb-header {
     font-family: var(--font-sign);
     font-size: 11.5px;
@@ -339,3 +344,15 @@
 }
 
 .v2-arch-connector-label { white-space: nowrap; }
+
+/* Single column (≤900px): the "At a glance" tiles above already show each
+   project's numbers, and the Result row states them with context, so the
+   case-study Key results block would only repeat them. Research cards keep theirs. */
+@media (max-width: 900px) {
+    .v2-case .v2-right-label,
+    .v2-case .v2-metric-row { display: none; }
+    .v2-case .v2-code-block { margin-top: 0; }
+}
+@media (max-width: 600px) {
+    .v2-code-block { font-size: 11.5px; padding: 14px 14px; }
+}
