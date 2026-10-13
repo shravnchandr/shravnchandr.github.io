@@ -23,9 +23,6 @@ desktop.ini
 # Python dev scripts (model training/export — dev/ only, not part of the site)
 *.py
 
-# Font directory (font file is committed directly)
-Google_Sans_Flex/
-
 # Résumé source (contains phone number) — keep local only
 resume.tex
 # LaTeX build artifacts

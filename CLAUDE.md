@@ -85,8 +85,8 @@ asl_model.js                # Trained MLP weights + StandardScaler; loaded lazil
                             # Weights stored TRANSPOSED: shape [in_features][out_features]
 dev/export_model.py         # PyTorch → JSON export script (generates asl_model.js; gitignored)
 404.html                    # Service-notice 404 page (GitHub Pages serves it for missing paths)
-social-card.jpg             # 1200×630 link-preview card (og:image / twitter:image), subway style, photo from link_preview.png
-link_preview.png            # Square headshot (JSON-LD image; source photo for the card)
+social-card.jpg             # 1200×630 link-preview card (og:image / twitter:image), subway style, photo from link_preview.jpg
+link_preview.jpg            # Square headshot, 800px (JSON-LD image; source photo for the card)
 favicon.svg                 # SVG favicon (favicon.ico: 48px fallback for crawlers/link previews)
 Shravan_Chandra_Resume.pdf  # Downloadable resume
 ```
