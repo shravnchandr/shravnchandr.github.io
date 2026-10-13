@@ -16,9 +16,9 @@
  *   window.__fragments.all      — every fragment settled
  */
 
-// Asset version: bump with index.html and css/main.css whenever CSS or html/ changes,
+// Asset version: bump with index.html and css/main.css whenever CSS changes,
 // so a returning visitor's cache can't pair new HTML with old CSS.
-const ASSET_VERSION = '2026101218';
+const ASSET_VERSION = '2026101301';
 
 const FRAGMENTS = [
     { id: 'frag-nav',      src: 'html/nav.html',      critical: true  },

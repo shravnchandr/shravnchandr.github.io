@@ -40,9 +40,9 @@
           rel="stylesheet">
 
     <!-- Styles -->
-    <!-- ?v= is the asset version: bump it (here, in css/main.css and in js/loader.js) whenever CSS or html/ changes,
+    <!-- ?v= is the asset version: bump it (here, in css/main.css and in js/loader.js) whenever CSS changes,
          so returning visitors never mix new HTML with cached old CSS -->
-    <link rel="stylesheet" href="css/main.css?v=2026101218">
+    <link rel="stylesheet" href="css/main.css?v=2026101301">
 
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
@@ -128,14 +128,6 @@
         </div>
     </div>
 
-    <!-- Persistent UI (not section-based) -->
-    <a href="Shravan_Chandra_Resume.pdf" class="resume-fab" download aria-label="Download Resume">
-        <svg class="icon" aria-hidden="true"><use href="#i-file-arrow-down"/></svg>
-    </a>
-    <button id="back-to-top" class="back-to-top" aria-label="Back to top">
-        <svg class="icon" aria-hidden="true"><use href="#i-arrow-up"/></svg>
-    </button>
-
     <!-- Accessibility Lab side panel (persistent, built by js/a11y.js) -->
     <aside id="a11y-panel" role="complementary" aria-label="Accessibility design notes" aria-hidden="true"></aside>
 
@@ -215,6 +207,13 @@
             </div>
         </div>
 
+        <!-- Persistent controls belong to the main landmark for screen-reader navigation. -->
+        <a href="Shravan_Chandra_Resume.pdf" class="resume-fab" download aria-label="Download Resume">
+            <svg class="icon" aria-hidden="true"><use href="#i-file-arrow-down"/></svg>
+        </a>
+        <button id="back-to-top" class="back-to-top" aria-label="Back to top">
+            <svg class="icon" aria-hidden="true"><use href="#i-arrow-up"/></svg>
+        </button>
     </main>
 
     <footer>

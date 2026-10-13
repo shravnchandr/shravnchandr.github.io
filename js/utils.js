@@ -72,12 +72,15 @@ export function isModalOpen() { return _openModal !== null; }
 export function createModal(overlay, openClass) {
     let returnFocus = null;
     let inerted = [];
+    let previousOverflow = '';
     const isOpen = () => _openModal === overlay;
 
     function open(focusEl) {
         if (_openModal) return;
         _openModal  = overlay;
         returnFocus = document.activeElement;
+        previousOverflow = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
         inerted = [...document.body.children].filter(c => c !== overlay && !c.inert);
         inerted.forEach(c => { c.inert = true; });
         overlay.inert = false;
@@ -89,6 +92,7 @@ export function createModal(overlay, openClass) {
     function close() {
         if (!isOpen()) return;
         _openModal = null;
+        document.body.style.overflow = previousOverflow;
         inerted.forEach(c => { c.inert = false; });
         inerted = [];
         overlay.classList.remove(openClass);

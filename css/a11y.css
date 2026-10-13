@@ -168,8 +168,10 @@
 
 /* ── ARIA highlight overlays (active when body.a11y-lab is set) ── */
 body.a11y-lab [role="navigation"],
+body.a11y-lab nav,
 body.a11y-lab main,
-body.a11y-lab section[aria-label] {
+body.a11y-lab section[aria-label],
+body.a11y-lab section[aria-labelledby] {
     outline: 2px dashed var(--v2-inference) !important;
     outline-offset: 6px;
 }

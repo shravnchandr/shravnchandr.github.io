@@ -16,7 +16,7 @@ const FEATURES = [
         icon: 'route',
         accent: 'inference',
         title: 'ARIA landmarks',
-        note: 'nav, main, and section[aria-label] give screen readers a named page map — users jump between sections with a single keystroke.',
+        note: 'nav, main, and named sections give screen readers a page map — users jump between sections with a single keystroke.',
     },
     {
         icon: 'tag',

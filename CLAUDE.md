@@ -209,7 +209,7 @@ Shared DOM/UI helpers imported by `a11y.js`, `search.js`, `asl.js`, `webcam.js`,
 - `makeOverlay(extraClass, ariaLabel)` — builds the standard modal overlay div with `role="dialog"`, `aria-modal`, `aria-hidden`; base styles from `.v2-modal-overlay` in `css/base.css`
 - `makeTop3Row(rank, letter, pct, isTop)` — builds a `.v2-t3-row` confidence bar row (label + fill bar)
 - `updateLetterDisplay(letterEl, key, prevKey)` — swaps letter text and re-triggers `m3LetterPop` animation via reflow
-- `createModal(overlay, openClass)` — APG modal behaviour: inerts the rest of `<body>`, traps Tab, Escape closes, restores focus; one modal at a time (`isModalOpen()`)
+- `createModal(overlay, openClass)` — APG modal behaviour: inerts the rest of `<body>`, locks page scrolling, traps Tab, Escape closes, restores focus and scrolling; one modal at a time (`isModalOpen()`)
 - `renderTop3(container, rows)` — renders Top-3 rows, reusing existing nodes
 - `prefersReducedMotion()` / `scrollToEl(el)` — motion-aware helpers
 - `clearEl(element)` — removes all child nodes from a DOM element; replaces the repeated `while (el.firstChild) el.removeChild(el.firstChild)` idiom

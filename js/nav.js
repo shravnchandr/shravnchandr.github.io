@@ -45,7 +45,7 @@ function initMobileMenu() {
 
     document.addEventListener('click', e => {
         if (isOpen() && !links.contains(e.target) && !btn.contains(e.target)) setOpen(false);
-    });
+    }, { capture: true });   // release the menu's scroll lock before search opens
 
     document.addEventListener('keydown', e => {
         if (e.key === 'Escape' && isOpen()) { setOpen(false); btn.focus(); }

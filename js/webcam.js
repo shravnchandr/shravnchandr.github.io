@@ -431,15 +431,18 @@ function _setBtnState(btn, state) {
     const dotEl   = btn.querySelector('.v2-webcam-dot');
 
     if (state === BTN_STATE_LOADING) {
+        btn.setAttribute('aria-label', 'Loading: webcam ASL classifier');
         btn.disabled = true;
         labelEl.textContent = 'Loading…';
         dotEl.style.background = 'var(--v2-text-muted)';
     } else if (state === BTN_STATE_ACTIVE) {
+        btn.setAttribute('aria-label', 'Stop camera');
         btn.disabled = false;
         btn.classList.add(CLS_BTN_ACTIVE);
         labelEl.textContent = 'Stop camera';
         dotEl.style.background = 'var(--v2-inference)';
     } else {
+        btn.setAttribute('aria-label', 'Try live: webcam ASL classifier');
         btn.disabled = false;
         btn.classList.remove(CLS_BTN_ACTIVE);
         labelEl.textContent = 'Try live →';

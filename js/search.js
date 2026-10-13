@@ -329,8 +329,11 @@ function _buildOverlay() {
     _input.setAttribute('aria-expanded',     'true');
     _input.setAttribute('aria-controls',     'search-results-list');
 
-    const esc  = _el('kbd', 'v2-search-esc');
+    const esc  = _el('button', 'v2-search-esc');
+    esc.type = 'button';
+    esc.setAttribute('aria-label', 'Close search');
     esc.textContent = 'ESC';
+    esc.addEventListener('click', _close);
 
     row.appendChild(ico);
     row.appendChild(_input);
