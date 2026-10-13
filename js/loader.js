@@ -89,5 +89,12 @@ function bootstrap() {
     window.__fragments = { critical, all };
 }
 
-document.body.classList.add('loading');
-bootstrap();
+// The deployed page is pre-built (dev/build.py writes every section into index.html),
+// so there are no placeholders and nothing to fetch. Locally, the repo's index.html
+// still has them, and the sections load at runtime as before.
+if (FRAGMENTS.some(f => document.getElementById(f.id))) {
+    document.body.classList.add('loading');
+    bootstrap();
+} else {
+    window.__fragments = { critical: Promise.resolve(), all: Promise.resolve() };
+}

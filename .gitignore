@@ -22,6 +22,10 @@ desktop.ini
 
 # Python dev scripts (model training/export — dev/ only, not part of the site)
 *.py
+!dev/build.py
+
+# Build output (dev/build.py → deployed by .github/workflows/pages.yml)
+_site/
 
 # Résumé source (contains phone number) — keep local only
 resume.tex

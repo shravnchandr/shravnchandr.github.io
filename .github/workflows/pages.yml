@@ -1,0 +1,47 @@
+# Build and deploy the site to GitHub Pages on every push to master.
+# dev/build.py writes every html/*.html section into index.html (fully static
+# for readers that don't run JavaScript) and stages the site in _site/.
+name: Deploy site
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deploy at a time; a newer push cancels a queued (not running) one
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build
+        run: python3 dev/build.py
+      - name: Check the built page is static
+        run: |
+          ! grep -q 'id="frag-' _site/index.html
+          grep -q 'id="case-valfred"' _site/index.html
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

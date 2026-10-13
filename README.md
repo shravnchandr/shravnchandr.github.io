@@ -34,24 +34,26 @@ Sections are numbered stations (1 At a Glance … 8 Next Stop). Full rules: [`CL
 
 ## How it's built
 
-Fully static — no framework, no build step, no package manager.
+Fully static — no framework, no bundler, no package manager.
 
-- `index.html` is a shell; `js/loader.js` fetches the `html/*.html` sections in parallel
+- Sections live in `html/*.html`. On deploy, `dev/build.py` writes them into `index.html`, so the live page is complete HTML that any reader or crawler can read; locally, `js/loader.js` fetches them at runtime, so you edit and refresh with no build
 - `js/main.js` is the ES-module entry point; styles are `css/*`, imported by `css/main.css`
 - `js/asl_model.js` holds the trained MLP weights, loaded only when "Try live" is clicked
 - Icons are an inline SVG sprite (Font Awesome Free paths) — no icon font or CDN
-- Stylesheets and sections carry an asset version (`?v=…`) so a deploy never mixes new HTML with cached CSS
+- Stylesheets carry an asset version (`?v=…`) so a deploy never mixes new HTML with cached CSS
 
 ## Running locally
 
 ```bash
 python3 -m http.server   # ES modules and fetch() need a server (file:// won't work)
 # open http://localhost:8000
+
+python3 dev/build.py && python3 -m http.server -d _site   # preview the deployed (built) page
 ```
 
 ## Deployment
 
-Push to `master` → GitHub Pages deploys automatically (about a minute). When CSS or `html/` changes, bump the asset version in `index.html`, `css/main.css` and `js/loader.js`. Images live in `assets/img/`; the root keeps only files that must be there (pages, icons, robots/sitemap, the public résumé PDF).
+Push to `master` → a GitHub Action builds (`dev/build.py`) and deploys to GitHub Pages (about a minute). When CSS changes, bump the asset version in `index.html`, `css/main.css` and `js/loader.js`. Images live in `assets/img/`; the root keeps only files that must be there (pages, icons, robots/sitemap, the public résumé PDF).
 
 ---
 

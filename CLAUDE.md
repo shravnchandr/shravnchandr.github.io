@@ -15,14 +15,17 @@ Personal portfolio website for Shravan Chandra, Machine Learning Engineer (Produ
 ```bash
 # Use a local server — direct file:// access breaks ES modules (CORS) and fetch()
 python3 -m http.server
-# Visit http://localhost:8000
+# Visit http://localhost:8000 — sections load from html/*.html at runtime, so edit and refresh
+
+# Preview exactly what's deployed (sections written into index.html):
+python3 dev/build.py && python3 -m http.server -d _site
 ```
 
 ---
 
 ## Architecture
 
-**Fully static site** — no build tools, bundlers, package managers, or compilation step. Edit files and refresh the browser.
+**Fully static site** — no framework, bundler or package manager. You edit `html/*.html` partials and refresh; the only build is `dev/build.py` (standard-library Python), which the deploy workflow runs to write the partials into `index.html` so the served page is static HTML.
 
 The site uses an **NYC Subway signage** design (after the 1970 NYCTA Graphics Standards Manual): black station signs with a thin white rule, Helvetica, coloured route bullets, and a line map for the career. See *CSS Design System* below for the rules. All styles are under `css/`, all HTML fragments in `html/`, all JS in `js/`. The old `script.js` (single-file) has been replaced by ES modules.
 
@@ -59,7 +62,9 @@ js/
   webcam.js                 # Live webcam ASL classifier: MediaPipe Hands + MLP inference
   layout.js                 # Moves the hero's ASL demo card below the project overview on single-column layouts
 
-html/
+.github/workflows/pages.yml # Build (dev/build.py) + deploy to GitHub Pages on push to master
+
+html/                       # Section partials — the source; written into index.html at deploy time
   nav.html                  # <nav>: logo (memoji avatar + "Shravan Chandra"), links with section bullets, search, theme, a11y btn, hire-me
   hero.html                 # Hero: headline, live ASL recognition CTA, ASL card
   impact.html               # At a glance: 3 project tiles (result + one-line ownership) linking to the case studies, + #overview-demo-slot  (01 · AT A GLANCE)
@@ -94,6 +99,7 @@ css/
                             #   .animate-in, .stagger-2–5 — LOADED LAST
 
 dev/
+  build.py                  # Writes the html/ partials into index.html → _site/ (run by the deploy workflow)
   social-card.html          # Source of assets/img/social-card.jpg
   export_model.py           # PyTorch → JSON export (weights for js/asl_model.js; gitignored)
   linkedin-banner.html      # LinkedIn banner source (gitignored)
@@ -103,8 +109,15 @@ dev/
 
 ## How the Page Loads
 
+Two modes, same code:
+
+- **Deployed (built):** `dev/build.py` replaces every `<div id="frag-*">` placeholder (skeleton included) with its `html/*.html` partial and writes `_site/index.html`. The page arrives complete — readers that don't run JavaScript (AI summarisers, ATS scrapers, older crawlers) see every section. `js/loader.js` finds no placeholders, skips fetching and resolves `window.__fragments` immediately.
+- **Local (source):** the repo's `index.html` keeps the placeholders, so `js/loader.js` fetches the partials at runtime, as below. Edit a partial, refresh, no build.
+
+The section list lives in one place: the `FRAGMENTS` array in `js/loader.js` (the build reads it too).
+
 ```
-index.html parsed
+index.html parsed  (local/source mode)
   │
   ├─ js/loader.js (plain <script>, runs immediately)
   │    └─ bootstrap() — fetch html/*.html in parallel (6s timeout per attempt, 3 retries)
@@ -117,7 +130,7 @@ index.html parsed
           __fragments.all      → initSections() (active nav, scroll reveal, CountUp, demo, demo-card placement) → markSectionsReady()
 ```
 
-Below-fold placeholders keep showing skeletons until their own fetch settles, so a stalled section never blocks the hero.
+In local mode, below-fold placeholders keep showing skeletons until their own fetch settles, so a stalled section never blocks the hero. (The built page has no placeholders or skeletons.)
 
 `body.loading { visibility: hidden }` (in `css/base.css`) prevents any flash while fragments are being fetched.
 
@@ -360,7 +373,7 @@ The SVG viewBox is `0 0 100 125`. WRIST is at `[50, 112]`.
 | Fira Code (Google Fonts) | Code, logs and live data only |
 | Helvetica Neue / Helvetica / Arial (system) | All other type — no download |
 
-No npm, no webpack, no React.
+No npm, no webpack, no React. The build (`dev/build.py`) is standard-library Python.
 
 ---
 
@@ -377,10 +390,9 @@ When updating bio copy, keep all four in sync: hero text, `<meta name="descripti
 
 ## Deployment
 
-**Asset version:** `index.html` (stylesheet link), `css/main.css` (every `@import`) and `js/loader.js` (`ASSET_VERSION`) append `?v=<version>`. Bump it in all three whenever CSS or `html/` changes, or returning visitors can pair new HTML with cached old CSS (GitHub Pages caches for 10 minutes; local `python3 -m http.server` relies on heuristic caching — hard-refresh with ⌘⇧R when testing).
+Push to `master` → `.github/workflows/pages.yml` runs `dev/build.py`, checks that no placeholder is left, and deploys `_site/` to GitHub Pages (repo Settings → Pages → Source: **GitHub Actions**). About a minute. `_site/` is gitignored — never commit it.
 
-
-Push to `master` → GitHub Pages deploys automatically. Allow 2–3 minutes for propagation.
+**Asset version:** `index.html` (stylesheet link), `css/main.css` (every `@import`) and `js/loader.js` (`ASSET_VERSION`) append `?v=<version>`. Bump it in all three whenever CSS changes, or returning visitors can pair new HTML with cached old CSS (GitHub Pages caches for 10 minutes; hard-refresh with ⌘⇧R when testing). Sections are written into the page on deploy, so `html/` changes no longer need a bump there.
 
 ```bash
 git add -p          # stage selectively — never commit .env or credentials
