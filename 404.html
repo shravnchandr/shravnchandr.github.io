@@ -36,7 +36,7 @@
         .kicker b { display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 4px; background: #fccc0a; color: #0a0a0a; font-size: 18px; }
         h1 { margin-top: 18px; font-size: clamp(34px, 6vw, 54px); font-weight: 700; letter-spacing: -.03em; line-height: 1.05; }
         .notice p { margin-top: 14px; font-size: 18px; color: var(--sign-dim); max-width: 46ch; }
-        .notice code { font-family: ui-monospace, Menlo, monospace; font-size: 15px; color: var(--sign-text); word-break: break-all; }
+        .notice code { font-family: ui-monospace, Menlo, monospace; font-size: 15px; color: var(--sign-text); overflow-wrap: anywhere; }
         .home { display: inline-block; margin-top: 26px; padding: 14px 22px; border-radius: 4px; background: var(--sign-text); color: var(--sign-bg); font-weight: 700; text-decoration: none; }
 
         /* The line map back to every section */
@@ -79,8 +79,14 @@
         </nav>
     </main>
     <script>
-        // Show the path that was asked for (text only)
-        document.getElementById('path').textContent = location.pathname;
+        // Show the path that was asked for (text only), with a line-break
+        // opportunity after each "/" so long paths wrap between segments
+        const pathEl = document.getElementById('path');
+        pathEl.textContent = '';
+        location.pathname.split(/(?<=\/)/).forEach((part, i) => {
+            if (i > 1) pathEl.appendChild(document.createElement('wbr'));   // not after the leading "/"
+            pathEl.appendChild(document.createTextNode(part));
+        });
     </script>
 </body>
 </html>
