@@ -356,3 +356,9 @@
 @media (max-width: 600px) {
     .v2-code-block { font-size: 11.5px; padding: 14px 14px; }
 }
+
+/* Narrow layouts: compact chips so a short tool list stays on one line */
+@media (max-width: 1024px) {
+    .v2-tech-tags { gap: 5px; }
+    .v2-tech-tags span { padding: 4px 7px; font-size: 12px; }
+}
