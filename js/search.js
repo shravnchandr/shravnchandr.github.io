@@ -56,7 +56,7 @@ const INDEX = [
     {
         type:  'project',
         id:    'case-maintenance',
-        label: 'Predictive Maintenance — Bosch',
+        label: 'Predictive Maintenance · Bosch',
         sub:   'Autoencoder anomaly detection · 40+ TB telemetry · est. €300K+ annualized savings',
         route: ['M', 'blue'],   // route bullet shown in results
         tokens: [
@@ -70,7 +70,7 @@ const INDEX = [
     {
         type:  'project',
         id:    'case-valfred',
-        label: 'Valfred — GenAI Data Assistant',
+        label: 'Valfred: GenAI Data Assistant',
         sub:   'Multi-agent · schema retrieval · self-healing SQL · Databricks',
         route: ['G', 'purple'],   // route bullet shown in results
         tokens: [
@@ -139,7 +139,7 @@ const INDEX = [
     {
         type:  'project',
         id:    'temporal-asl',
-        label: 'LandmarkConformer — Sign Recognition',
+        label: 'LandmarkConformer: Sign Recognition',
         sub:   'Multi-stream Conformer · Google ASL Signs (250 classes) · 76.65% · signer-independent',
         route: ['A', 'yellow'],   // route bullet shown in results
         tokens: [
@@ -174,7 +174,7 @@ const INDEX = [
     {
         type:  'story',
         id:    'bosch-sr',
-        label: 'Senior ML Engineer — Bosch',
+        label: 'Senior ML Engineer · Bosch',
         sub:   'Autoencoder · Anomaly Detection · Azure · Power BI · Mentoring',
         route: ['M', 'blue'],   // route bullet shown in results
         tokens: [
@@ -201,7 +201,7 @@ const INDEX = [
     {
         type:  'story',
         id:    'bosch-ml',
-        label: 'ML Engineer — Bosch',
+        label: 'ML Engineer · Bosch',
         sub:   'TF 1.x → PyTorch · 48% shorter training · KL divergence drift · Power BI',
         route: ['M', 'blue'],   // route bullet shown in results
         tokens: [
@@ -223,7 +223,7 @@ const INDEX = [
     {
         type:  'story',
         id:    'bosch-swe',
-        label: 'Software Developer — Bosch',
+        label: 'Software Developer · Bosch',
         sub:   'Automation Tools · Flask · PCB Pricing · Automotive Test Data',
         route: ['S', 'green'],   // route bullet shown in results
         tokens: [
@@ -240,7 +240,7 @@ const INDEX = [
     {
         type:  'story',
         id:    'goldman',
-        label: 'Goldman Sachs — Junior Analyst (Intern)',
+        label: 'Goldman Sachs · Junior Analyst (Intern)',
         sub:   'Trade Booking Automation · Finance · Python · 65% faster',
         route: ['S', 'green'],   // route bullet shown in results
         tokens: [
@@ -256,7 +256,7 @@ const INDEX = [
     {
         type:  'story',
         id:    'education',
-        label: 'PES University — BTech EEE',
+        label: 'PES University · BTech EEE',
         sub:   'Electrical & Electronics · CGPA 8.5 · 2017–2021',
         route: ['R', 'teal'],   // route bullet shown in results
         tokens: [
@@ -272,7 +272,7 @@ const INDEX = [
     {
         type:  'story',
         id:    'education-ubc',
-        label: 'University of British Columbia — MDS',
+        label: 'University of British Columbia · MDS',
         sub:   'Master of Data Science · Vancouver, Canada · 2026–2027',
         route: ['M', 'blue'],   // route bullet shown in results
         tokens: [
@@ -445,7 +445,7 @@ function _renderResults(hits, query) {
 
     if (!hits.length) {
         const empty = _el('div', 'v2-search-empty');
-        empty.textContent = `No matches for "${query}" — try "autoencoder", "drift detection", "flask", or "ieee"`;
+        empty.textContent = `No matches for "${query}". Try "autoencoder", "drift detection", "flask", or "ieee"`;
         _results.appendChild(empty);
         return;
     }

@@ -16,7 +16,7 @@ const FEATURES = [
         icon: 'route',
         accent: 'inference',
         title: 'ARIA landmarks',
-        note: 'nav, main, and named sections give screen readers a page map — users jump between sections with a single keystroke.',
+        note: 'nav, main, and named sections give screen readers a page map, so users jump between sections with a single keystroke.',
     },
     {
         icon: 'tag',
@@ -28,13 +28,13 @@ const FEATURES = [
         icon: 'wifi',
         accent: 'neural',
         title: 'Live regions',
-        note: 'aria-live="polite" on the ASL prediction panel — the letter is announced after the current utterance, never interrupting.',
+        note: 'aria-live="polite" on the ASL prediction panel: the letter is announced after the current utterance, never interrupting.',
     },
     {
         icon: 'wind',
         accent: 'inference',
         title: 'Reduced-motion fallback',
-        note: '@media (prefers-reduced-motion: reduce) disables every spring keyframe and CSS transition — no exceptions, no overrides.',
+        note: '@media (prefers-reduced-motion: reduce) disables every spring keyframe and CSS transition, with no exceptions or overrides.',
     },
     {
         icon: 'circle-half-stroke',

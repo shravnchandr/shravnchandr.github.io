@@ -287,7 +287,7 @@ async function _sendFrame(session) {
         } catch (err) {
             if (session !== _session) return;
             console.error('[webcam] Hand tracking failed:', err);
-            _stop('Hand tracking stopped — try again');
+            _stop('Hand tracking stopped. Try again');
             return;
         }
         if (session !== _session) return;   // stopped while the send was in flight
@@ -306,7 +306,7 @@ function _cameraErrorMessage(err) {
         case 'NotAllowedError':  return 'Camera permission denied';
         case 'NotFoundError':    return 'No camera found';
         case 'NotReadableError': return 'Camera is in use by another app';
-        default:                 return 'Couldn’t start the camera — try again';
+        default:                 return 'Couldn’t start the camera. Try again';
     }
 }
 
@@ -340,7 +340,7 @@ async function _start() {
     // Every step can fail (CDN outage, WASM blocked, permission denied, autoplay
     // policy). Any failure releases what was acquired and returns the button to idle.
     try {
-        let message = 'Couldn’t load the classifier — try again';
+        let message = 'Couldn’t load the classifier. Try again';
         try {
             await Promise.all([_loadScript(MODEL_SRC), _loadScript(MP_HANDS_CDN)]);
             if (!_modelData) {
@@ -384,7 +384,7 @@ async function _start() {
         pauseASL();
         _showNoHand();
         _setMeta('MediaPipe + MLP · in-browser', '—');
-        _setHint('psst — try signing H-I');
+        _setHint('psst: try signing H-I');
         _setCaption(true);
         _setBtnState(_btn, BTN_STATE_ACTIVE);
         _rafId = requestAnimationFrame(() => _sendFrame(session));
@@ -392,7 +392,7 @@ async function _start() {
         if (session !== _session) return;
         console.error('[webcam] Failed to start:', err);
         if (stream && stream !== _stream) stream.getTracks().forEach(t => t.stop());
-        _stop(err.userMessage || 'Couldn’t start the camera — try again');
+        _stop(err.userMessage || 'Couldn’t start the camera. Try again');
     }
 }
 

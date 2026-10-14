@@ -172,7 +172,7 @@ Sections are injected after load, so the browser's own jump to `location.hash` u
 On single-column layouts (≤1024px) `js/layout.js` moves `.v2-hero-right` (the ASL demo card) into `#overview-demo-slot`, after the three project tiles, and back when the layout widens; `hero.css` hides it inside the hero at that width so it never flashes there first.
 
 ### Easter eggs (opt-in only — nothing triggers on its own, moves the layout or plays sound)
-- **Fingerspell H-I** in "Try live" (`js/webcam.js`, `SECRET`): two letters that hold steady (the same ones announced to screen readers) within 6s show a small "Next stop: a conversation" sign over the canvas, with the email. The hint "psst — try signing H-I" appears only once the camera runs.
+- **Fingerspell H-I** in "Try live" (`js/webcam.js`, `SECRET`): two letters that hold steady (the same ones announced to screen readers) within 6s show a small "Next stop: a conversation" sign over the canvas, with the email. The hint "psst: try signing H-I" appears only once the camera runs.
 - **404 page** (`404.html`, root): a service notice with the line map back to each section. Self-contained (inline CSS, absolute links) because GitHub Pages serves it for any missing path.
 - **Console note** in `js/main.js` for engineers who open DevTools.
 

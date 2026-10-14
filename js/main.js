@@ -23,7 +23,7 @@ function initCore() {
     console.log(
         '%c S %c Shravan Chandra · Machine Learning Engineer\n\n' +
         '%cHow this page works:\n' +
-        '  · plain HTML partials fetched by loader.js — no framework, no build step\n' +
+        '  · plain HTML partials, written into the page by a small Python build; no framework or bundler\n' +
         '  · the ASL classifier (“Try live”) is a small MLP running in your browser: MediaPipe landmarks → softmax\n' +
         '  · the design is a subway signage system: route bullets, line map, one CSS token file\n\n' +
         'Source: github.com/shravnchandr/shravnchandr.github.io · Say hi: schandra.nyc@gmail.com',

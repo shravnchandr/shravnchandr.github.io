@@ -12,7 +12,7 @@
                 <div class="v2-card-badge"><span class="v2-bullet" data-r="blue" aria-hidden="true">M</span>Bosch · Production ML</div>
                 <h3 id="case-maintenance-h" class="v2-card-h3">Predictive maintenance</h3>
                 <div class="v2-card-tagline">Autoencoder anomaly detection on 40+ TB of sensor telemetry</div>
-                <p class="v2-case-summary">I owned the anomaly-detection model end to end — data, training and production — and testing cycles got 4 months shorter, saving an estimated €300K+ a year.</p>
+                <p class="v2-case-summary">I owned the anomaly-detection model end to end (data, training and production), and testing cycles got 4 months shorter, saving an estimated €300K+ a year.</p>
                 <dl class="v2-case-facts">
                     <dt>Problem</dt>
                     <dd>Endurance tests run continuously for about six months, and failures typically appear only after two to three months, when a component fails or drifts outside its expected intervals. Catching that late meant long cycles and damaged parts.</dd>
@@ -27,7 +27,7 @@
                     <summary>Implementation &amp; evaluation details</summary>
                     <dl class="v2-case-facts">
                         <dt>Why an autoencoder</dt>
-                        <dd>Whether a measurement is anomalous is judged over a 12-second window, across hundreds of components and 100+ ECUs. An autoencoder learns what those 12 seconds should look like and flags any window that doesn’t match — one approach that scales across every component, rather than a separate rule or model for each.</dd>
+                        <dd>Whether a measurement is anomalous is judged over a 12-second window, across hundreds of components and 100+ ECUs. An autoencoder learns what those 12 seconds should look like and flags any window that doesn’t match. One approach scales across every component, rather than a separate rule or model for each.</dd>
                         <dt>How it’s measured</dt>
                         <dd>€300K+ is an annualized estimate, from reduced test-bench downtime and fewer components damaged thanks to earlier detection. The model was validated on separate validation and test sets of measurements supplied by the hardware team before rollout.</dd>
                     </dl>
@@ -54,16 +54,16 @@
         <article id="case-valfred" class="v2-case v2-panel-chrome v2-line-card animate-on-scroll" data-r="purple" aria-labelledby="case-valfred-h">
             <div>
                 <div class="v2-card-badge"><span class="v2-bullet" data-r="purple" aria-hidden="true">G</span>Bosch · Applied GenAI</div>
-                <h3 id="case-valfred-h" class="v2-card-h3">Valfred — GenAI data assistant</h3>
+                <h3 id="case-valfred-h" class="v2-card-h3">Valfred: GenAI data assistant</h3>
                 <div class="v2-card-tagline">Natural-language queries over Bosch testing platforms</div>
                 <p class="v2-case-summary">I orchestrated the multi-agent assistant and deployed it on Databricks; for about 30 beta users, a 10–15 minute data lookup became a 1–2 minute question.</p>
                 <dl class="v2-case-facts">
                     <dt>Problem</dt>
                     <dd>Finding data in Bosch’s LEEPA/WebDVP testing platforms took engineers 10–15 minutes of manual lookup per question.</dd>
                     <dt>What I owned</dt>
-                    <dd>Orchestrated a multi-agent assistant with optional vector schema retrieval and self-healing SQL agents, deployed via MLflow and Unity Catalog on Databricks. Used by the hardware team in my department to pull measurement details from tests — about 30 users, in beta when I left.</dd>
+                    <dd>Orchestrated a multi-agent assistant with optional vector schema retrieval and self-healing SQL agents, deployed via MLflow and Unity Catalog on Databricks. Used by the hardware team in my department to pull measurement details from tests. About 30 users, in beta when I left.</dd>
                     <dt>Result</dt>
-                    <dd>A 10–15-minute manual lookup became a natural-language request answered in <strong>about 1–2 minutes</strong> — most of it data retrieval, not the agent. On ~500 internal test queries: <strong>65%</strong> answered correctly on the first pass, <strong>~81%</strong> within three attempts.</dd>
+                    <dd>A 10–15-minute manual lookup became a natural-language request answered in <strong>about 1–2 minutes</strong>, most of it data retrieval, not the agent. On ~500 internal test queries: <strong>65%</strong> answered correctly on the first pass, <strong>~81%</strong> within three attempts.</dd>
                     <dt>Key decision</dt>
                     <dd>Self-healing SQL: a query that fails is repaired from its own error message, with up to two retries before the error is reported.</dd>
                 </dl>
@@ -71,7 +71,7 @@
                     <summary>Implementation &amp; evaluation details</summary>
                     <dl class="v2-case-facts">
                         <dt>Schema in the prompt</dt>
-                        <dd>By default the whole schema goes into the prompt. A vector mode sends only the columns closest to the question, shrinking the schema text about 4× in local tests and keeping prompts manageable as schemas grow — at the risk of leaving out a table the query needs.</dd>
+                        <dd>By default the whole schema goes into the prompt. A vector mode sends only the columns closest to the question, shrinking the schema text about 4× in local tests and keeping prompts manageable as schemas grow. The trade-off: it can leave out a table the query needs.</dd>
                         <dt>Self-healing</dt>
                         <dd>When generated SQL fails to execute, a repair step sends the failing query and its error back to the model and runs the rewrite; after two retries (three attempts) it stops and reports the error to the user.</dd>
                         <dt>How it’s measured</dt>
@@ -100,11 +100,11 @@
             <div>
                 <div class="v2-card-badge"><span class="v2-bullet" data-r="yellow" aria-hidden="true">A</span>Personal project · End to end</div>
                 <h3 id="case-asl-guide-h" class="v2-card-h3">ASL Guide</h3>
-                <div class="v2-card-tagline">ASL learning platform — recognition, translation, practice</div>
-                <p class="v2-case-summary">I built the whole platform end to end — recognition, translation and practice — reaching 95.5% classifier accuracy on a held-out split.</p>
+                <div class="v2-card-tagline">ASL learning platform: recognition, translation, practice</div>
+                <p class="v2-case-summary">I built the whole platform end to end (recognition, translation and practice), reaching 95.5% classifier accuracy on a held-out split.</p>
                 <dl class="v2-case-facts">
                     <dt>Why I built it</dt>
-                    <dd>A left-handed user signed to my model and it failed — I’d built for an imaginary user. Afterwards I mirrored landmarks during training and gathered data from left-handed signers.</dd>
+                    <dd>A left-handed user signed to my model and it failed: I’d built for an imaginary user. Afterwards I mirrored landmarks during training and gathered data from left-handed signers.</dd>
                     <dt>What I built</dt>
                     <dd>A full-stack platform: in-browser fingerspelling recognition (MediaPipe + TensorFlow.js), a two-agent <strong>Gemini 2.5 Flash</strong> pipeline in LangGraph that applies 11 documented ASL grammar rules for English → ASL translation, and a Duolingo-style course of 100 signs over 10 levels with SM-2 spaced repetition.</dd>
                     <dt>Result</dt>
