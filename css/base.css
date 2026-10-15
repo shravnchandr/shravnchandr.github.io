@@ -168,7 +168,7 @@ body, .v2-nav, .v2-asl-card, .v2-tech-tags span {
 }
 
 .v2-section.v2-surface {
-    background: var(--v2-surface);
+    background: var(--v2-band);
 }
 
 .v2-inner {

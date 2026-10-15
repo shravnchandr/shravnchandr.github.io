@@ -289,6 +289,7 @@ Based on the 1970 NYCTA Graphics Standards Manual (Vignelli/Noorda, Unimark). Ke
 - **Colour = route.** Accent colours appear only on route bullets and lines (`--r-*`); text, numbers and links stay black/white. Cards carry their route via `data-r` on a `.v2-line-card` (6px line on top).
 - **Signs are black in both themes** (`.v2-sign`: `--sign-bg`, white text, thin white rule near the top), kept for focal points: the hero availability badge, the hiring snapshot, the ASL card strips and canvas, earlier education, contact. Section headers are lighter **route strips**: a 6px rule in the section's colour (`data-r` on the header) above the bullet + name. Content cards are `.v2-line-card`.
 - **One sans:** the Helvetica stack (`--font-sign`). Sign names are Medium (500), bullets Bold (700), as in the manual. Fira Code (`--font-mono`) only for code, logs and live data.
+- **Transfers:** a project where two lines meet shows both bullets in a `.v2-transfer` pill (white, black ring, like a line-map station) in its badge, with `role="img"` and an `aria-label` naming both lines. Used only on ASL Guide (A + G), in its overview tile and case study.
 - **Circles are reserved for route bullets**; everything else is a rectangle (`--radius: 4px`). Work in progress is labelled in words ("In progress"), not with a different bullet shape.
 - **No gradients, glows or tinted shadows.**
 - Sections and their routes: 1 At a Glance (red) · 2 Experience (blue) · 3 Selected Work (orange) · 4 Research (purple) · 5 Pipeline Replay (yellow) · 6 Stack (green) · 7 Now (brown) · 8 Next Stop (grey). Nav links carry the same bullets.
@@ -303,11 +304,11 @@ Section header markup:
 ```
 
 ### Theme (follows OS by default)
-`:root` in `css/variables.css` defines the dark palette; `body.light-theme` overrides it ("the map": white ground, signs stay black). With no saved choice the page follows `prefers-color-scheme`; an inline script at the top of `<body>` in `index.html` applies the class before first paint, and `js/theme.js` wires the toggle and live OS changes. Choosing the OS's own theme clears the saved key. Theme key in localStorage is `theme-v2` (the old key `theme` drove the legacy dark-theme/light-theme class system — do not reuse it).
+`:root` in `css/variables.css` defines the dark palette; `body.light-theme` overrides it ("the map": a warm paper ground `#f4f1ea`, near-white cards, signs stay black; keep the tint this subtle, as warmer reads as yellowed on warm-shifted screens). With no saved choice the page follows `prefers-color-scheme`; an inline script at the top of `<body>` in `index.html` applies the class before first paint, and `js/theme.js` wires the toggle and live OS changes. Choosing the OS's own theme clears the saved key. Theme key in localStorage is `theme-v2` (the old key `theme` drove the legacy dark-theme/light-theme class system — do not reuse it).
 
 ### Tokens (in `css/variables.css`)
 ```css
---v2-bg / --v2-surface / --v2-surface-hi / --v2-surface-hi2 / --v2-border   /* page surfaces */
+--v2-bg / --v2-band / --v2-surface / --v2-surface-hi / --v2-surface-hi2 / --v2-border   /* page, alternate section band, cards, insets */
 --v2-text / --v2-text-dim / --v2-text-muted                                 /* text; muted ≥4.8:1 everywhere */
 --v2-neural / --v2-data / --v2-inference   /* text-safe purple / green / orange, for rare meaningful colour */
 --sign-bg / --sign-text / --sign-dim / --sign-rule                           /* signs, same in both themes */

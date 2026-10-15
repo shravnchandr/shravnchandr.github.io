@@ -28,6 +28,7 @@
 
     --v2-bg:          #0d0d0d;
     --v2-surface:     #141414;
+    --v2-band:        #141414;   /* alternate section background */
     --v2-surface-hi:  #1e1e1e;
     --v2-surface-hi2: #282828;
     --v2-border:      #2c2c2c;
@@ -61,17 +62,20 @@
     --r-none:   #262626; --r-none-on:   #ffffff;   /* letter with no route */
 }
 
-/* Light theme = the map: white ground, saturated lines, signs stay black */
+/* Light theme = the map: warm paper ground, saturated lines, signs stay black.
+   Keep the tint this subtle: warmer reads as yellowed on warm-shifted screens.
+   Cards are near-white so they lift off the paper; insets (chips, tracks) sit below them. */
 :root:has(body.light-theme) { color-scheme: light; }
 body.light-theme {
-    --v2-bg:          #ffffff;
-    --v2-surface:     #fafafa;
-    --v2-surface-hi:  #ececea;
-    --v2-surface-hi2: #e0e0dd;
-    --v2-border:      #d4d4d0;
+    --v2-bg:          #f4f1ea;
+    --v2-band:        #f9f7f2;
+    --v2-surface:     #fdfcf9;
+    --v2-surface-hi:  #efebe4;
+    --v2-surface-hi2: #e4dfd5;
+    --v2-border:      #d6d0c4;
     --v2-text:        #111111;
-    --v2-text-dim:    #333333;   /* 12.6:1 on white */
-    --v2-text-muted:  #5c5c5c;
+    --v2-text-dim:    #333333;   /* ≥9.5:1 on every light surface */
+    --v2-text-muted:  #57534c;   /* ≥5.7:1 on every light surface incl. surface-hi2 */
     --v2-neural:      #a3249a;
     --v2-data:        #007a33;
     --v2-inference:   #c2410c;

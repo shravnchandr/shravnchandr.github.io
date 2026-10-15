@@ -43,7 +43,7 @@ body.loading .v2-skeleton { visibility: visible; }
     gap: 16px;
 }
 
-body.light-theme .v2-sk-nav { background: rgba(255, 255, 255, 0.94); }
+body.light-theme .v2-sk-nav { background: rgba(244, 241, 234, 0.94); }
 
 .v2-sk-logo-wrap  { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
 .v2-sk-logo-badge { width: 32px; height: 32px; border-radius: 50%; }

@@ -16,7 +16,7 @@
 }
 
 body.light-theme .v2-nav {
-    background: rgba(255, 255, 255, 0.94);
+    background: rgba(244, 241, 234, 0.94);   /* --v2-bg */
 }
 
 .v2-logo {

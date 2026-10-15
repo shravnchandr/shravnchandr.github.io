@@ -27,7 +27,6 @@
 }
 body.light-theme .v2-bullet { box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.18); }
 
-
 .v2-bullets { display: inline-flex; flex-wrap: wrap; gap: 5px; vertical-align: middle; }
 
 /* Route colours — any element can carry data-r to expose --c / --on */
@@ -102,6 +101,22 @@ body.light-theme .v2-bullet { box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.18); }
     color: var(--v2-text);
 }
 .v2-card-badge .v2-bullet { --b: 22px; }
+
+/* ── Transfer (after the badge rules, so its smaller bullets win): two lines meeting in one project, drawn like a line-map station
+      (white pill, black ring) holding both bullets ── */
+.v2-transfer {
+    display: inline-flex;
+    align-items: center;
+    flex: none;
+    gap: 2px;
+    padding: 1px;
+    margin-block: -2px;   /* 26px tall, but takes a 22px bullet's space so card titles stay level */
+    background: #fff;
+    border: 3px solid #0a0a0a;
+    border-radius: 999px;
+}
+.v2-transfer .v2-bullet { --b: 18px; }
+body:not(.light-theme) .v2-transfer { box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2); }
 
 /* ── Accessibility line, in the style of "Elevator at 42 St" ── */
 .v2-access {
