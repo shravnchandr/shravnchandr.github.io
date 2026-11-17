@@ -25,7 +25,7 @@ python3 dev/build.py && python3 -m http.server -d _site
 
 ## Architecture
 
-**Fully static site** — no framework, bundler or package manager. You edit `html/*.html` partials and refresh; the only build is `dev/build.py` (standard-library Python), which the deploy workflow runs to write the partials into `index.html` so the served page is static HTML.
+**Fully static site** — no framework or package manager. You edit `html/*.html` partials and refresh; the only build is `dev/build.py` (standard-library Python), which the deploy workflow runs to write the partials into `index.html` (so the served page is static HTML) and to bundle the CSS into one content-hashed file.
 
 The site uses an **NYC Subway signage** design (after the 1970 NYCTA Graphics Standards Manual): black station signs with a thin white rule, Helvetica, coloured route bullets, and a line map for the career. See *CSS Design System* below for the rules. All styles are under `css/`, all HTML fragments in `html/`, all JS in `js/`. The old `script.js` (single-file) has been replaced by ES modules.
 
@@ -39,7 +39,8 @@ index.html                  # Shell: head, icon sprite, skeleton screens, persis
 404.html                    # Service-notice 404 page (GitHub Pages serves it for missing paths)
 robots.txt · sitemap.xml    # Crawl rules + URL index
 favicon.ico · favicon.svg · apple-touch-icon.png   # Icons (crawlers request /favicon.ico directly)
-Shravan_Chandra_Resume.pdf  # Downloadable résumé — public URL, keep at root
+Shravan_Chandra_Resume.pdf  # Downloadable résumé — public URL, keep at root (built from resumes/resume.tex; keeps the phone number on purpose)
+resumes/                    # Résumé sources + per-role copies (resume.tex, resume-<company>-<role>.tex/.pdf) — gitignored, local only
 
 assets/img/
   memoji-128.jpg            # Logo avatar (nav, 404, social card, LinkedIn thumbnails)
@@ -56,7 +57,7 @@ js/
   nav.js                    # Mobile hamburger + active-section highlight + logo Easter egg
   scroll.js                 # Scroll-reveal, CountUp, back-to-top, smooth scroll
   asl.js                    # Procedural SVG ASL hand; random cycle + spellSequence() override
-  demo.js                   # Scripted ASL pipeline demo (HELLO WORLD → grammar → output)
+  demo.js                   # Scripted concept replay (HELLO WORLD → prototype grammar pass → output); pausable
   a11y.js                   # Accessibility Lab toggle + side panel (ARIA overlays)
   search.js                 # ⌘K semantic search overlay — keyword index, keyboard nav
   webcam.js                 # Live webcam ASL classifier: MediaPipe Hands + MLP inference
@@ -66,18 +67,18 @@ js/
 
 html/                       # Section partials — the source; written into index.html at deploy time
   nav.html                  # <nav>: logo (memoji avatar + "Shravan Chandra"), links with section bullets, search, theme, a11y btn, hire-me
-  hero.html                 # Hero: headline, live ASL recognition CTA, ASL card
+  hero.html                 # Hero: headline, live ASL recognition CTA, ASL card (with #asl-motion-btn: Pause/Play for the hand)
   impact.html               # At a glance: 3 project tiles (result + one-line ownership) linking to the case studies, + #overview-demo-slot  (01 · AT A GLANCE)
   story.html                # Experience line map (UBC now → Bosch roles → Goldman) + earlier education  (02 · EXPERIENCE)
   work.html                 # 3 case studies: maintenance, Valfred, ASL Guide (+ Architecture Trace)  (03 · SELECTED WORK)
-  research.html             # Research & Publications: 4 sign-language papers + Retinopathy  (04 · RESEARCH · PUBLICATIONS)
-  demo.html                 # Live Demo section: scripted ASL Guide pipeline replay  (05 · LIVE DEMO)
+  research.html             # Research & Publications: sign-recognition research (#research-sign, with its own line of stations), IEEE ICCAR paper, Retinopathy  (04 · RESEARCH · PUBLICATIONS)
+  demo.html                 # Live Demo section: scripted concept replay (recognition as in ASL Guide → prototype grammar pass)  (05 · LIVE DEMO)
   stack.html                # 5-column skills grid  (06 · STACK)
   now.html                  # "What I'm on" + OSS contributions  (07 · NOW)
   contact.html              # One large "Next Stop" sign: h2, 3 CTA buttons, accessibility line  (08 · NEXT STOP)
 
 css/
-  main.css                  # @import entry point — no legacy layers
+  main.css                  # @import entry point (local); bundled into css/site.<hash>.css on deploy
   variables.css             # All design tokens: page palette (dark + light), sign colours, route colours (--r-*)
   base.css                  # body/reset rules, focus ring, .v2-section, section-header signs, .v2-modal-overlay, .v2-panel-close, FOUC guard
   signage.css               # Route bullets (.v2-bullet[data-r]), .v2-sign, .v2-line-card, .v2-legend, .v2-card-badge, .v2-access
@@ -88,7 +89,7 @@ css/
   demo.css                  # Live demo section: webcam panel, pipeline panel, log
   story.css                 # Experience line map (stripes + stations), earlier education
   cards.css                 # .v2-panel-chrome, buttons (.v2-btn-*), case-study facts + summary, key-result rows, Architecture Trace
-  research.css              # Research section: featured card, 2-col row, bullet list
+  research.css              # Research section: featured card, the research line (.v2-research-line), bullet list
   stack.css                 # 5-col route tiles, one per skill category
   now.css                   # Now + OSS cards
   contact.css               # Contact section gradient bg + icon sizing
@@ -99,7 +100,7 @@ css/
                             #   .animate-in, .stagger-2–5 — LOADED LAST
 
 dev/
-  build.py                  # Writes the html/ partials into index.html → _site/ (run by the deploy workflow)
+  build.py                  # Writes the html/ partials into index.html and bundles the CSS → _site/ (run by the deploy workflow)
   social-card.html          # Source of assets/img/social-card.jpg
   export_model.py           # PyTorch → JSON export (weights for js/asl_model.js; gitignored)
   linkedin-banner.html      # LinkedIn banner source (gitignored)
@@ -148,7 +149,7 @@ Sections load in this order (matching `js/loader.js` FRAGMENTS array):
 | 4 | story.html | `#story` | Experience line map (02 · EXPERIENCE) |
 | 5 | work.html | `#work` | Case studies (03 · SELECTED WORK) |
 | 6 | research.html | `#research` | Research & Publications (04 · RESEARCH) |
-| 7 | demo.html | `#demo` | Live ASL pipeline demo (05 · LIVE DEMO) |
+| 7 | demo.html | `#demo` | Concept pipeline replay (05 · LIVE DEMO) |
 | 8 | stack.html | `#stack` | Skills grid (06 · STACK) |
 | 9 | now.html | `#now` | Now + OSS (07 · NOW) |
 | 10 | contact.html | `#contact` | Contact (08 · NEXT STOP) |
@@ -158,7 +159,7 @@ Under the name, `.v2-hero-routes` lists the specialties as route bullets (M Prod
 `<dl class="v2-glance v2-sign">` under the hero, an information board: based in / looking for (target roles + availability) / work authorization / strengths. Keep it in sync with `now.html`, `contact.html`, the UBC stop in `story.html` and the meta tags.
 
 ### Selected work (`#work`)
-`<article class="v2-case">` per case study: `#case-maintenance`, `#case-valfred`, `#case-asl-guide`. (Retinopathy lives in Research as `#research-retinopathy`.)
+`<article class="v2-case">` per case study: `#case-maintenance`, `#case-valfred`, `#case-asl-guide`. (Retinopathy lives in Research as `#research-retinopathy`; the sign-recognition research card is `#research-sign`.)
 Each opens with a one-sentence `<p class="v2-case-summary">` (what I owned + the result), then a `<dl class="v2-case-facts">` (Problem / What I owned / Result / Key decision / How it's measured). The `#overview` tiles link here.
 
 ### Experience (`#story`)
@@ -225,24 +226,24 @@ Exports `initASL`, `SIGNS`, `CONNECTIONS`, `spellSequence`, `pauseASL`, `resumeA
 - State machine: **hold** 1100ms → **morph** 420ms, lerped with `easeIO`
 - `updatePanel(key, conf)`: re-triggers `m3LetterPop` CSS animation on letter change
 - Single RAF loop, runs only when not paused (webcam), visible (`document.hidden`) and on-screen (IntersectionObserver)
-- Reduced motion: SVG infrastructure + `drawHandPose` still built; a static pose is shown instead of the cycle
+- Reduced motion: SVG infrastructure + `drawHandPose` still built; a static pose is shown instead of the cycle. The preference is watched live (`matchMedia` change), and `#asl-motion-btn` in the card header pauses/plays the cycle (WCAG 2.2.2; hidden when reduced motion is on)
 - `spellSequence(letters, onDone?)`: module-level override — sets `_seqQueue`; on the next `tick()` frame the state machine hijacks to the sequence at 2× speed (hold 550ms / morph 280ms) then resumes random cycle. Silently ignored if a sequence is already playing.
 - `pauseASL()` / `resumeASL()` / `drawHandPose(pose)` / `hideHandPose()`: refs wired inside `initASL`; called by `webcam.js` to pause the random cycle and draw live MediaPipe landmarks instead.
 
 ### `js/nav.js`
-- `initMobileMenu`: hamburger toggle, close on link click or outside click. Compact menu at ≤1240px (`MOBILE_MQ`, matching `css/nav.css`): measured, the full link row needs ~1330px and the tightened one (1241–1339px) ~1220px — re-measure if links change
+- `initMobileMenu`: hamburger toggle, close on link click or outside click. The compact menu only applies under `html.js-nav` (set by the inline script in `<head>`); without JavaScript the links wrap onto their own row and the hamburger stays hidden. Compact menu at ≤1240px (`MOBILE_MQ`, matching `css/nav.css`): measured, the full link row needs ~1330px and the tightened one (1241–1339px) ~1220px — re-measure if links change
 - `initActiveNav`: IntersectionObserver highlights the active nav link
 - `initLogoEasterEgg`: clicking `.v2-logo` calls `spellSequence(['S','H','R','A','V','A','N'])` and smooth-scrolls to top; `preventDefault` suppresses the `href="/"` reload
 
 ### `js/a11y.js`
 - `initA11yLab()` — wires `#a11y-lab-btn` (nav) and `#a11y-panel` (persistent aside in index.html)
 - `_buildPanel(panel)` — constructs side panel via pure DOM manipulation (no innerHTML): header + close button, colour legend, 6 feature rows
-- `setActive(on)` — toggles `body.a11y-lab`, `aria-pressed`, `.v2-a11y-panel--open`, `aria-hidden`; persists to `localStorage` key `a11y-lab`
+- `setActive(on)` — toggles `body.a11y-lab`, `aria-pressed`, `.v2-a11y-panel--open`, `aria-hidden`; persists to `localStorage` key `a11y-lab`. Closing from the panel's own button returns focus to `#a11y-lab-btn` (the panel goes inert)
 - `body.a11y-lab` activates CSS outline overlays in `css/a11y.css`: orange dashes on landmarks, teal on `aria-label` elements, purple on `aria-live` regions
 
 ### `js/search.js`
 - `initSearch()` — builds the search overlay via DOM, binds `⌘K`/`Ctrl+K`, wires `#search-trigger` in the nav
-- `INDEX`: 14 entries (4 projects/case studies + 4 research + 4 experience + 2 education), each with `tokens[]`, `label`, `sub`, `route` (`[letter, colour]`, shown as a route bullet in results), `action()`. The UBC entry jumps to `#role-ubc`, PES to `#education`
+- `INDEX`: 12 entries (4 projects/case studies + 2 research + 4 experience + 2 education), each with `tokens[]`, `label`, `sub`, `route` (`[letter, colour]`, shown as a route bullet in results), `action()`. The UBC entry jumps to `#role-ubc`, PES to `#education`
 - `_query(raw)` — tokenises query (strips stop words, normalises), scores against `INDEX`:
   - Exact match: `+5` (len ≥ 5), `+3` (len ≥ 3), `+1` (short)
   - Prefix match (query is prefix of token, len ≥ 3): `+2`
@@ -259,7 +260,8 @@ Imports `SIGNS`, `CONNECTIONS` from `./asl.js`.
 - Scripted sequence: `H E L L O · W O R L D`
 - Updates `#demo-asl-svg`, `#demo-buffer`, `#demo-grammar`, `#demo-output`, `#demo-log`
 - Fires when `#demo` section scrolls into view (IntersectionObserver, threshold 0.25)
-- `#demo-replay-btn` resets and reruns
+- `#demo-replay-btn` pauses/resumes while the replay plays (WCAG 2.2.2) and replays once it has finished; turning reduced motion on mid-replay jumps to the finished state
+- It's a **concept**: recognition matches ASL Guide, but the app's grammar agent runs English → ASL gloss, so the copy calls the grammar pass a prototype
 - No innerHTML — all DOM updates via `createElement` / `textContent` / `appendChild`
 
 ### `js/webcam.js`
@@ -391,9 +393,9 @@ When updating bio copy, keep all four in sync: hero text, `<meta name="descripti
 
 ## Deployment
 
-Push to `master` → `.github/workflows/pages.yml` runs `dev/build.py`, checks that no placeholder is left, and deploys `_site/` to GitHub Pages (repo Settings → Pages → Source: **GitHub Actions**). About a minute. `_site/` is gitignored — never commit it.
+Push to `master` → `.github/workflows/pages.yml` runs `dev/build.py`, checks that no placeholder is left and that the page links the bundled stylesheet, and deploys `_site/` to GitHub Pages (repo Settings → Pages → Source: **GitHub Actions**). About a minute. `_site/` is gitignored — never commit it.
 
-**Asset version:** `index.html` (stylesheet link), `css/main.css` (every `@import`) and `js/loader.js` (`ASSET_VERSION`) append `?v=<version>`. Bump it in all three whenever CSS changes, or returning visitors can pair new HTML with cached old CSS (GitHub Pages caches for 10 minutes; hard-refresh with ⌘⇧R when testing). Sections are written into the page on deploy, so `html/` changes no longer need a bump there.
+**CSS caching:** nothing to bump. `dev/build.py` concatenates `css/main.css`'s `@import`s, in order, into one file named by its content hash (`css/site.<hash>.css`) and points the built `index.html` at it; only the bundle is deployed. A CSS change gets a new URL, so returning visitors never pair new HTML with cached old CSS. Source files carry no `?v=` strings (the `?v=` on the favicons and social card are separate, for crawler caches). Keep CSS free of nested `@import` and relative `url()`s that would break when bundled; the build fails on a nested `@import`.
 
 ```bash
 git add -p          # stage selectively — never commit .env or credentials

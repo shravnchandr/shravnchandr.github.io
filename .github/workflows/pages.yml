@@ -32,6 +32,7 @@ jobs:
         run: |
           ! grep -q 'id="frag-' _site/index.html
           grep -q 'id="case-valfred"' _site/index.html
+          grep -q 'href="css/site\.[0-9a-f]*\.css"' _site/index.html
       - uses: actions/upload-pages-artifact@v5
         with:
           path: _site

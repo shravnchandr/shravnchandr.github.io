@@ -27,8 +27,9 @@ desktop.ini
 # Build output (dev/build.py → deployed by .github/workflows/pages.yml)
 _site/
 
-# Résumé source (contains phone number) — keep local only
-resume.tex
+# Résumé sources and per-role copies (contain the phone number) — local only.
+# The public PDF stays at the root as Shravan_Chandra_Resume.pdf.
+resumes/
 # LaTeX build artifacts
 *.aux
 *.log

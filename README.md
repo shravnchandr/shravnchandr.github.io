@@ -12,10 +12,10 @@ Former Senior ML Engineer at Bosch; Master of Data Science at UBC (June 2027).
 - **At a glance** — three projects, one measured result each, linking to the full case studies
 - **Experience** — the career drawn as a subway line map: UBC now → Bosch (Senior ML, ML, Software) → Goldman Sachs
 - **Selected work** — case studies (problem → what I owned → result → key decision): predictive maintenance, Valfred (multi-agent GenAI data assistant), ASL Guide
-- **Research** — sign-language recognition and translation, an IEEE ICCAR 2022 paper, a retinopathy classifier
-- **Pipeline replay** — a scripted run of the ASL Guide translation flow
+- **Research** — signer-independent sign recognition (from isolated signs toward continuous signing, tested on signers the model never saw, with its own line of stations from 2022 to now), an IEEE ICCAR 2022 paper, a retinopathy classifier
+- **Pipeline replay** — a scripted concept replay: recognition as in ASL Guide, then a prototype grammar pass into English
 - **Try live** — a small MLP classifies your fingerspelling from the webcam, entirely in the browser (MediaPipe Hands → 63 landmark values → MLP); nothing is uploaded
-- ⌘K search, an Accessibility Lab that outlines the page's ARIA structure, and dark/light themes that follow the OS
+- ⌘K search, an Accessibility Lab that outlines the page's ARIA structure, pause controls for every animation (reduced motion honoured live), and dark/light themes that follow the OS
 
 ## Design
 
@@ -34,13 +34,13 @@ Sections are numbered stations (1 At a Glance … 8 Next Stop). Full rules: [`CL
 
 ## How it's built
 
-Fully static — no framework, no bundler, no package manager.
+Fully static — no framework, no package manager; the only build is a small standard-library Python script.
 
 - Sections live in `html/*.html`. On deploy, `dev/build.py` writes them into `index.html`, so the live page is complete HTML that any reader or crawler can read; locally, `js/loader.js` fetches them at runtime, so you edit and refresh with no build
 - `js/main.js` is the ES-module entry point; styles are `css/*`, imported by `css/main.css`
 - `js/asl_model.js` holds the trained MLP weights, loaded only when "Try live" is clicked
 - Icons are an inline SVG sprite (Font Awesome Free paths) — no icon font or CDN
-- Stylesheets carry an asset version (`?v=…`) so a deploy never mixes new HTML with cached CSS
+- On deploy the CSS is bundled into one file named by a hash of its contents (`css/site.<hash>.css`), so a deploy never mixes new HTML with cached CSS and there are no version strings to bump
 
 ## Running locally
 
@@ -53,7 +53,7 @@ python3 dev/build.py && python3 -m http.server -d _site   # preview the deployed
 
 ## Deployment
 
-Push to `master` → a GitHub Action builds (`dev/build.py`) and deploys to GitHub Pages (about a minute). When CSS changes, bump the asset version in `index.html`, `css/main.css` and `js/loader.js`. Images live in `assets/img/`; the root keeps only files that must be there (pages, icons, robots/sitemap, the public résumé PDF).
+Push to `master` → a GitHub Action builds (`dev/build.py`) and deploys to GitHub Pages (about a minute). Images live in `assets/img/`; the root keeps only files that must be there (pages, icons, robots/sitemap, the public résumé PDF).
 
 ---
 

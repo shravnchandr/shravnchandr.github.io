@@ -79,7 +79,10 @@ export function initA11yLab() {
         setActive(!document.body.classList.contains('a11y-lab'));
     });
 
-    panel.querySelector('.v2-a11y-close').addEventListener('click', () => setActive(false));
+    panel.querySelector('.v2-a11y-close').addEventListener('click', () => {
+        setActive(false);
+        btn.focus();   // the panel is now inert, so focus can't stay on its close button
+    });
 
     try {
         if (localStorage.getItem('a11y-lab') === '1') setActive(true);

@@ -196,7 +196,7 @@ export function initASL() {
 
     // Drawing infrastructure is built in every mode — webcam.js draws through it
     // even when the procedural animation is disabled by reduced motion.
-    const reducedMotion = prefersReducedMotion();
+    let reducedMotion = prefersReducedMotion();
 
     for (let i = 0; i <= 10; i++)
         svg.appendChild(svgEl('line',{x1:i*10,y1:0,x2:i*10,y2:125,stroke:'#262626','stroke-width':0.15}));
@@ -226,9 +226,10 @@ export function initASL() {
     // Loop ownership: exactly one RAF chain, running only when nothing blocks it.
     let raf      = null;
     let paused   = false;   // webcam owns the hand
+    let userPaused = false; // visitor pressed Pause
     let onscreen = true;
 
-    function canRun() { return !reducedMotion && !paused && onscreen && !document.hidden; }
+    function canRun() { return !reducedMotion && !paused && !userPaused && onscreen && !document.hidden; }
 
     function startLoop() {
         if (raf !== null || !canRun()) return;
@@ -323,6 +324,27 @@ export function initASL() {
     let _prevTop3Key = null;
     let _lastPose    = null;
     let _lastConfAt  = -Infinity;
+
+    // Visitors can stop the cycle (WCAG 2.2.2), and a reduced-motion change applies live
+    const motionBtn = document.getElementById('asl-motion-btn');
+    function syncMotionBtn() {
+        if (!motionBtn) return;
+        motionBtn.hidden = reducedMotion;
+        motionBtn.textContent = userPaused ? 'Play' : 'Pause';
+        motionBtn.setAttribute('aria-label', userPaused ? 'Play hand animation' : 'Pause hand animation');
+    }
+    motionBtn?.addEventListener('click', () => {
+        userPaused = !userPaused;
+        if (userPaused) stopLoop(); else startLoop();
+        syncMotionBtn();
+    });
+    window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', e => {
+        reducedMotion = e.matches;
+        if (reducedMotion) { stopLoop(); if (!paused) renderStatic(); }
+        else startLoop();
+        syncMotionBtn();
+    });
+    syncMotionBtn();
 
     if (reducedMotion) renderStatic();
     else startLoop();

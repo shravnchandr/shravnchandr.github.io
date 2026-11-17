@@ -102,57 +102,21 @@ const INDEX = [
     },
     {
         type:  'project',
-        id:    'vqvae-conformer',
-        label: 'VQ-VAE + Conformer Translation System',
-        sub:   'VQ-VAE · Conformer · CTC-Attention · Beam Search · PyTorch',
+        id:    'sign-recognition',
+        label: 'Signer-Independent Sign Recognition',
+        sub:   'Toward continuous signing · 73.2% on 11 unseen Deaf signers · data-pipeline audit',
         route: ['A', 'yellow'],   // route bullet shown in results
         tokens: [
             'project','research','paper','publication',  // section words
-            'vqvae','vq','vae','conformer','quantization','quantize',
-            'ctc','attention','beam','search','prefix','scoring',
-            'continuous','slt','translation','sequence','seq2seq',
-            'hierarchical','factors','pose','motion','dynamics','facial',
-            'signer','independent','dominance','normalization',
-            'pytorch','mediapipe','research','2026','current','progress','wip',
-            'sign','language','gloss','landmark','landmarks',
+            'signer','independent','generalization','generalisation','unseen','deaf',
+            'isolated','continuous','phrases','ctc','conformer','landmarkconformer','graph','graphconformer','gcn','73.2','73',
+            'google','asl-signs','aslsigns','wlasl','popsign','citizen','kaggle','250',
+            'folds','cross','validation','ensemble','adabn','batchnorm','calibration',
+            'audit','pipeline','contract','frozen','preregistered','criteria',
+            'onnx','browser','device','pytorch','mediapipe','landmark','landmarks',
+            'asl','sign','language','recognition','research','2024','2026',
         ],
-        action() { _reveal('#research'); },
-    },
-    {
-        type:  'project',
-        id:    'stgcn',
-        label: 'Graph-Based Sign Language Recognition',
-        sub:   'ST-GCN · 209 joints · Edge Importance · Spatial Attention',
-        route: ['A', 'yellow'],   // route bullet shown in results
-        tokens: [
-            'project','research','paper','publication',  // section words
-            'stgcn','st','gcn','graph','convolutional','network',
-            'skeletal','skeleton','joints','adjacency','matrix',
-            'edge','importance','spatial','attention','weighting',
-            'residual','temporal','kernels','multi','scale',
-            'fingertips','velocity','motion','postural','transition',
-            'pytorch','mediapipe','research','2025',
-            'sign','language','recognition',
-        ],
-        action() { _reveal('#research'); },
-    },
-    {
-        type:  'project',
-        id:    'temporal-asl',
-        label: 'LandmarkConformer: Sign Recognition',
-        sub:   'Multi-stream Conformer · Google ASL Signs (250 classes) · 76.65% · signer-independent',
-        route: ['A', 'yellow'],   // route bullet shown in results
-        tokens: [
-            'project','research','paper','publication',  // section words
-            'temporal','modeling','sequence','video',
-            'google','asl-signs','aslsigns','isolated','kaggle','250',
-            'cnn','transformer','attention','architecture',
-            'pytorch','scaling','scale','dataset','keypoint','keypoints','543',
-            '76','76.65','signs','top1','accuracy','conformer','landmarkconformer','grl','gradient','reversal',
-            'mixup','dropout','augmentation','tta','amp','focal','loss',
-            'asl','sign','language','recognition','research','2024',
-        ],
-        action() { _reveal('#research'); },
+        action() { _reveal('#research-sign'); },
     },
     {
         type:  'project',
@@ -496,7 +460,7 @@ function _showTips() {
     const lines = [
         '"autoencoder anomaly detection"',
         '"Databricks PySpark 40TB"',
-        '"VQ-VAE Conformer translation"',
+        '"signer-independent sign recognition"',
         '"spaced repetition"',
         '"trade booking Goldman"',
         '"IEEE ICCAR 2022"',

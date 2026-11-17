@@ -11,12 +11,6 @@
     gap: 48px;
 }
 
-.v2-research-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
-
 .v2-research-h3 {
     font-size: clamp(20px, 2.5vw, 26px);
     font-weight: 700;
@@ -54,6 +48,66 @@
 }
 
 .v2-research-bullet:first-of-type { border-top: none; }
+/* Plain-language lead, for readers who stop at the first sentence */
+.v2-research-bullet strong { color: var(--v2-text); font-weight: 700; }
+
+/* The project's own line: stations along its route colour, oldest first */
+.v2-research-line {
+    grid-column: 1 / -1;
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 0 16px;
+    margin: 0;
+    padding: 24px 0 0;
+    list-style: none;
+    border-top: 1px solid var(--v2-border);
+}
+.v2-research-line::before {
+    content: '';
+    position: absolute;
+    top: 29px;
+    left: 0;
+    right: 0;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--c, var(--r-yellow));
+}
+body.light-theme .v2-research-line::before { box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12); }
+
+.v2-research-line li {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding-top: 28px;
+    min-width: 0;
+}
+/* Station: white pill with a black ring, as on the experience line */
+.v2-research-line li::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 26px;
+    height: 16px;
+    box-sizing: border-box;
+    background: #fff;
+    border: 3px solid #0a0a0a;
+    border-radius: 8px;
+}
+body:not(.light-theme) .v2-research-line li::before { box-shadow: 0 0 0 2px var(--v2-surface), 0 0 0 3px rgba(255, 255, 255, 0.2); }
+
+.v2-rl-when {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--v2-text);
+}
+.v2-rl-what {
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--v2-text-dim);
+}
 
 .v2-research-num {
     font-size: 11px;
@@ -66,7 +120,11 @@
 
 @media (max-width: 900px) {
     .v2-research-featured { grid-template-columns: 1fr; gap: 28px; }
-    .v2-research-row       { grid-template-columns: 1fr; }
+    /* The line runs down the left on narrow cards */
+    .v2-research-line { grid-template-columns: 1fr; gap: 14px; }
+    .v2-research-line::before { top: 24px; bottom: 0; left: 10px; right: auto; width: 6px; height: auto; }
+    .v2-research-line li { padding: 0 0 0 40px; }
+    .v2-research-line li::before { top: 2px; }
 }
 
 @media (max-width: 600px) {

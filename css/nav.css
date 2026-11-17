@@ -133,10 +133,14 @@ body.light-theme .v2-nav {
 @media (max-width: 1240px) {
     .v2-nav { padding: 10px 24px; position: relative; }
     .v2-hire-btn { display: none; }
-    .v2-mobile-btn { display: flex; }
+    .js-nav .v2-mobile-btn { display: flex; }
+
+    /* Without JavaScript the menu can't open, so the links wrap onto their own row */
+    html:not(.js-nav) .v2-nav { flex-wrap: wrap; }
+    html:not(.js-nav) .v2-nav-links { order: 3; width: 100%; flex-wrap: wrap; }
 
     /* Menu: a solid panel under the platform edge, large tap targets */
-    .v2-nav-links {
+    .js-nav .v2-nav-links {
         display: none;
         position: absolute;
         top: calc(100% + 3px);
@@ -151,17 +155,17 @@ body.light-theme .v2-nav {
         border-bottom: 3px solid var(--r-yellow);
     }
 
-    .v2-nav-links.active { display: flex; }
-    .v2-nav-links a {
+    .js-nav .v2-nav-links.active { display: flex; }
+    .js-nav .v2-nav-links a {
         padding: 14px 4px;
         font-size: 17px;
         gap: 12px;
         border-radius: 0;
         border-bottom: 1px solid var(--v2-border);
     }
-    .v2-nav-links a:last-child { border-bottom: none; }
-    .v2-nav-links a .v2-bullet { --b: 26px; }
-    .v2-nav-links a.active {
+    .js-nav .v2-nav-links a:last-child { border-bottom: none; }
+    .js-nav .v2-nav-links a .v2-bullet { --b: 26px; }
+    .js-nav .v2-nav-links a.active {
         background: transparent;
         box-shadow: none;
         text-decoration: underline;

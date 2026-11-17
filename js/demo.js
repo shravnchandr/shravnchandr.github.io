@@ -1,16 +1,17 @@
 /**
  * demo.js — Scripted ASL Guide pipeline demo.
  *
- * Plays a scripted H-E-L-L-O W-O-R-L-D sequence through the full
- * ASL Guide pipeline: hand landmarks → TF.js classifier → sign buffer
- * → LangGraph grammar pass → spoken output.
+ * Plays a scripted H-E-L-L-O W-O-R-L-D sequence: hand landmarks → TF.js
+ * classifier → sign buffer (as in ASL Guide) → a prototype grammar pass →
+ * spoken output. The app's own grammar agent runs English → ASL gloss.
  *
- * Fires when the demo section scrolls into view. Replay button resets.
+ * Fires when the demo section scrolls into view. While it plays the button
+ * pauses and resumes it (WCAG 2.2.2); once finished it replays.
  * Safe DOM updates only — no innerHTML anywhere.
  */
 
 import { SIGNS, CONNECTIONS } from './asl.js';
-import { clearEl, prefersReducedMotion, routeFor } from './utils.js';
+import { clearEl, routeFor } from './utils.js';
 
 const NS = 'http://www.w3.org/2000/svg';
 
@@ -33,7 +34,8 @@ export function initDemo() {
     if (!svg || !bufferEl) return;
 
     // Reduced motion: same pipeline, rendered straight to its finished state.
-    const reducedMotion = prefersReducedMotion();
+    // Read live, so turning it on mid-replay finishes the replay at once.
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 
     const connLines = CONNECTIONS.map(() => {
         const line = document.createElementNS(NS, 'line');
@@ -149,20 +151,44 @@ export function initDemo() {
 
     const LAST_STEP = SCRIPT.length + 2;
 
+    let step  = 0;
+    let state = 'idle';   // idle | running | paused | done
+    const replayText = replayBtn?.querySelector('.v2-demo-replay-text');
+    const replayIcon = replayBtn?.querySelector('svg.icon');
+
+    function setState(next) {
+        state = next;
+        if (!replayBtn) return;
+        const [text, label] = next === 'running' ? ['Pause',  'Pause replay']
+                            : next === 'paused'  ? ['Resume', 'Resume replay']
+                            :                      ['Replay', 'Replay demo'];
+        if (replayText) replayText.textContent = text;
+        if (replayIcon) replayIcon.style.display = (next === 'running' || next === 'paused') ? 'none' : '';
+        replayBtn.setAttribute('aria-label', label);
+    }
+
+    function schedule() { _demoTimer = setTimeout(tick, STEP_MS); }
+
+    function tick() {
+        renderStep(step);
+        step++;
+        if (step <= LAST_STEP) schedule();
+        else setState('done');
+    }
+
+    function finish() {
+        clearTimeout(_demoTimer);
+        _demoTimer = null;
+        while (step <= LAST_STEP) renderStep(step++);
+        setState('done');
+    }
+
     function run() {
         reset();
-        if (reducedMotion) {
-            for (let step = 1; step <= LAST_STEP; step++) renderStep(step);
-            return;
-        }
-        let step = 0;
-        function tick() {
-            if (step > LAST_STEP) return;
-            renderStep(step);
-            step++;
-            if (step <= LAST_STEP) _demoTimer = setTimeout(tick, STEP_MS);
-        }
-        _demoTimer = setTimeout(tick, STEP_MS);
+        step = 0;
+        if (motionQuery.matches) { finish(); return; }
+        setState('running');
+        schedule();
     }
 
     function renderStep(step) {
@@ -190,7 +216,7 @@ export function initDemo() {
             const span = document.createElement('span');
             span.textContent = c === ' ' ? '·' : c;
             span.style.color = c === ' ' ? 'var(--v2-text-muted)' : 'var(--v2-text)';
-            if (!reducedMotion) span.style.animation = `pop ${LETTER_POP_MS}ms var(--spring-bounce)`;
+            if (!motionQuery.matches) span.style.animation = `pop ${LETTER_POP_MS}ms var(--spring-bounce)`;
             bufferEl.insertBefore(span, cursorEl);
         }
 
@@ -200,7 +226,7 @@ export function initDemo() {
         if (step === SCRIPT.length) addLog('buffer', 'word complete: "WORLD"');
 
         if (step === SCRIPT.length + 1) {
-            addLog('langgraph', 'grammar pass · 11 rules');
+            addLog('langgraph', 'grammar pass · prototype');
 
             grammarEl.className = 'v2-demo-grammar-box active';
             clearEl(grammarEl);
@@ -210,7 +236,7 @@ export function initDemo() {
             correcting.textContent = '▸ capitalize · add punctuation · ASL→English reorder';
             const blinkDot = document.createElement('span');
             blinkDot.style.color = 'var(--v2-data)';
-            if (!reducedMotion) blinkDot.style.animation = 'blink 0.8s step-end infinite';
+            if (!motionQuery.matches) blinkDot.style.animation = 'blink 0.8s step-end infinite';
             blinkDot.textContent = '_';
             grammarEl.append(correcting, blinkDot);
 
@@ -239,7 +265,22 @@ export function initDemo() {
 
     }
 
-    replayBtn?.addEventListener('click', run);
+    replayBtn?.addEventListener('click', () => {
+        if (state === 'running') {
+            clearTimeout(_demoTimer);
+            _demoTimer = null;
+            setState('paused');
+        } else if (state === 'paused') {
+            setState('running');
+            schedule();
+        } else {
+            run();
+        }
+    });
+
+    motionQuery.addEventListener('change', e => {
+        if (e.matches && (state === 'running' || state === 'paused')) finish();
+    });
 
     const section = svg.closest('section');
     if (!section) return;
