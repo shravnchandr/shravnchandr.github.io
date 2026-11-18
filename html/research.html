@@ -26,7 +26,7 @@
                         </div>
                         <div class="v2-research-bullet">
                             <span class="v2-research-num">03</span>
-                            <span><strong>Checked the data before trusting the numbers.</strong> An audit found hand-tracking errors in 22% of clips and a dataset that counted the same hand twice. I rebuilt every dataset under one validated data contract and compared models against criteria set before the results, rejecting one candidate that failed them.</span>
+                            <span><strong>Checked the data before trusting the numbers.</strong> An audit found hand-tracking errors in 22% of clips and a dataset that counted the same hand twice. I rebuilt every dataset under one validated data contract and compared models against criteria set before the results, rejecting two candidates that failed them (one doubled each signer’s recordings, with no measurable gain).</span>
                         </div>
                     </div>
                 </div>
@@ -34,6 +34,7 @@
                     <div class="v2-right-label">Key metrics</div>
                     <div class="v2-metric-row"><span class="v2-mv">53% → 73%</span><span class="v2-ml">single-sign accuracy for 11 Deaf signers the model never saw, after adding more varied signers</span></div>
                     <div class="v2-metric-row"><span class="v2-mv">84.0%</span><span class="v2-ml">on new signers from a second public dataset (WLASL)</span></div>
+                    <div class="v2-metric-row"><span class="v2-mv">85%</span><span class="v2-ml">of signs right when the model is confident; below that it says “Not sure” · held-out signers, single signs</span></div>
                     <div class="v2-metric-row"><span class="v2-mv">87%</span><span class="v2-ml">on the same 11 signers when trained on others from their dataset · research only, not shipped under its licence</span></div>
                     <div class="v2-tech-tags">
                         <span>PyTorch</span><span>Conformer</span><span>Graph networks</span><span>CTC</span><span>ONNX Runtime Web</span><span>MediaPipe</span>
