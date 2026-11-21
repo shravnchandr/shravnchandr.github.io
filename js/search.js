@@ -177,7 +177,7 @@ const INDEX = [
             '48','faster','training','train','speed','throughput',
             'azure','gpu','cloud','multi','distributed',
             'drift','detection','kl','divergence','distribution','hypothesis','testing',
-            'online','shift','sensor','sensors','accuracy','95',
+            'online','shift','sensor','sensors','recall','precision','99.8',
             'dashboard','dashboards','powerbi','power bi','power','bi',
             'ecu','ecus','100','engineering','teams',
             'machine','learning','engineer',
